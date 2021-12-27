@@ -1,0 +1,299 @@
+#+TITLE: Introduzione ad Architettura degli elaboratori
+#+AUTHOR: Jacopo Costantini
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+* Calcolatori elettronici
+   Basati su tecnologie in rapidissima evoluzione
+   Valvole → Transistor → IC = Integrated Circuit, VLSI = Very Large Scale Integration
+
+** Legge di Moore
+   Ogni 1,5 anni osserviamo il raddoppio di:
+   1. Capacità di memoria
+   2. Velocità del processore
+   3. Abbattimento dei costi contemporaneamente all'incremento di velocità
+
+** Trend
+    Incremento prestazioni e abbattimento costi
+    + Permette di affrontare e risolvere applicazioni sempre più complesse
+    Integrazione con la rete
+    + Sempre nuove applicazioni informatiche
+    Integrazione con la rete telefonica e cellulare
+    + Nuovi hw e applicazioni ( smartphone, IOT, ecc.)
+
+* L'architettura di Von Neumann
+  Le macchine moderne sono basate sulla macchina di Von Neumann
+
+  - CPU ( parte operativa e parte di controllo )
+  - Memoria ( per dati e programmi )
+  - Periferiche di input e output
+
+  Il BUS è il canale di cunicazione che consente ai dati di transitare fra diversi componenti dell'elaboratore
+
+** Componenti principali di un computer
+     + Input/Output ( I/O )
+       - Mouse, tastiera ( I )
+       - Video, stampante ( O )
+       - Dischi ( I/O )
+       - CD e DVD ( I/O o I )
+       - Rete ( I/O )
+	 
+     + Memoria principale
+       - DRAM ( Memoria dinamica ), SRAM ( Memoria Statica )
+	 
+     + Processore ( CPU )
+       - Parte operativa ( Datapath )
+       - Parte controllo ( control )
+       - Bus
+
+** Com'è fatto un computer
+               - I/O
+                - Serve per comunicare con l'esterno
+                - Include dispositivi di memoria secondaria ( memoria non volatile ), acceduti come dispositivi di I/O
+            - Memoria principale
+                - Usata per memorizzare programmi e dati durante l'esecuzione ( concetti di stored-program introdotto da Von Neumann )
+            - Processore
+                - È l'esecutore delle istruzioni appartenenti ad un'ISA
+                - ISA ( Instruction Set Architecture ) definisce quindi il linguaggio ( povero ) comprensibile dal processore
+                - Le istruzioni sono lette dalla memoria, modificano dati in memoria o agiscono sull'I/O
+                - Decomponibile in :
+                    - Parte Controllo → Mente
+                    - Parte Operativa → Braccio
+
+* Il ruolo dell'astrazione
+        - L'informatica si basa sul concetto di astrazione
+        - L'astrazione è una tecnica di semplificazione
+        - Il termine astrazione si riferisce alla distinzione tra le proprietà esterne di un'entità e i dettagli ella sua struttura interna
+        - L'astrazione permette di ignorare i particolari interni di un congegno complesso e di usarlo come una singola unità
+        
+        Per progettare o capire l'architettura di un sistema, oppure per programmare semplicemente un sistema, abbiamo bisogno di astrarre.
+        
+        Se scendiamo di livello, troviamo fili e milioni di transistor, diventa così impossibile comprenderne il funzionamento
+        
+        - I livelli più alti virtualizzano, ovvero offrono una vista virtuale dei livelli inferiori
+            - Macchina virtuale o astratta
+                - Appare più potente e semplice da programmare della macchina sottostante
+    
+* Strutturazione in livelli
+          Tradizionale vista a livelli dell'architettura hw/sw di un computer. Ogni livello mette a disposizione :
+        
+        - Uno o più linguaggi riconosciuti
+        - Uno o più interpreti o compilatori per tradurre tra linguaggi
+            
+            <aside>
+            🛠 Livello 4: Linguaggio ad alto livello
+            Livello 3: Assembler
+            Livello 2: Sistema Operativo
+            Livello 1: Linguaggio Macchina ( ISA )
+            Livello 0: Hardware/Firmware
+            
+            </aside>
+** Sistema Operativo ( SO )
+    - Per ora pensiamo al S.O come un livello il cui linguaggio è l'ISA estesa con nuove istruzioni ad alto livello per gestire risorse critiche
+            - Offre nuove istruzioni oltre a quella base dell'ISA
+        
+        - Livello Hardware/Firmware
+            - Livello della logica digitale ( HW )
+                - Fili e porte logiche ( Gate ) realizzati tramite transistor ( speciali interruttori )
+                - Gate ( fili ) elaborano ( trasportano ) segnali binari ( 0 / 1 )
+                - Tramite questi segnali è possibile rappresentare qualsiasi tipo di informazione
+                - Interconnettendo gate e fili è possibile realizzare funzioni complesse
+                - È anche possibile realizzare elementi di memoria ( utilizzati per dati e programmi )
+            - Livello della microarchitettura ( FW )
+                - Costruito sopra il livello della logica digitale, si occupa di interpretare ed eseguire le istruzioni del livello ISA
+                - È il livello di macchina nuda che appare al programmatore di sistema
+                - comprende un insieme di istruzioni che di solito sono diverse per ogni processore
+                    - Problema della portabilità binaria
+                - La sintassi è adatta ad essere interpretata facilmente dal livello sottostante
+        - Livello Linguaggio Macchina ( ISA )
+            
+            Le istruzioni sono stringhe di Bit con formato ben determinato per permettere la facile individuazione di codice e operandi delle istruzioni 
+            
+            - I codici individuano l'operazione elementare che l’istruzione dovrà eseguire
+            - Gli operandi si riferiscono alle locazioni di memoria che contengono i dati su cui eseguire l'operazione e le locazioni dove memorizzare i risultati
+        - Livello Linguaggio Assembler
+            - Offre al programmatore di sistema una vista più "umana" del livello macchina
+                - Istruzioni espresse con stringhe di carattere mnemoniche invece di stringhe binarie
+                - Traduzione realizzata dall’assemblatore ( è una speciale compilatore ) rispetto al livello macchina
+            - L'assemblatore è uno dei primi software di sistema realizzato per facilitare la programmazione dei calcolatori
+        - Livello Linguaggio ad alto livello
+            - C, C++, Modula 3, Java, ...
+            - Permette al programmatore una maggiore astrazione rispetto ai livelli sottostanti della macchina
+            - Ha di solito bisogno di un traduttore ( compilatore )
+            - Per alcuni linguaggi esistono interpreti: per esempio Java
+            - È il livello solitamente usato per produrre software
+            - Tale livello permette di realizzare la portabilità tra processori con diversa ISA
+                - Basta che esista il compilatore/interprete implementato per la nuova ISA
+* Software applicativo e di sistema
+Compilatori, assemblatori, OS, Word processor, ecc... è tutto software
+        - Il software di sistema serve a
+            - Produrre altro software ( sia di sistema che applicativo )
+            - Permettere l'esecuzione di altro software
+        - Il software applicativo
+            - Costruisce la maggior parte del software
+            - Lo scopo di questo software dipende dallo specifico campo applicativo
+                - Applicazioni bancarie
+                - CAD
+                - Word processor
+                - Foglio elettronico
+* Storia
+** Abaco Cinese
+            - L'abaco cinese può essere considerato il primo modello matematico di calcolo
+            - In questo modello si possono formalizzare le quattro operazioni
+                - Somma
+                - Sottrazione
+                - Prodotto
+                - Divisione intera
+            
+             
+** Macchina di Antikythera
+            - È il più antico calcolatore meccanico conosciuto, databile intorno al 100 - 150 A.C
+            - Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari, i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.
+            - Trae il nome dall'isola greca Anticitera ( Cerigotto ) presso cui è stata rinvenuta.
+            
+            
+** Pascalina 1640
+            - Blaise Pascal progetta e realizza la Pascalina: Calcolatore meccanico per addizioni
+                
+                
+** Leibnitz 1673
+            
+            Macchina per addizioni, sottrazioni, moltiplicazioni, divisioni e radice quadrata
+            
+              
+** Babbage 1824
+            
+            Macchina "General-purpose" le cui funzionalità dipendono da come è progettata
+            
+              
+*** Ada Lovelace Byron ( 1815 - 1852 )
+                - Figlia del noto poeta inglese
+                - Collabora con Babbage
+                - Scrive il primo software della storia
+                    
+                      
+** Hollerit 1890
+            - Fondatore dell'IBM, inventa l'uso delle carte perforate per automatizzare la tabulazione dei dati di un censimento
+            - Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente, dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati
+            - I risultati del censimento furono ottenuti in tempo molto minore del precedente
+                
+                 
+*** Tra '800 e '900
+            - Nel 1890 venne utilizzata una macchina per il conteggio tramite schede perforate che trovò largo uso negli uffici statunitensi per il censimento di quello stesso anno.
+            - Questo tipo di macchine si diffusero rapidamente sia negli uffici governativi che in quelli privati
+            - Venne fondata una società per la commercializzazione di quelle che venivano chiamate macchine meccanografiche
+            - Questa società diventerà nel 1924 la International Business Machine ( IBM )
+        - Schede perforate
+            - L'ingresso del calcolatore nel mondo del lavoro risale all'inizio del 1900; la tecnologia delle macchine di calcolo era di tipo meccanografico
+            - Con queste macchine si eseguivano calcoli ad una discreta velocità ( per quei tempi ), dell'ordine delle 60 operazioni al minuto; la loro gestione tuttavia era molto complessa
+                
+                 
+** ENIAC 1946
+            - Electronic Numerical Integrator and Calculator
+            - Considerato il primo calcolatore a valvole general-purpose programmabile
+            - Creata da Mauchly & Eckert (Univ. Pennsylvania)
+            - 18000 valvole - 30 tons
+            - 140 KW - 24x3x2 metri
+            - Programmazione tramite inserimento di cavi e azionamento di interruttori
+            - Dati inseriti con schede perforate
+                - Per programmare ENIAC era necessario modificare la disposizione di un grande numero di fili collegati a uno dei suoi pannelli.
+                - Programmare ENIAC era una questione non solo di algoritmi ma anche di saldature e collegamenti elettrici, rendendo l’operazione molto difficoltosa
+        - Enigma
+            
+            In Germania, durante la seconda guerra mondiale, venne utilizzata Enigma, una macchina crittografica per cifrare le comunicazioni, inventata da un polacco e finita misteriosamente in mani naziste
+            
+            
+            - 1943: In Inghilterra COLOSSUS, progettato da Alan Turing, ha un ruolo importante per decifrare i codici segreti usati dall'armata tedesca nella seconda guerra mondiale
+                
+                  
+** John Von Neumann
+            - Inventò il concetto di Stored-program computer
+                - Constatò che era noioso riprogrammare l'ENIAC
+                - Poiché anche i programmi sono rappresentabili in binario, esattamente come i dati, propose di porre programmi e dati assieme in memoria
+                - ISA: Store-program computer costruito da Von Neumann a Princeton
+                - In pratica il calcolatore diventa un elaboratore capace di trattare qualsiasi informazione in codice binario
+                    
+                       
+** Mauchly & Eckert
+            - Nel 1946 progettano e costruiscono l'EDVAC ( dell' Electronic Discrete Variable Automatic Computer ), basato sull'architettura di Von Neumann
+            - Crearono una ditta diventata poi l'Unisys
+            - Cercarono di ottenere il brevetto per l'invenzione del calcolatore elettronico, ma persero la causa.
+            - Il brevetto fu invece attribuito ad Atanasoff, che aveva costruito una macchina special-purpose ( ABC ) agli inizi degli '40
+        - Sviluppo commerciale
+            - Per arrivare al primo successo commericale
+                - Univac 1 ( 1951 ) - Universal Automatic Computer
+                    - Prodotto dalla ditta fondata da Mauchly & Eckert
+                    - Prodotto in 48 esemplari, venduto a 1M $
+            - IBM entrò nel mercato successivamente
+                - IBM 701 ( 1952 )
+            - Gli anni 50 videro l'avvento dei transistor
+                - Transistor inventati nel 1948 da Bardeen, Brattain, Shockley
+                - Primo computer costruito al M.I.T. di boston alla fine degli anni '50
+                - Agli inizi degli anni '60, l'IBM costruì il 7090 ( basato su transistor invece che su valvole come il 709 )
+                - La DEC, una ditta fondata da Olsen, un ricercatore del M.I.T. , nel 1961 commercializzò il PDP-1 basato su transistor
+            - IBM S/360 ( 1964 )
+                - Famiglia di computer
+                - Variabili in prezzo e prestazioni
+                - Stessa architettura astratta
+                - Capacità di simulare ISA di altri modelli IBM precedenti
+            - DEC PDP-8 ( 1965 )
+                - Il primo minicomputer
+                - Venduti circa 50000 esemplari
+                - Costo contenuto ( solo 16000$ )
+            - Avvento circuiti integrati e VLSI
+                - Invenzione dei circuiti integrati su silicio dovuto a Noyce nel 1958
+                - Negli anni '70, famiglia IBM S/360 e DEC PDP-11, costruiti con circuiti integrati
+                - Negli anni '80, VLSI ( Very Large Scale Integration ) ha permesso di mettere sullo stesso chip
+                    - 10.000, 100.000, e finalmente diversi milioni di transistor
+            - Negli anni '80
+                - I prezzi si abbassano
+                - Microprocessori ( CPU su singolo chip )
+                - Avvento dei Personal Computer
+                    - Apple, Apple ][ , PC IBM ( 1981 )
+            - Metà anni '80
+                - Architettura RISC, che prendono il poso delle complicate architetture CISC
+        L'algoritmo impiegato nei calcolatori per sottrarre numeri binari
+        
+        Viene utilizzata una particolare rappresentaziones
+        
+        
+        - Caratteristiche delle rappresentazioni
+            - Bilanciamento: Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
+            - Numero di zeri: Le rappresentazioni in Modulo e Segno, e quella in Complemento a Uno, hanno 2 rappresentazioni per lo zero
+            - Semplicità delle operazioni: Per il Modulo e segno bisogna prima guardare i segni e confrontare i moduli, per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre.
+            
+            > Il complemento a uno non permette di sommare numeri negativi
+            > 
+        - Complemento a 2
+            
+            La rappresentazione in complemento a 2 è quella adottata dai calcolatori per i numeri interi con segno ( signed )
+            
+            Il Bit più significativo corrisponde al segno ( 0 positivo, 1 negativo )
+            
+            - Numeri relativi ( signed ) rappresentabili su 32Bit
+                
+                
+            - Numeri relativi ( signed ) rappresentabili su 64Bit:
+                
+
+                
+            - Rappresentazione
+                
+                Rappresentazione di numeri in complemento a 2 su n Bit dei numeri signed:
+                
+                
+            - Valore
+                
+                Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
+                
+                - Per quanto riguarda i numeri negativi, per ottenere direttamente il valore di un numero negativo su n posizioni, basta considerare
+                    - Il Bit di segno ( = 1 ) in posizione $n-1$ con peso : $-2^{n-1}$
+                    - Tutti gli altri bit in posizione $i\$ con peso $2^i$
+            - Cambio di segno
+                
+                Dato un numero positivo $N$, con bit di segno uguale a 0
+                
+                Per ottenere la rappresentazione in complemento a 2 di $-N$ è possibile impiegare equivalentemente
+                
+                - Algoritmo 1: Invertire tutti i bit ( ovvero Complemento a uno ) e somma 1
+                - Algoritmo 2: Invertire tutti i bit a sinistra della cifra 1 meno significativa
+

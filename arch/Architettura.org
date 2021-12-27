@@ -1,0 +1,26 @@
+#+TITLE: Architettura degli elaboratori
+#+AUTHOR: Jacopo Costantini
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+* Cose da fare
+** DONE introduzione
+** TODO numbers
+** TODO esempi numbers
+** TODO algebra di bool
+** TODO esempi algebra di bool
+** TODO circuiti
+** TODO ISA-MIMPS
+** TODO ALU
+** TODO mult
+** TODO memorie e circuiti sequenziali
+** TODO sintesi circuiti sequenziali
+** TODO esercizi circuiti sequenziali
+** TODO Progetto CPU (ciclo singolo)
+** TODO Progetto CPU (multiciclo)
+** TODO Valutazione delle prestazioni
+** TODO Esercizi sulla valutazione delle prestazioni
+
+   
+* Indice degli argomenti
+** [[file:src/introduzione.org][Introduzione]]
+** [[file:src/numbers.org][Rappresentazione dell'informazione]]

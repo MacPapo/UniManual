@@ -1,0 +1,174 @@
+#+TITLE: Rappresentazione dell'informazione
+#+AUTHOR: Jacopo Costantini
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+
+* Rappresentazione dell'informazione
+  Differenza tra simbolo e significato
+    
+    - La cifra ( lettera ) usata per scrivere è un simbolo che rappresenta l'informazione
+    - Il concetto di numero ( suono ) corrisponde al significato dell'informazione
+    
+    Per comunicare/rappresentare informazioni è quindi necessario usare dei simboli
+    
+    - È necessaria una convenzione ( rappresentazione, codifica o codice ) per associare i simboli con il loro significato
+    - Codifica o Codice
+        
+        Per codificare l'informazione solitamente si usa un alfabeto di simboli
+        
+        - Alfabeto = insieme finito di simboli adottati per rappresentare informazioni
+        
+        Una codifica ( codice ) fornisce una corrispondenza tra :
+        
+        - Sequenze ( stringhe, configurazione ) di simboli dell'alfabeto
+        - Dati
+        
+        Solitamente, i codici fanno riferimento a sequenze di simboli di lunghezza finita
+        
+        - Alfabeto di $N\$ simboli e Sequenza di lunghezza $k$
+            - $N^k \$ configurazioni possibili
+        - Rispetto ad un alfabeto binario $(\ N = 2\ )$
+            - Numero totale di configurazioni : $\ 2^k$
+            - $2^k >= s\$ ( dove $s\$ è la cardinalità dell'insieme $D\$ dei dati )
+            - n Es.: se D comprende le 26 lettere dell’alfabeto inglese (s=26)
+           - n sono necessarie almeno sequenze di K simboli binari, con K >= 5
+    
+** Codifica e tipo di informazione
+         La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
+        
+        - Basta fissare una convenzione per permettere di riconoscere i dati
+        
+        La codifica dei numeri
+        
+        - Deve essere accurata, perché è necessario effettuare operazioni ( somma, moltiplicazioni ecc... ) usando la rappresentazione adatta
+        - Di solito si adotta il sistema di numerazione arabica, o posizionale
+
+** Codifica dei numeri
+           Sistema di numerazione arabico in case 10 $\ (\ B = 10\ )$
+        
+        - Cifre ( simboli ) appartenenti all'alfabeto di 10 simboli $\ A=\{\ 0,1,...,9\ \}$
+        - Il simbolo con $0\$ corrisponde al numero zero, ..., il simbolo 9 corrisponde al numero nove
+        - Simboli con valore diverso in base alla posizione nella stringa di simboli in $A\$ ( unità, decine, centinaia, migliaia, ecc... )
+
+** Sistema di codifica posizionale
+           Codificare i numeri in una generica base $B$
+        
+        - Fissare un alfabeto $A\$ di $B\$ simboli
+        - Fissare una corrispondenza tra
+            - i $B\$ simboli di $A\ \iff$i Primi $B\$ numeri naturali $\{\ 0,1,2,...,\ B-1\ \}$
+        - Numeri maggiori di $B\$ rappresentabili come stringhe di simboli $\ d_i \in A$
+            - $d_{n-1}\ ...\ d_1\ d_0$
+        - Valore numerico della stringa, dove la significatività delle cifre è espressa in base alle varie potenze di $B$
+            - $B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1 \ +\ B^0 \times d_0$
+
+** Numeri naturali in base 2
+          Alfabeto binario $A = \{ 0,1\}$, dove i simboli sono detti bit, con 0 corrispondente a zero ed 1 corrispondente al numero uno
+        
+        - Nei calcolatori i numeri sono rappresentati come sequenze di bit di lunghezza finita
+        - Numeri rappresentati in notazione arabica, con base $B = 2\$ ( numeri binari )
+            - $d_{n-1} \ ...\ d_1\ d_0\ \$ dove $\ d_i \in \{0,1\}$
+        
+        Con stringhe di $n$ bit, sono rappresentabili $2^n$ dati ( numeri diversi )
+        
+        - Dal numero $0$ al numero $2^n-1$
+        
+        Il valore numerico corrispondente, dove la significatività delle cifre è espressa sulla base di una potenza di $B = 2$
+        
+        - $2^{n-1} \times d_{n-1}\ +\ ...\ +\ 2^1 \times d_1 \ +\ 2^0 \times d_0$
+
+** Conversione inversa
+           Da base 10 a base $B$
+        
+        Procedimento per divisione intere successive
+        
+        Sia dato un certo numero naturale $N_{10}$ rappresentabile in base $B$ come stringa di $n$ simboli $d_{n-1}\ ...\ d_1\ d_0$ il cui valore è
+        
+        $$N_{10} = B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1\ +\ B^0 \times d_0$$
+        
+        Se dividiamo per $B$
+        
+        - Otteniamo $d_0$ come resto
+            - Quoziente:$\ \ \ B^{n-2} \times d_{n-1}\ +\ ...\ +\ B^0 \times d_1$
+            - Resto: $\ \ \ \ \ \ \ \ \ d_0, \ 0 <= d_0 < B$
+        - Possiamo iterare il procedimento, ottenendo $d_1, d_2, d_3\$ ecc... fino ad ottenere un Quoziente = 0
+    
+** Rappresentazione ottale ed esadecimale
+           
+        Ottale : $B = 8$
+        
+        Esadecimale: $B = 16$
+        
+        Usate per facilitare la comunicazione di numeri binari tra umani, o tra il computer e il programmatore
+        
+        La codifica è più corta rispetto alla base 2
+        
+        Esiste inoltre un metodo veloce per convertire tra base 8 ( o base 16 ) e base 2, e viceversa
+        
+        - Rappresentazione Ottale
+            
+            $B = 8,\ A = \{0,1,2,3,4,5,6,7\}$
+            
+            Come convertire:
+            
+            - Sia dato un numero binario di 10 cifre: $d_9\ ...\ d_1\ d_0$, il cui valore è
+                
+                $$\sum_{i=0}^{9}2^i \times d_i$$
+                
+            - Raggruppiamo le cifre: da destra a triplette
+            - Poniamo in evidenza la più grande potenza di 2 comune possibile
+                - $(2^0 \times d_9)\times2^9\ +\ (2^2 \times d_8 + 2^1 \times d_7 + 2^0 \times d_6)\times2^6\ +\ (2^2 \times d_5 + 2^1 \times d_4 + 2^0 \times d_3)\times2^3\ +\ (2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0)\times2^0$
+                - I termini fra parentesi sono numeri compresi tra 0 e 7
+                    - Si possono far corrispondere ai simboli dell'alfabeto ottale
+                    - I fattori messi in evidenza corrispondono alle potenze di $B = 8$
+                        - $2^0 = 8^0\ \ \ \ 2^3 = 8^1\ \ \ \ 2^6=8^2\ \ \ \ 2^9=8^3$
+                        - Da binario ad ottale: $\ 1001010111_2 = 1\ \ 000\ \ 010\ \ 111 = 1127_8$
+                        - Da ottale a binario: $\ 267_8 = 010\ \ 110\ \ 111 = 10110111_2$
+        - Rappresentazione Esadecimale
+            
+            $B = 16,\ A = \{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F\}$
+            
+            Come convertire:
+            
+            - Sia dato un numero binario di 10 cifre: $d_9\ ...\ d_1\ d_0$ il cui valore è
+                
+                $$\sum_{i=0}^9 2^i \times d_i$$
+                
+            - Raggruppiamo le cifre: da destra, 4 a 4
+            - Poniamo in evidenza la più grande potenza di 2 possibile
+                
+                $$(2^1 \times d_9\ +\ 2^0 \times d_8)\times2^8\ +\ (2^3 \times d_7 + 2^2 \times d_6 + 2^1 \times d_5 \ +\ 2^0 \times d_4)\times2^4\ +\ (2^3 \times d_3 + 2^2 \times d_2 + 2^1 \times d_1 \ +\ 2^0 \times d_0)\times2^0$$
+                
+                I termini tra parentesi sono numeri compresi tra 0 e 15
+                
+                - Si possono far corrispondere ai simboli dell'alfabeto esadecimale
+                
+                I fattori messi in evidenza corrispondono alle potenze di $B = 16$
+                
+                - $2^0 = 16^0\ \ \ 2^4 = 16^1\ \ \ 2^8 = 16^2$
+                    - Da binario ad esadecimale: $\\1001011111_2 = 10\ \ 0101\ \ 1111 = 25F_{16}$
+                    - Da esadecimale a binario: $\\A67_{16} = 1010\ \ 0110\ \ \ 0111 = 101001100111_2$
+
+** Numeri naturali binari
+           Il processore che studieremo ( MIPS ) rappresenta i numeri interi su 32Bit ( 32 bit = 1 word )
+        
+        I numeri interi senza segno ( unsigned ) rappresentabili su 32Bit sono:
+        
+          
+        I numeri intero senza segno ( unsigned ) rappresentabili su 64Bit sono:  
+        
+         
+        - Somma di numeri ( naturali ) binari
+            
+            Sia $A = 13_{10} = 01101_2$ e $\ B = 11_{10} = 01011_2$
+            
+             
+        - Algoritmo di somma di numeri ( naturali ) binari
+            
+            Per la somma di numeri rappresentati in binario possiamo adottare la stessa procedura usata per sommare numeri decimali
+
+** Overflow
+           L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
+        
+        $\Longrightarrow$ il riporto ( significa, cioè pari a 1 ) fluisce fuori
+
+** Sottrazione e numeri relativi
+   
