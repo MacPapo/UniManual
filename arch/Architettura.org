@@ -22,5 +22,5 @@
 
    
 * Indice degli argomenti
-** [[file:src/introduzione.org][Introduzione]]
-** [[file:src/numbers.org][Rappresentazione dell'informazione]]
+** [[file:introduzione.org][Introduzione]]
+** [[file:numbers.org][Rappresentazione dell'informazione]]

@@ -1,10 +1,9 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-27 Mon 23:47 -->
+<!-- 2021-12-28 Tue 00:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Architettura degli elaboratori</title>
@@ -230,106 +229,106 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgb8bfe6e">1. Cose da fare</a>
+<li><a href="#org8198278">1. Cose da fare</a>
 <ul>
-<li><a href="#org07b088c">1.1. <span class="done DONE">DONE</span> introduzione</a></li>
-<li><a href="#orgc9cc36e">1.2. <span class="todo TODO">TODO</span> numbers</a></li>
-<li><a href="#orgcea2fd0">1.3. <span class="todo TODO">TODO</span> esempi numbers</a></li>
-<li><a href="#org1bf8ada">1.4. <span class="todo TODO">TODO</span> algebra di bool</a></li>
-<li><a href="#orgd2f45de">1.5. <span class="todo TODO">TODO</span> esempi algebra di bool</a></li>
-<li><a href="#org9dd06c4">1.6. <span class="todo TODO">TODO</span> circuiti</a></li>
-<li><a href="#org1c76bc3">1.7. <span class="todo TODO">TODO</span> ISA-MIMPS</a></li>
-<li><a href="#org4f6cf93">1.8. <span class="todo TODO">TODO</span> ALU</a></li>
-<li><a href="#org6f2d62c">1.9. <span class="todo TODO">TODO</span> mult</a></li>
-<li><a href="#orgc27e048">1.10. <span class="todo TODO">TODO</span> memorie e circuiti sequenziali</a></li>
-<li><a href="#orgbec035c">1.11. <span class="todo TODO">TODO</span> sintesi circuiti sequenziali</a></li>
-<li><a href="#org68d28d9">1.12. <span class="todo TODO">TODO</span> esercizi circuiti sequenziali</a></li>
-<li><a href="#orgfce4144">1.13. <span class="todo TODO">TODO</span> Progetto CPU (ciclo singolo)</a></li>
-<li><a href="#orgd200650">1.14. <span class="todo TODO">TODO</span> Progetto CPU (multiciclo)</a></li>
-<li><a href="#org99c885e">1.15. <span class="todo TODO">TODO</span> Valutazione delle prestazioni</a></li>
-<li><a href="#org3297377">1.16. <span class="todo TODO">TODO</span> Esercizi sulla valutazione delle prestazioni</a></li>
+<li><a href="#orga62a57f">1.1. <span class="done DONE">DONE</span> introduzione</a></li>
+<li><a href="#orgdc9afb8">1.2. <span class="todo TODO">TODO</span> numbers</a></li>
+<li><a href="#org2bbc8d1">1.3. <span class="todo TODO">TODO</span> esempi numbers</a></li>
+<li><a href="#orgba8807d">1.4. <span class="todo TODO">TODO</span> algebra di bool</a></li>
+<li><a href="#org415ba76">1.5. <span class="todo TODO">TODO</span> esempi algebra di bool</a></li>
+<li><a href="#orge5da92f">1.6. <span class="todo TODO">TODO</span> circuiti</a></li>
+<li><a href="#orge2b2d7e">1.7. <span class="todo TODO">TODO</span> ISA-MIMPS</a></li>
+<li><a href="#org604033a">1.8. <span class="todo TODO">TODO</span> ALU</a></li>
+<li><a href="#org2d8326a">1.9. <span class="todo TODO">TODO</span> mult</a></li>
+<li><a href="#org51e86aa">1.10. <span class="todo TODO">TODO</span> memorie e circuiti sequenziali</a></li>
+<li><a href="#orga9faf26">1.11. <span class="todo TODO">TODO</span> sintesi circuiti sequenziali</a></li>
+<li><a href="#orgbb6b13f">1.12. <span class="todo TODO">TODO</span> esercizi circuiti sequenziali</a></li>
+<li><a href="#org7f10ee9">1.13. <span class="todo TODO">TODO</span> Progetto CPU (ciclo singolo)</a></li>
+<li><a href="#org359075b">1.14. <span class="todo TODO">TODO</span> Progetto CPU (multiciclo)</a></li>
+<li><a href="#orgd825325">1.15. <span class="todo TODO">TODO</span> Valutazione delle prestazioni</a></li>
+<li><a href="#org65b8dc6">1.16. <span class="todo TODO">TODO</span> Esercizi sulla valutazione delle prestazioni</a></li>
 </ul>
 </li>
-<li><a href="#org88000fa">2. Indice degli argomenti</a>
+<li><a href="#org6a70371">2. Indice degli argomenti</a>
 <ul>
-<li><a href="#orgc906be5">2.1. Introduzione</a></li>
-<li><a href="#org5c3feaa">2.2. Rappresentazione dell'informazione</a></li>
+<li><a href="#orgfbf93c5">2.1. Introduzione</a></li>
+<li><a href="#org99b4d58">2.2. Rappresentazione dell'informazione</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb8bfe6e" class="outline-2">
-<h2 id="orgb8bfe6e"><span class="section-number-2">1</span> Cose da fare</h2>
+<div id="outline-container-org8198278" class="outline-2">
+<h2 id="org8198278"><span class="section-number-2">1</span> Cose da fare</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org07b088c" class="outline-3">
-<h3 id="org07b088c"><span class="section-number-3">1.1</span> <span class="done DONE">DONE</span> introduzione</h3>
+<div id="outline-container-orga62a57f" class="outline-3">
+<h3 id="orga62a57f"><span class="section-number-3">1.1</span> <span class="done DONE">DONE</span> introduzione</h3>
 </div>
-<div id="outline-container-orgc9cc36e" class="outline-3">
-<h3 id="orgc9cc36e"><span class="section-number-3">1.2</span> <span class="todo TODO">TODO</span> numbers</h3>
+<div id="outline-container-orgdc9afb8" class="outline-3">
+<h3 id="orgdc9afb8"><span class="section-number-3">1.2</span> <span class="todo TODO">TODO</span> numbers</h3>
 </div>
-<div id="outline-container-orgcea2fd0" class="outline-3">
-<h3 id="orgcea2fd0"><span class="section-number-3">1.3</span> <span class="todo TODO">TODO</span> esempi numbers</h3>
+<div id="outline-container-org2bbc8d1" class="outline-3">
+<h3 id="org2bbc8d1"><span class="section-number-3">1.3</span> <span class="todo TODO">TODO</span> esempi numbers</h3>
 </div>
-<div id="outline-container-org1bf8ada" class="outline-3">
-<h3 id="org1bf8ada"><span class="section-number-3">1.4</span> <span class="todo TODO">TODO</span> algebra di bool</h3>
+<div id="outline-container-orgba8807d" class="outline-3">
+<h3 id="orgba8807d"><span class="section-number-3">1.4</span> <span class="todo TODO">TODO</span> algebra di bool</h3>
 </div>
-<div id="outline-container-orgd2f45de" class="outline-3">
-<h3 id="orgd2f45de"><span class="section-number-3">1.5</span> <span class="todo TODO">TODO</span> esempi algebra di bool</h3>
+<div id="outline-container-org415ba76" class="outline-3">
+<h3 id="org415ba76"><span class="section-number-3">1.5</span> <span class="todo TODO">TODO</span> esempi algebra di bool</h3>
 </div>
-<div id="outline-container-org9dd06c4" class="outline-3">
-<h3 id="org9dd06c4"><span class="section-number-3">1.6</span> <span class="todo TODO">TODO</span> circuiti</h3>
+<div id="outline-container-orge5da92f" class="outline-3">
+<h3 id="orge5da92f"><span class="section-number-3">1.6</span> <span class="todo TODO">TODO</span> circuiti</h3>
 </div>
-<div id="outline-container-org1c76bc3" class="outline-3">
-<h3 id="org1c76bc3"><span class="section-number-3">1.7</span> <span class="todo TODO">TODO</span> ISA-MIMPS</h3>
+<div id="outline-container-orge2b2d7e" class="outline-3">
+<h3 id="orge2b2d7e"><span class="section-number-3">1.7</span> <span class="todo TODO">TODO</span> ISA-MIMPS</h3>
 </div>
-<div id="outline-container-org4f6cf93" class="outline-3">
-<h3 id="org4f6cf93"><span class="section-number-3">1.8</span> <span class="todo TODO">TODO</span> ALU</h3>
+<div id="outline-container-org604033a" class="outline-3">
+<h3 id="org604033a"><span class="section-number-3">1.8</span> <span class="todo TODO">TODO</span> ALU</h3>
 </div>
-<div id="outline-container-org6f2d62c" class="outline-3">
-<h3 id="org6f2d62c"><span class="section-number-3">1.9</span> <span class="todo TODO">TODO</span> mult</h3>
+<div id="outline-container-org2d8326a" class="outline-3">
+<h3 id="org2d8326a"><span class="section-number-3">1.9</span> <span class="todo TODO">TODO</span> mult</h3>
 </div>
-<div id="outline-container-orgc27e048" class="outline-3">
-<h3 id="orgc27e048"><span class="section-number-3">1.10</span> <span class="todo TODO">TODO</span> memorie e circuiti sequenziali</h3>
+<div id="outline-container-org51e86aa" class="outline-3">
+<h3 id="org51e86aa"><span class="section-number-3">1.10</span> <span class="todo TODO">TODO</span> memorie e circuiti sequenziali</h3>
 </div>
-<div id="outline-container-orgbec035c" class="outline-3">
-<h3 id="orgbec035c"><span class="section-number-3">1.11</span> <span class="todo TODO">TODO</span> sintesi circuiti sequenziali</h3>
+<div id="outline-container-orga9faf26" class="outline-3">
+<h3 id="orga9faf26"><span class="section-number-3">1.11</span> <span class="todo TODO">TODO</span> sintesi circuiti sequenziali</h3>
 </div>
-<div id="outline-container-org68d28d9" class="outline-3">
-<h3 id="org68d28d9"><span class="section-number-3">1.12</span> <span class="todo TODO">TODO</span> esercizi circuiti sequenziali</h3>
+<div id="outline-container-orgbb6b13f" class="outline-3">
+<h3 id="orgbb6b13f"><span class="section-number-3">1.12</span> <span class="todo TODO">TODO</span> esercizi circuiti sequenziali</h3>
 </div>
-<div id="outline-container-orgfce4144" class="outline-3">
-<h3 id="orgfce4144"><span class="section-number-3">1.13</span> <span class="todo TODO">TODO</span> Progetto CPU (ciclo singolo)</h3>
+<div id="outline-container-org7f10ee9" class="outline-3">
+<h3 id="org7f10ee9"><span class="section-number-3">1.13</span> <span class="todo TODO">TODO</span> Progetto CPU (ciclo singolo)</h3>
 </div>
-<div id="outline-container-orgd200650" class="outline-3">
-<h3 id="orgd200650"><span class="section-number-3">1.14</span> <span class="todo TODO">TODO</span> Progetto CPU (multiciclo)</h3>
+<div id="outline-container-org359075b" class="outline-3">
+<h3 id="org359075b"><span class="section-number-3">1.14</span> <span class="todo TODO">TODO</span> Progetto CPU (multiciclo)</h3>
 </div>
-<div id="outline-container-org99c885e" class="outline-3">
-<h3 id="org99c885e"><span class="section-number-3">1.15</span> <span class="todo TODO">TODO</span> Valutazione delle prestazioni</h3>
+<div id="outline-container-orgd825325" class="outline-3">
+<h3 id="orgd825325"><span class="section-number-3">1.15</span> <span class="todo TODO">TODO</span> Valutazione delle prestazioni</h3>
 </div>
-<div id="outline-container-org3297377" class="outline-3">
-<h3 id="org3297377"><span class="section-number-3">1.16</span> <span class="todo TODO">TODO</span> Esercizi sulla valutazione delle prestazioni</h3>
+<div id="outline-container-org65b8dc6" class="outline-3">
+<h3 id="org65b8dc6"><span class="section-number-3">1.16</span> <span class="todo TODO">TODO</span> Esercizi sulla valutazione delle prestazioni</h3>
 </div>
 </div>
 
 
-<div id="outline-container-org88000fa" class="outline-2">
-<h2 id="org88000fa"><span class="section-number-2">2</span> Indice degli argomenti</h2>
+<div id="outline-container-org6a70371" class="outline-2">
+<h2 id="org6a70371"><span class="section-number-2">2</span> Indice degli argomenti</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgc906be5" class="outline-3">
-<h3 id="orgc906be5"><span class="section-number-3">2.1</span> <a href="introduzione.html">Introduzione</a></h3>
+<div id="outline-container-orgfbf93c5" class="outline-3">
+<h3 id="orgfbf93c5"><span class="section-number-3">2.1</span> <a href="introduzione.html">Introduzione</a></h3>
 </div>
-<div id="outline-container-org5c3feaa" class="outline-3">
-<h3 id="org5c3feaa"><span class="section-number-3">2.2</span> <a href="numbers.html">Rappresentazione dell'informazione</a></h3>
+<div id="outline-container-org99b4d58" class="outline-3">
+<h3 id="org99b4d58"><span class="section-number-3">2.2</span> <a href="numbers.html">Rappresentazione dell'informazione</a></h3>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2021-12-27 Mon 23:47</p>
+<p class="date">Created: 2021-12-28 Tue 00:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
