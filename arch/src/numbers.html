@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-27 Mon 23:59 -->
+<!-- 2021-12-28 Tue 12:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rappresentazione dell'informazione</title>
@@ -251,25 +251,40 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org69eb19d">1. Rappresentazione dell'informazione</a>
+<li><a href="#org8903b03">1. Rappresentazione dell'informazione</a>
 <ul>
-<li><a href="#orgd3adf21">1.1. Codifica e tipo di informazione</a></li>
-<li><a href="#orgda856ad">1.2. Codifica dei numeri</a></li>
-<li><a href="#org89789b7">1.3. Sistema di codifica posizionale</a></li>
-<li><a href="#orge4aa67a">1.4. Numeri naturali in base 2</a></li>
-<li><a href="#orgc2e7b67">1.5. Conversione inversa</a></li>
-<li><a href="#orgcb9bdf3">1.6. Rappresentazione ottale ed esadecimale</a></li>
-<li><a href="#orga981428">1.7. Numeri naturali binari</a></li>
-<li><a href="#orgd7dd6c4">1.8. Overflow</a></li>
-<li><a href="#org49d6bd4">1.9. Sottrazione e numeri relativi</a></li>
+<li><a href="#orgc3ee299">1.1. Codifica e tipo di informazione</a></li>
+<li><a href="#orga7fe555">1.2. Codifica dei numeri</a></li>
+<li><a href="#org5352254">1.3. Sistema di codifica posizionale</a></li>
+<li><a href="#org5b587b7">1.4. Numeri naturali in base 2</a></li>
+<li><a href="#org993e999">1.5. Conversione inversa</a></li>
+<li><a href="#orgb55534f">1.6. Rappresentazione ottale ed esadecimale</a></li>
+<li><a href="#org51b5c5b">1.7. Numeri naturali binari</a></li>
+<li><a href="#orgb2d22d3">1.8. Overflow</a></li>
+<li><a href="#orgd36809f">1.9. Sottrazione e numeri relativi</a></li>
+<li><a href="#orgffd02f1">1.10. Caratteristiche delle rappresentazioni</a></li>
+<li><a href="#org061990b">1.11. Complemento a 2</a>
+<ul>
+<li><a href="#orge3fda44">1.11.1. Valore</a></li>
+<li><a href="#orge88ad4c">1.11.2. Cambio di segno</a></li>
+<li><a href="#orgac98c62">1.11.3. Addizioni e sottrazioni</a></li>
+</ul>
+</li>
+<li><a href="#orgb723ae9">1.12. Come scoprire gli Overflow</a></li>
+<li><a href="#org8e0dd5c">1.13. Numeri razionali a virgola fissa</a></li>
+<li><a href="#org2f49482">1.14. Numeri razionali a virgola mobile</a>
+<ul>
+<li><a href="#orga826ce2">1.14.1. Standard IEEE754</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org69eb19d" class="outline-2">
-<h2 id="org69eb19d"><span class="section-number-2">1</span> Rappresentazione dell'informazione</h2>
+<div id="outline-container-org8903b03" class="outline-2">
+<h2 id="org8903b03"><span class="section-number-2">1</span> Rappresentazione dell'informazione</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Differenza tra simbolo e significato
@@ -331,8 +346,8 @@ Rispetto ad un alfabeto binario \((\ N = 2\ )\)
 </ul>
 </div>
 
-<div id="outline-container-orgd3adf21" class="outline-3">
-<h3 id="orgd3adf21"><span class="section-number-3">1.1</span> Codifica e tipo di informazione</h3>
+<div id="outline-container-orgc3ee299" class="outline-3">
+<h3 id="orgc3ee299"><span class="section-number-3">1.1</span> Codifica e tipo di informazione</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
@@ -353,8 +368,8 @@ La codifica dei numeri
 </div>
 </div>
 
-<div id="outline-container-orgda856ad" class="outline-3">
-<h3 id="orgda856ad"><span class="section-number-3">1.2</span> Codifica dei numeri</h3>
+<div id="outline-container-orga7fe555" class="outline-3">
+<h3 id="orga7fe555"><span class="section-number-3">1.2</span> Codifica dei numeri</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Sistema di numerazione arabico in case 10 \(\ (\ B = 10\ )\)
@@ -368,8 +383,8 @@ Sistema di numerazione arabico in case 10 \(\ (\ B = 10\ )\)
 </div>
 </div>
 
-<div id="outline-container-org89789b7" class="outline-3">
-<h3 id="org89789b7"><span class="section-number-3">1.3</span> Sistema di codifica posizionale</h3>
+<div id="outline-container-org5352254" class="outline-3">
+<h3 id="org5352254"><span class="section-number-3">1.3</span> Sistema di codifica posizionale</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Codificare i numeri in una generica base \(B\)
@@ -393,8 +408,8 @@ Codificare i numeri in una generica base \(B\)
 </div>
 </div>
 
-<div id="outline-container-orge4aa67a" class="outline-3">
-<h3 id="orge4aa67a"><span class="section-number-3">1.4</span> Numeri naturali in base 2</h3>
+<div id="outline-container-org5b587b7" class="outline-3">
+<h3 id="org5b587b7"><span class="section-number-3">1.4</span> Numeri naturali in base 2</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Alfabeto binario \(A = \{ 0,1\}\), dove i simboli sono detti bit, con 0 corrispondente a zero ed 1 corrispondente al numero uno
@@ -426,8 +441,8 @@ Il valore numerico corrispondente, dove la significatività delle cifre è espre
 </div>
 </div>
 
-<div id="outline-container-orgc2e7b67" class="outline-3">
-<h3 id="orgc2e7b67"><span class="section-number-3">1.5</span> Conversione inversa</h3>
+<div id="outline-container-org993e999" class="outline-3">
+<h3 id="org993e999"><span class="section-number-3">1.5</span> Conversione inversa</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 Da base 10 a base \(B\)
@@ -460,8 +475,8 @@ Se dividiamo per \(B\)
 </div>
 </div>
 
-<div id="outline-container-orgcb9bdf3" class="outline-3">
-<h3 id="orgcb9bdf3"><span class="section-number-3">1.6</span> Rappresentazione ottale ed esadecimale</h3>
+<div id="outline-container-orgb55534f" class="outline-3">
+<h3 id="orgb55534f"><span class="section-number-3">1.6</span> Rappresentazione ottale ed esadecimale</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 Ottale : \(B = 8\)
@@ -575,8 +590,8 @@ I fattori messi in evidenza corrispondono alle potenze di \(B = 16\)
 </div>
 </div>
 
-<div id="outline-container-orga981428" class="outline-3">
-<h3 id="orga981428"><span class="section-number-3">1.7</span> Numeri naturali binari</h3>
+<div id="outline-container-org51b5c5b" class="outline-3">
+<h3 id="org51b5c5b"><span class="section-number-3">1.7</span> Numeri naturali binari</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Il processore che studieremo ( MIPS ) rappresenta i numeri interi su 32Bit ( 32 bit = 1 word )
@@ -615,8 +630,8 @@ Per la somma di numeri rappresentati in binario possiamo adottare la stessa proc
 </div>
 </div>
 
-<div id="outline-container-orgd7dd6c4" class="outline-3">
-<h3 id="orgd7dd6c4"><span class="section-number-3">1.8</span> Overflow</h3>
+<div id="outline-container-orgb2d22d3" class="outline-3">
+<h3 id="orgb2d22d3"><span class="section-number-3">1.8</span> Overflow</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
@@ -628,14 +643,226 @@ L'Overflow si veridica quando il risultato è troppo grande per essere rappresen
 </div>
 </div>
 
-<div id="outline-container-org49d6bd4" class="outline-3">
-<h3 id="org49d6bd4"><span class="section-number-3">1.9</span> Sottrazione e numeri relativi</h3>
+<div id="outline-container-orgd36809f" class="outline-3">
+<h3 id="orgd36809f"><span class="section-number-3">1.9</span> Sottrazione e numeri relativi</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+Per fare la sottrazione si usa una particolare rappresentazione dei numeri relativ
+Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per la somma.
+</p>
+
+<p>
+[Aggiungere schemino rappresentazioni]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgffd02f1" class="outline-3">
+<h3 id="orgffd02f1"><span class="section-number-3">1.10</span> Caratteristiche delle rappresentazioni</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>Bilanciamento:
+Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo</li>
+
+<li>Numero di zeri:
+la rappresentazione in modulo e segno. e quella in complemento a uno,
+hanno 2 rappresentazioni per lo zero</li>
+
+<li>Semplicità delle operazioni: per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
+per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org061990b" class="outline-3">
+<h3 id="org061990b"><span class="section-number-3">1.11</span> Complemento a 2</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negativo e 1 positivo )
+</p>
+
+<p>
+[ inserire schemino ]
+</p>
+</div>
+
+<div id="outline-container-orge3fda44" class="outline-4">
+<h4 id="orge3fda44"><span class="section-number-4">1.11.1</span> Valore</h4>
+<div class="outline-text-4" id="text-1-11-1">
+<ul class="org-ul">
+<li>Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito</li>
+<li>Per quanto riguarda i negativi, per ottenere il valore bisogna considerare
+<ul class="org-ul">
+<li>Il bit di segno ( =1 ) in posizione n - 1 con peso: -2<sup>n</sup>-1</li>
+<li>Tutti gli altri bit in posizione i con peso 2<sup>i</sup></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge88ad4c" class="outline-4">
+<h4 id="orge88ad4c"><span class="section-number-4">1.11.2</span> Cambio di segno</h4>
+<div class="outline-text-4" id="text-1-11-2">
+<p>
+Dato un numero positivo N con bit di segno uguale a 0
+per ottenere il complemento a due ci sono 2 possibili algoritmi
+</p>
+
+<ul class="org-ul">
+<li>Convertitre tutti i bit e sommare 1</li>
+<li>Complementare tutti i bit fino all'uno meno significativo</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgac98c62" class="outline-4">
+<h4 id="orgac98c62"><span class="section-number-4">1.11.3</span> Addizioni e sottrazioni</h4>
+<div class="outline-text-4" id="text-1-11-3">
+<p>
+Le operazioni con i numeri binari in complemento a 2 sono facili
+</p>
+<ul class="org-ul">
+<li>Sottraiamo usando semplicemente l'algoritmo dell'addizione</li>
+<li>Il sottraendo ( negativo ) deve essere espresso in complemento a 2</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb723ae9" class="outline-3">
+<h3 id="orgb723ae9"><span class="section-number-3">1.12</span> Come scoprire gli Overflow</h3>
+<div class="outline-text-3" id="text-1-12">
+<p>
+<b>No overflow</b> se somma di numeri con segno discorde
+<b>No overflow</b> se sottrazione di numeri con segno discorde
+</p>
+
+<p>
+<b>Overflow</b> se si ottiene un numero con segno diverso da quello aspettato,
+ovvero se si sommano algebricamente due numeri con segno concorde,
+e il segno del risultato diverso
+</p>
+
+<p>
+Quindi otteniamo <b>overflow</b>:
+</p>
+<ul class="org-ul">
+<li>Se sommando due positivi si ottiene un negativo</li>
+<li>Se sommando due negativi si ottiene un positivo</li>
+<li>Se sottraendo un negativo da un positivo si ottiene un negativo</li>
+<li><p>
+Se sottraendo un positivo da un negativo si ottiene un positivo
+</p>
+
+<p>
+[Inserire tabella overflow]
+</p>
+
+<p>
+Somma algebrica di due <b>numeri positivi</b> A e B la cui somma
+non può essere rappresentata su n bit in complemento a 2
+</p>
+
+<ul class="org-ul">
+<li>Overflow se A + B &gt;= 2<sup>n</sup>-1
+<b>Overflow</b> -&gt; due  ultimi riporti discordi
+<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi</li>
+</ul>
+
+<p>
+Somma algebrica di due <b>numeri negativi</b> A e B la cui somma non
+può essere rappresentata su n-bit in complemento a 2
+</p>
+
+<ul class="org-ul">
+<li>Overflow se |A |+ |B| &gt;= 2<sup>n</sup>-1
+<b>Overflow</b> -&gt; due  ultimi riporti discordi
+<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8e0dd5c" class="outline-3">
+<h3 id="org8e0dd5c"><span class="section-number-3">1.13</span> Numeri razionali a virgola fissa</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+Conversione da base 10 a base 2
+da 10,5(base 10) -&gt;  1010,1(base 2)
+</p>
+
+<p>
+[inserire specchietto conversione frazionaria
+</p>
+
+<p>
+[inserire problemi]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f49482" class="outline-3">
+<h3 id="org2f49482"><span class="section-number-3">1.14</span> Numeri razionali a virgola mobile</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+Notazione a <b>virgola mobile</b> o <b>Floating Point</b>
+</p>
+
+<p>
+Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
+[Inserire mantissa]
+</p>
+
+<p>
+In base 2, l'esponente E si riferisce ad una potenza di 2
+</p>
+<ul class="org-ul">
+<li><b>segno</b>, <b>esponente</b>, <b>mantissa</b> -&gt; (-1)<sup>2</sup> * 2<sup>E</sup> * M</li>
+</ul>
+
+<p>
+Dati i bit disponibili per la rappresentazione FP, si suddividono in:
+</p>
+<ul class="org-ul">
+<li>Un bit per il segno</li>
+<li>Un gruppo di bit per Esponente</li>
+<li>Un gruppo di bit per la Mantissa</li>
+</ul>
+
+<p>
+Una volta fissato il numero di bit totali per la rappresentazione dei numeri razionali a virgola mobile rimane da decidere:
+</p>
+<ul class="org-ul">
+<li>Quanti bit assegnare alla mantissa?
+Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.</li>
+<li>Quanti bit assegnare per l'esponente?
+Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili</li>
+</ul>
+
+<p>
+<b>OVERFLOW</b>: si ha quando l'esponente positivo è troppo grande per
+poter essere rappresentato con il numero di bit assegnato all'esponente
+</p>
+
+<p>
+<b>UNDERFLOW</b>: si ha quando l'esponente negativo è troppo grande ( il valore assoluto ) per poter essere rappresentato con il numero di bit assegnato all'esponente
+</p>
+</div>
+
+<div id="outline-container-orga826ce2" class="outline-4">
+<h4 id="orga826ce2"><span class="section-number-4">1.14.1</span> Standard IEEE754</h4>
+<div class="outline-text-4" id="text-1-14-1">
+<ul class="org-ul">
+<li>Singola precisione ( 32 BIT ) -&gt; L' intervallo di valori (decimali) rappresentabili è +_ ~10<sup>-44.85</sup> &#x2013; ~10<sup>38.53</sup></li>
+<li>Doppia precisione ( 64 BIT ) -&gt;  L' intervallo di valori ( decimali ) rappresentabili è +_ ~10<sup>-323.3</sup> &#x2013; ~10<sup>308.3</sup></li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2021-12-27 Mon 23:59</p>
+<p class="date">Created: 2021-12-28 Tue 12:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

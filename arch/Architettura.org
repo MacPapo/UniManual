@@ -4,6 +4,7 @@
 
 * Cose da fare
 ** DONE introduzione
+   CLOSED: [2021-12-28 Tue 11:05]
 ** TODO numbers
 ** TODO esempi numbers
 ** TODO algebra di bool
@@ -20,7 +21,7 @@
 ** TODO Valutazione delle prestazioni
 ** TODO Esercizi sulla valutazione delle prestazioni
 
-   
+
 * Indice degli argomenti
 ** [[file:introduzione.org][Introduzione]]
 ** [[file:numbers.org][Rappresentazione dell'informazione]]

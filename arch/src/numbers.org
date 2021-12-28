@@ -171,4 +171,110 @@
         $\Longrightarrow$ il riporto ( significa, cioè pari a 1 ) fluisce fuori
 
 ** Sottrazione e numeri relativi
-   
+   Per fare la sottrazione si usa una particolare rappresentazione dei numeri relativ
+   Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per la somma.
+
+   [Aggiungere schemino rappresentazioni]
+
+** Caratteristiche delle rappresentazioni
+    - Bilanciamento:
+      Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
+      
+    - Numero di zeri:
+      la rappresentazione in modulo e segno. e quella in complemento a uno,
+      hanno 2 rappresentazioni per lo zero
+      
+    - Semplicità delle operazioni: per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
+      per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre
+** Complemento a 2
+   Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negativo e 1 positivo )
+
+   [ inserire schemino ]
+
+*** Valore
+    - Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
+    - Per quanto riguarda i negativi, per ottenere il valore bisogna considerare
+      - Il bit di segno ( =1 ) in posizione n - 1 con peso: -2^n-1
+      - Tutti gli altri bit in posizione i con peso 2^i
+
+*** Cambio di segno
+    Dato un numero positivo N con bit di segno uguale a 0
+    per ottenere il complemento a due ci sono 2 possibili algoritmi
+
+    - Convertitre tutti i bit e sommare 1
+    - Complementare tutti i bit fino all'uno meno significativo
+
+*** Addizioni e sottrazioni
+    Le operazioni con i numeri binari in complemento a 2 sono facili
+    - Sottraiamo usando semplicemente l'algoritmo dell'addizione
+    - Il sottraendo ( negativo ) deve essere espresso in complemento a 2
+
+** Come scoprire gli Overflow
+   *No overflow* se somma di numeri con segno discorde
+   *No overflow* se sottrazione di numeri con segno discorde
+
+   *Overflow* se si ottiene un numero con segno diverso da quello aspettato,
+   ovvero se si sommano algebricamente due numeri con segno concorde,
+   e il segno del risultato diverso
+
+   Quindi otteniamo *overflow*:
+   - Se sommando due positivi si ottiene un negativo
+   - Se sommando due negativi si ottiene un positivo
+   - Se sottraendo un negativo da un positivo si ottiene un negativo
+   - Se sottraendo un positivo da un negativo si ottiene un positivo
+
+     [Inserire tabella overflow]
+
+     Somma algebrica di due *numeri positivi* A e B la cui somma
+     non può essere rappresentata su n bit in complemento a 2
+
+     - Overflow se A + B >= 2^n-1
+       *Overflow* -> due  ultimi riporti discordi
+       *NON OVERFLOW* -> due ultimi riporti concordi
+
+     Somma algebrica di due *numeri negativi* A e B la cui somma non
+     può essere rappresentata su n-bit in complemento a 2
+
+     - Overflow se |A |+ |B| >= 2^n-1
+       *Overflow* -> due  ultimi riporti discordi
+       *NON OVERFLOW* -> due ultimi riporti concordi
+
+** Numeri razionali a virgola fissa
+   Conversione da base 10 a base 2
+   da 10,5(base 10) ->  1010,1(base 2)
+
+   [inserire specchietto conversione frazionaria
+
+   [inserire problemi]
+
+** Numeri razionali a virgola mobile
+   Notazione a *virgola mobile* o *Floating Point*
+
+   Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
+   [Inserire mantissa]
+
+   In base 2, l'esponente E si riferisce ad una potenza di 2
+   - *segno*, *esponente*, *mantissa* -> (-1)^2 * 2^E * M
+
+   Dati i bit disponibili per la rappresentazione FP, si suddividono in:
+   - Un bit per il segno
+   - Un gruppo di bit per Esponente
+   - Un gruppo di bit per la Mantissa
+
+   Una volta fissato il numero di bit totali per la rappresentazione dei numeri razionali a virgola mobile rimane da decidere:
+   - Quanti bit assegnare alla mantissa?
+     Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.
+   - Quanti bit assegnare per l'esponente?
+     Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili
+
+   *OVERFLOW*: si ha quando l'esponente positivo è troppo grande per
+   poter essere rappresentato con il numero di bit assegnato all'esponente
+
+   *UNDERFLOW*: si ha quando l'esponente negativo è troppo grande ( il valore assoluto ) per poter essere rappresentato con il numero di bit assegnato all'esponente
+
+*** Standard IEEE754
+    - Singola precisione ( 32 BIT ) -> L' intervallo di valori (decimali) rappresentabili è +_ ~10^-44.85 -- ~10^38.53
+    - Doppia precisione ( 64 BIT ) ->  L' intervallo di valori ( decimali ) rappresentabili è +_ ~10^-323.3 -- ~10^308.3
+
+
+
