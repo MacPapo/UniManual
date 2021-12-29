@@ -25,3 +25,4 @@
 * Indice degli argomenti
 ** [[file:introduzione.org][Introduzione]]
 ** [[file:numbers.org][Rappresentazione dell'informazione]]
+** [[file:bool.org][Algebra di Bool]]
