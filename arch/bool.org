@@ -134,7 +134,7 @@
   Scopo della minimizzazione:
     - data un'equazione in forma normale, es. SP, si riduce il numero di prodotti oppure il numero di variabili coinvolte in 
       ogni prodotto.
-      Tale processo permette l'uso di meno porte, un'arietà ridotta dato il decretempo delle variabili e un 
+      Tale processo permette l'uso di meno porte, un'arietà ridotta dato il decremento delle variabili e un 
       costo minore per il circuito.
   Le variabili *DON'T CARE* non hanno importanza ai fini della definizione dell'equazione, tradotto sono quelle variabili che 
   nel processo di minimizzazione (tipo *mappa di Karnaught*) non rimangono fisse.
@@ -177,3 +177,25 @@
      + Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
        variabili *DON'T CARE* diventano *rettangoli* di valori uguali ad 1 nella mappa di Karnaugh
      + Questi *rettangoli* sono composti da *2^p valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
+
+** Minimizzare con mappe di Karnaugh
+  Per minimizzare il più possibile basta scegliere i più grandi rettangoli (p-sottocubi) che ricoprono gli 1 della mappa, 
+  alcuni 1 possono essere ricoperti da più rettangoli.
+
+** Ipercurbi e Meppe di Karnaugh
+  La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia ad ipercubo:
+    - ogni nodo dell'ipercubo a n dimensioni è etichettato con un *numero binario a n cifre*.
+    - due nodi dell'ipercubo sono connessi se la loro etichetta differisce per un solo bit.
+    - i *sottocubi* si riferiscono a specifci sottoinsiemi di nodi connessi.
+
+    Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
+  
+** Funzioni incomplete
+  Alcuni output di una funzionem, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare
+  sono detti output D0N'T CARE.
+  Per esemopio nelle tabelle di verità o nelle mappe di Karnaugh possiamo avere degli *X* che stanno per DON'T CARE.
+
+  *Problema*
+  - L'equzione logica e il corrispodente circuito *non possono essere incompleti*, essi devono produrre un risultato in
+    corrispondenza di tutte le combinazioni dei valori di input.
+    Si sceglie di insirire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
