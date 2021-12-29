@@ -140,7 +140,6 @@
   nel processo di minimizzazione (tipo *mappa di Karnaught*) non rimangono fisse.
 
 
-
 * Tecniche di minimizzazione
   Intuitivamente, per semplificare una tabella di verità di *N* variabili di input e minimizzare
   la corrispondente forma normale *SP*, ovvero per scoprire le variabili *DON'T CARE*, basta individuare:
