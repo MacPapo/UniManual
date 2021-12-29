@@ -102,3 +102,45 @@
    Se i transistor *NMOS* sono più veloci:
    - È meglio avere transistor *NMOS* in serie
    - Porte *NAND* preferite
+
+
+
+
+
+* Tecniche di minimizzazione
+  Intuitivamente, per semplificare una tabella di verità di *N* variabili di input e minimizzare
+  la corrispondente forma normale *SP*, ovvero per scoprire le variabili *DON'T CARE*, basta individuare:
+  + 2^1 (*coppie di*) righe *con output 1* dove
+    - i valori assunti da *N - 1* variabili appaiono fissi
+    - tutti i possibili valori di *una* variabile (*X*) appaiono combinati con gli altri
+      *N - 1* valori fissi ==> la variabile *X* è *DON'T CARE*
+  + 2^2 (*4-ple di*) righe con *output 1* dove
+    - i valori assunti da *N - 2* variabili appaiono fissi
+    - tutti i possibili valori *due* variabili (*X,Y*) appaiono combinati con
+      gli altri *N - 2* valori fissi ==> le variabili *X* e *Y* sono *DON'T CARE*
+  + 2^3 (*8-ple di*) righe *con output 1* dove
+    - i valori assunti da *N - 3* variabili appaiono fissi
+    - tutti i possibili valori di *tre* variabili *(X,Y,Z)* appaiono combinati con gli altri
+      *N - 3* valori fissi ==> le variabili *X, Y, Z* sono *DON'T CARE*
+  + 2^4 (*16-ple di*) righe *con output 1* dove ...
+
+* Mappe di Karnaugh
+  Per minimizzare a mano funzioni di poche variabili, si possono rappresentare le tabelle di verità
+  con le *mappe di Karnaugh*
+  - Ogni quadrato (cella) della mappa individua una combinazione di variabili in input
+  - il valore contenuto nel quadrato corrispondente al valore di *output* per quella
+    particolare combinazione di variabili in input
+  - per convenzione nella mappa si inseriscono solo i valori uguali a 1
+  - *da notare* le combinazioni delle variabili in input che *etichettiamo* i due assi
+    delle mappe:
+    - *Codice di Gray*: differenza di un singolo bit tra combinazioni consecutive
+
+      
+** Scopo delle mappe
+   - Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
+     di varietà con variabili (1, 2, 3 variabili, ecc.) *DON'T CARE*
+   - Gli 1 corrispondono a queste righe risultano infatti *adiacenti* nella mappa corrispondente
+     + Nel considerare l'adiacenza delle celle nella mappa, si tengono conto che i *bordi orizzontali/verticali* della mappa *è come se si toccassero*
+     + Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
+       variabili *DON'T CARE* diventano *rettangoli* di valori uguali ad 1 nella mappa di Karnaugh
+     + Questi *rettangoli* sono composti da *2^p valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
