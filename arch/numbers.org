@@ -31,7 +31,7 @@
             - n Es.: se D comprende le 26 lettere dell’alfabeto inglese (s=26)
            - n sono necessarie almeno sequenze di K simboli binari, con K >= 5
     
-** Codifica e tipo di informazione
+* Codifica e tipo di informazione
          La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
         
         - Basta fissare una convenzione per permettere di riconoscere i dati
@@ -48,7 +48,7 @@
         - Il simbolo con $0\$ corrisponde al numero zero, ..., il simbolo 9 corrisponde al numero nove
         - Simboli con valore diverso in base alla posizione nella stringa di simboli in $A\$ ( unità, decine, centinaia, migliaia, ecc... )
 
-** Sistema di codifica posizionale
+* Sistema di codifica posizionale
            Codificare i numeri in una generica base $B$
         
         - Fissare un alfabeto $A\$ di $B\$ simboli
@@ -185,7 +185,7 @@
       
     - Semplicità delle operazioni: per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
       per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre
-** Complemento a 2
+* Complemento a 2
    Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negativo e 1 positivo )
 
    [ inserire schemino ]
@@ -238,7 +238,7 @@
        *Overflow* -> due  ultimi riporti discordi
        *NON OVERFLOW* -> due ultimi riporti concordi
 
-** Numeri razionali a virgola fissa
+* Numeri razionali a virgola fissa
    Conversione da base 10 a base 2
    da 10,5(base 10) ->  1010,1(base 2)
 
@@ -246,7 +246,7 @@
 
    [inserire problemi]
 
-** Numeri razionali a virgola mobile
+* Numeri razionali a virgola mobile
    Notazione a *virgola mobile* o *Floating Point*
 
    Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
@@ -271,7 +271,7 @@
 
    *UNDERFLOW*: si ha quando l'esponente negativo è troppo grande ( il valore assoluto ) per poter essere rappresentato con il numero di bit assegnato all'esponente
 
-*** Standard IEEE754
+** Standard IEEE754
     1. Singola precisione ( 32 BIT )
         - 1 bit per il segno
         - 8 bit per l'esponente
@@ -288,7 +288,7 @@
     
     Il valore di un numero in notazione polarizzata vale: (-1)^S * (1 + M) * 2^(E - polarizzazione)
 
-*** Somma di numeri FP (Floating Point)
+** Somma di numeri FP (Floating Point)
     1.  Confronto dell'esponente dei due numeri, shift, del numero con l'esponente più piccolo, a destra fino
         a che non è allineato a l'esponente maggiore.
     2.  Somma della rappresentazione in binario dei numeri.
@@ -298,7 +298,7 @@
         -   Sinistra - diminuzione dell'esponente.
     4. Verifico OVERFLOW o UNDERFLOW
 
-*** Parità
+** Parità
     Per scoprire i singoli errori si aggiunge un bit di parità:
         - bit aggiuntivo è uguale a 0 *se* il numero di bit a 1 è pari.
         - bit aggiuntivo è uguale a 1 *se* il numero di bit a 1 è dispari.
