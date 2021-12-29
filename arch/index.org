@@ -4,7 +4,7 @@
 * Cose da fare
 ** DONE introduzione
 ** DONE numbers
-** TODO esempi numbers
+** DONE esempi numbers
 ** TODO algebra di bool
 ** TODO esempi algebra di bool
 ** TODO circuiti

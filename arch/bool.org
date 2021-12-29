@@ -157,6 +157,7 @@
       *N - 3* valori fissi ==> le variabili *X, Y, Z* sono *DON'T CARE*
   + 2^4 (*16-ple di*) righe *con output 1* dove ...
 
+    
 * Mappe di Karnaugh
   Per minimizzare a mano funzioni di poche variabili, si possono rappresentare le tabelle di verità
   con le *mappe di Karnaugh*
@@ -167,8 +168,7 @@
   - *da notare* le combinazioni delle variabili in input che *etichettiamo* i due assi
     delle mappe:
     - *Codice di Gray*: differenza di un singolo bit tra combinazioni consecutive
-
-      
+    
 ** Scopo delle mappe
    - Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
      di varietà con variabili (1, 2, 3 variabili, ecc.) *DON'T CARE*
@@ -177,3 +177,34 @@
      + Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
        variabili *DON'T CARE* diventano *rettangoli* di valori uguali ad 1 nella mappa di Karnaugh
      + Questi *rettangoli* sono composti da *2^p valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
+
+
+* Algoritmo di Quine McCluskey
+  Le mappe di Karnaugh servono per la minimizzazione a mano delle funzioni, ma si riscono a rappresentare al
+  massimo 5 variabili
+
+  Esiste un algoritmo detto *Algoritmo di Quine - McCluskey* che serve per sintetizzare funzioni logiche con
+  più di 5 variabili in maniera automatica
+
+  
+* George Boole (1815 - 1864)
+  Definisce lo strumento concettuale che sta alla base del funzionamento del calcolatore elettronico: l'algebra booleana
+
+  Nel suo libro del 1854 crea il legame tra logica e algebra.
+  Il suo lavoro in vita fu considerato pura matematica.
+
+  Nel 1938 *Claude Shannon* dimostra che la logica simbolica di Boole può essere applicata per rappresentare
+  le funzioni degli interruttori nei circuiti elettronici
+
+  
+* Claude Shannon (1916 - 2001)
+  Nella sua tesi di master del 1938 dimostra che il fluire di un segnale elettrico attraverso
+  una rete di interruttori segue le regole dell'algebra di Boole.
+  Questo pone la base teorica dei sistemi di codificazione, elaborazione e trasmissione
+  digitale dell'informazione.
+
+  Nel 1948 pubblica una ricerca sul problema di ricostruire, con un certo grado di certezza, le informazioni
+  trasmesse da un mittente. In questa ricerca conia la parola "*bit*" per designare l'unità
+  elementare d'informazione.
+
+  Nel 1949 pubblica uno studio che fonda la teoria matematica della crittografia.
