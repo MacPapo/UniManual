@@ -273,8 +273,39 @@
    *UNDERFLOW*: si ha quando l'esponente negativo è troppo grande ( il valore assoluto ) per poter essere rappresentato con il numero di bit assegnato all'esponente
 
 *** Standard IEEE754
-    - Singola precisione ( 32 BIT ) -> L' intervallo di valori (decimali) rappresentabili è +_ ~10^-44.85 -- ~10^38.53
-    - Doppia precisione ( 64 BIT ) ->  L' intervallo di valori ( decimali ) rappresentabili è +_ ~10^-323.3 -- ~10^308.3
+    1. Singola precisione ( 32 BIT )
+        - 1 bit per il segno
+        - 8 bit per l'esponente
+        - 23 bit per la mantissa
+    2. Doppia precisione  ( 64 BIT )
+        - 1 bit per il segno
+        - 11 bit per l'esponente
+        - 20 bit per la mantissa
+        - 32 bit aggiuntivi per la mantissa
+    
+    La *Notazione polarizzata* è usata per rappresentare l'esponente:
+        - Singola precisione: gli esponenti variano da -126  a +127
+        - Doppia precisione:  gli esponenti variano da -1022 a +1023
+    
+    Il valore di un numero in notazione polarizzata vale: (-1)^S * (1 + M) * 2^(E - polarizzazione)
 
+*** Somma di numeri FP (Floating Point)
+    1.  Confronto dell'esponente dei due numeri, shift, del numero con l'esponente più piccolo, a destra fino
+        a che non è allineato a l'esponente maggiore.
+    2.  Somma della rappresentazione in binario dei numeri.
+    3.  Normalizzazione della somma, scorrere verso destra oppure verso sinistra sino al bit più significativo
+        aumentando o diminuendo l'esponente. 
+        -   Destra   - aumento dell'esponente.
+        -   Sinistra - diminuzione dell'esponente.
+    4. Verifico OVERFLOW o UNDERFLOW
+
+*** Parità
+    Per scoprire i singoli errori si aggiunge un bit di parità:
+        - bit aggiuntivo è uguale a 0 *se* il numero di bit a 1 è pari.
+        - bit aggiuntivo è uguale a 1 *se* il numero di bit a 1 è dispari.
+    
+    Con un bit di parità non scopriremo *mai* un numero di errori doppi o in generale pari.
+
+    Usare un bit di parità significa significa usare una *codifica non minimale*.
 
 
