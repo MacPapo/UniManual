@@ -1,0 +1,86 @@
+#+TITLE: Circuiti combinatori
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Circuiti integrati
+  I circuiti logici sono realizzati con *IC* ( circuiti integrati )
+
+  - Realizzati su chip si silicio
+  - Porte (*gate*) e fili depositati su chip di silicio, inseriti in un package
+    e collegati all'esterno con un certo insieme di *pin*.
+  - Gli *IC* si distinguono per grado di integrazione
+    - Da singole porte indipendenti, a circuiti più complessi
+
+      
+** Livelli di integrazione
+   + *SSI* (Small Scale Integrated): 1 - 10 porte
+   + *MSI* (Medium Scale Integrated): 10 - 100 porte
+   + *LSI* (Large Scale Integrated): 100 - 100.000 porte
+   + *VLSI* (Very Large Scale Integrated): >100.000
+
+   Con tecnologia *SSI*, gli *IC* contenvano poche porte, direttamente
+   collegate ai pin esterni
+
+   Con tecnologia *MSI*, gli *IC* contenevano alcuni componenti base
+   - Circuiti comunemente usati nel progetto di computer
+
+   Con tecnologia *VLSI*, un *IC* può oggi contenere una *CPU completa*
+   - Microprocessore
+
+* Multiplexer
+  *n* input ed *1* output
+  *log2n* segnali di controllo
+
+  Il multiplexer, sulla base dei segni di controllo, seleziona quale tra gli *n* input
+  verrà presentato come output del circuito.
+
+  se S = 0: passa A
+  se S = 1: passa B
+
+  C = A ~S + BS
+  
+* Demultiplexer
+  Da 1 singola linea in *input*, a n linee in output
+  - log2n segnali di controllo (S)
+  - Se la linea in input è uguale a 0
+    - Tutti gli output dovranno essere uguali a 0, indipendentemente da S
+  - Se la linea in input è uguale a 1
+    - Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
+    - L'output da affermare dipende da S
+            
+* Decoder
+  Componente con *n input* e *2^n output*
+  - Gli n input sono interpretati come un numero unsigned
+  - Se questo numero rappresenta il numero i, allora
+    + Solo il bit in output di indice i (i = 0, 1, ..., 2^n-1) verrà posto ad 1
+    + Tutti gli altri verranno posti a 0 
+
+* PLA
+  *Programmable Logic Array*
+  Componente per costruire funzioni logiche arbitrarie
+  - Permette di costruire funzioni in forma *SP*
+    - Porte *AND* al primo livello, e porte *OR* al secondo livello
+
+  - *n input* e *o output*
+    + *m porte AND* ==> *m* fissa un limite al numero di *mintermini* esprimibili
+    + *o porte OR*  ==> *o* fissa un limite al numero di funzioni differenti in forma canonica *SP*
+      
+* ROM
+  Memoria usabili anche per implementare, in maniera non minima, funzioni logiche arbitrarie
+
+  - *ROM* (Read Only Memory)
+    - *PROM* (Programmable ROM)
+      -Scrivibile solo una volta
+    - *EPROM* (Erasable PROM)
+      - Cancellabile con luce ultravioletta
+
+  Data una *Tabella di Verità*, le *ROM* sono usate per memorizzare direttamente le diverse
+  funzioni logiche
+
+  Indirizzo a *n* bit
+  - Individua una specifica combinazione delle *n* variabili logiche in input
+  - Individua una cella di *Width* bit della *ROM*
+
+  Ogni funzione:
+  + Singola colonna della *ROM*
+  + Funzioni *Fully Encoded*
+  + *PLA* più efficiente

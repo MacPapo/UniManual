@@ -1,0 +1,149 @@
+#+TITLE: Linguaggio macchina e assembler MIPS
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Istruzioni e Linguaggio Macchina
+  I *Linguaggi Macchina* sono composti da *istruzioni macchine*,
+  codificate in binario, con *formato* ben definito
+
+  - Processori diversi hanno linguaggio macchina simili
+  - Scopo: massimizzare le prestazioni
+    + Veloce interpretazione da parte del processore
+    + Efficace traduzione/compilazione di programmi ad alto livello
+
+* Concetto di "Stored Program"
+  Istruzioine sono stringhe di bit
+  Programmi: sequenza di istruzioni
+  Programmi (come i dati) memorizzati in memoria
+  - La *CPU* legge le istruzioni dalla memoria (come i dati)
+
+  *Ciclo macchina* ==> *FETCH* - *DECODE* - *EXECUTE*
+  - *CPU legge* (*FETCH*): L'istruzione corrente (indirizzata dal *PC*, ovvero *Program Counter*),
+    e la pone in un registro speciale interno.
+  - *CPU* usa i bit dell'istruzione per *controllare* (decodificare) le azioni da svolgere,
+    e su questa base *esegue* l'istruzione
+  - *CPU* determina la *prossima* istruzione e ripetere il ciclo
+    
+* Livello di astrazione
+  Livelli e Linguaggi
+  - Linguaggio ad *Alto Livello*
+  - Linguaggio *Assembler*
+  - Linguaggio *Macchina*
+
+  Il linguaggio più astratto omette dettagli, ma ci permette di trattare la complessità
+
+* Istruzioni Aritmetiche del MIPS
+  *MIPS*
+  L'*instruction set* del *MIPS* è simile a quello di altre architetture *RISC* sviluppate dal 1980
+
+  Le istruzioni aritmetiche del *MIPS* permettono solo *operazioni elementari* (*add, sub, mult, div*)
+  tra coppie di operandi a 32 BIT.
+
+  Le istruzioni *MIPS* operano su particolari *operandi* in memoria denominati *registri*,
+  la cui lunghezza è di 32 BIT = 4 BYTE = 1 WORD
+
+  Tutte le istruzioni hanno 3 operandi
+  l'ordine degli operandi è fisso
+  - L'operando destinazione è in prima posizione
+
+  Esempio:
+  - C code:
+    #+BEGIN_EXAMPLE C
+    A = B + C
+    #+END_EXAMPLE
+  - MIPS code:
+    #+BEGIN_EXAMPLE asm
+    add $8, $9, $10
+    #+END_EXAMPLE
+
+  Principio di progetto: *semplicità favorisce la regolarità*
+
+  Ma la regolarità può complicare le cose...
+  - C code:
+    #+BEGIN_EXAMPLE C
+    A = B + C + D;
+    E = F - A;
+    #+END_EXAMPLE
+  - MIPS code
+    #+BEGIN_EXAMPLE asm
+    add $8, $4, $5
+    add $8, $8, $6
+    sub $9, $7, $8
+    #+END_EXAMPLE
+
+  Operandi = 32 *REGISTRI* grandi *4B*
+  - $0, $1, $2.....
+
+  Principio di progetto: più piccolo è anche più veloce
+
+* Registri e Memoria
+  Le istruzioni aritmetiche operano su registri
+  - Compilatori associa variabili con registri
+  - *Register File* fa parte del *Datapath* del processore
+
+  Cosa succede con programmi con tanti dati (tante variabili, o array)?
+  - Usiamo la memoria centrale
+  - Memoria *MIPS* indirizzata al BYTE
+
+  sw (Store Word):  reg ==> word in memoria
+  lw (Load Word):   word in memoria ==> reg
+
+  Esempio:
+  - C code:
+    #+BEGIN_EXAMPLE C
+    A[8] = h + A[8];
+    #+END_EXAMPLE
+  - MIPS code:
+    #+BEGIN_EXAMPLE asm
+    lw  $15, 32($4)
+    add $15, $5, $15
+    sw  $15, 32($4)
+    #+END_EXAMPLE
+
+  Indirizzo della word in memoria &A[8]: $4 +32 -> displacement
+  *Nota* che *sw* ha la destinazione come ultimo operando
+  *Ricorda* che gli operandi delle istruzioni aritmetiche sono registri, non celle di memoria!
+
+  *MIPS*
+  - *load/store* word, con indirizzamento al byte
+  - aritmetica solo su registri
+
+  Istruzioni
+  #+BEGIN_EXAMPLE asm
+  add $4, $5, $6
+  sub $4, $5, $6
+  lw  $4, 100($5)
+  sw  $4, 100($5)
+  #+END_EXAMPLE
+
+  Significato
+  #+BEGIN_EXAMPLE asm
+  $4 = $5 + $6
+  $4 = $5 - $6
+  $4 = Memory[$5 + 100]
+  Memory[$5 + 100] = $4
+  #+END_EXAMPLE
+
+
+* Linguaggio Macchina
+  Anche le istruzioni sono rappresentate in memoria con 1 word (4B)
+
+  Formato istruzioni lw e sw
+  - Necessario introdurre un nuovo tipo di formato
+  - *I-TYPE* (Immediate Type)
+  - Diverso dal formato *R-TYPE* usato per le istruzioni aritmetiche-logiche
+
+  Compromesso di progetto
+  - Anche lw/sw sono lunghe 4B
+  - Displacement nell'istruzione (*operando immediato* = 2B)
+  - *rt* in questo caso è il registro di destinazione
+    
+** Istruzioni di controllo
+   Istruzioni per prendere decisioni sul futuro
+   - Alterano il controllo di flusso (sequenziale)
+   - Cambiano quindi la prossima istruzione da eseguire (*PC*)
+
+     Istruzione *MIPS* di *salto condizionato*:
+     #+BEGIN_EXAMPLE asm
+     beq $4, $5, Label   # branch if equal
+     bne $6, $5, Label   # branch if not equal
+     #+END_EXAMPLE

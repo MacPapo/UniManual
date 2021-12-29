@@ -1,5 +1,5 @@
 #+TITLE: Algebra di Bool
-#+AUTHOR: Jacopo Costantini
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 * Algebra e circuiti elettrici
   I computer operano con segnali elettrici con valori di potenziale discreti.
@@ -192,12 +192,12 @@
 
     
 ** Funzioni incomplete
-  Alcuni output di una funzionem, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare
-  sono detti output D0N'T CARE.
+  Alcuni output di una funzione, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare,
+  per questo sono detti output DON'T CARE.
   Per esemopio nelle tabelle di verità o nelle mappe di Karnaugh possiamo avere degli *X* che stanno per DON'T CARE.
 
   *Problema*
-  - L'equzione logica e il corrispodente circuito *non possono essere incompleti*, essi devono produrre un risultato in
+  - L'equazione logica e il corrispodente circuito *non possono essere incompleti*, essi devono produrre un risultato in
     corrispondenza di tutte le combinazioni dei valori di input.
     Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
     

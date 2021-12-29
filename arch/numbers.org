@@ -1,5 +1,5 @@
 #+TITLE: Rappresentazione dell'informazione
-#+AUTHOR: Jacopo Costantini
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 * Rappresentazione dell'informazione
   Differenza tra simbolo e significato

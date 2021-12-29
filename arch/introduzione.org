@@ -1,5 +1,5 @@
 #+TITLE: Introduzione ad Architettura degli elaboratori
-#+AUTHOR: Jacopo Costantini
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 * Calcolatori elettronici
    Basati su tecnologie in rapidissima evoluzione

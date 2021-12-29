@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Circuiti combinatori</title>
+<!-- 2021-12-30 Thu 00:01 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Circuiti integrati</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. Livelli di integrazione</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Multiplexer</a></li>
+<li><a href="#sec-3">3. Demultiplexer</a></li>
+<li><a href="#sec-4">4. Decoder</a></li>
+<li><a href="#sec-5">5. PLA</a></li>
+<li><a href="#sec-6">6. ROM</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Circuiti combinatori</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Circuiti integrati</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I circuiti logici sono realizzati con <b>IC</b> ( circuiti integrati )
+</p>
+
+<ul class="org-ul">
+<li>Realizzati su chip si silicio
+</li>
+<li>Porte (<b>gate</b>) e fili depositati su chip di silicio, inseriti in un package
+e collegati all'esterno con un certo insieme di <b>pin</b>.
+</li>
+<li>Gli <b>IC</b> si distinguono per grado di integrazione
+<ul class="org-ul">
+<li>Da singole porte indipendenti, a circuiti più complessi
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Livelli di integrazione</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>SSI</b> (Small Scale Integrated): 1 - 10 porte
+</li>
+<li><b>MSI</b> (Medium Scale Integrated): 10 - 100 porte
+</li>
+<li><b>LSI</b> (Large Scale Integrated): 100 - 100.000 porte
+</li>
+<li><b>VLSI</b> (Very Large Scale Integrated): &gt;100.000
+</li>
+</ul>
+
+<p>
+Con tecnologia <b>SSI</b>, gli <b>IC</b> contenvano poche porte, direttamente
+collegate ai pin esterni
+</p>
+
+<p>
+Con tecnologia <b>MSI</b>, gli <b>IC</b> contenevano alcuni componenti base
+</p>
+<ul class="org-ul">
+<li>Circuiti comunemente usati nel progetto di computer
+</li>
+</ul>
+
+<p>
+Con tecnologia <b>VLSI</b>, un <b>IC</b> può oggi contenere una <b>CPU completa</b>
+</p>
+<ul class="org-ul">
+<li>Microprocessore
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Multiplexer</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>n</b> input ed <b>1</b> output
+<b>log2n</b> segnali di controllo
+</p>
+
+<p>
+Il multiplexer, sulla base dei segni di controllo, seleziona quale tra gli <b>n</b> input
+verrà presentato come output del circuito.
+</p>
+
+<p>
+se S = 0: passa A
+se S = 1: passa B
+</p>
+
+<p>
+C = A ~S + BS
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Demultiplexer</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Da 1 singola linea in <b>input</b>, a n linee in output
+</p>
+<ul class="org-ul">
+<li>log2n segnali di controllo (S)
+</li>
+<li>Se la linea in input è uguale a 0
+<ul class="org-ul">
+<li>Tutti gli output dovranno essere uguali a 0, indipendentemente da S
+</li>
+</ul>
+</li>
+<li>Se la linea in input è uguale a 1
+<ul class="org-ul">
+<li>Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
+</li>
+<li>L'output da affermare dipende da S
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Decoder</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Componente con <b>n input</b> e <b>2^n output</b>
+</p>
+<ul class="org-ul">
+<li>Gli n input sono interpretati come un numero unsigned
+</li>
+<li>Se questo numero rappresenta il numero i, allora
+<ul class="org-ul">
+<li>Solo il bit in output di indice i (i = 0, 1, &#x2026;, 2^n-1) verrà posto ad 1
+</li>
+<li>Tutti gli altri verranno posti a 0 
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> PLA</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<b>Programmable Logic Array</b>
+Componente per costruire funzioni logiche arbitrarie
+</p>
+<ul class="org-ul">
+<li>Permette di costruire funzioni in forma <b>SP</b>
+<ul class="org-ul">
+<li>Porte <b>AND</b> al primo livello, e porte <b>OR</b> al secondo livello
+</li>
+</ul>
+</li>
+
+<li><b>n input</b> e <b>o output</b>
+<ul class="org-ul">
+<li><b>m porte AND</b> ==&gt; <b>m</b> fissa un limite al numero di <b>mintermini</b> esprimibili
+</li>
+<li><b>o porte OR</b>  ==&gt; <b>o</b> fissa un limite al numero di funzioni differenti in forma canonica <b>SP</b>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> ROM</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Memoria usabili anche per implementare, in maniera non minima, funzioni logiche arbitrarie
+</p>
+
+<ul class="org-ul">
+<li><b>ROM</b> (Read Only Memory)
+<ul class="org-ul">
+<li><b>PROM</b> (Programmable ROM)
+-Scrivibile solo una volta
+</li>
+<li><b>EPROM</b> (Erasable PROM)
+<ul class="org-ul">
+<li>Cancellabile con luce ultravioletta
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Data una <b>Tabella di Verità</b>, le <b>ROM</b> sono usate per memorizzare direttamente le diverse
+funzioni logiche
+</p>
+
+<p>
+Indirizzo a <b>n</b> bit
+</p>
+<ul class="org-ul">
+<li>Individua una specifica combinazione delle <b>n</b> variabili logiche in input
+</li>
+<li>Individua una cella di <b>Width</b> bit della <b>ROM</b>
+</li>
+</ul>
+
+<p>
+Ogni funzione:
+</p>
+<ul class="org-ul">
+<li>Singola colonna della <b>ROM</b>
+</li>
+<li>Funzioni <b>Fully Encoded</b>
+</li>
+<li><b>PLA</b> più efficiente
+</li>
+</ul>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2021-12-30 Thu 00:01</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
+</div>
+</footer>
+</body>
+</html>
