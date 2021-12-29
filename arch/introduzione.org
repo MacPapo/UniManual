@@ -147,7 +147,8 @@ Compilatori, assemblatori, OS, Word processor, ecc... è tutto software
              
 ** Macchina di Antikythera
             - È il più antico calcolatore meccanico conosciuto, databile intorno al 100 - 150 A.C
-            - Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari, i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.
+            - Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari,
+              i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.
             - Trae il nome dall'isola greca Anticitera ( Cerigotto ) presso cui è stata rinvenuta.
             
             
@@ -173,7 +174,8 @@ Compilatori, assemblatori, OS, Word processor, ecc... è tutto software
                       
 ** Hollerit 1890
             - Fondatore dell'IBM, inventa l'uso delle carte perforate per automatizzare la tabulazione dei dati di un censimento
-            - Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente, dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati
+            - Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente,
+              dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati
             - I risultati del censimento furono ottenuti in tempo molto minore del precedente
                 
                  
@@ -288,6 +290,7 @@ Compilatori, assemblatori, OS, Word processor, ecc... è tutto software
                 - Per quanto riguarda i numeri negativi, per ottenere direttamente il valore di un numero negativo su n posizioni, basta considerare
                     - Il Bit di segno ( = 1 ) in posizione $n-1$ con peso : $-2^{n-1}$
                     - Tutti gli altri bit in posizione $i\$ con peso $2^i$
+                      
             - Cambio di segno
                 
                 Dato un numero positivo $N$, con bit di segno uguale a 0
