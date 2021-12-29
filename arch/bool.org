@@ -102,3 +102,39 @@
    Se i transistor *NMOS* sono più veloci:
    - È meglio avere transistor *NMOS* in serie
    - Porte *NAND* preferite
+
+** Forma canonica
+  Ogni *funzione logica* può essere rappresentata come *equazione logica* o come *tabella di verità*
+  Ogni *equazione logica* può essere scritta in forma canonica tramite l'uso degli operatori AND, OR, NOT.
+
+  Forma canonica *SP* (somma di prodotti)
+    - Per ogni valore uguale ad 1 nell'output genera un prodotto (*mintermine*) degli input A, B, C dove gli input uguali
+      a 0 appaiono negati.
+      Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
+      *esempio*: E = (~A * B) + (B * C)
+  
+  Forma canonica *PS* (prodotto di somme)
+    - Per ogni valore uguale ad 0 nell'output genera una somma (*maxtermine*) degli input A, B, C dove gli input uguali
+      a 1 appaiono negati.
+      Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
+      *esempio*: E = (~A + B) * (B + C)
+
+** Dalla forma canonica ai circuiti
+  - Da una equazione logica espressa come *somma di prodotti (SP)* si realizza una funzione logica di n input e 1 output,
+    costituita da 2 livelli:
+    1. Primo livello:
+      1.  numero di porte AND per ogni prodotto.
+      2.  arietà delle porte dipende dal numero di fattori dei prodotti, es. se un prodotto ha 2 fattori la funzione AND avrà
+          2 porte (arietà = 2).
+    2. Secondo livello
+      1. livello costituito da una porta OR per la somma.
+      2. arietà della funzione OR dipende dal numero di prodotti.
+
+** Minimizzare
+  Scopo della minimizzazione:
+    - data un'equazione in forma normale, es. SP, si riduce il numero di prodotti oppure il numero di variabili coinvolte in 
+      ogni prodotto.
+      Tale processo permette l'uso di meno porte, un'arietà ridotta dato il decretempo delle variabili e un 
+      costo minore per il circuito.
+  Le variabili *DON'T CARE* non hanno importanza ai fini della definizione dell'equazione, tradotto sono quelle variabili che 
+  nel processo di minimizzazione (tipo *mappa di Karnaught*) non rimangono fisse.
