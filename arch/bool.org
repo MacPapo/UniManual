@@ -1,5 +1,4 @@
 #+TITLE: Algebra di Bool
 #+AUTHOR: Jacopo Costantini
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 * Dio Cane

@@ -1,6 +1,5 @@
 #+TITLE: Rappresentazione dell'informazione
 #+AUTHOR: Jacopo Costantini
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 * Rappresentazione dell'informazione
   Differenza tra simbolo e significato

@@ -1,6 +1,5 @@
 #+TITLE: Architettura degli elaboratori
 #+AUTHOR: Jacopo Costantini
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
 
 * Cose da fare
 ** DONE introduzione

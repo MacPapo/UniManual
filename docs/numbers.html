@@ -1,300 +1,261 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-<!-- 2021-12-29 Wed 10:57 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rappresentazione dell'informazione</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Jacopo Costantini" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
+<!-- 2021-12-29 Wed 14:08 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
     position: relative;
-    overflow: auto;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
     position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
+    bottom: 0;
     width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
-</style>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-<script type="text/javascript">
-// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
-<!--/*--><![CDATA[/*><!--*/
-     function CodeHighlightOn(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.add("code-highlighted");
-         target.classList.add("code-highlighted");
-       }
-     }
-     function CodeHighlightOff(elem, id)
-     {
-       var target = document.getElementById(id);
-       if(null != target) {
-         elem.classList.remove("code-highlighted");
-         target.classList.remove("code-highlighted");
-       }
-     }
-    /*]]>*///-->
-// @license-end
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+    height: 101px;
+    background-color: #f5f5f5;
+}
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
 });
 </script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
-<div id="content">
-<h1 class="title">Rappresentazione dell'informazione</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org04d98eb">1. Rappresentazione dell'informazione</a>
-<ul>
-<li><a href="#org091a816">1.1. Codifica e tipo di informazione</a></li>
-<li><a href="#orgb4a19fc">1.2. Codifica dei numeri</a></li>
-<li><a href="#org8cad097">1.3. Sistema di codifica posizionale</a></li>
-<li><a href="#org3221fe8">1.4. Numeri naturali in base 2</a></li>
-<li><a href="#org57c0013">1.5. Conversione inversa</a></li>
-<li><a href="#org4c45da7">1.6. Rappresentazione ottale ed esadecimale</a></li>
-<li><a href="#org0a671af">1.7. Numeri naturali binari</a></li>
-<li><a href="#orgd4948ac">1.8. Overflow</a></li>
-<li><a href="#org6b3ee02">1.9. Sottrazione e numeri relativi</a></li>
-<li><a href="#org04eaf46">1.10. Caratteristiche delle rappresentazioni</a></li>
-<li><a href="#org23bc9fc">1.11. Complemento a 2</a>
-<ul>
-<li><a href="#org9f0ddbf">1.11.1. Valore</a></li>
-<li><a href="#orgc24da1f">1.11.2. Cambio di segno</a></li>
-<li><a href="#org665c111">1.11.3. Addizioni e sottrazioni</a></li>
-</ul>
-</li>
-<li><a href="#orga6b45e4">1.12. Come scoprire gli Overflow</a></li>
-<li><a href="#org4b83d6f">1.13. Numeri razionali a virgola fissa</a></li>
-<li><a href="#org8584ec0">1.14. Numeri razionali a virgola mobile</a>
-<ul>
-<li><a href="#orgc89b9df">1.14.1. Standard IEEE754</a></li>
-<li><a href="#org556bf7f">1.14.2. Somma di numeri FP (Floating Point)</a></li>
-<li><a href="#org975ff40">1.14.3. Parità</a></li>
-</ul>
-</li>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Rappresentazione dell'informazione</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. Codifica e tipo di informazione</a></li>
+<li><a href="#sec-1-2">1.2. Codifica dei numeri</a></li>
+<li><a href="#sec-1-3">1.3. Sistema di codifica posizionale</a></li>
+<li><a href="#sec-1-4">1.4. Numeri naturali in base 2</a></li>
+<li><a href="#sec-1-5">1.5. Conversione inversa</a></li>
+<li><a href="#sec-1-6">1.6. Rappresentazione ottale ed esadecimale</a></li>
+<li><a href="#sec-1-7">1.7. Numeri naturali binari</a></li>
+<li><a href="#sec-1-8">1.8. Overflow</a></li>
+<li><a href="#sec-1-9">1.9. Sottrazione e numeri relativi</a></li>
+<li><a href="#sec-1-10">1.10. Caratteristiche delle rappresentazioni</a></li>
+<li><a href="#sec-1-11">1.11. Complemento a 2</a></li>
+<li><a href="#sec-1-12">1.12. Come scoprire gli Overflow</a></li>
+<li><a href="#sec-1-13">1.13. Numeri razionali a virgola fissa</a></li>
+<li><a href="#sec-1-14">1.14. Numeri razionali a virgola mobile</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Rappresentazione dell'informazione</h1>
 
-<div id="outline-container-org04d98eb" class="outline-2">
-<h2 id="org04d98eb"><span class="section-number-2">1</span> Rappresentazione dell'informazione</h2>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Rappresentazione dell'informazione</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Differenza tra simbolo e significato
 </p>
 
 <ul class="org-ul">
-<li>La cifra ( lettera ) usata per scrivere è un simbolo che rappresenta l'informazione</li>
-<li>Il concetto di numero ( suono ) corrisponde al significato dell'informazione</li>
+<li>La cifra ( lettera ) usata per scrivere è un simbolo che rappresenta l'informazione
+</li>
+<li>Il concetto di numero ( suono ) corrisponde al significato dell'informazione
+</li>
 </ul>
 
 <p>
@@ -302,17 +263,17 @@ Per comunicare/rappresentare informazioni è quindi necessario usare dei simboli
 </p>
 
 <ul class="org-ul">
-<li>È necessaria una convenzione ( rappresentazione, codifica o codice ) per associare i simboli con il loro significato</li>
-<li><p>
-Codifica o Codice
-</p>
+<li>È necessaria una convenzione ( rappresentazione, codifica o codice ) per associare i simboli con il loro significato
+</li>
+<li>Codifica o Codice
 
 <p>
 Per codificare l'informazione solitamente si usa un alfabeto di simboli
 </p>
 
 <ul class="org-ul">
-<li>Alfabeto = insieme finito di simboli adottati per rappresentare informazioni</li>
+<li>Alfabeto = insieme finito di simboli adottati per rappresentare informazioni
+</li>
 </ul>
 
 <p>
@@ -320,8 +281,10 @@ Una codifica ( codice ) fornisce una corrispondenza tra :
 </p>
 
 <ul class="org-ul">
-<li>Sequenze ( stringhe, configurazione ) di simboli dell'alfabeto</li>
-<li>Dati</li>
+<li>Sequenze ( stringhe, configurazione ) di simboli dell'alfabeto
+</li>
+<li>Dati
+</li>
 </ul>
 
 <p>
@@ -331,32 +294,39 @@ Solitamente, i codici fanno riferimento a sequenze di simboli di lunghezza finit
 <ul class="org-ul">
 <li>Alfabeto di \(N\\) simboli e Sequenza di lunghezza \(k\)
 <ul class="org-ul">
-<li>\(N^k \\) configurazioni possibili</li>
-</ul></li>
-<li><p>
-Rispetto ad un alfabeto binario \((\ N = 2\ )\)
-</p>
+<li>\(N^k \\) configurazioni possibili
+</li>
+</ul>
+</li>
+<li>Rispetto ad un alfabeto binario \((\ N = 2\ )\)
 <ul class="org-ul">
-<li>Numero totale di configurazioni : \(\ 2^k\)</li>
-<li>\(2^k >= s\\) ( dove \(s\\) è la cardinalità dell'insieme \(D\\) dei dati )</li>
-<li>n Es.: se D comprende le 26 lettere dell’alfabeto inglese (s=26)</li>
+<li>Numero totale di configurazioni : \(\ 2^k\)
+</li>
+<li>\(2^k >= s\\) ( dove \(s\\) è la cardinalità dell'insieme \(D\\) dei dati )
+</li>
+<li>n Es.: se D comprende le 26 lettere dell’alfabeto inglese (s=26)
+</li>
 </ul>
 <ul class="org-ul">
-<li>n sono necessarie almeno sequenze di K simboli binari, con K &gt;= 5</li>
-</ul></li>
-</ul></li>
+<li>n sono necessarie almeno sequenze di K simboli binari, con K &gt;= 5
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 
-<div id="outline-container-org091a816" class="outline-3">
-<h3 id="org091a816"><span class="section-number-3">1.1</span> Codifica e tipo di informazione</h3>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Codifica e tipo di informazione</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
 </p>
 
 <ul class="org-ul">
-<li>Basta fissare una convenzione per permettere di riconoscere i dati</li>
+<li>Basta fissare una convenzione per permettere di riconoscere i dati
+</li>
 </ul>
 
 <p>
@@ -364,65 +334,80 @@ La codifica dei numeri
 </p>
 
 <ul class="org-ul">
-<li>Deve essere accurata, perché è necessario effettuare operazioni ( somma, moltiplicazioni ecc&#x2026; ) usando la rappresentazione adatta</li>
-<li>Di solito si adotta il sistema di numerazione arabica, o posizionale</li>
+<li>Deve essere accurata, perché è necessario effettuare operazioni ( somma, moltiplicazioni ecc&#x2026; ) usando la rappresentazione adatta
+</li>
+<li>Di solito si adotta il sistema di numerazione arabica, o posizionale
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb4a19fc" class="outline-3">
-<h3 id="orgb4a19fc"><span class="section-number-3">1.2</span> Codifica dei numeri</h3>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Codifica dei numeri</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Sistema di numerazione arabico in case 10 \(\ (\ B = 10\ )\)
 </p>
 
 <ul class="org-ul">
-<li>Cifre ( simboli ) appartenenti all'alfabeto di 10 simboli \(\ A=\{\ 0,1,...,9\ \}\)</li>
-<li>Il simbolo con \(0\\) corrisponde al numero zero, &#x2026;, il simbolo 9 corrisponde al numero nove</li>
-<li>Simboli con valore diverso in base alla posizione nella stringa di simboli in \(A\\) ( unità, decine, centinaia, migliaia, ecc&#x2026; )</li>
+<li>Cifre ( simboli ) appartenenti all'alfabeto di 10 simboli \(\ A=\{\ 0,1,...,9\ \}\)
+</li>
+<li>Il simbolo con \(0\\) corrisponde al numero zero, &#x2026;, il simbolo 9 corrisponde al numero nove
+</li>
+<li>Simboli con valore diverso in base alla posizione nella stringa di simboli in \(A\\) ( unità, decine, centinaia, migliaia, ecc&#x2026; )
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org8cad097" class="outline-3">
-<h3 id="org8cad097"><span class="section-number-3">1.3</span> Sistema di codifica posizionale</h3>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Sistema di codifica posizionale</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Codificare i numeri in una generica base \(B\)
 </p>
 
 <ul class="org-ul">
-<li>Fissare un alfabeto \(A\\) di \(B\\) simboli</li>
+<li>Fissare un alfabeto \(A\\) di \(B\\) simboli
+</li>
 <li>Fissare una corrispondenza tra
 <ul class="org-ul">
-<li>i \(B\\) simboli di $A\ \iff$i Primi \(B\\) numeri naturali \(\{\ 0,1,2,...,\ B-1\ \}\)</li>
-</ul></li>
+<li>i \(B\\) simboli di $A\ \iff$i Primi \(B\\) numeri naturali \(\{\ 0,1,2,...,\ B-1\ \}\)
+</li>
+</ul>
+</li>
 <li>Numeri maggiori di \(B\\) rappresentabili come stringhe di simboli \(\ d_i \in A\)
 <ul class="org-ul">
-<li>\(d_{n-1}\ ...\ d_1\ d_0\)</li>
-</ul></li>
+<li>\(d_{n-1}\ ...\ d_1\ d_0\)
+</li>
+</ul>
+</li>
 <li>Valore numerico della stringa, dove la significatività delle cifre è espressa in base alle varie potenze di \(B\)
 <ul class="org-ul">
-<li>\(B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1 \ +\ B^0 \times d_0\)</li>
-</ul></li>
+<li>\(B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1 \ +\ B^0 \times d_0\)
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org3221fe8" class="outline-3">
-<h3 id="org3221fe8"><span class="section-number-3">1.4</span> Numeri naturali in base 2</h3>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Numeri naturali in base 2</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Alfabeto binario \(A = \{ 0,1\}\), dove i simboli sono detti bit, con 0 corrispondente a zero ed 1 corrispondente al numero uno
 </p>
 
 <ul class="org-ul">
-<li>Nei calcolatori i numeri sono rappresentati come sequenze di bit di lunghezza finita</li>
+<li>Nei calcolatori i numeri sono rappresentati come sequenze di bit di lunghezza finita
+</li>
 <li>Numeri rappresentati in notazione arabica, con base \(B = 2\\) ( numeri binari )
 <ul class="org-ul">
-<li>\(d_{n-1} \ ...\ d_1\ d_0\ \\) dove \(\ d_i \in \{0,1\}\)</li>
-</ul></li>
+<li>\(d_{n-1} \ ...\ d_1\ d_0\ \\) dove \(\ d_i \in \{0,1\}\)
+</li>
+</ul>
+</li>
 </ul>
 
 <p>
@@ -430,7 +415,8 @@ Con stringhe di \(n\) bit, sono rappresentabili \(2^n\) dati ( numeri diversi )
 </p>
 
 <ul class="org-ul">
-<li>Dal numero \(0\) al numero \(2^n-1\)</li>
+<li>Dal numero \(0\) al numero \(2^n-1\)
+</li>
 </ul>
 
 <p>
@@ -438,13 +424,14 @@ Il valore numerico corrispondente, dove la significatività delle cifre è espre
 </p>
 
 <ul class="org-ul">
-<li>\(2^{n-1} \times d_{n-1}\ +\ ...\ +\ 2^1 \times d_1 \ +\ 2^0 \times d_0\)</li>
+<li>\(2^{n-1} \times d_{n-1}\ +\ ...\ +\ 2^1 \times d_1 \ +\ 2^0 \times d_0\)
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org57c0013" class="outline-3">
-<h3 id="org57c0013"><span class="section-number-3">1.5</span> Conversione inversa</h3>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Conversione inversa</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 Da base 10 a base \(B\)
@@ -469,16 +456,20 @@ Se dividiamo per \(B\)
 <ul class="org-ul">
 <li>Otteniamo \(d_0\) come resto
 <ul class="org-ul">
-<li>Quoziente:\(\ \ \ B^{n-2} \times d_{n-1}\ +\ ...\ +\ B^0 \times d_1\)</li>
-<li>Resto: \(\ \ \ \ \ \ \ \ \ d_0, \ 0 <= d_0 < B\)</li>
-</ul></li>
-<li>Possiamo iterare il procedimento, ottenendo \(d_1, d_2, d_3\\) ecc&#x2026; fino ad ottenere un Quoziente = 0</li>
+<li>Quoziente:\(\ \ \ B^{n-2} \times d_{n-1}\ +\ ...\ +\ B^0 \times d_1\)
+</li>
+<li>Resto: \(\ \ \ \ \ \ \ \ \ d_0, \ 0 <= d_0 < B\)
+</li>
+</ul>
+</li>
+<li>Possiamo iterare il procedimento, ottenendo \(d_1, d_2, d_3\\) ecc&#x2026; fino ad ottenere un Quoziente = 0
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4c45da7" class="outline-3">
-<h3 id="org4c45da7"><span class="section-number-3">1.6</span> Rappresentazione ottale ed esadecimale</h3>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Rappresentazione ottale ed esadecimale</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 Ottale : \(B = 8\)
@@ -501,9 +492,7 @@ Esiste inoltre un metodo veloce per convertire tra base 8 ( o base 16 ) e base 2
 </p>
 
 <ul class="org-ul">
-<li><p>
-Rappresentazione Ottale
-</p>
+<li>Rappresentazione Ottale
 
 <p>
 \(B = 8,\ A = \{0,1,2,3,4,5,6,7\}\)
@@ -514,33 +503,40 @@ Come convertire:
 </p>
 
 <ul class="org-ul">
-<li><p>
-Sia dato un numero binario di 10 cifre: \(d_9\ ...\ d_1\ d_0\), il cui valore è
-</p>
+<li>Sia dato un numero binario di 10 cifre: \(d_9\ ...\ d_1\ d_0\), il cui valore è
 
 <p>
 \[\sum_{i=0}^{9}2^i \times d_i\]
-</p></li>
+</p>
+</li>
 
-<li>Raggruppiamo le cifre: da destra a triplette</li>
+<li>Raggruppiamo le cifre: da destra a triplette
+</li>
 <li>Poniamo in evidenza la più grande potenza di 2 comune possibile
 <ul class="org-ul">
-<li>\((2^0 \times d_9)\times2^9\ +\ (2^2 \times d_8 + 2^1 \times d_7 + 2^0 \times d_6)\times2^6\ +\ (2^2 \times d_5 + 2^1 \times d_4 + 2^0 \times d_3)\times2^3\ +\ (2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0)\times2^0\)</li>
+<li>\((2^0 \times d_9)\times2^9\ +\ (2^2 \times d_8 + 2^1 \times d_7 + 2^0 \times d_6)\times2^6\ +\ (2^2 \times d_5 + 2^1 \times d_4 + 2^0 \times d_3)\times2^3\ +\ (2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0)\times2^0\)
+</li>
 <li>I termini fra parentesi sono numeri compresi tra 0 e 7
 <ul class="org-ul">
-<li>Si possono far corrispondere ai simboli dell'alfabeto ottale</li>
+<li>Si possono far corrispondere ai simboli dell'alfabeto ottale
+</li>
 <li>I fattori messi in evidenza corrispondono alle potenze di \(B = 8\)
 <ul class="org-ul">
-<li>\(2^0 = 8^0\ \ \ \ 2^3 = 8^1\ \ \ \ 2^6=8^2\ \ \ \ 2^9=8^3\)</li>
-<li>Da binario ad ottale: \(\ 1001010111_2 = 1\ \ 000\ \ 010\ \ 111 = 1127_8\)</li>
-<li>Da ottale a binario: \(\ 267_8 = 010\ \ 110\ \ 111 = 10110111_2\)</li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><p>
-Rappresentazione Esadecimale
-</p>
+<li>\(2^0 = 8^0\ \ \ \ 2^3 = 8^1\ \ \ \ 2^6=8^2\ \ \ \ 2^9=8^3\)
+</li>
+<li>Da binario ad ottale: \(\ 1001010111_2 = 1\ \ 000\ \ 010\ \ 111 = 1127_8\)
+</li>
+<li>Da ottale a binario: \(\ 267_8 = 010\ \ 110\ \ 111 = 10110111_2\)
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Rappresentazione Esadecimale
 
 <p>
 \(B = 16,\ A = \{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F\}\)
@@ -551,18 +547,16 @@ Come convertire:
 </p>
 
 <ul class="org-ul">
-<li><p>
-Sia dato un numero binario di 10 cifre: \(d_9\ ...\ d_1\ d_0\) il cui valore è
-</p>
+<li>Sia dato un numero binario di 10 cifre: \(d_9\ ...\ d_1\ d_0\) il cui valore è
 
 <p>
 \[\sum_{i=0}^9 2^i \times d_i\]
-</p></li>
-
-<li>Raggruppiamo le cifre: da destra, 4 a 4</li>
-<li><p>
-Poniamo in evidenza la più grande potenza di 2 possibile
 </p>
+</li>
+
+<li>Raggruppiamo le cifre: da destra, 4 a 4
+</li>
+<li>Poniamo in evidenza la più grande potenza di 2 possibile
 
 <p>
 \[(2^1 \times d_9\ +\ 2^0 \times d_8)\times2^8\ +\ (2^3 \times d_7 + 2^2 \times d_6 + 2^1 \times d_5 \ +\ 2^0 \times d_4)\times2^4\ +\ (2^3 \times d_3 + 2^2 \times d_2 + 2^1 \times d_1 \ +\ 2^0 \times d_0)\times2^0\]
@@ -573,7 +567,8 @@ I termini tra parentesi sono numeri compresi tra 0 e 15
 </p>
 
 <ul class="org-ul">
-<li>Si possono far corrispondere ai simboli dell'alfabeto esadecimale</li>
+<li>Si possono far corrispondere ai simboli dell'alfabeto esadecimale
+</li>
 </ul>
 
 <p>
@@ -583,17 +578,22 @@ I fattori messi in evidenza corrispondono alle potenze di \(B = 16\)
 <ul class="org-ul">
 <li>\(2^0 = 16^0\ \ \ 2^4 = 16^1\ \ \ 2^8 = 16^2\)
 <ul class="org-ul">
-<li>Da binario ad esadecimale: \(\\1001011111_2 = 10\ \ 0101\ \ 1111 = 25F_{16}\)</li>
-<li>Da esadecimale a binario: \(\\A67_{16} = 1010\ \ 0110\ \ \ 0111 = 101001100111_2\)</li>
-</ul></li>
-</ul></li>
-</ul></li>
+<li>Da binario ad esadecimale: \(\\1001011111_2 = 10\ \ 0101\ \ 1111 = 25F_{16}\)
+</li>
+<li>Da esadecimale a binario: \(\\A67_{16} = 1010\ \ 0110\ \ \ 0111 = 101001100111_2\)
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org0a671af" class="outline-3">
-<h3 id="org0a671af"><span class="section-number-3">1.7</span> Numeri naturali binari</h3>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Numeri naturali binari</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Il processore che studieremo ( MIPS ) rappresenta i numeri interi su 32Bit ( 32 bit = 1 word )
@@ -610,30 +610,28 @@ I numeri intero senza segno ( unsigned ) rappresentabili su 64Bit sono: 
 
 
 <ul class="org-ul">
-<li><p>
-Somma di numeri ( naturali ) binari
-</p>
+<li>Somma di numeri ( naturali ) binari
 
 <p>
 Sia \(A = 13_{10} = 01101_2\) e \(\ B = 11_{10} = 01011_2\)
-</p></li>
+</p>
+</li>
 </ul>
 
 
 <ul class="org-ul">
-<li><p>
-Algoritmo di somma di numeri ( naturali ) binari
-</p>
+<li>Algoritmo di somma di numeri ( naturali ) binari
 
 <p>
 Per la somma di numeri rappresentati in binario possiamo adottare la stessa procedura usata per sommare numeri decimali
-</p></li>
+</p>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd4948ac" class="outline-3">
-<h3 id="orgd4948ac"><span class="section-number-3">1.8</span> Overflow</h3>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> Overflow</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
@@ -645,8 +643,8 @@ L'Overflow si veridica quando il risultato è troppo grande per essere rappresen
 </div>
 </div>
 
-<div id="outline-container-org6b3ee02" class="outline-3">
-<h3 id="org6b3ee02"><span class="section-number-3">1.9</span> Sottrazione e numeri relativi</h3>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Sottrazione e numeri relativi</h3>
 <div class="outline-text-3" id="text-1-9">
 <p>
 Per fare la sottrazione si usa una particolare rappresentazione dei numeri relativ
@@ -659,24 +657,27 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
 </div>
 </div>
 
-<div id="outline-container-org04eaf46" class="outline-3">
-<h3 id="org04eaf46"><span class="section-number-3">1.10</span> Caratteristiche delle rappresentazioni</h3>
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> Caratteristiche delle rappresentazioni</h3>
 <div class="outline-text-3" id="text-1-10">
 <ul class="org-ul">
 <li>Bilanciamento:
-Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo</li>
+Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
+</li>
 
 <li>Numero di zeri:
 la rappresentazione in modulo e segno. e quella in complemento a uno,
-hanno 2 rappresentazioni per lo zero</li>
+hanno 2 rappresentazioni per lo zero
+</li>
 
 <li>Semplicità delle operazioni: per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
-per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre</li>
+per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre
+</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org23bc9fc" class="outline-3">
-<h3 id="org23bc9fc"><span class="section-number-3">1.11</span> Complemento a 2</h3>
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> Complemento a 2</h3>
 <div class="outline-text-3" id="text-1-11">
 <p>
 Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negativo e 1 positivo )
@@ -687,22 +688,26 @@ Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negati
 </p>
 </div>
 
-<div id="outline-container-org9f0ddbf" class="outline-4">
-<h4 id="org9f0ddbf"><span class="section-number-4">1.11.1</span> Valore</h4>
+<div id="outline-container-sec-1-11-1" class="outline-4">
+<h4 id="sec-1-11-1"><span class="section-number-4">1.11.1</span> Valore</h4>
 <div class="outline-text-4" id="text-1-11-1">
 <ul class="org-ul">
-<li>Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito</li>
+<li>Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
+</li>
 <li>Per quanto riguarda i negativi, per ottenere il valore bisogna considerare
 <ul class="org-ul">
-<li>Il bit di segno ( =1 ) in posizione n - 1 con peso: -2<sup>n</sup>-1</li>
-<li>Tutti gli altri bit in posizione i con peso 2<sup>i</sup></li>
-</ul></li>
+<li>Il bit di segno ( =1 ) in posizione n - 1 con peso: -2^n-1
+</li>
+<li>Tutti gli altri bit in posizione i con peso 2^i
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgc24da1f" class="outline-4">
-<h4 id="orgc24da1f"><span class="section-number-4">1.11.2</span> Cambio di segno</h4>
+<div id="outline-container-sec-1-11-2" class="outline-4">
+<h4 id="sec-1-11-2"><span class="section-number-4">1.11.2</span> Cambio di segno</h4>
 <div class="outline-text-4" id="text-1-11-2">
 <p>
 Dato un numero positivo N con bit di segno uguale a 0
@@ -710,28 +715,32 @@ per ottenere il complemento a due ci sono 2 possibili algoritmi
 </p>
 
 <ul class="org-ul">
-<li>Convertitre tutti i bit e sommare 1</li>
-<li>Complementare tutti i bit fino all'uno meno significativo</li>
+<li>Convertitre tutti i bit e sommare 1
+</li>
+<li>Complementare tutti i bit fino all'uno meno significativo
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org665c111" class="outline-4">
-<h4 id="org665c111"><span class="section-number-4">1.11.3</span> Addizioni e sottrazioni</h4>
+<div id="outline-container-sec-1-11-3" class="outline-4">
+<h4 id="sec-1-11-3"><span class="section-number-4">1.11.3</span> Addizioni e sottrazioni</h4>
 <div class="outline-text-4" id="text-1-11-3">
 <p>
 Le operazioni con i numeri binari in complemento a 2 sono facili
 </p>
 <ul class="org-ul">
-<li>Sottraiamo usando semplicemente l'algoritmo dell'addizione</li>
-<li>Il sottraendo ( negativo ) deve essere espresso in complemento a 2</li>
+<li>Sottraiamo usando semplicemente l'algoritmo dell'addizione
+</li>
+<li>Il sottraendo ( negativo ) deve essere espresso in complemento a 2
+</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga6b45e4" class="outline-3">
-<h3 id="orga6b45e4"><span class="section-number-3">1.12</span> Come scoprire gli Overflow</h3>
+<div id="outline-container-sec-1-12" class="outline-3">
+<h3 id="sec-1-12"><span class="section-number-3">1.12</span> Come scoprire gli Overflow</h3>
 <div class="outline-text-3" id="text-1-12">
 <p>
 <b>No overflow</b> se somma di numeri con segno discorde
@@ -748,12 +757,13 @@ e il segno del risultato diverso
 Quindi otteniamo <b>overflow</b>:
 </p>
 <ul class="org-ul">
-<li>Se sommando due positivi si ottiene un negativo</li>
-<li>Se sommando due negativi si ottiene un positivo</li>
-<li>Se sottraendo un negativo da un positivo si ottiene un negativo</li>
-<li><p>
-Se sottraendo un positivo da un negativo si ottiene un positivo
-</p>
+<li>Se sommando due positivi si ottiene un negativo
+</li>
+<li>Se sommando due negativi si ottiene un positivo
+</li>
+<li>Se sottraendo un negativo da un positivo si ottiene un negativo
+</li>
+<li>Se sottraendo un positivo da un negativo si ottiene un positivo
 
 <p>
 [Inserire tabella overflow]
@@ -765,9 +775,10 @@ non può essere rappresentata su n bit in complemento a 2
 </p>
 
 <ul class="org-ul">
-<li>Overflow se A + B &gt;= 2<sup>n</sup>-1
+<li>Overflow se A + B &gt;= 2^n-1
 <b>Overflow</b> -&gt; due  ultimi riporti discordi
-<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi</li>
+<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi
+</li>
 </ul>
 
 <p>
@@ -776,16 +787,18 @@ può essere rappresentata su n-bit in complemento a 2
 </p>
 
 <ul class="org-ul">
-<li>Overflow se |A |+ |B| &gt;= 2<sup>n</sup>-1
+<li>Overflow se |A |+ |B| &gt;= 2^n-1
 <b>Overflow</b> -&gt; due  ultimi riporti discordi
-<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi</li>
-</ul></li>
+<b>NON OVERFLOW</b> -&gt; due ultimi riporti concordi
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org4b83d6f" class="outline-3">
-<h3 id="org4b83d6f"><span class="section-number-3">1.13</span> Numeri razionali a virgola fissa</h3>
+<div id="outline-container-sec-1-13" class="outline-3">
+<h3 id="sec-1-13"><span class="section-number-3">1.13</span> Numeri razionali a virgola fissa</h3>
 <div class="outline-text-3" id="text-1-13">
 <p>
 Conversione da base 10 a base 2
@@ -802,8 +815,8 @@ da 10,5(base 10) -&gt;  1010,1(base 2)
 </div>
 </div>
 
-<div id="outline-container-org8584ec0" class="outline-3">
-<h3 id="org8584ec0"><span class="section-number-3">1.14</span> Numeri razionali a virgola mobile</h3>
+<div id="outline-container-sec-1-14" class="outline-3">
+<h3 id="sec-1-14"><span class="section-number-3">1.14</span> Numeri razionali a virgola mobile</h3>
 <div class="outline-text-3" id="text-1-14">
 <p>
 Notazione a <b>virgola mobile</b> o <b>Floating Point</b>
@@ -818,16 +831,20 @@ Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
 In base 2, l'esponente E si riferisce ad una potenza di 2
 </p>
 <ul class="org-ul">
-<li><b>segno</b>, <b>esponente</b>, <b>mantissa</b> -&gt; (-1)<sup>2</sup> * 2<sup>E</sup> * M</li>
+<li><b>segno</b>, <b>esponente</b>, <b>mantissa</b> -&gt; (-1)^2 * 2^E * M
+</li>
 </ul>
 
 <p>
 Dati i bit disponibili per la rappresentazione FP, si suddividono in:
 </p>
 <ul class="org-ul">
-<li>Un bit per il segno</li>
-<li>Un gruppo di bit per Esponente</li>
-<li>Un gruppo di bit per la Mantissa</li>
+<li>Un bit per il segno
+</li>
+<li>Un gruppo di bit per Esponente
+</li>
+<li>Un gruppo di bit per la Mantissa
+</li>
 </ul>
 
 <p>
@@ -835,9 +852,11 @@ Una volta fissato il numero di bit totali per la rappresentazione dei numeri raz
 </p>
 <ul class="org-ul">
 <li>Quanti bit assegnare alla mantissa?
-Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.</li>
+Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.
+</li>
 <li>Quanti bit assegnare per l'esponente?
-Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili</li>
+Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili
+</li>
 </ul>
 
 <p>
@@ -850,66 +869,85 @@ poter essere rappresentato con il numero di bit assegnato all'esponente
 </p>
 </div>
 
-<div id="outline-container-orgc89b9df" class="outline-4">
-<h4 id="orgc89b9df"><span class="section-number-4">1.14.1</span> Standard IEEE754</h4>
+<div id="outline-container-sec-1-14-1" class="outline-4">
+<h4 id="sec-1-14-1"><span class="section-number-4">1.14.1</span> Standard IEEE754</h4>
 <div class="outline-text-4" id="text-1-14-1">
 <ol class="org-ol">
 <li>Singola precisione ( 32 BIT )
 <ul class="org-ul">
-<li>1 bit per il segno</li>
-<li>8 bit per l'esponente</li>
-<li>23 bit per la mantissa</li>
-</ul></li>
+<li>1 bit per il segno
+</li>
+<li>8 bit per l'esponente
+</li>
+<li>23 bit per la mantissa
+</li>
+</ul>
+</li>
 <li>Doppia precisione  ( 64 BIT )
 <ul class="org-ul">
-<li>1 bit per il segno</li>
-<li>11 bit per l'esponente</li>
-<li>20 bit per la mantissa</li>
-<li>32 bit aggiuntivi per la mantissa</li>
-</ul></li>
+<li>1 bit per il segno
+</li>
+<li>11 bit per l'esponente
+</li>
+<li>20 bit per la mantissa
+</li>
+<li>32 bit aggiuntivi per la mantissa
+</li>
+</ul>
+</li>
 </ol>
 
 <p>
 La <b>Notazione polarizzata</b> è usata per rappresentare l'esponente:
 </p>
 <ul class="org-ul">
-<li>Singola precisione: gli esponenti variano da -126  a +127</li>
-<li>Doppia precisione:  gli esponenti variano da -1022 a +1023</li>
+<li>Singola precisione: gli esponenti variano da -126  a +127
+</li>
+<li>Doppia precisione:  gli esponenti variano da -1022 a +1023
+</li>
 </ul>
 
 <p>
-Il valore di un numero in notazione polarizzata vale: (-1)<sup>S</sup> * (1 + M) * 2<sup>(E - polarizzazione)</sup>
+Il valore di un numero in notazione polarizzata vale: (-1)^S * (1 + M) * 2^(E - polarizzazione)
 </p>
 </div>
 </div>
 
-<div id="outline-container-org556bf7f" class="outline-4">
-<h4 id="org556bf7f"><span class="section-number-4">1.14.2</span> Somma di numeri FP (Floating Point)</h4>
+<div id="outline-container-sec-1-14-2" class="outline-4">
+<h4 id="sec-1-14-2"><span class="section-number-4">1.14.2</span> Somma di numeri FP (Floating Point)</h4>
 <div class="outline-text-4" id="text-1-14-2">
 <ol class="org-ol">
 <li>Confronto dell'esponente dei due numeri, shift, del numero con l'esponente più piccolo, a destra fino
-a che non è allineato a l'esponente maggiore.</li>
-<li>Somma della rappresentazione in binario dei numeri.</li>
+a che non è allineato a l'esponente maggiore.
+</li>
+<li>Somma della rappresentazione in binario dei numeri.
+</li>
 <li>Normalizzazione della somma, scorrere verso destra oppure verso sinistra sino al bit più significativo
 aumentando o diminuendo l'esponente. 
 <ul class="org-ul">
-<li>Destra   - aumento dell'esponente.</li>
-<li>Sinistra - diminuzione dell'esponente.</li>
-</ul></li>
-<li>Verifico OVERFLOW o UNDERFLOW</li>
+<li>Destra   - aumento dell'esponente.
+</li>
+<li>Sinistra - diminuzione dell'esponente.
+</li>
+</ul>
+</li>
+<li>Verifico OVERFLOW o UNDERFLOW
+</li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-org975ff40" class="outline-4">
-<h4 id="org975ff40"><span class="section-number-4">1.14.3</span> Parità</h4>
+<div id="outline-container-sec-1-14-3" class="outline-4">
+<h4 id="sec-1-14-3"><span class="section-number-4">1.14.3</span> Parità</h4>
 <div class="outline-text-4" id="text-1-14-3">
 <p>
 Per scoprire i singoli errori si aggiunge un bit di parità:
 </p>
 <ul class="org-ul">
-<li>bit aggiuntivo è uguale a 0 <b>se</b> il numero di bit a 1 è pari.</li>
-<li>bit aggiuntivo è uguale a 1 <b>se</b> il numero di bit a 1 è dispari.</li>
+<li>bit aggiuntivo è uguale a 0 <b>se</b> il numero di bit a 1 è pari.
+</li>
+<li>bit aggiuntivo è uguale a 1 <b>se</b> il numero di bit a 1 è dispari.
+</li>
 </ul>
 
 <p>
@@ -923,11 +961,12 @@ Usare un bit di parità significa significa usare una <b>codifica non minimale</
 </div>
 </div>
 </div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2021-12-29 Wed 14:08</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
 </div>
-<div id="postamble" class="status">
-<p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2021-12-29 Wed 10:57</p>
-<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
+</footer>
 </body>
 </html>
