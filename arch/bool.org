@@ -189,7 +189,8 @@
     - i *sottocubi* si riferiscono a specifci sottoinsiemi di nodi connessi.
 
     Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
-  
+
+    
 ** Funzioni incomplete
   Alcuni output di una funzionem, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare
   sono detti output D0N'T CARE.
