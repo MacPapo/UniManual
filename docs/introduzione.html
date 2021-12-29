@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-12-27 Mon 23:52 -->
+<!-- 2021-12-29 Wed 10:57 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduzione ad Architettura degli elaboratori</title>
@@ -251,52 +251,52 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org6034b0f">1. Calcolatori elettronici</a>
+<li><a href="#org22ea095">1. Calcolatori elettronici</a>
 <ul>
-<li><a href="#org7fb8960">1.1. Legge di Moore</a></li>
-<li><a href="#org5b8adda">1.2. Trend</a></li>
+<li><a href="#orgfaf7080">1.1. Legge di Moore</a></li>
+<li><a href="#org17cbd91">1.2. Trend</a></li>
 </ul>
 </li>
-<li><a href="#org6e9a1df">2. L'architettura di Von Neumann</a>
+<li><a href="#orgf92c446">2. L'architettura di Von Neumann</a>
 <ul>
-<li><a href="#org209b594">2.1. Componenti principali di un computer</a></li>
-<li><a href="#org69e5a51">2.2. Com'è fatto un computer</a></li>
+<li><a href="#org9b0809c">2.1. Componenti principali di un computer</a></li>
+<li><a href="#org5f8a9f3">2.2. Com'è fatto un computer</a></li>
 </ul>
 </li>
-<li><a href="#org4f5bdd8">3. Il ruolo dell'astrazione</a></li>
-<li><a href="#orge4af9ce">4. Strutturazione in livelli</a>
+<li><a href="#orga848641">3. Il ruolo dell'astrazione</a></li>
+<li><a href="#org96eaa46">4. Strutturazione in livelli</a>
 <ul>
-<li><a href="#org89c49c2">4.1. Sistema Operativo ( SO )</a></li>
+<li><a href="#org6d1ea92">4.1. Sistema Operativo ( SO )</a></li>
 </ul>
 </li>
-<li><a href="#org5241370">5. Software applicativo e di sistema</a></li>
-<li><a href="#org5037012">6. Storia</a>
+<li><a href="#org030fedb">5. Software applicativo e di sistema</a></li>
+<li><a href="#org0efef59">6. Storia</a>
 <ul>
-<li><a href="#orgfce995f">6.1. Abaco Cinese</a></li>
-<li><a href="#org7bf5cdf">6.2. Macchina di Antikythera</a></li>
-<li><a href="#orgb8cacf2">6.3. Pascalina 1640</a></li>
-<li><a href="#orgc0bb44c">6.4. Leibnitz 1673</a></li>
-<li><a href="#orgb84180d">6.5. Babbage 1824</a>
+<li><a href="#orgb2797b0">6.1. Abaco Cinese</a></li>
+<li><a href="#orgb46db3a">6.2. Macchina di Antikythera</a></li>
+<li><a href="#orge6bd694">6.3. Pascalina 1640</a></li>
+<li><a href="#org5dcc073">6.4. Leibnitz 1673</a></li>
+<li><a href="#org0dab2ad">6.5. Babbage 1824</a>
 <ul>
-<li><a href="#orga1e8ddf">6.5.1. Ada Lovelace Byron ( 1815 - 1852 )</a></li>
+<li><a href="#org2a465de">6.5.1. Ada Lovelace Byron ( 1815 - 1852 )</a></li>
 </ul>
 </li>
-<li><a href="#orgb809972">6.6. Hollerit 1890</a>
+<li><a href="#orge99f6d5">6.6. Hollerit 1890</a>
 <ul>
-<li><a href="#org028087f">6.6.1. Tra '800 e '900</a></li>
+<li><a href="#org2c9a1d3">6.6.1. Tra '800 e '900</a></li>
 </ul>
 </li>
-<li><a href="#orgb1926e5">6.7. ENIAC 1946</a></li>
-<li><a href="#org2b8aa40">6.8. John Von Neumann</a></li>
-<li><a href="#org76db5ec">6.9. Mauchly &amp; Eckert</a></li>
+<li><a href="#org220ca9e">6.7. ENIAC 1946</a></li>
+<li><a href="#orga2a7d3a">6.8. John Von Neumann</a></li>
+<li><a href="#org639571b">6.9. Mauchly &amp; Eckert</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6034b0f" class="outline-2">
-<h2 id="org6034b0f"><span class="section-number-2">1</span> Calcolatori elettronici</h2>
+<div id="outline-container-org22ea095" class="outline-2">
+<h2 id="org22ea095"><span class="section-number-2">1</span> Calcolatori elettronici</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Basati su tecnologie in rapidissima evoluzione
@@ -304,8 +304,8 @@ Valvole → Transistor → IC = Integrated Circuit, VLSI = Very Large Scale Inte
 </p>
 </div>
 
-<div id="outline-container-org7fb8960" class="outline-3">
-<h3 id="org7fb8960"><span class="section-number-3">1.1</span> Legge di Moore</h3>
+<div id="outline-container-orgfaf7080" class="outline-3">
+<h3 id="orgfaf7080"><span class="section-number-3">1.1</span> Legge di Moore</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Ogni 1,5 anni osserviamo il raddoppio di:
@@ -318,8 +318,8 @@ Ogni 1,5 anni osserviamo il raddoppio di:
 </div>
 </div>
 
-<div id="outline-container-org5b8adda" class="outline-3">
-<h3 id="org5b8adda"><span class="section-number-3">1.2</span> Trend</h3>
+<div id="outline-container-org17cbd91" class="outline-3">
+<h3 id="org17cbd91"><span class="section-number-3">1.2</span> Trend</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Incremento prestazioni e abbattimento costi
@@ -343,8 +343,8 @@ Integrazione con la rete telefonica e cellulare
 </div>
 </div>
 
-<div id="outline-container-org6e9a1df" class="outline-2">
-<h2 id="org6e9a1df"><span class="section-number-2">2</span> L'architettura di Von Neumann</h2>
+<div id="outline-container-orgf92c446" class="outline-2">
+<h2 id="orgf92c446"><span class="section-number-2">2</span> L'architettura di Von Neumann</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Le macchine moderne sono basate sulla macchina di Von Neumann
@@ -361,8 +361,8 @@ Il BUS è il canale di cunicazione che consente ai dati di transitare fra divers
 </p>
 </div>
 
-<div id="outline-container-org209b594" class="outline-3">
-<h3 id="org209b594"><span class="section-number-3">2.1</span> Componenti principali di un computer</h3>
+<div id="outline-container-org9b0809c" class="outline-3">
+<h3 id="org9b0809c"><span class="section-number-3">2.1</span> Componenti principali di un computer</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>Input/Output ( I/O )
@@ -389,8 +389,8 @@ Il BUS è il canale di cunicazione che consente ai dati di transitare fra divers
 </div>
 </div>
 
-<div id="outline-container-org69e5a51" class="outline-3">
-<h3 id="org69e5a51"><span class="section-number-3">2.2</span> Com'è fatto un computer</h3>
+<div id="outline-container-org5f8a9f3" class="outline-3">
+<h3 id="org5f8a9f3"><span class="section-number-3">2.2</span> Com'è fatto un computer</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>I/O
@@ -420,8 +420,8 @@ Il BUS è il canale di cunicazione che consente ai dati di transitare fra divers
 </div>
 </div>
 
-<div id="outline-container-org4f5bdd8" class="outline-2">
-<h2 id="org4f5bdd8"><span class="section-number-2">3</span> Il ruolo dell'astrazione</h2>
+<div id="outline-container-orga848641" class="outline-2">
+<h2 id="orga848641"><span class="section-number-2">3</span> Il ruolo dell'astrazione</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>L'informatica si basa sul concetto di astrazione</li>
@@ -450,8 +450,8 @@ Se scendiamo di livello, troviamo fili e milioni di transistor, diventa così im
 </div>
 </div>
 
-<div id="outline-container-orge4af9ce" class="outline-2">
-<h2 id="orge4af9ce"><span class="section-number-2">4</span> Strutturazione in livelli</h2>
+<div id="outline-container-org96eaa46" class="outline-2">
+<h2 id="org96eaa46"><span class="section-number-2">4</span> Strutturazione in livelli</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Tradizionale vista a livelli dell'architettura hw/sw di un computer. Ogni livello mette a disposizione :
@@ -477,8 +477,8 @@ Livello 0: Hardware/Firmware
 </p></li>
 </ul>
 </div>
-<div id="outline-container-org89c49c2" class="outline-3">
-<h3 id="org89c49c2"><span class="section-number-3">4.1</span> Sistema Operativo ( SO )</h3>
+<div id="outline-container-org6d1ea92" class="outline-3">
+<h3 id="org6d1ea92"><span class="section-number-3">4.1</span> Sistema Operativo ( SO )</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><p>
@@ -547,8 +547,8 @@ Le istruzioni sono stringhe di Bit con formato ben determinato per permettere la
 </div>
 </div>
 </div>
-<div id="outline-container-org5241370" class="outline-2">
-<h2 id="org5241370"><span class="section-number-2">5</span> Software applicativo e di sistema</h2>
+<div id="outline-container-org030fedb" class="outline-2">
+<h2 id="org030fedb"><span class="section-number-2">5</span> Software applicativo e di sistema</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Compilatori, assemblatori, OS, Word processor, ecc&#x2026; è tutto software
@@ -573,12 +573,12 @@ Compilatori, assemblatori, OS, Word processor, ecc&#x2026; è tutto software
 </ul>
 </div>
 </div>
-<div id="outline-container-org5037012" class="outline-2">
-<h2 id="org5037012"><span class="section-number-2">6</span> Storia</h2>
+<div id="outline-container-org0efef59" class="outline-2">
+<h2 id="org0efef59"><span class="section-number-2">6</span> Storia</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-orgfce995f" class="outline-3">
-<h3 id="orgfce995f"><span class="section-number-3">6.1</span> Abaco Cinese</h3>
+<div id="outline-container-orgb2797b0" class="outline-3">
+<h3 id="orgb2797b0"><span class="section-number-3">6.1</span> Abaco Cinese</h3>
 <div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>L'abaco cinese può essere considerato il primo modello matematico di calcolo</li>
@@ -594,20 +594,21 @@ Compilatori, assemblatori, OS, Word processor, ecc&#x2026; è tutto software
 </div>
 
 
-<div id="outline-container-org7bf5cdf" class="outline-3">
-<h3 id="org7bf5cdf"><span class="section-number-3">6.2</span> Macchina di Antikythera</h3>
+<div id="outline-container-orgb46db3a" class="outline-3">
+<h3 id="orgb46db3a"><span class="section-number-3">6.2</span> Macchina di Antikythera</h3>
 <div class="outline-text-3" id="text-6-2">
 <ul class="org-ul">
 <li>È il più antico calcolatore meccanico conosciuto, databile intorno al 100 - 150 A.C</li>
-<li>Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari, i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.</li>
+<li>Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari,
+i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.</li>
 <li>Trae il nome dall'isola greca Anticitera ( Cerigotto ) presso cui è stata rinvenuta.</li>
 </ul>
 </div>
 </div>
 
 
-<div id="outline-container-orgb8cacf2" class="outline-3">
-<h3 id="orgb8cacf2"><span class="section-number-3">6.3</span> Pascalina 1640</h3>
+<div id="outline-container-orge6bd694" class="outline-3">
+<h3 id="orge6bd694"><span class="section-number-3">6.3</span> Pascalina 1640</h3>
 <div class="outline-text-3" id="text-6-3">
 <ul class="org-ul">
 <li>Blaise Pascal progetta e realizza la Pascalina: Calcolatore meccanico per addizioni</li>
@@ -616,8 +617,8 @@ Compilatori, assemblatori, OS, Word processor, ecc&#x2026; è tutto software
 </div>
 
 
-<div id="outline-container-orgc0bb44c" class="outline-3">
-<h3 id="orgc0bb44c"><span class="section-number-3">6.4</span> Leibnitz 1673</h3>
+<div id="outline-container-org5dcc073" class="outline-3">
+<h3 id="org5dcc073"><span class="section-number-3">6.4</span> Leibnitz 1673</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Macchina per addizioni, sottrazioni, moltiplicazioni, divisioni e radice quadrata
@@ -626,8 +627,8 @@ Macchina per addizioni, sottrazioni, moltiplicazioni, divisioni e radice quadrat
 </div>
 
 
-<div id="outline-container-orgb84180d" class="outline-3">
-<h3 id="orgb84180d"><span class="section-number-3">6.5</span> Babbage 1824</h3>
+<div id="outline-container-org0dab2ad" class="outline-3">
+<h3 id="org0dab2ad"><span class="section-number-3">6.5</span> Babbage 1824</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Macchina "General-purpose" le cui funzionalità dipendono da come è progettata
@@ -635,8 +636,8 @@ Macchina "General-purpose" le cui funzionalità dipendono da come è progettata
 </div>
 
 
-<div id="outline-container-orga1e8ddf" class="outline-4">
-<h4 id="orga1e8ddf"><span class="section-number-4">6.5.1</span> Ada Lovelace Byron ( 1815 - 1852 )</h4>
+<div id="outline-container-org2a465de" class="outline-4">
+<h4 id="org2a465de"><span class="section-number-4">6.5.1</span> Ada Lovelace Byron ( 1815 - 1852 )</h4>
 <div class="outline-text-4" id="text-6-5-1">
 <ul class="org-ul">
 <li>Figlia del noto poeta inglese</li>
@@ -648,19 +649,20 @@ Macchina "General-purpose" le cui funzionalità dipendono da come è progettata
 </div>
 
 
-<div id="outline-container-orgb809972" class="outline-3">
-<h3 id="orgb809972"><span class="section-number-3">6.6</span> Hollerit 1890</h3>
+<div id="outline-container-orge99f6d5" class="outline-3">
+<h3 id="orge99f6d5"><span class="section-number-3">6.6</span> Hollerit 1890</h3>
 <div class="outline-text-3" id="text-6-6">
 <ul class="org-ul">
 <li>Fondatore dell'IBM, inventa l'uso delle carte perforate per automatizzare la tabulazione dei dati di un censimento</li>
-<li>Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente, dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati</li>
+<li>Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente,
+dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati</li>
 <li>I risultati del censimento furono ottenuti in tempo molto minore del precedente</li>
 </ul>
 </div>
 
 
-<div id="outline-container-org028087f" class="outline-4">
-<h4 id="org028087f"><span class="section-number-4">6.6.1</span> Tra '800 e '900</h4>
+<div id="outline-container-org2c9a1d3" class="outline-4">
+<h4 id="org2c9a1d3"><span class="section-number-4">6.6.1</span> Tra '800 e '900</h4>
 <div class="outline-text-4" id="text-6-6-1">
 <ul class="org-ul">
 <li>Nel 1890 venne utilizzata una macchina per il conteggio tramite schede perforate che trovò largo uso negli uffici statunitensi per il censimento di quello stesso anno.</li>
@@ -680,8 +682,8 @@ Macchina "General-purpose" le cui funzionalità dipendono da come è progettata
 </div>
 
 
-<div id="outline-container-orgb1926e5" class="outline-3">
-<h3 id="orgb1926e5"><span class="section-number-3">6.7</span> ENIAC 1946</h3>
+<div id="outline-container-org220ca9e" class="outline-3">
+<h3 id="org220ca9e"><span class="section-number-3">6.7</span> ENIAC 1946</h3>
 <div class="outline-text-3" id="text-6-7">
 <ul class="org-ul">
 <li>Electronic Numerical Integrator and Calculator</li>
@@ -714,8 +716,8 @@ In Germania, durante la seconda guerra mondiale, venne utilizzata Enigma, una ma
 </div>
 
 
-<div id="outline-container-org2b8aa40" class="outline-3">
-<h3 id="org2b8aa40"><span class="section-number-3">6.8</span> John Von Neumann</h3>
+<div id="outline-container-orga2a7d3a" class="outline-3">
+<h3 id="orga2a7d3a"><span class="section-number-3">6.8</span> John Von Neumann</h3>
 <div class="outline-text-3" id="text-6-8">
 <ul class="org-ul">
 <li>Inventò il concetto di Stored-program computer
@@ -730,8 +732,8 @@ In Germania, durante la seconda guerra mondiale, venne utilizzata Enigma, una ma
 </div>
 
 
-<div id="outline-container-org76db5ec" class="outline-3">
-<h3 id="org76db5ec"><span class="section-number-3">6.9</span> Mauchly &amp; Eckert</h3>
+<div id="outline-container-org639571b" class="outline-3">
+<h3 id="org639571b"><span class="section-number-3">6.9</span> Mauchly &amp; Eckert</h3>
 <div class="outline-text-3" id="text-6-9">
 <ul class="org-ul">
 <li>Nel 1946 progettano e costruiscono l'EDVAC ( dell' Electronic Discrete Variable Automatic Computer ), basato sull'architettura di Von Neumann</li>
@@ -872,6 +874,7 @@ Il valore corrispondente alla rappresentazione dei numeri positivi è quello sol
 <li>Tutti gli altri bit in posizione \(i\\) con peso \(2^i\)</li>
 </ul></li>
 </ul></li>
+
 <li><p>
 Cambio di segno
 </p>
@@ -895,7 +898,7 @@ Per ottenere la rappresentazione in complemento a 2 di \(-N\) è possibile impie
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2021-12-27 Mon 23:52</p>
+<p class="date">Created: 2021-12-29 Wed 10:57</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
