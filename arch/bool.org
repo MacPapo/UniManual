@@ -198,4 +198,4 @@
   *Problema*
   - L'equzione logica e il corrispodente circuito *non possono essere incompleti*, essi devono produrre un risultato in
     corrispondenza di tutte le combinazioni dei valori di input.
-    Si sceglie di insirire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
+    Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
