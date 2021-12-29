@@ -1,4 +1,104 @@
 #+TITLE: Algebra di Bool
 #+AUTHOR: Jacopo Costantini
 
-* Dio Cane
+* Algebra e circuiti elettrici
+  I computer operano con segnali elettrici con valori di potenziale discreti.
+  - sono considerati significativi soltanto due potenziali
+    *high* / *Low*
+  - I potenziali intermedi, che si verificano durante le transizioni di potenziale, *non vengono considerati*.
+
+  L'aritmetica binaria è stata adottata proprio perché i
+  bit sono rappresentabili naturalmente
+  tramite elementi elettronici in cui siamo in grado
+  distinguere i 2 stati di potenziale elettronico ( *High* / *Low*)
+
+  Il funzionamento dei circuiti elettronici può essere modellato tramite l'algebra di Boole
+
+  + Solo 2 valori:
+    1. Valore *TRUE* (*1* o *asserted*) ==> livello di potenziale *ALTO*
+    2. Valore *FALSE* (*0* o *deasserted*) ==> livello di potenziale *BASSO*
+  + Operazioni logiche Booleane: *SOMMA* (*OR*), *PRODOTTO* (*AND*), *INVERSIONE LOGICA* (*NOT*)
+    - *OR* (*A + B*): risultato uguale ad 1 (*TRUE*) se almeno un input è 1 (*TRUE*)
+    - *AND* (*A x B*): risultato uguale ad 1 (*TRUE*) solo se tutti gli input sono 1 (*TRUE*)
+    - *NOT* (*~A*): risultato uguale all'inverso dell'input (0 -> 1 uppure 1 -> 0)
+    
+* Blocco logico
+  - Circuito elettronico con linee (*fili*) in *input* e *output*
+  - possiamo associare *variabili logiche* con le varie *linee in input/output*
+  - Il circuito calcola una o più *funzioni logiche*, ciascuna espriminile tramite una
+    combinazione di operazioni dell'algebra di Boole *sulle variabili in input*
+* Circuiti combinatori/sequenziali
+  Circuiti combinatorio
+  - Senza elementi di memoria - produce output che dipeende funzionalmente solo dall'input
+
+  Circuiti sequenziali
+  - Con elementi di memoria - produce output che dipende non solo dall'input ma anche dallo stato della memoria
+
+* Funzioni Logiche
+  Una funzione logica è completamente specificata da
+  - Una *tabella di verità*
+  - Una *equazione logica*
+
+** Tabelle di Verità
+   Dati *n input bit*, il numero di configurazione possibili degli input, ovvero il numero di righe
+   della Tabella di verità, + *2^n*
+   - Per ogni bit in output, la tabella contiene una colonna, con un valore definito per ognuna
+     combinazione dei bit in input
+
+     [Inserire tabella]
+
+** Proprietà dell'algebra di Boole
+   Proprietà:
+   + *Identità*:
+     - *OR*:  A + 0 = A
+     - *AND*: A x 1 = A
+   + *Nullo*:
+     - *OR*:  A + 1 = 1
+     - *AND*: A x 0 = 0
+   + *Idempotente*:
+     - *OR*:  A + A = A
+     - *AND*: A x A = A
+   + *Inverso*:
+     - *OR*:  A + (~A) = 1
+     - *AND*: A x (~A) = 0
+   + *Commutativa*:
+     - *OR*:  A + B = B + A
+     - *AND*: A x B = B x A
+   + *Associativa*:
+     - *OR*:  A + (B + C) = (A + B) + C
+     - *AND*: A x (B x C) = (A x B) x C
+   + *Distributiva*:
+     - *OR*:  A x (B + C) = (A x B) + (A x C)
+     - *AND*: A + (B x C) = (A + B) x (A + C)
+   + *DeMorgan*:
+     - *OR*:  ~(A + B) = (~A) x (~B)
+     - *AND*: ~(A x B) = (~A) + (~B)
+
+** NAND e NOR
+   *NAND* (inverso dell'operazione *AND*): ~(A x B) = A *nand* B
+   *NOR*  (inverso dell'operazione *OR*):  ~(A + B) = A *nor*  B
+
+* Porte logiche e transistor
+  Tecnologia *CMOS* (Complementary Metal Oxide Semiconductor) per realizzare transistor in sul silicio
+  - I transistor sono degli interruttori velocissimi che lasciano o meno passare la corrente, e sono
+    comandati da un segnale elettrico
+
+** NMOS
+   *N-Type Metal Oxide Semiconductor transistor*
+   - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor diventa un *conduttore*
+   - Se applichi un *BASSO* voltaggio (*GND*), il transistor interrompe la conduzione (*resistenza infinita*)
+
+** PMOS
+   *P_Type Metal Oxide Semiconductor transistor*
+   - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor interrompe la conduzione (*resistenza infinita*)
+   - Se applichi un *BASSO* voltaggio (*GND*), il transistor diventa un *conduttore*
+
+
+** Confronto tra porte
+   Se i transistor *PMOS* sono più veloci:
+   - È meglio avere transistor *PMOS* in serie
+   - Porte *NOR* preferite
+
+   Se i transistor *NMOS* sono più veloci:
+   - È meglio avere transistor *NMOS* in serie
+   - Porte *NAND* preferite

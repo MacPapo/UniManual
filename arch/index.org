@@ -3,7 +3,6 @@
 
 * Cose da fare
 ** DONE introduzione
-   CLOSED: [2021-12-28 Tue 11:05]
 ** DONE numbers
 ** TODO esempi numbers
 ** TODO algebra di bool
