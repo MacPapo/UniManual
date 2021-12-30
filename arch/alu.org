@@ -210,4 +210,3 @@
   ...ci sono metodi per velocizzare il calcolo del riporto?
   - Si, il *metodo del Carry Lookahead*
   - Si cerca di far passare il segnale per un numero minore di porte, per anticipare il riporto
-

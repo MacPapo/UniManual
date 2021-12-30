@@ -85,5 +85,27 @@
   + Alla fine il *resto* dovrà essere 0 o essere minore del *divisore*
 
 ** Divisione tra numeri inter in base 2
-   
+  Quante volte ci sta nella porzione del *dividendo* nella porzione desiderata?
+  + ci sono due possibilità: 0 volte oppure 1 volta
+
+  I circuiti non capiscono “al volo” quando il divisore è più piccolo della porzione di dividendo considerata.
+  ad ogni passo si effettua quindi la sottrazione (dividendo - divisore) e si controlla il segno del risultato.
+  Poiché il dividendo è memorizzato nel registro resto la sottrazione da effettuare è (resto - divisore)
+
+** Divisione tra interi (ottimizzazioni)
+  Analogamente al caso della moltiplicazione, sono stati studiati dei raffinamenti per l’algoritmo della divisione. 
+  L’obiettivo è sempre quello di semplificare e rendere più veloce il circuito che implementa la divisione
+  + Il registro del resto viene shiftato a sinistra
+  + Il divisore viene sottratto solo dalla parte alta del registro Resto
+
+  Analogamente al caso della moltiplicazione, il modo più semplice di gestire
+  il segno è il seguente:
+  - convertire dividendo e divisore in numeri positivi
+  - eseguire la divisione lasciando i bit di segno fuori dal calcolo
+  - stabilire il segno del quoziente mediante la regola dei segni, ricordando i segni originali 
+    (quoziente *negativo* se i segni di dividendo e divisore sono discordi, *positivo* altrimenti)
+
+  Stabilire il segno del resto mediante la seguente regola:
+  - dividendo e resto devono avere lo stesso segno
+
 
