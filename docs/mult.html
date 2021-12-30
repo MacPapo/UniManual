@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</title>
+<!-- 2021-12-30 Thu 16:38 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Operazione aritmetiche e logiche</a></li>
+<li><a href="#sec-2">2. Moltiplicazione: algoritmo carta e penna</a>
+<ul class="nav">
+<li><a href="#sec-2-1">2.1. Algoritmo carta e penna (Base 2)</a></li>
+<li><a href="#sec-2-2">2.2. Moltiplicazione tra numeri interi</a></li>
+<li><a href="#sec-2-3">2.3. Moltiplicazione: ottimizzazione</a></li>
+<li><a href="#sec-2-4">2.4. Segno della moltiplicazione</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Divisione tra numeri interi</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Divisione tra numeri inter in base 2</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Operazione aritmetiche e logiche</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Abbiamo visto che le ALU sono in grado di eseguire operazioni di
+</p>
+<ul class="org-ul">
+<li><b>somma</b>
+</li>
+<li><b>sottrazione</b>
+</li>
+<li><b>salto</b>
+</li>
+<li><b>confronto</b>
+</li>
+<li><b>operazione logiche: AND e OR</b>
+</li>
+</ul>
+
+<p>
+Rimangono però altre due operazioni da realizzare:
+<b>MOLTIPLICAZIONE</b> e <b>DIVISIONE</b> di numeri interi.
+</p>
+
+<p>
+Nel <b>MIPS</b> abbiamo:
+</p>
+<pre class="example">
+mult  $5 $4   # Hi, Lo = $5 x $4 prodotto con segno
+multu $5 $4   # Hi, Lo = $5 x $4 prodotto senza segno
+div   $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione con segno
+divu  $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione senza segno
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Moltiplicazione: algoritmo carta e penna</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Passi dell'algoritmo sono i seguenti:
+</p>
+<ul class="org-ul">
+<li>Considerare le cifre del <b>moltiplicatore</b> una alla volta, da destra a sinistra
+</li>
+<li>Moltiplicare il <b>moltiplicando</b> per la singola cifra del <b>moltiplicatore</b>
+</li>
+<li>Scalare il prodotto intermedio di una cifra alla volta verso sx (<b>shift a sx</b>)
+</li>
+<li>il <b>prodotto finale</b> si ottiene dalla somma di tutti i prodotti intermedi
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Algoritmo carta e penna (Base 2)</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+In base 2, la presenza delle sole cifre 0 e 1 semplifica i vari prodotti?
+Osservazioni:
+</p>
+<ul class="org-ul">
+<li>Il numero di cifre del prodotto è molto più grande rispetto alle cifre del
+<b>moltiplicatore</b> e del <b>moltiplicando</b>
+</li>
+<li>Ignorando i bit di segno si ha:
+<ul class="org-ul">
+<li><b>moltiplicatore</b> (n bit) <b>moltiplicando</b> (n bit) ==&gt; <b>prodotto</b> (2n bit)
+</li>
+</ul>
+</li>
+<li>In generale, per rappresentare il risultato abbiamo bisogno del doppio dei bit dei due fattori del prodotto
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Moltiplicazione tra numeri interi</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Si basa su:
+</p>
+<ul class="org-ul">
+<li><b>Shift a sx</b> del <b>moltiplicando</b> per rappresentare i prodotti parziali
+</li>
+<li><b>Shift a dx</b> del <b>moltiplicatore</b> per considerare, una alla volta, tutte le sue cifre
+(dalla meno significativa alla più significativa)
+</li>
+<li><b>Somma</b> di <b>moltiplicando</b> e <b>prodotto</b> accumulato fino a quel momento
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Moltiplicazione: ottimizzazione</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+L'algoritmo di moltiplicazione precedente usa un registro a <b>64 bit</b> per il <b>moltiplicando</b> e,
+conseguentemente, una <b>ALU a 64 bit</b> per la somma.
+</p>
+
+<p>
+Infatti, il <b>moltiplicando</b> viene scalato a sinistra di una cifra ad ogni passo, in modo
+da non influenzare i bit meno singnificativi del prodotto
+</p>
+
+<p>
+Scalando il prodotto a destra, il moltiplicando può rimanere fisso e quindi sono necessari solo 32bit
+sia per il registro corrispodente che per l'ALU. ==&gt; il circuito diventa più semplice e la
+moltiplicazione più veloce
+</p>
+
+<ul class="org-ul">
+<li><b>SHIFT</b> a destra del <b>moltiplicatore</b> per considerare una alla volta, tutte le sue cifre (dalla meno significativa alla più significativa)
+</li>
+<li><b>SHIFT</b> a destra del <b>prodotto</b> per non influenzare le cifre meno significative dei prodotti parziali
+</li>
+<li>ad ogni passo vengono sommati il <b>moltiplicando</b> e i 32 bit più significativi del <b>prodotto</b>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Segno della moltiplicazione</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Il modo più semplice di gestire il segno è il seguente:
+</p>
+<ul class="org-ul">
+<li>Convertire <b>moltiplicando</b> e <b>moltiplicatore</b> in numeri positivi
+</li>
+<li>Eseguire la moltiplicazione
+</li>
+<li>Stabilire il segno del <b>prodotto</b> secondo la regola dei segni, sulla base dei segni originali,
+e complementare se necessario
+</li>
+</ul>
+
+<p>
+<b>ATTENZIONE</b>: gli algoritmi possono limitarsi ad effettuare solo 31 iterazioni,
+lasciando i segni fuori dal calcolo
+</p>
+
+<p>
+Esiste un algoritmi,detto <b>Algoritmo di Booth</b>, che consente di moltiplicare direttamente numeri con segno.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Divisione tra numeri interi</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Si ha: <b>Dividendo</b> = <b>Quoziente</b> x <b>Divisore</b> + <b>Resto</b>
+da cui: <b>Resto</b> = <b>Dividendo</b> - <b>Quoziente</b> x <b>Divisore</b>
+</p>
+
+<p>
+I passi dell'algoritmo sono i seguenti:
+</p>
+<ul class="org-ul">
+<li>Considerare gruppi di cifre del <b>dividendo</b>, partendo dalla cifra più significativa
+</li>
+<li>Vedere quante volte il <b>divisore</b> sta nel gruppo di cifre del <b>dividendo</b>
+</li>
+<li>Scrivere la cifra corrispodente nel <b>quoziente</b>
+</li>
+<li>Sottrarre il multiplo del <b>divisore</b> dal <b>dividendo</b>
+</li>
+<li>Alla fine il <b>resto</b> dovrà essere 0 o essere minore del <b>divisore</b>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Divisione tra numeri inter in base 2</h3>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2021-12-30 Thu 16:38</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
+</div>
+</footer>
+</body>
+</html>

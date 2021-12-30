@@ -1,0 +1,89 @@
+#+TITLE: Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Operazione aritmetiche e logiche
+  Abbiamo visto che le ALU sono in grado di eseguire operazioni di
+  - *somma*
+  - *sottrazione*
+  - *salto*
+  - *confronto*
+  - *operazione logiche: AND e OR*
+
+  Rimangono però altre due operazioni da realizzare:
+  *MOLTIPLICAZIONE* e *DIVISIONE* di numeri interi.
+
+  Nel *MIPS* abbiamo:
+  #+BEGIN_EXAMPLE asm
+  mult  $5 $4   # Hi, Lo = $5 x $4 prodotto con segno
+  multu $5 $4   # Hi, Lo = $5 x $4 prodotto senza segno
+  div   $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione con segno
+  divu  $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione senza segno
+  #+END_EXAMPLE
+
+  
+* Moltiplicazione: algoritmo carta e penna
+  Passi dell'algoritmo sono i seguenti:
+  + Considerare le cifre del *moltiplicatore* una alla volta, da destra a sinistra
+  + Moltiplicare il *moltiplicando* per la singola cifra del *moltiplicatore*
+  + Scalare il prodotto intermedio di una cifra alla volta verso sx (*shift a sx*)
+  + il *prodotto finale* si ottiene dalla somma di tutti i prodotti intermedi
+    
+** Algoritmo carta e penna (Base 2)
+   In base 2, la presenza delle sole cifre 0 e 1 semplifica i vari prodotti?
+   Osservazioni:
+   - Il numero di cifre del prodotto è molto più grande rispetto alle cifre del
+     *moltiplicatore* e del *moltiplicando*
+   - Ignorando i bit di segno si ha:
+     + *moltiplicatore* (n bit) *moltiplicando* (n bit) ==> *prodotto* (2n bit)
+   - In generale, per rappresentare il risultato abbiamo bisogno del doppio dei bit dei due fattori del prodotto
+
+** Moltiplicazione tra numeri interi
+   Si basa su:
+   + *Shift a sx* del *moltiplicando* per rappresentare i prodotti parziali
+   + *Shift a dx* del *moltiplicatore* per considerare, una alla volta, tutte le sue cifre
+     (dalla meno significativa alla più significativa)
+   + *Somma* di *moltiplicando* e *prodotto* accumulato fino a quel momento
+
+** Moltiplicazione: ottimizzazione
+   L'algoritmo di moltiplicazione precedente usa un registro a *64 bit* per il *moltiplicando* e,
+   conseguentemente, una *ALU a 64 bit* per la somma.
+
+   Infatti, il *moltiplicando* viene scalato a sinistra di una cifra ad ogni passo, in modo
+   da non influenzare i bit meno singnificativi del prodotto
+
+   Scalando il prodotto a destra, il moltiplicando può rimanere fisso e quindi sono necessari solo 32bit
+   sia per il registro corrispodente che per l'ALU. ==> il circuito diventa più semplice e la
+   moltiplicazione più veloce
+
+   - *SHIFT* a destra del *moltiplicatore* per considerare una alla volta, tutte le sue cifre (dalla meno significativa alla più significativa)
+   - *SHIFT* a destra del *prodotto* per non influenzare le cifre meno significative dei prodotti parziali
+   - ad ogni passo vengono sommati il *moltiplicando* e i 32 bit più significativi del *prodotto*
+
+     
+** Segno della moltiplicazione
+   Il modo più semplice di gestire il segno è il seguente:
+   - Convertire *moltiplicando* e *moltiplicatore* in numeri positivi
+   - Eseguire la moltiplicazione
+   - Stabilire il segno del *prodotto* secondo la regola dei segni, sulla base dei segni originali,
+     e complementare se necessario
+
+   *ATTENZIONE*: gli algoritmi possono limitarsi ad effettuare solo 31 iterazioni,
+   lasciando i segni fuori dal calcolo
+
+   Esiste un algoritmi,detto *Algoritmo di Booth*, che consente di moltiplicare direttamente numeri con segno.
+
+* Divisione tra numeri interi
+
+  Si ha: *Dividendo* = *Quoziente* x *Divisore* + *Resto*
+  da cui: *Resto* = *Dividendo* - *Quoziente* x *Divisore*
+
+  I passi dell'algoritmo sono i seguenti:
+  + Considerare gruppi di cifre del *dividendo*, partendo dalla cifra più significativa
+  + Vedere quante volte il *divisore* sta nel gruppo di cifre del *dividendo*
+  + Scrivere la cifra corrispodente nel *quoziente*
+  + Sottrarre il multiplo del *divisore* dal *dividendo*
+  + Alla fine il *resto* dovrà essere 0 o essere minore del *divisore*
+
+** Divisione tra numeri inter in base 2
+   
+

@@ -9,7 +9,7 @@
 ** DONE esempi algebra di bool
 ** DONE circuiti
 ** DONE ISA-MIMPS
-** TODO ALU
+** DONE ALU
 ** TODO mult
 ** TODO memorie e circuiti sequenziali
 ** TODO sintesi circuiti sequenziali
@@ -26,4 +26,5 @@
 ** [[file:bool.org][Algebra di Bool]]
 ** [[file:circuiti.org][Circuiti combinatori]] 
 ** [[file:isamips.org][Linguaggio macchina e assembler MIPS]]
-
+** [[file:alu.org][Circuiti combinatori: ALU]]
+** [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
