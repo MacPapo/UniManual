@@ -2,7 +2,7 @@
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 * Istruzioni e Linguaggio Macchina
-  I *Linguaggi Macchina* sono composti da *istruzioni macchine*,
+  I *Linguaggi Macchina* sono composti da *istruzioni macchina*,
   codificate in binario, con *formato* ben definito
 
   - Processori diversi hanno linguaggio macchina simili
@@ -127,6 +127,16 @@
 * Linguaggio Macchina
   Anche le istruzioni sono rappresentate in memoria con 1 word (4B)
 
+  Formato R-Type per le istruzioni aritmetico-logiche, è formato da:
+  - op: operazione base dell'istruzione ( 6 bit )
+  - rs: registro del primo operando ( 5 bit )
+  - rt: registro del secondo operando ( 5 bit )
+  - rd: registro di destinazione, che contiene quindi il risultato dell'operazione ( 5 bit )
+  - shamt: utilizzato pe le istruzioni di shift, posto a zero per le altre istruzioni ( 5 bit)
+  - funct: seleziona la specifica variante dell'operazione base definita nel campo op ( 6 bit )
+
+  L'insieme dei bit costituiscono 32 bit ovvero 4B
+
   Formato istruzioni lw e sw
   - Necessario introdurre un nuovo tipo di formato
   - *I-TYPE* (Immediate Type)
@@ -135,15 +145,31 @@
   Compromesso di progetto
   - Anche lw/sw sono lunghe 4B
   - Displacement nell'istruzione (*operando immediato* = 2B)
-  - *rt* in questo caso è il registro di destinazione
-    
+
+  Esempio: lw $9, 32($18)
+  - op: operazione base dell'istruzione ( 6 bit )
+  - rs: registro del primo operando, es. 18 ( 5 bit ) 
+  - *rt*: in questo caso è il registro di destinazione, es. 9 ( 5 bit )
+  - 16 bit number: guardando l'esempio è 32
+
 ** Istruzioni di controllo
+
    Istruzioni per prendere decisioni sul futuro
    - Alterano il controllo di flusso (sequenziale)
    - Cambiano quindi la prossima istruzione da eseguire (*PC*)
 
      Istruzione *MIPS* di *salto condizionato*:
      #+BEGIN_EXAMPLE asm
-     beq $4, $5, Label   # branch if equal
-     bne $6, $5, Label   # branch if not equal
+      add $4,$5,$6      $4 = $5 + $6        
+      sub $4,$5,$6      $4 = $5 - $6
+
+      lw $4,100($5)     $4 = Memory[$5+100]
+      sw $4,100($5)     Memory[$5+100] = $4
+
+      bne $4,$5,Label   Se $s4 != $s5, prossima istr. caricata dall’indirizzo Label
+      beq $4,$5,Label   Se $s4  = $s5, prossima istr. caricata dall’indirizzo Label
      #+END_EXAMPLE
+
+
+** Riassumendo
+  

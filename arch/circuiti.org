@@ -15,7 +15,7 @@
    + *SSI* (Small Scale Integrated): 1 - 10 porte
    + *MSI* (Medium Scale Integrated): 10 - 100 porte
    + *LSI* (Large Scale Integrated): 100 - 100.000 porte
-   + *VLSI* (Very Large Scale Integrated): >100.000
+   + *VLSI* (Very Large Scale Integrated): > 100.000
 
    Con tecnologia *SSI*, gli *IC* contenvano poche porte, direttamente
    collegate ai pin esterni
