@@ -1,0 +1,19 @@
+#+TITLE: Memorie e circuiti sequenziali
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Circuiti combinatori vs sequenziali
+  I *circuiti combinatori* sono in grado di calcolare funzioni che dipendono *solo* dai dati in *input*
+
+  I *circuiti sequenziali* sono invece in grado di calcolare funzioni che dipendono *anche* da uno *stato*
+  ovvero, che dipendono anche da informazioni memorizzate in *elementi di memoria* interni
+
+  - In generale, la funzione calcolata dal circuito sequenziale ad un dato istante dipende dalla
+    *sequenza temporale* dei valori in input al circuito
+  - La *sequenza temporale* determina infatti il valore memorizzato nello *stato*
+
+    
+* Elementi di memoria
+  Per realizzare circuiti sequenziali è necessario un elemento di *memoria* per memorizzare lo *stato*
+
+  Possiamo organizzare le porte logiche in modo da realizzare un elemento di memoria?
+  - Si, un elemento in grado di memorizzare un singolo bit è il *LATCH*
