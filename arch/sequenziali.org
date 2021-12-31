@@ -17,3 +17,222 @@
 
   Possiamo organizzare le porte logiche in modo da realizzare un elemento di memoria?
   - Si, un elemento in grado di memorizzare un singolo bit è il *LATCH*
+
+* S-R Latch
+  L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
+  - *S* sta per *Set*
+  - *R* sta per *Reset*
+  Anche se *(S,R)=(0,0)*, gli output del latch possono comunque essere diversi
+  - l'*output* è infatti il valore memorizzato nel latch
+  - verificare che il latch a *sinistra memorizza il valore 0*, mentre quello a *destra il valore 1*
+
+  Poniamo per esempio (S,R)=(1,0) per effettuare il *setting del latch a sinistra*
+  - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando S=0)
+
+  Poniamo per esempio (S,R)=(0,1) per effettuare il *resetting del latch a destra*
+  - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando R=0)
+
+
+  La combinazione (S,R) = (0,0) viene detta combinazione di riposo, 
+  perché semplicemente mantiene il valore memorizzato in precedenza
+
+  La combinazione di valori (S,R)=(1,1) non deve *mai essere presentata al latch*
+
+* Clock
+  I segnali *S* e *R* devono essere stabili, e valere, (1,0) o (0,1) per poter memorizzare un valore corretto
+  Ma (S,R) sono di solito calcolati da un circuito combinatorio
+  - l'output del circuito diventa stabile dopo un certo intervallo di tempo
+  - l'*intervallo di tempo* dipende dal numero di porte attraversate e dal ritardo delle porte
+  - bisogna evitare che durante questo intervallo, gli *output intermedi* del circuito vengano presentati al latch
+    per la memorizzazione
+  
+  *Soluzione* =>  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l'inizio di un gradino e quello successivo
+                viene scelto abbastanza grande da assicurare la stabilità degli output del circuito
+                - usiamo il *clock* per abilitare la scrittura nei latch
+                - il clock determina il ritmo dei calcoli e delle relative operazioni di memorizzazione
+                - il ciurcuito diventa sincrono
+
+  [circuito]
+
+* Unità di misura
+  Se il periodo T è espresso in *sec*
+    - Frequenza di clock: Freq = 1/T Hz (numero di cicli al secondo)
+
+  Se T = 10 nsec qual è la franquenza del clock?
+  - 1 nsec = 10^-9 sec
+  - Freq = 1/T = 1/(10*10-9)= 108Hz=108Hz=102 *106 Hz=100 MHz
+
+  Se T = 1 nsec, qual è la differenza del clock?
+  - 1 nsec = 10^-9 sec
+  - Freq=1/T=1/10-9=109Hz=1 GHz
+
+* Latch clockato (D-latch)
+  *D=1* corrisponde al *setting*
+  -S=1 e R=0
+
+  *D=0* corrisponde al *resetting*
+  -S=0 e R=1
+
+  La combinazione S=1 e R=1 non può mai verificarsi
+
+  A causa delle 2 porte AND quando il *clock è deasserted* abbiamo che nel latch non viene memorizzato alucn valore:
+  S=0 e R=0 (viene mantenuto il valore precedentemente memorizzato)
+
+  Viene *memorizzato* un valore solo quando il *clock è asserted*.
+  Se il segnale C fosse invertito (porta NOT aggiuntiva), il latch memorizzerebbe sul valore basso del clock 
+  (cioè quando il clock è deasserted)
+
+  [circuito]
+
+* Diagramma temporale del D-latch
+  Il segnale D, ottenuto solitamente come output di un circuito combinatorio
+  - deve essere già stabile quando C diventa asserted
+  - deve rimanere stabile per tutta la durata del livello alto di C (Setup time)
+  - deve infine rimanere stabile per un altro periodo di tempo per evitare malfunzionamenti (Hold time)
+
+  [circuito]
+
+** Ritardi nella propagazione dei segnali nei circuiti
+  I circuiti reali hanno *ritardi non-nulli*, che dipendono dai cammini, ovvero delle porte e dai fili, attraversati
+  dai segnali.
+  Gli output possono temporaneamente cambiare da valori corretti a valori errati, e ancora a valori corretti
+  - questo fenomeno è noto come glitch
+  - dopo un certo intervallo, con alta probabilità i segnali si stabilizzano
+
+  [ciurcuito]
+
+* Periodo del ciclo di clock
+  Il periodo T deve essere scelto abbastanza lungo affinché l’output del circuito combinatorio si stabilizzi
+  - deve essere stabile un po’ prima D del periodo di apertura del latch C (setup time), e lo deve rimanere per un certo tempo (hold time)
+
+  [ciurcuito]
+
+* D-latch clockato: fenomeno della trasparenza
+  Osserviamo il seguendo comportamente del D-latch clockato:
+  - durante l'intervallo alto del clock il valore sel seguente di ingresso D viene memorizzato nel latch
+  - il valore di D si propaga immediatamente (o quasi) all'uscita Quante
+  - ma anche eventuali variazioni di *D si propagano immediatamente*, col risultato che Q può variare più volte durante l'intervallo altod
+    del clock
+  - solo quando il clock torna a zero *Q* si stabilizza
+  - possiamo concludere che durante l’intervallo alto del clock il latch non esercita di fatto alcuna funzione di memorizzazione.
+
+  Questo comportamento è noto come *trasparenza* del latch
+
+  [circuito]
+
+* Elemento di memoria usato come input e output
+  Durante ogni periodo di clock
+  - il circuito combinatorio dovrebbe calcolare una funzione sulla base dell'attuale valore *dell'elemento di memoria* (stato del circuito)
+  - l'output calcolato dovrebbe diventare il nuovo valore da memorizzare nell'elemento di memoria (nuovo stato del circuito)
+  - il nuovo valore memorizzato dovebbe essere usato come *input del circuito di durante il ciclo di clock successivo*
+
+  l'*elemento di memoria* deve essere usato sia come input che come output durante lo stesso ciclo di clock.
+
+Il D-latch precedente funzionerebbe in questo caso ?
+- Purtroppo no, perché se il clock rimane alto per molto tempo, allora il valore memorizzato nel latch potrebbe nel frattempo fluire fuori, 
+entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizzato nel latch
+
+[circuito]
+
+** Metodologia di timing
+  Si possono progettare componenti di memoria, in cui la memorizzazione può avvenire in vari istanti rispetto al segnale a gradino del clock
+  - *level-triggered methodology*
+    + avviene sul livello alto (o basso) del clock
+    + il D-latch precedente era level-triggered (rispetto al livello alto)
+  - *edge-triggered methodology*
+    + avviene sul fronte di salita (o di discesa) del clock
+    + possiamo immaginare che la memorizzazione avvenga istantaneamente, e che l’eventuale segnale di ritorno sporco, proveniente dal circuito combinatorio, 
+      non faccia in tempo ad arrivare a causa dell’istantaneità della memorizzazione
+    + gli elementi di memoria di tipo edge-triggered si chiamano flip-flop
+
+** Generatore di impulsi
+  Il generatore di impulsi permette appunto di *generare impulsi brevissimi*
+  in corrispondenza del fronte di salita di un segnale a gradino
+
+  [circuito]
+
+* Flip-Flop semplice con generato di impulsi
+  Il *flip - flop semplice memorizza istantaneamente* il valore di D (input) sul fronte di salita del clock: 
+  in corrispondenza dell’impulso.
+
+  Metodologia edge-triggered di tipo *rising triggered*.
+
+  [circuito]
+
+  Il segnale *memorizzato comincia a fluire subito fuori dal flip-flop*.
+  Causa brevità dell’impulso, il segnale “non fa però in tempo” a entrare/uscire nel/dal circuito combinatorio a valle, 
+  e a modificare l’input del flip-flop
+
+* Flip-Flop più complesso (D flip-flop)
+  Il Flip-flop di tipo D usabile come input e output durante uno stesso ciclo di clock:
+  - realizzato ponendo in serie 2 D-latch: il *primo viene detto master* e il *secondo slave*
+
+  Metodologia edge-triggered:
+  - rispetto al flip-flop precedente, questo è di tipo *falling triggered*
+  - per semplicità, possiamo pensare che la memorizzazione avvenga in maniera istantanea su fronte di discesa del clock C
+
+  [circuito]
+
+  * Funzionamento
+  1. Il primo latch è aperto e pronto per memorizzare D. Il valore memorizzato Q’ fluisce fuori, 
+  ma il secondo latch è chiuso.
+  2. Il segnale del clock scende, e in questo istante il secondo latch viene aperto per memorizzare il valore di Q’
+  3. Il secondo latch è aperto, memorizza D (Q’), e fa fluire il nuovo valore Q nel circuito a valle. Il primo latch è invece chiuso, e non memorizza niente
+
+** Uso degli elementi di memoria
+  Sappiamo come costruire gli elementi di memoria. Vediamo come utilizzarli per realizzare:
+  1. Circuiti sequenziali
+  2. Register File
+  3. Memorie principali
+
+  * Circuito sequenziale sincrono
+  *Blocco logico* con linee in input e output composto da:
+  - *circuiti combinatori*
+  - *elementi di memoria clockati* (registri realizzati tramite flip-flop), che mantengono lo stato del circuito e che possono essere letti/scritti 
+    nello stesso periodo di clock
+  
+  *I circuiti combinatori* sono le componenti che calcolano funzioni che generano:
+  - i valori in output
+  - i valori da memorizzare negli elementi di memoria
+
+  * Circuiti sequenziali
+  Registro di stato realizzato con flip-flop che impiegano una metodologia *f*alling edge triggered*
+  - durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
+
+  * Tipi di circuito (Mealy vs Moore)
+  - *INPUT(ti) e OUTPUT(ti)* i valori presenti, rispettivamente, sugli input e gli
+    output dei circuiti combinatori al tempo ti 
+  - *STATE(ti)* i valori presenti nei registri di stato al tempo ti
+
+  *Circuito sequenziale di Mealy*
+  - OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+  - NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti)) 
+  
+  *Circuito sequenziale di Moore*
+  - OUTPUT(ti) = d(STATE(ti))
+  - NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti))
+
+  Definiamo quindi i due tipi di circuito:
+  
+  *Circuito sequenziale di Mealy*
+  - OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+  
+  *Circuito sequenziale di Moore*
+  - OUTPUT(ti) = d(STATE(ti))
+  - valore dell’output al tempo ti dipende solo dal valore dei registri di stato
+
+  STATE(ti) modificato alla fine del ciclo di clock precedente (ti-1) in base a:
+  - *input* a quel tempo presenti in ingresso al circuito: INPUT(ti-1)
+  - *stato* a quel tempo memorizzato nei registri: STATE(ti-1)
+
+  * Sintesi di reti sequenziali
+  Per sintetizzare il circuito sequenziale in maniera diretta basta conoscere le *tabelle di verità delle funzioni*:
+  - *OUTPUT e NEXT_STATE*
+
+  Dalle tabelle siamo poi in grado di determinare le equazioni booleane e i corrispondenti circuiti.
+
+  È possibile specificare il comportamento di un circuito sequenziale *tramite un particolare programma ad eventi*, 
+  espresso graficamente tramite un *automa a stati finiti*
+  - grafo diretto
+  - nodi *(stati)* + archi *(transizioni di stato)*
+  - etichette sui nodi e sugli archi (input/output)
