@@ -236,3 +236,166 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - grafo diretto
   - nodi *(stati)* + archi *(transizioni di stato)*
   - etichette sui nodi e sugli archi (input/output)
+
+  * Register File
+  La *Parte Operativa (Datapath)* della CPU contiene, oltre all’ALU, alcuni registri che memorizzano, all’interno della CPU, 
+  gli operandi delle istruzioni aritmetico/logiche.
+  Ogni registro è costituito da *n* flip-flop, dove *n* è il numero bit che costituiscono una Word:
+  - nel *MIPS* ogni registro è di 1 Word = 4 B = 32 b
+
+  Più registri sono organizzati in una componente nota come *Register file*:
+  - il *Register File del MIPS* contiene 32 registri (32x32=1024 flip-flop) 
+  - deve permettere: lettura di *2 registri*, e *scrittura* di 1 registro
+
+  * Singolo Registro
+  Nel Datapath della CPU, il clock non entra direttamente nei vari flip-flop:
+  - viene messo in *AND* con un segnale di controllo: Write
+
+  * Lettura del Register File
+  2 *MUX* 32:1
+  - larghi *32* bit
+
+  I controlli dei 2 MUX sono:
+  - Read Reg1 #
+  - Read Reg2 #
+
+  Nota che il Register file fornisce sempre in output una coppia di registri:
+  - *non significativi*, se i controlli Read Reg1 e Read Reg2 non lo sono
+  - in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
+
+  * Scrittura del Register File
+  *Decoder* che decodifica il segnale di controllo Write Reg (5 bit)
+  - *32* bit in output
+
+  Il segnale di *Write* (a sua volta in AND con il clock) abilita solo uno dei 32 registri
+  - il segnale di *Write* è infatti in *AND* con l’output del *Decoder*
+
+  Se il segnale di *Write è non affermato*, i possibili valori spuri in input non verranno memorizzati nel *Register file*
+
+  * Lettura/Scrittura nel Register File
+  *Domanda*: cosa succede se uno stesso registro del Register file viene acceduto in lettura e scrittura 
+  durante uno stesso ciclo di clock?
+
+
+  *Risposta*: poiché la scrittura sul registro avviene sul fronte di discesa del clock, 
+  il valore ritornato dalla lettura sarà quello memorizzato in un ciclo di clock precedente.
+
+  * Memoria principale
+  La dimensione del Register File è piccola:
+  - registri usati per memorizzare singole variabili di tipo semplice
+  - purtroppo per memorizzare dati strutturati e codice di programma, sono tipicamente necessari diversi KB o MB
+
+  *Memoria principale (RAM)*:
+  - meno veloce della memoria dei registri, ma molto più capiente
+  - è detta *Random Access Memory* perché i tempi di accesso sono indipendenti dal valore dell’indirizzo della cella di memoria acceduta
+
+  * SRAM e DRAM
+  La *SRAM* (Static RAM) è più *veloce*:
+  - per la sua realizzazione vengono usati dei *latch*
+  - è usata per realizzare *memorie veloci*, come le *memorie cache*
+  - tempi di accesso intorno a 0,5 - 2,5 ns
+
+  La *DRAM* (Dynamic RAM) è più *capiente ma più lenta*:
+  - tempi di accesso intorno a 50-70 ns
+  - non è realizzata tramite *latch*
+  - ogni bit è memorizzato tramite un *condensatore*
+  - è necessario *rinfrescare* il contenuto delle *DRAM* a intervalli di tempo prefissati
+  - è usata per realizzare *memorie capienti* come quella principale
+
+  * SRAM
+  SRAM realizzata come matrice di latch *HxW*:
+  - *larghezza* o *ampiezza W* (numero di latch per ogni cella)
+  - *altezza H* (numero di celle indirizzabili)
+  - per ragioni costruttive *W è spesso piccolo*
+  - *singolo indirizzo* per *lettura* o *scrittura*
+  - non è possibile *scrivere* e *leggere contemporaneamente*, a differenza del *Register File*
+
+  Esempio 1:
+  - *256K X 1* (256K celle da 1 bit = 256Kb)
+
+  Esempio 2:
+  - 32K X 8* ́(32K celle da 8bit=256Kb)
+
+  *Per scrivere*:
+  - Chip select *affermato*
+  - Indirizzo in *Address*
+  - *Write* enable affermato
+  - Dato in input in Din
+
+  *Per leggere*:
+  - Chip select *affermato*
+  - Indirizzo in Address
+  - Output *enable* affermato
+  - Dato in output in Dout
+
+  * Realizzazione SRAM
+  Tecniche realizzative diverse rispetto a quelle del register file:
+  - il *register file* impiega *decoder* (per selezionare il registro da scrivere) e
+    *multiplexer* (per selezionale il registro da leggere)
+
+  - con un numero elevato di celle di memoria avremmo bisogno di enormi *decoder o multiplexer*
+    + avremmo bisogno di porte AND con fan-in troppo elevato
+    + *necessari livelli multipli* di porte *AND*, con conseguente introduzione di ritardi negli accessi alla memoria
+
+  Per evitare il multiplexer in uscita:
+  - possiamo usare una linea di *bit* condivisa su cui i vari elementi di memoria sono tutti collegati (or-ed)
+  - il collegamento alla linea condivisa avviene tramite buffer a *tre stati*, 
+    che aprono o chiudono i collegamenti (se il controllo è affermato o meno). 
+  
+  In particolare il *buffer* ha due ingressi *(dato e segnale di Enable)* e una uscita:
+  - l’uscita è *uguale al dato* (zero o uno) se *Enable* è affermato
+  - l’uscita viene impedita (high-impedance state) *se Enable non è affermato*
+
+** SRAM 4x2
+  I latch di una certa colonna sono collegati alla stessa linea in output (Dout[0] e Dout[1])
+  - nell’esempio ogni elemento di memoria (D-latch) ha un *segnale di Enable* che abilita il three-state buffer interno
+
+  Il *Decoder* serve ad abilitare in *lettura/scrittura* una certa *linea della memoria*:
+  - entrambi i segnali *Write enable* ed *Enable* vengono abilitati su una sola linea di memoria (2 bit)
+
+  Chip *Enable* e *Output Enable* sono stati *omessi per semplicità* ma possono essere aggiunti con qualche porta *AND*:
+  - solo se *Chip Enable* è abilitato i segnali *Write Enable* e *Output Enable* sono significativi (servono porte AND aggiuntive)
+  - solo se *Output Enable* è affermato, la coppia Dout[0-1] dovrebbe essere abilitata ad uscire 
+    (Output Enable in AND con Enable, a sua volta determinato dal decoder)
+
+** SRAM a due livelli
+  Nel caso precedente abbiamo evitato l’uso dei *Multiplexer*, ma rimane il problema del *Decoder* grande
+  Per ovviare, decodifica degli indirizzi a due livelli.
+  Usiamo un decoder più piccolo e una batteria di piccoli Multiplexer.
+
+** DRAM
+  Gli elementi di memoria di tipo *DRAM* sono *meno costosi* e più capienti rispetto al tipo *SRAM*, ma sono più lenti.
+  La *DRAM è meno costosa*, perché è realizzata con un solo transistor per bit, e un condensatore:
+  - il condensatore possiede la carica (0/1)
+  - il *transistor* viene chiuso, trasferendo il potenziale elettrico del condensatore sulla *Bit line (output)*,
+    grazie al segnale affermato della *Word line*
+  - la specifica *Word line* è attivata sulla base dell’indirizzo di *memoria richiesto*
+
+  I *condensatori* mantengono i valori memorizzati solo per alcuni *ms*.
+  Necessario il *refresh dinamico delle DRAM*, effettuato leggendo, e subito riscrivendo i valori appena letti.
+
+
+  *DRAM* (come SRAM) realizzate con decodifica a 2 livelli:
+  - indirizzo totale di *22 bit*
+  - indirizzo spezzato in due pezzi da *11 bit*
+
+  Parte *alta* e *bassa* dell’indirizzo considerate come indirizzo di *RIGA* o di *COLONNA*, rispettivamente:
+  - indirizzo di *RIGA* ha effetto sul *Decoder*
+  - indirizzo di *COLONN*A* ha effetto sul *Mux*
+
+  Possibile accesso ottimizzato a *bit* di memoria consecutivi:
+  - contenuti nei *column latches* dopo un accesso di RIGA
+
+** SSRAM e SDRAM
+  Abbiamo visto che per diminuire la complessità dei decoder è opportuno suddividere gli indirizzi in 2 blocchi:
+  - *parte alta* per accedere una riga
+  - *parte bassa* per accedere una specifica colonna
+
+  Nota che celle consecutive hanno indirizzi che solitamente differiscono solo per la parte bassa dell’indirizzo:
+  - *quindi sono contenuti all’interno di una stessa riga selezionata con la parte alta dell’indirizzo*
+
+  - *Memoria sincrona* (col segnale di clock)
+  - E’ possibile specificare che vogliamo trasferire dalla memoria un *burst* di dati (ovvero una sequenza di celle consecutive)
+  - Ogni burst specificato da un *indirizzo di partenza*, e da una *lunghezza*
+  - Le celle del burst sono contenute all’interno di una stessa *Riga*, selezionata una volta per tutte tramite *decoder*
+  - La memoria fornisce una delle celle del *burst* a ogni *ciclo di clock*
