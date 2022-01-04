@@ -10,8 +10,8 @@
 ** DONE circuiti
 ** DONE ISA-MIMPS
 ** DONE ALU
-** TODO mult
-** TODO memorie e circuiti sequenziali
+** DONE mult
+** STRT memorie e circuiti sequenziali
 ** TODO sintesi circuiti sequenziali
 ** TODO esercizi circuiti sequenziali
 ** TODO Progetto CPU (ciclo singolo)

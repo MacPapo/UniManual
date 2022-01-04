@@ -173,7 +173,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
 
   [circuito]
 
-  * Funzionamento
+* Funzionamento
   1. Il primo latch è aperto e pronto per memorizzare D. Il valore memorizzato Q’ fluisce fuori, 
   ma il secondo latch è chiuso.
   2. Il segnale del clock scende, e in questo istante il secondo latch viene aperto per memorizzare il valore di Q’
@@ -195,11 +195,11 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - i valori in output
   - i valori da memorizzare negli elementi di memoria
 
-  * Circuiti sequenziali
+* Circuiti sequenziali
   Registro di stato realizzato con flip-flop che impiegano una metodologia *f*alling edge triggered*
   - durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
 
-  * Tipi di circuito (Mealy vs Moore)
+* Tipi di circuito (Mealy vs Moore)
   - *INPUT(ti) e OUTPUT(ti)* i valori presenti, rispettivamente, sugli input e gli
     output dei circuiti combinatori al tempo ti 
   - *STATE(ti)* i valori presenti nei registri di stato al tempo ti
@@ -225,7 +225,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - *input* a quel tempo presenti in ingresso al circuito: INPUT(ti-1)
   - *stato* a quel tempo memorizzato nei registri: STATE(ti-1)
 
-  * Sintesi di reti sequenziali
+* Sintesi di reti sequenziali
   Per sintetizzare il circuito sequenziale in maniera diretta basta conoscere le *tabelle di verità delle funzioni*:
   - *OUTPUT e NEXT_STATE*
 
@@ -237,7 +237,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - nodi *(stati)* + archi *(transizioni di stato)*
   - etichette sui nodi e sugli archi (input/output)
 
-  * Register File
+* Register File
   La *Parte Operativa (Datapath)* della CPU contiene, oltre all’ALU, alcuni registri che memorizzano, all’interno della CPU, 
   gli operandi delle istruzioni aritmetico/logiche.
   Ogni registro è costituito da *n* flip-flop, dove *n* è il numero bit che costituiscono una Word:
@@ -263,7 +263,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - *non significativi*, se i controlli Read Reg1 e Read Reg2 non lo sono
   - in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
 
-  * Scrittura del Register File
+* Scrittura del Register File
   *Decoder* che decodifica il segnale di controllo Write Reg (5 bit)
   - *32* bit in output
 
@@ -280,7 +280,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   *Risposta*: poiché la scrittura sul registro avviene sul fronte di discesa del clock, 
   il valore ritornato dalla lettura sarà quello memorizzato in un ciclo di clock precedente.
 
-  * Memoria principale
+* Memoria principale
   La dimensione del Register File è piccola:
   - registri usati per memorizzare singole variabili di tipo semplice
   - purtroppo per memorizzare dati strutturati e codice di programma, sono tipicamente necessari diversi KB o MB
@@ -289,7 +289,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - meno veloce della memoria dei registri, ma molto più capiente
   - è detta *Random Access Memory* perché i tempi di accesso sono indipendenti dal valore dell’indirizzo della cella di memoria acceduta
 
-  * SRAM e DRAM
+* SRAM e DRAM
   La *SRAM* (Static RAM) è più *veloce*:
   - per la sua realizzazione vengono usati dei *latch*
   - è usata per realizzare *memorie veloci*, come le *memorie cache*
@@ -302,7 +302,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - è necessario *rinfrescare* il contenuto delle *DRAM* a intervalli di tempo prefissati
   - è usata per realizzare *memorie capienti* come quella principale
 
-  * SRAM
+* SRAM
   SRAM realizzata come matrice di latch *HxW*:
   - *larghezza* o *ampiezza W* (numero di latch per ogni cella)
   - *altezza H* (numero di celle indirizzabili)
@@ -328,7 +328,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - Output *enable* affermato
   - Dato in output in Dout
 
-  * Realizzazione SRAM
+* Realizzazione SRAM
   Tecniche realizzative diverse rispetto a quelle del register file:
   - il *register file* impiega *decoder* (per selezionare il registro da scrivere) e
     *multiplexer* (per selezionale il registro da leggere)
