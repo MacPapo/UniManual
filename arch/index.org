@@ -28,3 +28,4 @@
 ** [[file:isamips.org][Linguaggio macchina e assembler MIPS]]
 ** [[file:alu.org][Circuiti combinatori: ALU]]
 ** [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
+** [[file:sequenziali.org][Memorie e circuiti sequenziali]]
