@@ -1,0 +1,1024 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Introduzione ad Architettura degli elaboratori</title>
+<!-- 2022-01-05 Wed 21:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Calcolatori elettronici</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. Legge di Moore</a></li>
+<li><a href="#sec-1-2">1.2. Trend</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. L&rsquo;architettura di Von Neumann</a>
+<ul class="nav">
+<li><a href="#sec-2-1">2.1. Componenti principali di un computer</a></li>
+<li><a href="#sec-2-2">2.2. Com&rsquo;è fatto un computer</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Il ruolo dell&rsquo;astrazione</a></li>
+<li><a href="#sec-4">4. Strutturazione in livelli</a>
+<ul class="nav">
+<li><a href="#sec-4-1">4.1. Sistema Operativo ( SO )</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Software applicativo e di sistema</a></li>
+<li><a href="#sec-6">6. Storia</a>
+<ul class="nav">
+<li><a href="#sec-6-1">6.1. Abaco Cinese</a></li>
+<li><a href="#sec-6-2">6.2. Macchina di Antikythera</a></li>
+<li><a href="#sec-6-3">6.3. Pascalina 1640</a></li>
+<li><a href="#sec-6-4">6.4. Leibnitz 1673</a></li>
+<li><a href="#sec-6-5">6.5. Babbage 1824</a></li>
+<li><a href="#sec-6-6">6.6. Hollerit 1890</a></li>
+<li><a href="#sec-6-7">6.7. ENIAC 1946</a></li>
+<li><a href="#sec-6-8">6.8. John Von Neumann</a></li>
+<li><a href="#sec-6-9">6.9. Mauchly &amp; Eckert</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Introduzione ad Architettura degli elaboratori</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Calcolatori elettronici</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Basati su tecnologie in rapidissima evoluzione
+Valvole → Transistor → IC = Integrated Circuit, VLSI = Very Large Scale Integration
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Legge di Moore</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Ogni 1,5 anni osserviamo il raddoppio di:
+</p>
+<ol class="org-ol">
+<li>Capacità di memoria
+</li>
+<li>Velocità del processore
+</li>
+<li>Abbattimento dei costi contemporaneamente all&rsquo;incremento di velocità
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Trend</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Incremento prestazioni e abbattimento costi
+</p>
+<ul class="org-ul">
+<li>Permette di affrontare e risolvere applicazioni sempre più complesse
+</li>
+</ul>
+<p>
+Integrazione con la rete
+</p>
+<ul class="org-ul">
+<li>Sempre nuove applicazioni informatiche
+</li>
+</ul>
+<p>
+Integrazione con la rete telefonica e cellulare
+</p>
+<ul class="org-ul">
+<li>Nuovi hw e applicazioni ( smartphone, IOT, ecc.)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> L&rsquo;architettura di Von Neumann</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Le macchine moderne sono basate sulla macchina di Von Neumann
+</p>
+
+<ul class="org-ul">
+<li>CPU ( parte operativa e parte di controllo )
+</li>
+<li>Memoria ( per dati e programmi )
+</li>
+<li>Periferiche di input e output
+</li>
+</ul>
+
+<p>
+Il BUS è il canale di cunicazione che consente ai dati di transitare fra diversi componenti dell&rsquo;elaboratore
+</p>
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Componenti principali di un computer</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>Input/Output ( I/O )
+<ul class="org-ul">
+<li>Mouse, tastiera ( I )
+</li>
+<li>Video, stampante ( O )
+</li>
+<li>Dischi ( I/O )
+</li>
+<li>CD e DVD ( I/O o I )
+</li>
+<li>Rete ( I/O )
+</li>
+</ul>
+</li>
+
+<li>Memoria principale
+<ul class="org-ul">
+<li>DRAM ( Memoria dinamica ), SRAM ( Memoria Statica )
+</li>
+</ul>
+</li>
+
+<li>Processore ( CPU )
+<ul class="org-ul">
+<li>Parte operativa ( Datapath )
+</li>
+<li>Parte controllo ( control )
+</li>
+<li>Bus
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Com&rsquo;è fatto un computer</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>I/O
+<ul class="org-ul">
+<li>Serve per comunicare con l&rsquo;esterno
+</li>
+<li>Include dispositivi di memoria secondaria ( memoria non volatile ), acceduti come dispositivi di I/O
+</li>
+</ul>
+</li>
+</ul>
+<ul class="org-ul">
+<li>Memoria principale
+<ul class="org-ul">
+<li>Usata per memorizzare programmi e dati durante l&rsquo;esecuzione ( concetti di stored-program introdotto da Von Neumann )
+</li>
+</ul>
+</li>
+<li>Processore
+<ul class="org-ul">
+<li>È l&rsquo;esecutore delle istruzioni appartenenti ad un&rsquo;ISA
+</li>
+<li>ISA ( Instruction Set Architecture ) definisce quindi il linguaggio ( povero ) comprensibile dal processore
+</li>
+<li>Le istruzioni sono lette dalla memoria, modificano dati in memoria o agiscono sull&rsquo;I/O
+</li>
+<li>Decomponibile in :
+<ul class="org-ul">
+<li>Parte Controllo → Mente
+</li>
+<li>Parte Operativa → Braccio
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Il ruolo dell&rsquo;astrazione</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>L&rsquo;informatica si basa sul concetto di astrazione
+</li>
+<li>L&rsquo;astrazione è una tecnica di semplificazione
+</li>
+<li>Il termine astrazione si riferisce alla distinzione tra le proprietà esterne di un&rsquo;entità e i dettagli ella sua struttura interna
+</li>
+<li>L&rsquo;astrazione permette di ignorare i particolari interni di un congegno complesso e di usarlo come una singola unità
+</li>
+</ul>
+
+<p>
+Per progettare o capire l&rsquo;architettura di un sistema, oppure per programmare semplicemente un sistema, abbiamo bisogno di astrarre.
+</p>
+
+<p>
+Se scendiamo di livello, troviamo fili e milioni di transistor, diventa così impossibile comprenderne il funzionamento
+</p>
+
+<ul class="org-ul">
+<li>I livelli più alti virtualizzano, ovvero offrono una vista virtuale dei livelli inferiori
+<ul class="org-ul">
+<li>Macchina virtuale o astratta
+<ul class="org-ul">
+<li>Appare più potente e semplice da programmare della macchina sottostante
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Strutturazione in livelli</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Tradizionale vista a livelli dell&rsquo;architettura hw/sw di un computer. Ogni livello mette a disposizione :
+</p>
+
+<ul class="org-ul">
+<li>Uno o più linguaggi riconosciuti
+</li>
+<li>Uno o più interpreti o compilatori per tradurre tra linguaggi
+
+<p>
+&lt;aside&gt;
+🛠 Livello 4: Linguaggio ad alto livello
+Livello 3: Assembler
+Livello 2: Sistema Operativo
+Livello 1: Linguaggio Macchina ( ISA )
+Livello 0: Hardware/Firmware
+</p>
+
+<p>
+&lt;/aside&gt;
+</p>
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Sistema Operativo ( SO )</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>Per ora pensiamo al S.O come un livello il cui linguaggio è l&rsquo;ISA estesa con nuove istruzioni ad alto livello per gestire risorse critiche
+<ul class="org-ul">
+<li>Offre nuove istruzioni oltre a quella base dell&rsquo;ISA
+</li>
+</ul>
+<ul class="org-ul">
+<li>Livello Hardware/Firmware
+<ul class="org-ul">
+<li>Livello della logica digitale ( HW )
+<ul class="org-ul">
+<li>Fili e porte logiche ( Gate ) realizzati tramite transistor ( speciali interruttori )
+</li>
+<li>Gate ( fili ) elaborano ( trasportano ) segnali binari ( 0 / 1 )
+</li>
+<li>Tramite questi segnali è possibile rappresentare qualsiasi tipo di informazione
+</li>
+<li>Interconnettendo gate e fili è possibile realizzare funzioni complesse
+</li>
+<li>È anche possibile realizzare elementi di memoria ( utilizzati per dati e programmi )
+</li>
+</ul>
+</li>
+<li>Livello della microarchitettura ( FW )
+<ul class="org-ul">
+<li>Costruito sopra il livello della logica digitale, si occupa di interpretare ed eseguire le istruzioni del livello ISA
+</li>
+<li>È il livello di macchina nuda che appare al programmatore di sistema
+</li>
+<li>comprende un insieme di istruzioni che di solito sono diverse per ogni processore
+<ul class="org-ul">
+<li>Problema della portabilità binaria
+</li>
+</ul>
+</li>
+<li>La sintassi è adatta ad essere interpretata facilmente dal livello sottostante
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Livello Linguaggio Macchina ( ISA )
+
+<p>
+Le istruzioni sono stringhe di Bit con formato ben determinato per permettere la facile individuazione di codice e operandi delle istruzioni 
+</p>
+
+<ul class="org-ul">
+<li>I codici individuano l&rsquo;operazione elementare che l’istruzione dovrà eseguire
+</li>
+<li>Gli operandi si riferiscono alle locazioni di memoria che contengono i dati su cui eseguire l&rsquo;operazione e le locazioni dove memorizzare i risultati
+</li>
+</ul>
+</li>
+<li>Livello Linguaggio Assembler
+<ul class="org-ul">
+<li>Offre al programmatore di sistema una vista più &ldquo;umana&rdquo; del livello macchina
+<ul class="org-ul">
+<li>Istruzioni espresse con stringhe di carattere mnemoniche invece di stringhe binarie
+</li>
+<li>Traduzione realizzata dall’assemblatore ( è una speciale compilatore ) rispetto al livello macchina
+</li>
+</ul>
+</li>
+<li>L&rsquo;assemblatore è uno dei primi software di sistema realizzato per facilitare la programmazione dei calcolatori
+</li>
+</ul>
+</li>
+<li>Livello Linguaggio ad alto livello
+<ul class="org-ul">
+<li>C, C++, Modula 3, Java, &#x2026;
+</li>
+<li>Permette al programmatore una maggiore astrazione rispetto ai livelli sottostanti della macchina
+</li>
+<li>Ha di solito bisogno di un traduttore ( compilatore )
+</li>
+<li>Per alcuni linguaggi esistono interpreti: per esempio Java
+</li>
+<li>È il livello solitamente usato per produrre software
+</li>
+<li>Tale livello permette di realizzare la portabilità tra processori con diversa ISA
+<ul class="org-ul">
+<li>Basta che esista il compilatore/interprete implementato per la nuova ISA
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Software applicativo e di sistema</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Compilatori, assemblatori, OS, Word processor, ecc&#x2026; è tutto software
+</p>
+<ul class="org-ul">
+<li>Il software di sistema serve a
+<ul class="org-ul">
+<li>Produrre altro software ( sia di sistema che applicativo )
+</li>
+<li>Permettere l&rsquo;esecuzione di altro software
+</li>
+</ul>
+</li>
+<li>Il software applicativo
+<ul class="org-ul">
+<li>Costruisce la maggior parte del software
+</li>
+<li>Lo scopo di questo software dipende dallo specifico campo applicativo
+<ul class="org-ul">
+<li>Applicazioni bancarie
+</li>
+<li>CAD
+</li>
+<li>Word processor
+</li>
+<li>Foglio elettronico
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Storia</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Abaco Cinese</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>L&rsquo;abaco cinese può essere considerato il primo modello matematico di calcolo
+</li>
+<li>In questo modello si possono formalizzare le quattro operazioni
+<ul class="org-ul">
+<li>Somma
+</li>
+<li>Sottrazione
+</li>
+<li>Prodotto
+</li>
+<li>Divisione intera
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Macchina di Antikythera</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li>È il più antico calcolatore meccanico conosciuto, databile intorno al 100 - 150 A.C
+</li>
+<li>Si tratta di un sofisticato planetario, mosso da ruote dentate, che serviva per calcolare il sorgere del sole, le fasi lunari,
+i movimenti dei 5 pianeti allora conosciuti, gli equinozi, i mesi e i giorni della settimana.
+</li>
+<li>Trae il nome dall&rsquo;isola greca Anticitera ( Cerigotto ) presso cui è stata rinvenuta.
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Pascalina 1640</h3>
+<div class="outline-text-3" id="text-6-3">
+<ul class="org-ul">
+<li>Blaise Pascal progetta e realizza la Pascalina: Calcolatore meccanico per addizioni
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Leibnitz 1673</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+Macchina per addizioni, sottrazioni, moltiplicazioni, divisioni e radice quadrata
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Babbage 1824</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+Macchina &ldquo;General-purpose&rdquo; le cui funzionalità dipendono da come è progettata
+</p>
+</div>
+
+
+<div id="outline-container-sec-6-5-1" class="outline-4">
+<h4 id="sec-6-5-1"><span class="section-number-4">6.5.1</span> Ada Lovelace Byron ( 1815 - 1852 )</h4>
+<div class="outline-text-4" id="text-6-5-1">
+<ul class="org-ul">
+<li>Figlia del noto poeta inglese
+</li>
+<li>Collabora con Babbage
+</li>
+<li>Scrive il primo software della storia
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Hollerit 1890</h3>
+<div class="outline-text-3" id="text-6-6">
+<ul class="org-ul">
+<li>Fondatore dell&rsquo;IBM, inventa l&rsquo;uso delle carte perforate per automatizzare la tabulazione dei dati di un censimento
+</li>
+<li>Il costo della tabulazione risultò essere maggiore del 98% rispetto al censimento precedente,
+dovuto in parte alla tentazione di usare al massimo la macchina e tabulare un maggior numero di dati
+</li>
+<li>I risultati del censimento furono ottenuti in tempo molto minore del precedente
+</li>
+</ul>
+</div>
+
+
+<div id="outline-container-sec-6-6-1" class="outline-4">
+<h4 id="sec-6-6-1"><span class="section-number-4">6.6.1</span> Tra &rsquo;800 e &rsquo;900</h4>
+<div class="outline-text-4" id="text-6-6-1">
+<ul class="org-ul">
+<li>Nel 1890 venne utilizzata una macchina per il conteggio tramite schede perforate che trovò largo uso negli uffici statunitensi per il censimento di quello stesso anno.
+</li>
+<li>Questo tipo di macchine si diffusero rapidamente sia negli uffici governativi che in quelli privati
+</li>
+<li>Venne fondata una società per la commercializzazione di quelle che venivano chiamate macchine meccanografiche
+</li>
+<li>Questa società diventerà nel 1924 la International Business Machine ( IBM )
+</li>
+</ul>
+<ul class="org-ul">
+<li>Schede perforate
+<ul class="org-ul">
+<li>L&rsquo;ingresso del calcolatore nel mondo del lavoro risale all&rsquo;inizio del 1900; la tecnologia delle macchine di calcolo era di tipo meccanografico
+</li>
+<li>Con queste macchine si eseguivano calcoli ad una discreta velocità ( per quei tempi ), dell&rsquo;ordine delle 60 operazioni al minuto; la loro gestione tuttavia era molto complessa
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> ENIAC 1946</h3>
+<div class="outline-text-3" id="text-6-7">
+<ul class="org-ul">
+<li>Electronic Numerical Integrator and Calculator
+</li>
+<li>Considerato il primo calcolatore a valvole general-purpose programmabile
+</li>
+<li>Creata da Mauchly &amp; Eckert (Univ. Pennsylvania)
+</li>
+<li>18000 valvole - 30 tons
+</li>
+<li>140 KW - 24x3x2 metri
+</li>
+<li>Programmazione tramite inserimento di cavi e azionamento di interruttori
+</li>
+<li>Dati inseriti con schede perforate
+<ul class="org-ul">
+<li>Per programmare ENIAC era necessario modificare la disposizione di un grande numero di fili collegati a uno dei suoi pannelli.
+</li>
+<li>Programmare ENIAC era una questione non solo di algoritmi ma anche di saldature e collegamenti elettrici, rendendo l’operazione molto difficoltosa
+</li>
+</ul>
+</li>
+</ul>
+<ul class="org-ul">
+<li>Enigma
+
+<p>
+In Germania, durante la seconda guerra mondiale, venne utilizzata Enigma, una macchina crittografica per cifrare le comunicazioni, inventata da un polacco e finita misteriosamente in mani naziste
+</p>
+</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>1943: In Inghilterra COLOSSUS, progettato da Alan Turing, ha un ruolo importante per decifrare i codici segreti usati dall&rsquo;armata tedesca nella seconda guerra mondiale
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-8" class="outline-3">
+<h3 id="sec-6-8"><span class="section-number-3">6.8</span> John Von Neumann</h3>
+<div class="outline-text-3" id="text-6-8">
+<ul class="org-ul">
+<li>Inventò il concetto di Stored-program computer
+<ul class="org-ul">
+<li>Constatò che era noioso riprogrammare l&rsquo;ENIAC
+</li>
+<li>Poiché anche i programmi sono rappresentabili in binario, esattamente come i dati, propose di porre programmi e dati assieme in memoria
+</li>
+<li>ISA: Store-program computer costruito da Von Neumann a Princeton
+</li>
+<li>In pratica il calcolatore diventa un elaboratore capace di trattare qualsiasi informazione in codice binario
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-9" class="outline-3">
+<h3 id="sec-6-9"><span class="section-number-3">6.9</span> Mauchly &amp; Eckert</h3>
+<div class="outline-text-3" id="text-6-9">
+<ul class="org-ul">
+<li>Nel 1946 progettano e costruiscono l&rsquo;EDVAC ( dell&rsquo; Electronic Discrete Variable Automatic Computer ), basato sull&rsquo;architettura di Von Neumann
+</li>
+<li>Crearono una ditta diventata poi l&rsquo;Unisys
+</li>
+<li>Cercarono di ottenere il brevetto per l&rsquo;invenzione del calcolatore elettronico, ma persero la causa.
+</li>
+<li>Il brevetto fu invece attribuito ad Atanasoff, che aveva costruito una macchina special-purpose ( ABC ) agli inizi degli &rsquo;40
+</li>
+</ul>
+<ul class="org-ul">
+<li>Sviluppo commerciale
+<ul class="org-ul">
+<li>Per arrivare al primo successo commericale
+<ul class="org-ul">
+<li>Univac 1 ( 1951 ) - Universal Automatic Computer
+<ul class="org-ul">
+<li>Prodotto dalla ditta fondata da Mauchly &amp; Eckert
+</li>
+<li>Prodotto in 48 esemplari, venduto a 1M $
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>IBM entrò nel mercato successivamente
+<ul class="org-ul">
+<li>IBM 701 ( 1952 )
+</li>
+</ul>
+</li>
+<li>Gli anni 50 videro l&rsquo;avvento dei transistor
+<ul class="org-ul">
+<li>Transistor inventati nel 1948 da Bardeen, Brattain, Shockley
+</li>
+<li>Primo computer costruito al M.I.T. di boston alla fine degli anni &rsquo;50
+</li>
+<li>Agli inizi degli anni &rsquo;60, l&rsquo;IBM costruì il 7090 ( basato su transistor invece che su valvole come il 709 )
+</li>
+<li>La DEC, una ditta fondata da Olsen, un ricercatore del M.I.T. , nel 1961 commercializzò il PDP-1 basato su transistor
+</li>
+</ul>
+</li>
+<li>IBM S/360 ( 1964 )
+<ul class="org-ul">
+<li>Famiglia di computer
+</li>
+<li>Variabili in prezzo e prestazioni
+</li>
+<li>Stessa architettura astratta
+</li>
+<li>Capacità di simulare ISA di altri modelli IBM precedenti
+</li>
+</ul>
+</li>
+<li>DEC PDP-8 ( 1965 )
+<ul class="org-ul">
+<li>Il primo minicomputer
+</li>
+<li>Venduti circa 50000 esemplari
+</li>
+<li>Costo contenuto ( solo 16000$ )
+</li>
+</ul>
+</li>
+<li>Avvento circuiti integrati e VLSI
+<ul class="org-ul">
+<li>Invenzione dei circuiti integrati su silicio dovuto a Noyce nel 1958
+</li>
+<li>Negli anni &rsquo;70, famiglia IBM S/360 e DEC PDP-11, costruiti con circuiti integrati
+</li>
+<li>Negli anni &rsquo;80, VLSI ( Very Large Scale Integration ) ha permesso di mettere sullo stesso chip
+<ul class="org-ul">
+<li>10.000, 100.000, e finalmente diversi milioni di transistor
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Negli anni &rsquo;80
+<ul class="org-ul">
+<li>I prezzi si abbassano
+</li>
+<li>Microprocessori ( CPU su singolo chip )
+</li>
+<li>Avvento dei Personal Computer
+<ul class="org-ul">
+<li>Apple, Apple ][ , PC IBM ( 1981 )
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Metà anni &rsquo;80
+<ul class="org-ul">
+<li>Architettura RISC, che prendono il poso delle complicate architetture CISC
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>
+L&rsquo;algoritmo impiegato nei calcolatori per sottrarre numeri binari
+</p>
+
+<p>
+Viene utilizzata una particolare rappresentaziones
+</p>
+
+
+<ul class="org-ul">
+<li>Caratteristiche delle rappresentazioni
+<ul class="org-ul">
+<li>Bilanciamento: Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
+</li>
+<li>Numero di zeri: Le rappresentazioni in Modulo e Segno, e quella in Complemento a Uno, hanno 2 rappresentazioni per lo zero
+</li>
+<li>Semplicità delle operazioni: Per il Modulo e segno bisogna prima guardare i segni e confrontare i moduli, per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre.
+</li>
+</ul>
+
+<p>
+&gt; Il complemento a uno non permette di sommare numeri negativi
+&gt; 
+</p>
+</li>
+<li>Complemento a 2
+
+<p>
+La rappresentazione in complemento a 2 è quella adottata dai calcolatori per i numeri interi con segno ( signed )
+</p>
+
+<p>
+Il Bit più significativo corrisponde al segno ( 0 positivo, 1 negativo )
+</p>
+
+<ul class="org-ul">
+<li>Numeri relativi ( signed ) rappresentabili su 32Bit
+</li>
+</ul>
+</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>Numeri relativi ( signed ) rappresentabili su 64Bit:
+</li>
+</ul>
+
+
+
+<ul class="org-ul">
+<li>Rappresentazione
+
+<p>
+Rappresentazione di numeri in complemento a 2 su n Bit dei numeri signed:
+</p>
+</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>Valore
+
+<p>
+Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
+</p>
+
+<ul class="org-ul">
+<li>Per quanto riguarda i numeri negativi, per ottenere direttamente il valore di un numero negativo su n posizioni, basta considerare
+<ul class="org-ul">
+<li>Il Bit di segno ( = 1 ) in posizione \(n-1\) con peso : \(-2^{n-1}\)
+</li>
+<li>Tutti gli altri bit in posizione \(i\\) con peso \(2^i\)
+</li>
+</ul>
+</li>
+</ul>
+</li>
+
+<li>Cambio di segno
+
+<p>
+Dato un numero positivo \(N\), con bit di segno uguale a 0
+</p>
+
+<p>
+Per ottenere la rappresentazione in complemento a 2 di \(-N\) è possibile impiegare equivalentemente
+</p>
+
+<ul class="org-ul">
+<li>Algoritmo 1: Invertire tutti i bit ( ovvero Complemento a uno ) e somma 1
+</li>
+<li>Algoritmo 2: Invertire tutti i bit a sinistra della cifra 1 meno significativa
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-05 Wed 21:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

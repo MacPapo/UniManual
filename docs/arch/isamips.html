@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Linguaggio macchina e assembler MIPS</title>
+<!-- 2022-01-05 Wed 21:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Istruzioni e Linguaggio Macchina</a></li>
+<li><a href="#sec-2">2. Concetto di &ldquo;Stored Program&rdquo;</a></li>
+<li><a href="#sec-3">3. Livello di astrazione</a></li>
+<li><a href="#sec-4">4. Istruzioni Aritmetiche del MIPS</a></li>
+<li><a href="#sec-5">5. Registri e Memoria</a></li>
+<li><a href="#sec-6">6. Linguaggio Macchina</a>
+<ul class="nav">
+<li><a href="#sec-6-1">6.1. Istruzioni di controllo</a></li>
+<li><a href="#sec-6-2">6.2. Riassumendo</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Linguaggio macchina e assembler MIPS</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Istruzioni e Linguaggio Macchina</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I <b>Linguaggi Macchina</b> sono composti da <b>istruzioni macchina</b>,
+codificate in binario, con <b>formato</b> ben definito
+</p>
+
+<ul class="org-ul">
+<li>Processori diversi hanno linguaggio macchina simili
+</li>
+<li>Scopo: massimizzare le prestazioni
+<ul class="org-ul">
+<li>Veloce interpretazione da parte del processore
+</li>
+<li>Efficace traduzione/compilazione di programmi ad alto livello
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Concetto di &ldquo;Stored Program&rdquo;</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Istruzioine sono stringhe di bit
+Programmi: sequenza di istruzioni
+Programmi (come i dati) memorizzati in memoria
+</p>
+<ul class="org-ul">
+<li>La <b>CPU</b> legge le istruzioni dalla memoria (come i dati)
+</li>
+</ul>
+
+<p>
+<b>Ciclo macchina</b> ==&gt; <b>FETCH</b> - <b>DECODE</b> - <b>EXECUTE</b>
+</p>
+<ul class="org-ul">
+<li><b>CPU legge</b> (<b>FETCH</b>): L&rsquo;istruzione corrente (indirizzata dal <b>PC</b>, ovvero <b>Program Counter</b>),
+e la pone in un registro speciale interno.
+</li>
+<li><b>CPU</b> usa i bit dell&rsquo;istruzione per <b>controllare</b> (decodificare) le azioni da svolgere,
+e su questa base <b>esegue</b> l&rsquo;istruzione
+</li>
+<li><b>CPU</b> determina la <b>prossima</b> istruzione e ripetere il ciclo
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Livello di astrazione</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Livelli e Linguaggi
+</p>
+<ul class="org-ul">
+<li>Linguaggio ad <b>Alto Livello</b>
+</li>
+<li>Linguaggio <b>Assembler</b>
+</li>
+<li>Linguaggio <b>Macchina</b>
+</li>
+</ul>
+
+<p>
+Il linguaggio più astratto omette dettagli, ma ci permette di trattare la complessità
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Istruzioni Aritmetiche del MIPS</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<b>MIPS</b>
+L&rsquo;<b>instruction set</b> del <b>MIPS</b> è simile a quello di altre architetture <b>RISC</b> sviluppate dal 1980
+</p>
+
+<p>
+Le istruzioni aritmetiche del <b>MIPS</b> permettono solo <b>operazioni elementari</b> (<b>add, sub, mult, div</b>)
+tra coppie di operandi a 32 BIT.
+</p>
+
+<p>
+Le istruzioni <b>MIPS</b> operano su particolari <b>operandi</b> in memoria denominati <b>registri</b>,
+la cui lunghezza è di 32 BIT = 4 BYTE = 1 WORD
+</p>
+
+<p>
+Tutte le istruzioni hanno 3 operandi
+l&rsquo;ordine degli operandi è fisso
+</p>
+<ul class="org-ul">
+<li>L&rsquo;operando destinazione è in prima posizione
+</li>
+</ul>
+
+<p>
+Esempio:
+</p>
+<ul class="org-ul">
+<li>C code:
+<pre class="example">
+    A = B + C
+</pre>
+</li>
+<li>MIPS code:
+<pre class="example">
+    add $8, $9, $10
+</pre>
+</li>
+</ul>
+
+<p>
+Principio di progetto: <b>semplicità favorisce la regolarità</b>
+</p>
+
+<p>
+Ma la regolarità può complicare le cose&#x2026;
+</p>
+<ul class="org-ul">
+<li>C code:
+<pre class="example">
+    A = B + C + D;
+    E = F - A;
+</pre>
+</li>
+<li>MIPS code
+<pre class="example">
+    add $8, $4, $5
+    add $8, $8, $6
+    sub $9, $7, $8
+</pre>
+</li>
+</ul>
+
+<p>
+Operandi = 32 <b>REGISTRI</b> grandi <b>4B</b>
+</p>
+<ul class="org-ul">
+<li>$0, $1, $2&#x2026;..
+</li>
+</ul>
+
+<p>
+Principio di progetto: più piccolo è anche più veloce
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Registri e Memoria</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Le istruzioni aritmetiche operano su registri
+</p>
+<ul class="org-ul">
+<li>Compilatori associa variabili con registri
+</li>
+<li><b>Register File</b> fa parte del <b>Datapath</b> del processore
+</li>
+</ul>
+
+<p>
+Cosa succede con programmi con tanti dati (tante variabili, o array)?
+</p>
+<ul class="org-ul">
+<li>Usiamo la memoria centrale
+</li>
+<li>Memoria <b>MIPS</b> indirizzata al BYTE
+</li>
+</ul>
+
+<p>
+sw (Store Word):  reg ==&gt; word in memoria
+lw (Load Word):   word in memoria ==&gt; reg
+</p>
+
+<p>
+Esempio:
+</p>
+<ul class="org-ul">
+<li>C code:
+<pre class="example">
+    A[8] = h + A[8];
+</pre>
+</li>
+<li>MIPS code:
+<pre class="example">
+    lw  $15, 32($4)
+    add $15, $5, $15
+    sw  $15, 32($4)
+</pre>
+</li>
+</ul>
+
+<p>
+Indirizzo della word in memoria &amp;A[8]: $4 +32 -&gt; displacement
+<b>Nota</b> che <b>sw</b> ha la destinazione come ultimo operando
+<b>Ricorda</b> che gli operandi delle istruzioni aritmetiche sono registri, non celle di memoria!
+</p>
+
+<p>
+<b>MIPS</b>
+</p>
+<ul class="org-ul">
+<li><b>load/store</b> word, con indirizzamento al byte
+</li>
+<li>aritmetica solo su registri
+</li>
+</ul>
+
+<p>
+Istruzioni
+</p>
+<pre class="example">
+  add $4, $5, $6
+  sub $4, $5, $6
+  lw  $4, 100($5)
+  sw  $4, 100($5)
+</pre>
+
+<p>
+Significato
+</p>
+<pre class="example">
+  $4 = $5 + $6
+  $4 = $5 - $6
+  $4 = Memory[$5 + 100]
+  Memory[$5 + 100] = $4
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Linguaggio Macchina</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Anche le istruzioni sono rappresentate in memoria con 1 word (4B)
+</p>
+
+<p>
+Formato R-Type per le istruzioni aritmetico-logiche, è formato da:
+</p>
+<ul class="org-ul">
+<li>op: operazione base dell&rsquo;istruzione ( 6 bit )
+</li>
+<li>rs: registro del primo operando ( 5 bit )
+</li>
+<li>rt: registro del secondo operando ( 5 bit )
+</li>
+<li>rd: registro di destinazione, che contiene quindi il risultato dell&rsquo;operazione ( 5 bit )
+</li>
+<li>shamt: utilizzato pe le istruzioni di shift, posto a zero per le altre istruzioni ( 5 bit)
+</li>
+<li>funct: seleziona la specifica variante dell&rsquo;operazione base definita nel campo op ( 6 bit )
+</li>
+</ul>
+
+<p>
+L&rsquo;insieme dei bit costituiscono 32 bit ovvero 4B
+</p>
+
+<p>
+Formato istruzioni lw e sw
+</p>
+<ul class="org-ul">
+<li>Necessario introdurre un nuovo tipo di formato
+</li>
+<li><b>I-TYPE</b> (Immediate Type)
+</li>
+<li>Diverso dal formato <b>R-TYPE</b> usato per le istruzioni aritmetiche-logiche
+</li>
+</ul>
+
+<p>
+Compromesso di progetto
+</p>
+<ul class="org-ul">
+<li>Anche lw/sw sono lunghe 4B
+</li>
+<li>Displacement nell&rsquo;istruzione (<b>operando immediato</b> = 2B)
+</li>
+</ul>
+
+<p>
+Esempio: lw $9, 32($18)
+</p>
+<ul class="org-ul">
+<li>op: operazione base dell&rsquo;istruzione ( 6 bit )
+</li>
+<li>rs: registro del primo operando, es. 18 ( 5 bit ) 
+</li>
+<li><b>rt</b>: in questo caso è il registro di destinazione, es. 9 ( 5 bit )
+</li>
+<li>16 bit number: guardando l&rsquo;esempio è 32
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Istruzioni di controllo</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+Istruzioni per prendere decisioni sul futuro
+</p>
+<ul class="org-ul">
+<li>Alterano il controllo di flusso (sequenziale)
+</li>
+<li>Cambiano quindi la prossima istruzione da eseguire (<b>PC</b>)
+
+<p>
+Istruzione <b>MIPS</b> di <b>salto condizionato</b>:
+</p>
+<pre class="example">
+      add $4,$5,$6      $4 = $5 + $6        
+      sub $4,$5,$6      $4 = $5 - $6
+
+      lw $4,100($5)     $4 = Memory[$5+100]
+      sw $4,100($5)     Memory[$5+100] = $4
+
+      bne $4,$5,Label   Se $s4 != $s5, prossima istr. caricata dall’indirizzo Label
+      beq $4,$5,Label   Se $s4  = $s5, prossima istr. caricata dall’indirizzo Label
+</pre>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Riassumendo</h3>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-05 Wed 21:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

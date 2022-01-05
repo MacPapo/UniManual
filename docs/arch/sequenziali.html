@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Memorie e circuiti sequenziali</title>
+<!-- 2022-01-05 Wed 21:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Circuiti combinatori vs sequenziali</a></li>
+<li><a href="#sec-2">2. Elementi di memoria</a></li>
+<li><a href="#sec-3">3. S-R Latch</a></li>
+<li><a href="#sec-4">4. Clock</a></li>
+<li><a href="#sec-5">5. Unità di misura</a></li>
+<li><a href="#sec-6">6. Latch clockato (D-latch)</a></li>
+<li><a href="#sec-7">7. Diagramma temporale del D-latch</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. Ritardi nella propagazione dei segnali nei circuiti</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Periodo del ciclo di clock</a></li>
+<li><a href="#sec-9">9. D-latch clockato: fenomeno della trasparenza</a></li>
+<li><a href="#sec-10">10. Elemento di memoria usato come input e output</a>
+<ul class="nav">
+<li><a href="#sec-10-1">10.1. Metodologia di timing</a></li>
+<li><a href="#sec-10-2">10.2. Generatore di impulsi</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. Flip-Flop semplice con generato di impulsi</a></li>
+<li><a href="#sec-12">12. Flip-Flop più complesso (D flip-flop)</a></li>
+<li><a href="#sec-13">13. Funzionamento</a>
+<ul class="nav">
+<li><a href="#sec-13-1">13.1. Uso degli elementi di memoria</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. Circuiti sequenziali</a></li>
+<li><a href="#sec-15">15. Tipi di circuito (Mealy vs Moore)</a></li>
+<li><a href="#sec-16">16. Sintesi di reti sequenziali</a></li>
+<li><a href="#sec-17">17. Register File</a></li>
+<li><a href="#sec-18">18. Scrittura del Register File</a></li>
+<li><a href="#sec-19">19. Memoria principale</a></li>
+<li><a href="#sec-20">20. SRAM e DRAM</a></li>
+<li><a href="#sec-21">21. SRAM</a></li>
+<li><a href="#sec-22">22. Realizzazione SRAM</a>
+<ul class="nav">
+<li><a href="#sec-22-1">22.1. SRAM 4x2</a></li>
+<li><a href="#sec-22-2">22.2. SRAM a due livelli</a></li>
+<li><a href="#sec-22-3">22.3. DRAM</a></li>
+<li><a href="#sec-22-4">22.4. SSRAM e SDRAM</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Memorie e circuiti sequenziali</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Circuiti combinatori vs sequenziali</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I <b>circuiti combinatori</b> sono in grado di calcolare funzioni che dipendono <b>solo</b> dai dati in <b>input</b>
+</p>
+
+<p>
+I <b>circuiti sequenziali</b> sono invece in grado di calcolare funzioni che dipendono <b>anche</b> da uno <b>stato</b>
+ovvero, che dipendono anche da informazioni memorizzate in <b>elementi di memoria</b> interni
+</p>
+
+<ul class="org-ul">
+<li>In generale, la funzione calcolata dal circuito sequenziale ad un dato istante dipende dalla
+<b>sequenza temporale</b> dei valori in input al circuito
+</li>
+<li>La <b>sequenza temporale</b> determina infatti il valore memorizzato nello <b>stato</b>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Elementi di memoria</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Per realizzare circuiti sequenziali è necessario un elemento di <b>memoria</b> per memorizzare lo <b>stato</b>
+</p>
+
+<p>
+Possiamo organizzare le porte logiche in modo da realizzare un elemento di memoria?
+</p>
+<ul class="org-ul">
+<li>Si, un elemento in grado di memorizzare un singolo bit è il <b>LATCH</b>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> S-R Latch</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+L&rsquo;<b>S-R Latch</b> è un circuito composto da 2 porte NOR concatenate
+</p>
+<ul class="org-ul">
+<li><b>S</b> sta per <b>Set</b>
+</li>
+<li><b>R</b> sta per <b>Reset</b>
+</li>
+</ul>
+<p>
+Anche se <b>(S,R)=(0,0)</b>, gli output del latch possono comunque essere diversi
+</p>
+<ul class="org-ul">
+<li>l&rsquo;<b>output</b> è infatti il valore memorizzato nel latch
+</li>
+<li>verificare che il latch a <b>sinistra memorizza il valore 0</b>, mentre quello a <b>destra il valore 1</b>
+</li>
+</ul>
+
+<p>
+Poniamo per esempio (S,R)=(1,0) per effettuare il <b>setting del latch a sinistra</b>
+</p>
+<ul class="org-ul">
+<li>il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando S=0)
+</li>
+</ul>
+
+<p>
+Poniamo per esempio (S,R)=(0,1) per effettuare il <b>resetting del latch a destra</b>
+</p>
+<ul class="org-ul">
+<li>il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando R=0)
+</li>
+</ul>
+
+
+<p>
+La combinazione (S,R) = (0,0) viene detta combinazione di riposo, 
+perché semplicemente mantiene il valore memorizzato in precedenza
+</p>
+
+<p>
+La combinazione di valori (S,R)=(1,1) non deve <b>mai essere presentata al latch</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Clock</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+I segnali <b>S</b> e <b>R</b> devono essere stabili, e valere, (1,0) o (0,1) per poter memorizzare un valore corretto
+Ma (S,R) sono di solito calcolati da un circuito combinatorio
+</p>
+<ul class="org-ul">
+<li>l&rsquo;output del circuito diventa stabile dopo un certo intervallo di tempo
+</li>
+<li>l&rsquo;<b>intervallo di tempo</b> dipende dal numero di porte attraversate e dal ritardo delle porte
+</li>
+<li>bisogna evitare che durante questo intervallo, gli <b>output intermedi</b> del circuito vengano presentati al latch
+per la memorizzazione
+</li>
+</ul>
+
+<p>
+<b>Soluzione</b> =&gt;  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l&rsquo;inizio di un gradino e quello successivo
+              viene scelto abbastanza grande da assicurare la stabilità degli output del circuito
+</p>
+<ul class="org-ul">
+<li>usiamo il <b>clock</b> per abilitare la scrittura nei latch
+</li>
+<li>il clock determina il ritmo dei calcoli e delle relative operazioni di memorizzazione
+</li>
+<li>il ciurcuito diventa sincrono
+</li>
+</ul>
+
+<p>
+[circuito]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Unità di misura</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Se il periodo T è espresso in <b>sec</b>
+</p>
+<ul class="org-ul">
+<li>Frequenza di clock: Freq = 1/T Hz (numero di cicli al secondo)
+</li>
+</ul>
+
+<p>
+Se T = 10 nsec qual è la franquenza del clock?
+</p>
+<ul class="org-ul">
+<li>1 nsec = 10^-9 sec
+</li>
+<li>Freq = 1/T = 1/(10*10-9)= 108Hz=108Hz=102 *106 Hz=100 MHz
+</li>
+</ul>
+
+<p>
+Se T = 1 nsec, qual è la differenza del clock?
+</p>
+<ul class="org-ul">
+<li>1 nsec = 10^-9 sec
+</li>
+<li>Freq=1/T=1/10-9=109Hz=1 GHz
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Latch clockato (D-latch)</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<b>D=1</b> corrisponde al <b>setting</b>
+-S=1 e R=0
+</p>
+
+<p>
+<b>D=0</b> corrisponde al <b>resetting</b>
+-S=0 e R=1
+</p>
+
+<p>
+La combinazione S=1 e R=1 non può mai verificarsi
+</p>
+
+<p>
+A causa delle 2 porte AND quando il <b>clock è deasserted</b> abbiamo che nel latch non viene memorizzato alucn valore:
+S=0 e R=0 (viene mantenuto il valore precedentemente memorizzato)
+</p>
+
+<p>
+Viene <b>memorizzato</b> un valore solo quando il <b>clock è asserted</b>.
+Se il segnale C fosse invertito (porta NOT aggiuntiva), il latch memorizzerebbe sul valore basso del clock 
+(cioè quando il clock è deasserted)
+</p>
+
+<p>
+[circuito]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Diagramma temporale del D-latch</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Il segnale D, ottenuto solitamente come output di un circuito combinatorio
+</p>
+<ul class="org-ul">
+<li>deve essere già stabile quando C diventa asserted
+</li>
+<li>deve rimanere stabile per tutta la durata del livello alto di C (Setup time)
+</li>
+<li>deve infine rimanere stabile per un altro periodo di tempo per evitare malfunzionamenti (Hold time)
+</li>
+</ul>
+
+<p>
+[circuito]
+</p>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Ritardi nella propagazione dei segnali nei circuiti</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+I circuiti reali hanno <b>ritardi non-nulli</b>, che dipendono dai cammini, ovvero delle porte e dai fili, attraversati
+dai segnali.
+Gli output possono temporaneamente cambiare da valori corretti a valori errati, e ancora a valori corretti
+</p>
+<ul class="org-ul">
+<li>questo fenomeno è noto come glitch
+</li>
+<li>dopo un certo intervallo, con alta probabilità i segnali si stabilizzano
+</li>
+</ul>
+
+<p>
+[ciurcuito]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Periodo del ciclo di clock</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Il periodo T deve essere scelto abbastanza lungo affinché l’output del circuito combinatorio si stabilizzi
+</p>
+<ul class="org-ul">
+<li>deve essere stabile un po’ prima D del periodo di apertura del latch C (setup time), e lo deve rimanere per un certo tempo (hold time)
+</li>
+</ul>
+
+<p>
+[ciurcuito]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> D-latch clockato: fenomeno della trasparenza</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Osserviamo il seguendo comportamente del D-latch clockato:
+</p>
+<ul class="org-ul">
+<li>durante l&rsquo;intervallo alto del clock il valore sel seguente di ingresso D viene memorizzato nel latch
+</li>
+<li>il valore di D si propaga immediatamente (o quasi) all&rsquo;uscita Quante
+</li>
+<li>ma anche eventuali variazioni di <b>D si propagano immediatamente</b>, col risultato che Q può variare più volte durante l&rsquo;intervallo altod
+del clock
+</li>
+<li>solo quando il clock torna a zero <b>Q</b> si stabilizza
+</li>
+<li>possiamo concludere che durante l’intervallo alto del clock il latch non esercita di fatto alcuna funzione di memorizzazione.
+</li>
+</ul>
+
+<p>
+Questo comportamento è noto come <b>trasparenza</b> del latch
+</p>
+
+<p>
+[circuito]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Elemento di memoria usato come input e output</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Durante ogni periodo di clock
+</p>
+<ul class="org-ul">
+<li>il circuito combinatorio dovrebbe calcolare una funzione sulla base dell&rsquo;attuale valore <b>dell&rsquo;elemento di memoria</b> (stato del circuito)
+</li>
+<li>l&rsquo;output calcolato dovrebbe diventare il nuovo valore da memorizzare nell&rsquo;elemento di memoria (nuovo stato del circuito)
+</li>
+<li>il nuovo valore memorizzato dovebbe essere usato come <b>input del circuito di durante il ciclo di clock successivo</b>
+</li>
+</ul>
+
+<p>
+l&rsquo;<b>elemento di memoria</b> deve essere usato sia come input che come output durante lo stesso ciclo di clock.
+</p>
+
+<p>
+Il D-latch precedente funzionerebbe in questo caso ?
+</p>
+<ul class="org-ul">
+<li>Purtroppo no, perché se il clock rimane alto per molto tempo, allora il valore memorizzato nel latch potrebbe nel frattempo fluire fuori, 
+</li>
+</ul>
+<p>
+entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizzato nel latch
+</p>
+
+<p>
+[circuito]
+</p>
+</div>
+
+<div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Metodologia di timing</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+Si possono progettare componenti di memoria, in cui la memorizzazione può avvenire in vari istanti rispetto al segnale a gradino del clock
+</p>
+<ul class="org-ul">
+<li><b>level-triggered methodology</b>
+<ul class="org-ul">
+<li>avviene sul livello alto (o basso) del clock
+</li>
+<li>il D-latch precedente era level-triggered (rispetto al livello alto)
+</li>
+</ul>
+</li>
+<li><b>edge-triggered methodology</b>
+<ul class="org-ul">
+<li>avviene sul fronte di salita (o di discesa) del clock
+</li>
+<li>possiamo immaginare che la memorizzazione avvenga istantaneamente, e che l’eventuale segnale di ritorno sporco, proveniente dal circuito combinatorio, 
+non faccia in tempo ad arrivare a causa dell’istantaneità della memorizzazione
+</li>
+<li>gli elementi di memoria di tipo edge-triggered si chiamano flip-flop
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Generatore di impulsi</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+Il generatore di impulsi permette appunto di <b>generare impulsi brevissimi</b>
+in corrispondenza del fronte di salita di un segnale a gradino
+</p>
+
+<p>
+[circuito]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Flip-Flop semplice con generato di impulsi</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+Il <b>flip - flop semplice memorizza istantaneamente</b> il valore di D (input) sul fronte di salita del clock: 
+in corrispondenza dell’impulso.
+</p>
+
+<p>
+Metodologia edge-triggered di tipo <b>rising triggered</b>.
+</p>
+
+<p>
+[circuito]
+</p>
+
+<p>
+Il segnale <b>memorizzato comincia a fluire subito fuori dal flip-flop</b>.
+Causa brevità dell’impulso, il segnale “non fa però in tempo” a entrare/uscire nel/dal circuito combinatorio a valle, 
+e a modificare l’input del flip-flop
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Flip-Flop più complesso (D flip-flop)</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+Il Flip-flop di tipo D usabile come input e output durante uno stesso ciclo di clock:
+</p>
+<ul class="org-ul">
+<li>realizzato ponendo in serie 2 D-latch: il <b>primo viene detto master</b> e il <b>secondo slave</b>
+</li>
+</ul>
+
+<p>
+Metodologia edge-triggered:
+</p>
+<ul class="org-ul">
+<li>rispetto al flip-flop precedente, questo è di tipo <b>falling triggered</b>
+</li>
+<li>per semplicità, possiamo pensare che la memorizzazione avvenga in maniera istantanea su fronte di discesa del clock C
+</li>
+</ul>
+
+<p>
+[circuito]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> Funzionamento</h2>
+<div class="outline-text-2" id="text-13">
+<ol class="org-ol">
+<li>Il primo latch è aperto e pronto per memorizzare D. Il valore memorizzato Q’ fluisce fuori, 
+</li>
+</ol>
+<p>
+ma il secondo latch è chiuso.
+</p>
+<ol class="org-ol">
+<li>Il segnale del clock scende, e in questo istante il secondo latch viene aperto per memorizzare il valore di Q’
+</li>
+<li>Il secondo latch è aperto, memorizza D (Q’), e fa fluire il nuovo valore Q nel circuito a valle. Il primo latch è invece chiuso, e non memorizza niente
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> Uso degli elementi di memoria</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+Sappiamo come costruire gli elementi di memoria. Vediamo come utilizzarli per realizzare:
+</p>
+<ol class="org-ol">
+<li>Circuiti sequenziali
+</li>
+<li>Register File
+</li>
+<li>Memorie principali
+</li>
+
+<li>Circuito sequenziale sincrono
+</li>
+</ol>
+<p>
+<b>Blocco logico</b> con linee in input e output composto da:
+</p>
+<ul class="org-ul">
+<li><b>circuiti combinatori</b>
+</li>
+<li><b>elementi di memoria clockati</b> (registri realizzati tramite flip-flop), che mantengono lo stato del circuito e che possono essere letti/scritti 
+nello stesso periodo di clock
+</li>
+</ul>
+
+<p>
+<b>I circuiti combinatori</b> sono le componenti che calcolano funzioni che generano:
+</p>
+<ul class="org-ul">
+<li>i valori in output
+</li>
+<li>i valori da memorizzare negli elementi di memoria
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> Circuiti sequenziali</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+Registro di stato realizzato con flip-flop che impiegano una metodologia <b>f*alling edge triggered</b>
+</p>
+<ul class="org-ul">
+<li>durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> Tipi di circuito (Mealy vs Moore)</h2>
+<div class="outline-text-2" id="text-15">
+<ul class="org-ul">
+<li><b>INPUT(ti) e OUTPUT(ti)</b> i valori presenti, rispettivamente, sugli input e gli
+output dei circuiti combinatori al tempo ti 
+</li>
+<li><b>STATE(ti)</b> i valori presenti nei registri di stato al tempo ti
+</li>
+</ul>
+
+<p>
+<b>Circuito sequenziale di Mealy</b>
+</p>
+<ul class="org-ul">
+<li>OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+</li>
+<li>NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti)) 
+</li>
+</ul>
+
+<p>
+<b>Circuito sequenziale di Moore</b>
+</p>
+<ul class="org-ul">
+<li>OUTPUT(ti) = d(STATE(ti))
+</li>
+<li>NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti))
+</li>
+</ul>
+
+<p>
+Definiamo quindi i due tipi di circuito:
+</p>
+
+<p>
+<b>Circuito sequenziale di Mealy</b>
+</p>
+<ul class="org-ul">
+<li>OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+</li>
+</ul>
+
+<p>
+<b>Circuito sequenziale di Moore</b>
+</p>
+<ul class="org-ul">
+<li>OUTPUT(ti) = d(STATE(ti))
+</li>
+<li>valore dell’output al tempo ti dipende solo dal valore dei registri di stato
+</li>
+</ul>
+
+<p>
+STATE(ti) modificato alla fine del ciclo di clock precedente (ti-1) in base a:
+</p>
+<ul class="org-ul">
+<li><b>input</b> a quel tempo presenti in ingresso al circuito: INPUT(ti-1)
+</li>
+<li><b>stato</b> a quel tempo memorizzato nei registri: STATE(ti-1)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> Sintesi di reti sequenziali</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+Per sintetizzare il circuito sequenziale in maniera diretta basta conoscere le <b>tabelle di verità delle funzioni</b>:
+</p>
+<ul class="org-ul">
+<li><b>OUTPUT e NEXT_STATE</b>
+</li>
+</ul>
+
+<p>
+Dalle tabelle siamo poi in grado di determinare le equazioni booleane e i corrispondenti circuiti.
+</p>
+
+<p>
+È possibile specificare il comportamento di un circuito sequenziale <b>tramite un particolare programma ad eventi</b>, 
+espresso graficamente tramite un <b>automa a stati finiti</b>
+</p>
+<ul class="org-ul">
+<li>grafo diretto
+</li>
+<li>nodi <b>(stati)</b> + archi <b>(transizioni di stato)</b>
+</li>
+<li>etichette sui nodi e sugli archi (input/output)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> Register File</h2>
+<div class="outline-text-2" id="text-17">
+<p>
+La <b>Parte Operativa (Datapath)</b> della CPU contiene, oltre all’ALU, alcuni registri che memorizzano, all’interno della CPU, 
+gli operandi delle istruzioni aritmetico/logiche.
+Ogni registro è costituito da <b>n</b> flip-flop, dove <b>n</b> è il numero bit che costituiscono una Word:
+</p>
+<ul class="org-ul">
+<li>nel <b>MIPS</b> ogni registro è di 1 Word = 4 B = 32 b
+</li>
+</ul>
+
+<p>
+Più registri sono organizzati in una componente nota come <b>Register file</b>:
+</p>
+<ul class="org-ul">
+<li>il <b>Register File del MIPS</b> contiene 32 registri (32x32=1024 flip-flop) 
+</li>
+<li>deve permettere: lettura di <b>2 registri</b>, e <b>scrittura</b> di 1 registro
+</li>
+
+<li>Singolo Registro
+</li>
+</ul>
+<p>
+Nel Datapath della CPU, il clock non entra direttamente nei vari flip-flop:
+</p>
+<ul class="org-ul">
+<li>viene messo in <b>AND</b> con un segnale di controllo: Write
+</li>
+
+<li>Lettura del Register File
+</li>
+</ul>
+<p>
+2 <b>MUX</b> 32:1
+</p>
+<ul class="org-ul">
+<li>larghi <b>32</b> bit
+</li>
+</ul>
+
+<p>
+I controlli dei 2 MUX sono:
+</p>
+<ul class="org-ul">
+<li>Read Reg1 #
+</li>
+<li>Read Reg2 #
+</li>
+</ul>
+
+<p>
+Nota che il Register file fornisce sempre in output una coppia di registri:
+</p>
+<ul class="org-ul">
+<li><b>non significativi</b>, se i controlli Read Reg1 e Read Reg2 non lo sono
+</li>
+<li>in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> Scrittura del Register File</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+<b>Decoder</b> che decodifica il segnale di controllo Write Reg (5 bit)
+</p>
+<ul class="org-ul">
+<li><b>32</b> bit in output
+</li>
+</ul>
+
+<p>
+Il segnale di <b>Write</b> (a sua volta in AND con il clock) abilita solo uno dei 32 registri
+</p>
+<ul class="org-ul">
+<li>il segnale di <b>Write</b> è infatti in <b>AND</b> con l’output del <b>Decoder</b>
+</li>
+</ul>
+
+<p>
+Se il segnale di <b>Write è non affermato</b>, i possibili valori spuri in input non verranno memorizzati nel <b>Register file</b>
+</p>
+
+<ul class="org-ul">
+<li>Lettura/Scrittura nel Register File
+</li>
+</ul>
+<p>
+<b>Domanda</b>: cosa succede se uno stesso registro del Register file viene acceduto in lettura e scrittura 
+durante uno stesso ciclo di clock?
+</p>
+
+
+<p>
+<b>Risposta</b>: poiché la scrittura sul registro avviene sul fronte di discesa del clock, 
+il valore ritornato dalla lettura sarà quello memorizzato in un ciclo di clock precedente.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> Memoria principale</h2>
+<div class="outline-text-2" id="text-19">
+<p>
+La dimensione del Register File è piccola:
+</p>
+<ul class="org-ul">
+<li>registri usati per memorizzare singole variabili di tipo semplice
+</li>
+<li>purtroppo per memorizzare dati strutturati e codice di programma, sono tipicamente necessari diversi KB o MB
+</li>
+</ul>
+
+<p>
+<b>Memoria principale (RAM)</b>:
+</p>
+<ul class="org-ul">
+<li>meno veloce della memoria dei registri, ma molto più capiente
+</li>
+<li>è detta <b>Random Access Memory</b> perché i tempi di accesso sono indipendenti dal valore dell’indirizzo della cella di memoria acceduta
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> SRAM e DRAM</h2>
+<div class="outline-text-2" id="text-20">
+<p>
+La <b>SRAM</b> (Static RAM) è più <b>veloce</b>:
+</p>
+<ul class="org-ul">
+<li>per la sua realizzazione vengono usati dei <b>latch</b>
+</li>
+<li>è usata per realizzare <b>memorie veloci</b>, come le <b>memorie cache</b>
+</li>
+<li>tempi di accesso intorno a 0,5 - 2,5 ns
+</li>
+</ul>
+
+<p>
+La <b>DRAM</b> (Dynamic RAM) è più <b>capiente ma più lenta</b>:
+</p>
+<ul class="org-ul">
+<li>tempi di accesso intorno a 50-70 ns
+</li>
+<li>non è realizzata tramite <b>latch</b>
+</li>
+<li>ogni bit è memorizzato tramite un <b>condensatore</b>
+</li>
+<li>è necessario <b>rinfrescare</b> il contenuto delle <b>DRAM</b> a intervalli di tempo prefissati
+</li>
+<li>è usata per realizzare <b>memorie capienti</b> come quella principale
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> SRAM</h2>
+<div class="outline-text-2" id="text-21">
+<p>
+SRAM realizzata come matrice di latch <b>HxW</b>:
+</p>
+<ul class="org-ul">
+<li><b>larghezza</b> o <b>ampiezza W</b> (numero di latch per ogni cella)
+</li>
+<li><b>altezza H</b> (numero di celle indirizzabili)
+</li>
+<li>per ragioni costruttive <b>W è spesso piccolo</b>
+</li>
+<li><b>singolo indirizzo</b> per <b>lettura</b> o <b>scrittura</b>
+</li>
+<li>non è possibile <b>scrivere</b> e <b>leggere contemporaneamente</b>, a differenza del <b>Register File</b>
+</li>
+</ul>
+
+<p>
+Esempio 1:
+</p>
+<ul class="org-ul">
+<li><b>256K X 1</b> (256K celle da 1 bit = 256Kb)
+</li>
+</ul>
+
+<p>
+Esempio 2:
+</p>
+<ul class="org-ul">
+<li>32K X 8* ́(32K celle da 8bit=256Kb)
+</li>
+</ul>
+
+<p>
+<b>Per scrivere</b>:
+</p>
+<ul class="org-ul">
+<li>Chip select <b>affermato</b>
+</li>
+<li>Indirizzo in <b>Address</b>
+</li>
+<li><b>Write</b> enable affermato
+</li>
+<li>Dato in input in Din
+</li>
+</ul>
+
+<p>
+<b>Per leggere</b>:
+</p>
+<ul class="org-ul">
+<li>Chip select <b>affermato</b>
+</li>
+<li>Indirizzo in Address
+</li>
+<li>Output <b>enable</b> affermato
+</li>
+<li>Dato in output in Dout
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> Realizzazione SRAM</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+Tecniche realizzative diverse rispetto a quelle del register file:
+</p>
+<ul class="org-ul">
+<li>il <b>register file</b> impiega <b>decoder</b> (per selezionare il registro da scrivere) e
+<b>multiplexer</b> (per selezionale il registro da leggere)
+</li>
+
+<li>con un numero elevato di celle di memoria avremmo bisogno di enormi <b>decoder o multiplexer</b>
+<ul class="org-ul">
+<li>avremmo bisogno di porte AND con fan-in troppo elevato
+</li>
+<li><b>necessari livelli multipli</b> di porte <b>AND</b>, con conseguente introduzione di ritardi negli accessi alla memoria
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Per evitare il multiplexer in uscita:
+</p>
+<ul class="org-ul">
+<li>possiamo usare una linea di <b>bit</b> condivisa su cui i vari elementi di memoria sono tutti collegati (or-ed)
+</li>
+<li>il collegamento alla linea condivisa avviene tramite buffer a <b>tre stati</b>, 
+che aprono o chiudono i collegamenti (se il controllo è affermato o meno). 
+</li>
+</ul>
+
+<p>
+In particolare il <b>buffer</b> ha due ingressi <b>(dato e segnale di Enable)</b> e una uscita:
+</p>
+<ul class="org-ul">
+<li>l’uscita è <b>uguale al dato</b> (zero o uno) se <b>Enable</b> è affermato
+</li>
+<li>l’uscita viene impedita (high-impedance state) <b>se Enable non è affermato</b>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-22-1" class="outline-3">
+<h3 id="sec-22-1"><span class="section-number-3">22.1</span> SRAM 4x2</h3>
+<div class="outline-text-3" id="text-22-1">
+<p>
+I latch di una certa colonna sono collegati alla stessa linea in output (Dout[0] e Dout[1])
+</p>
+<ul class="org-ul">
+<li>nell’esempio ogni elemento di memoria (D-latch) ha un <b>segnale di Enable</b> che abilita il three-state buffer interno
+</li>
+</ul>
+
+<p>
+Il <b>Decoder</b> serve ad abilitare in <b>lettura/scrittura</b> una certa <b>linea della memoria</b>:
+</p>
+<ul class="org-ul">
+<li>entrambi i segnali <b>Write enable</b> ed <b>Enable</b> vengono abilitati su una sola linea di memoria (2 bit)
+</li>
+</ul>
+
+<p>
+Chip <b>Enable</b> e <b>Output Enable</b> sono stati <b>omessi per semplicità</b> ma possono essere aggiunti con qualche porta <b>AND</b>:
+</p>
+<ul class="org-ul">
+<li>solo se <b>Chip Enable</b> è abilitato i segnali <b>Write Enable</b> e <b>Output Enable</b> sono significativi (servono porte AND aggiuntive)
+</li>
+<li>solo se <b>Output Enable</b> è affermato, la coppia Dout[0-1] dovrebbe essere abilitata ad uscire 
+(Output Enable in AND con Enable, a sua volta determinato dal decoder)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-22-2" class="outline-3">
+<h3 id="sec-22-2"><span class="section-number-3">22.2</span> SRAM a due livelli</h3>
+<div class="outline-text-3" id="text-22-2">
+<p>
+Nel caso precedente abbiamo evitato l’uso dei <b>Multiplexer</b>, ma rimane il problema del <b>Decoder</b> grande
+Per ovviare, decodifica degli indirizzi a due livelli.
+Usiamo un decoder più piccolo e una batteria di piccoli Multiplexer.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-22-3" class="outline-3">
+<h3 id="sec-22-3"><span class="section-number-3">22.3</span> DRAM</h3>
+<div class="outline-text-3" id="text-22-3">
+<p>
+Gli elementi di memoria di tipo <b>DRAM</b> sono <b>meno costosi</b> e più capienti rispetto al tipo <b>SRAM</b>, ma sono più lenti.
+La <b>DRAM è meno costosa</b>, perché è realizzata con un solo transistor per bit, e un condensatore:
+</p>
+<ul class="org-ul">
+<li>il condensatore possiede la carica (0/1)
+</li>
+<li>il <b>transistor</b> viene chiuso, trasferendo il potenziale elettrico del condensatore sulla <b>Bit line (output)</b>,
+grazie al segnale affermato della <b>Word line</b>
+</li>
+<li>la specifica <b>Word line</b> è attivata sulla base dell’indirizzo di <b>memoria richiesto</b>
+</li>
+</ul>
+
+<p>
+I <b>condensatori</b> mantengono i valori memorizzati solo per alcuni <b>ms</b>.
+Necessario il <b>refresh dinamico delle DRAM</b>, effettuato leggendo, e subito riscrivendo i valori appena letti.
+</p>
+
+
+<p>
+<b>DRAM</b> (come SRAM) realizzate con decodifica a 2 livelli:
+</p>
+<ul class="org-ul">
+<li>indirizzo totale di <b>22 bit</b>
+</li>
+<li>indirizzo spezzato in due pezzi da <b>11 bit</b>
+</li>
+</ul>
+
+<p>
+Parte <b>alta</b> e <b>bassa</b> dell’indirizzo considerate come indirizzo di <b>RIGA</b> o di <b>COLONNA</b>, rispettivamente:
+</p>
+<ul class="org-ul">
+<li>indirizzo di <b>RIGA</b> ha effetto sul <b>Decoder</b>
+</li>
+<li>indirizzo di <b>COLONN*A</b> ha effetto sul <b>Mux</b>
+</li>
+</ul>
+
+<p>
+Possibile accesso ottimizzato a <b>bit</b> di memoria consecutivi:
+</p>
+<ul class="org-ul">
+<li>contenuti nei <b>column latches</b> dopo un accesso di RIGA
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-22-4" class="outline-3">
+<h3 id="sec-22-4"><span class="section-number-3">22.4</span> SSRAM e SDRAM</h3>
+<div class="outline-text-3" id="text-22-4">
+<p>
+Abbiamo visto che per diminuire la complessità dei decoder è opportuno suddividere gli indirizzi in 2 blocchi:
+</p>
+<ul class="org-ul">
+<li><b>parte alta</b> per accedere una riga
+</li>
+<li><b>parte bassa</b> per accedere una specifica colonna
+</li>
+</ul>
+
+<p>
+Nota che celle consecutive hanno indirizzi che solitamente differiscono solo per la parte bassa dell’indirizzo:
+</p>
+<ul class="org-ul">
+<li><b>quindi sono contenuti all’interno di una stessa riga selezionata con la parte alta dell’indirizzo</b>
+</li>
+
+<li><b>Memoria sincrona</b> (col segnale di clock)
+</li>
+<li>E’ possibile specificare che vogliamo trasferire dalla memoria un <b>burst</b> di dati (ovvero una sequenza di celle consecutive)
+</li>
+<li>Ogni burst specificato da un <b>indirizzo di partenza</b>, e da una <b>lunghezza</b>
+</li>
+<li>Le celle del burst sono contenute all’interno di una stessa <b>Riga</b>, selezionata una volta per tutte tramite <b>decoder</b>
+</li>
+<li>La memoria fornisce una delle celle del <b>burst</b> a ogni <b>ciclo di clock</b>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-05 Wed 21:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

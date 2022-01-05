@@ -1,5 +1,13 @@
-Ciao sono l'index
+#+TITLE: UNIMANUAL
+#+AUTHOR: Jacopo Costantini
 
-[[file:it/ITlist.org][IT]]
+Ciao e benvenuto a *UniManual* la tua guida di sopravvivenza personale.
 
-[[file:arch/Archlist.org][Architettura]]
+Di seguito puoi trovare la lista delle materie trattate, spero che possano darti una mano nel tuo percorso.
+
+Cominciamo !!
+
+* Primo Anno
+
+- [[file:it/ITlist.org][Introduzione alla programmazione]]
+- [[file:arch/Archlist.org][Architettura degli elaboratori]]

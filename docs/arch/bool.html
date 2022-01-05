@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Algebra di Bool</title>
+<!-- 2022-01-05 Wed 21:26 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Algebra e circuiti elettrici</a></li>
+<li><a href="#sec-2">2. Blocco logico</a></li>
+<li><a href="#sec-3">3. Circuiti combinatori/sequenziali</a></li>
+<li><a href="#sec-4">4. Funzioni Logiche</a>
+<ul class="nav">
+<li><a href="#sec-4-1">4.1. Tabelle di Verità</a></li>
+<li><a href="#sec-4-2">4.2. Proprietà dell&rsquo;algebra di Boole</a></li>
+<li><a href="#sec-4-3">4.3. NAND e NOR</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Porte logiche e transistor</a>
+<ul class="nav">
+<li><a href="#sec-5-1">5.1. NMOS</a></li>
+<li><a href="#sec-5-2">5.2. PMOS</a></li>
+<li><a href="#sec-5-3">5.3. Confronto tra porte</a></li>
+<li><a href="#sec-5-4">5.4. Forma canonica</a></li>
+<li><a href="#sec-5-5">5.5. Dalla forma canonica ai circuiti</a></li>
+<li><a href="#sec-5-6">5.6. Minimizzare</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Tecniche di minimizzazione</a></li>
+<li><a href="#sec-7">7. Mappe di Karnaugh</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. Scopo delle mappe</a></li>
+<li><a href="#sec-7-2">7.2. Minimizzare con mappe di Karnaugh</a></li>
+<li><a href="#sec-7-3">7.3. Ipercurbi e Meppe di Karnaugh</a></li>
+<li><a href="#sec-7-4">7.4. Funzioni incomplete</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Algoritmo di Quine McCluskey</a></li>
+<li><a href="#sec-9">9. George Boole (1815 - 1864)</a></li>
+<li><a href="#sec-10">10. Claude Shannon (1916 - 2001)</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Algebra di Bool</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Algebra e circuiti elettrici</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I computer operano con segnali elettrici con valori di potenziale discreti.
+</p>
+<ul class="org-ul">
+<li>sono considerati significativi soltanto due potenziali
+<b>high</b> / <b>Low</b>
+</li>
+<li>I potenziali intermedi, che si verificano durante le transizioni di potenziale, <b>non vengono considerati</b>.
+</li>
+</ul>
+
+<p>
+L&rsquo;aritmetica binaria è stata adottata proprio perché i
+bit sono rappresentabili naturalmente
+tramite elementi elettronici in cui siamo in grado
+distinguere i 2 stati di potenziale elettronico ( <b>High</b> / <b>Low</b>)
+</p>
+
+<p>
+Il funzionamento dei circuiti elettronici può essere modellato tramite l&rsquo;algebra di Boole
+</p>
+
+<ul class="org-ul">
+<li>Solo 2 valori:
+<ol class="org-ol">
+<li>Valore <b>TRUE</b> (<b>1</b> o <b>asserted</b>) ==&gt; livello di potenziale <b>ALTO</b>
+</li>
+<li>Valore <b>FALSE</b> (<b>0</b> o <b>deasserted</b>) ==&gt; livello di potenziale <b>BASSO</b>
+</li>
+</ol>
+</li>
+<li>Operazioni logiche Booleane: <b>SOMMA</b> (<b>OR</b>), <b>PRODOTTO</b> (<b>AND</b>), <b>INVERSIONE LOGICA</b> (<b>NOT</b>)
+<ul class="org-ul">
+<li><b>OR</b> (<b>A + B</b>): risultato uguale ad 1 (<b>TRUE</b>) se almeno un input è 1 (<b>TRUE</b>)
+</li>
+<li><b>AND</b> (<b>A x B</b>): risultato uguale ad 1 (<b>TRUE</b>) solo se tutti gli input sono 1 (<b>TRUE</b>)
+</li>
+<li><b>NOT</b> (<b>~A</b>): risultato uguale all&rsquo;inverso dell&rsquo;input (0 -&gt; 1 uppure 1 -&gt; 0)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Blocco logico</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Circuito elettronico con linee (<b>fili</b>) in <b>input</b> e <b>output</b>
+</li>
+<li>possiamo associare <b>variabili logiche</b> con le varie <b>linee in input/output</b>
+</li>
+<li>Il circuito calcola una o più <b>funzioni logiche</b>, ciascuna espriminile tramite una
+combinazione di operazioni dell&rsquo;algebra di Boole <b>sulle variabili in input</b>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Circuiti combinatori/sequenziali</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Circuiti combinatorio
+</p>
+<ul class="org-ul">
+<li>Senza elementi di memoria - produce output che dipeende funzionalmente solo dall&rsquo;input
+</li>
+</ul>
+
+<p>
+Circuiti sequenziali
+</p>
+<ul class="org-ul">
+<li>Con elementi di memoria - produce output che dipende non solo dall&rsquo;input ma anche dallo stato della memoria
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Funzioni Logiche</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Una funzione logica è completamente specificata da
+</p>
+<ul class="org-ul">
+<li>Una <b>tabella di verità</b>
+</li>
+<li>Una <b>equazione logica</b>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Tabelle di Verità</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Dati <b>n input bit</b>, il numero di configurazione possibili degli input, ovvero il numero di righe
+della Tabella di verità, + <b>2^n</b>
+</p>
+<ul class="org-ul">
+<li>Per ogni bit in output, la tabella contiene una colonna, con un valore definito per ognuna
+combinazione dei bit in input
+
+<p>
+[Inserire tabella]
+</p>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Proprietà dell&rsquo;algebra di Boole</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Proprietà:
+</p>
+<ul class="org-ul">
+<li><b>Identità</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + 0 = A
+</li>
+<li><b>AND</b>: A x 1 = A
+</li>
+</ul>
+</li>
+<li><b>Nullo</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + 1 = 1
+</li>
+<li><b>AND</b>: A x 0 = 0
+</li>
+</ul>
+</li>
+<li><b>Idempotente</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + A = A
+</li>
+<li><b>AND</b>: A x A = A
+</li>
+</ul>
+</li>
+<li><b>Inverso</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + (~A) = 1
+</li>
+<li><b>AND</b>: A x (~A) = 0
+</li>
+</ul>
+</li>
+<li><b>Commutativa</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + B = B + A
+</li>
+<li><b>AND</b>: A x B = B x A
+</li>
+</ul>
+</li>
+<li><b>Associativa</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A + (B + C) = (A + B) + C
+</li>
+<li><b>AND</b>: A x (B x C) = (A x B) x C
+</li>
+</ul>
+</li>
+<li><b>Distributiva</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  A x (B + C) = (A x B) + (A x C)
+</li>
+<li><b>AND</b>: A + (B x C) = (A + B) x (A + C)
+</li>
+</ul>
+</li>
+<li><b>DeMorgan</b>:
+<ul class="org-ul">
+<li><b>OR</b>:  ~(A + B) = (~A) x (~B)
+</li>
+<li><b>AND</b>: ~(A x B) = (~A) + (~B)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> NAND e NOR</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+<b>NAND</b> (inverso dell&rsquo;operazione <b>AND</b>): ~(A x B) = A <b>nand</b> B
+<b>NOR</b>  (inverso dell&rsquo;operazione <b>OR</b>):  ~(A + B) = A <b>nor</b>  B
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Porte logiche e transistor</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Tecnologia <b>CMOS</b> (Complementary Metal Oxide Semiconductor) per realizzare transistor in sul silicio
+</p>
+<ul class="org-ul">
+<li>I transistor sono degli interruttori velocissimi che lasciano o meno passare la corrente, e sono
+comandati da un segnale elettrico
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> NMOS</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+<b>N-Type Metal Oxide Semiconductor transistor</b>
+</p>
+<ul class="org-ul">
+<li>Se applichi un <b>ALTO</b> voltaggio (<b>Vdd</b>), il transistor diventa un <b>conduttore</b>
+</li>
+<li>Se applichi un <b>BASSO</b> voltaggio (<b>GND</b>), il transistor interrompe la conduzione (<b>resistenza infinita</b>)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> PMOS</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+<b>P_Type Metal Oxide Semiconductor transistor</b>
+</p>
+<ul class="org-ul">
+<li>Se applichi un <b>ALTO</b> voltaggio (<b>Vdd</b>), il transistor interrompe la conduzione (<b>resistenza infinita</b>)
+</li>
+<li>Se applichi un <b>BASSO</b> voltaggio (<b>GND</b>), il transistor diventa un <b>conduttore</b>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Confronto tra porte</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+Se i transistor <b>PMOS</b> sono più veloci:
+</p>
+<ul class="org-ul">
+<li>È meglio avere transistor <b>PMOS</b> in serie
+</li>
+<li>Porte <b>NOR</b> preferite
+</li>
+</ul>
+
+<p>
+Se i transistor <b>NMOS</b> sono più veloci:
+</p>
+<ul class="org-ul">
+<li>È meglio avere transistor <b>NMOS</b> in serie
+</li>
+<li>Porte <b>NAND</b> preferite
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Forma canonica</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+Ogni <b>funzione logica</b> può essere rappresentata come <b>equazione logica</b> o come <b>tabella di verità</b>
+Ogni <b>equazione logica</b> può essere scritta in forma canonica tramite l&rsquo;uso degli operatori AND, OR, NOT.
+</p>
+
+<p>
+Forma canonica <b>SP</b> (somma di prodotti)
+</p>
+<ul class="org-ul">
+<li>Per ogni valore uguale ad 1 nell&rsquo;output genera un prodotto (<b>mintermine</b>) degli input A, B, C dove gli input uguali
+a 0 appaiono negati.
+Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
+<b>esempio</b>: E = (~A * B) + (B * C)
+</li>
+</ul>
+
+<p>
+Forma canonica <b>PS</b> (prodotto di somme)
+</p>
+<ul class="org-ul">
+<li>Per ogni valore uguale ad 0 nell&rsquo;output genera una somma (<b>maxtermine</b>) degli input A, B, C dove gli input uguali
+a 1 appaiono negati.
+Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
+<b>esempio</b>: E = (~A + B) * (B + C)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-5" class="outline-3">
+<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Dalla forma canonica ai circuiti</h3>
+<div class="outline-text-3" id="text-5-5">
+<ul class="org-ul">
+<li>Da una equazione logica espressa come <b>somma di prodotti (SP)</b> si realizza una funzione logica di n input e 1 output,
+costituita da 2 livelli:
+<ol class="org-ol">
+<li>Primo livello:
+<ol class="org-ol">
+<li>numero di porte AND per ogni prodotto.
+</li>
+<li>arietà delle porte dipende dal numero di fattori dei prodotti, es. se un prodotto ha 2 fattori la funzione AND avrà
+2 porte (arietà = 2).
+</li>
+</ol>
+</li>
+<li>Secondo livello
+<ol class="org-ol">
+<li>livello costituito da una porta OR per la somma.
+</li>
+<li>arietà della funzione OR dipende dal numero di prodotti.
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-6" class="outline-3">
+<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Minimizzare</h3>
+<div class="outline-text-3" id="text-5-6">
+<p>
+Scopo della minimizzazione:
+</p>
+<ul class="org-ul">
+<li>data un&rsquo;equazione in forma normale, es. SP, si riduce il numero di prodotti oppure il numero di variabili coinvolte in 
+ogni prodotto.
+Tale processo permette l&rsquo;uso di meno porte, un&rsquo;arietà ridotta dato il decremento delle variabili e un 
+costo minore per il circuito.
+</li>
+</ul>
+<p>
+Le variabili <b>DON&rsquo;T CARE</b> non hanno importanza ai fini della definizione dell&rsquo;equazione, tradotto sono quelle variabili che 
+nel processo di minimizzazione (tipo <b>mappa di Karnaught</b>) non rimangono fisse.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Tecniche di minimizzazione</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Intuitivamente, per semplificare una tabella di verità di <b>N</b> variabili di input e minimizzare
+la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>DON&rsquo;T CARE</b>, basta individuare:
+</p>
+<ul class="org-ul">
+<li>2^1 (<b>coppie di</b>) righe <b>con output 1</b> dove
+<ul class="org-ul">
+<li>i valori assunti da <b>N - 1</b> variabili appaiono fissi
+</li>
+<li>tutti i possibili valori di <b>una</b> variabile (<b>X</b>) appaiono combinati con gli altri
+<b>N - 1</b> valori fissi ==&gt; la variabile <b>X</b> è <b>DON&rsquo;T CARE</b>
+</li>
+</ul>
+</li>
+<li>2^2 (<b>4-ple di</b>) righe con <b>output 1</b> dove
+<ul class="org-ul">
+<li>i valori assunti da <b>N - 2</b> variabili appaiono fissi
+</li>
+<li>tutti i possibili valori <b>due</b> variabili (<b>X,Y</b>) appaiono combinati con
+gli altri <b>N - 2</b> valori fissi ==&gt; le variabili <b>X</b> e <b>Y</b> sono <b>DON&rsquo;T CARE</b>
+</li>
+</ul>
+</li>
+<li>2^3 (<b>8-ple di</b>) righe <b>con output 1</b> dove
+<ul class="org-ul">
+<li>i valori assunti da <b>N - 3</b> variabili appaiono fissi
+</li>
+<li>tutti i possibili valori di <b>tre</b> variabili <b>(X,Y,Z)</b> appaiono combinati con gli altri
+<b>N - 3</b> valori fissi ==&gt; le variabili <b>X, Y, Z</b> sono <b>DON&rsquo;T CARE</b>
+</li>
+</ul>
+</li>
+<li>2^4 (<b>16-ple di</b>) righe <b>con output 1</b> dove &#x2026;
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Mappe di Karnaugh</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Per minimizzare a mano funzioni di poche variabili, si possono rappresentare le tabelle di verità
+con le <b>mappe di Karnaugh</b>
+</p>
+<ul class="org-ul">
+<li>Ogni quadrato (cella) della mappa individua una combinazione di variabili in input
+</li>
+<li>il valore contenuto nel quadrato corrispondente al valore di <b>output</b> per quella
+particolare combinazione di variabili in input
+</li>
+<li>per convenzione nella mappa si inseriscono solo i valori uguali a 1
+</li>
+<li><b>da notare</b> le combinazioni delle variabili in input che <b>etichettiamo</b> i due assi
+delle mappe:
+<ul class="org-ul">
+<li><b>Codice di Gray</b>: differenza di un singolo bit tra combinazioni consecutive
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Scopo delle mappe</h3>
+<div class="outline-text-3" id="text-7-1">
+<ul class="org-ul">
+<li>Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
+di varietà con variabili (1, 2, 3 variabili, ecc.) <b>DON&rsquo;T CARE</b>
+</li>
+<li>Gli 1 corrispondono a queste righe risultano infatti <b>adiacenti</b> nella mappa corrispondente
+<ul class="org-ul">
+<li>Nel considerare l&rsquo;adiacenza delle celle nella mappa, si tengono conto che i <b>bordi orizzontali/verticali</b> della mappa <b>è come se si toccassero</b>
+</li>
+<li>Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
+variabili <b>DON&rsquo;T CARE</b> diventano <b>rettangoli</b> di valori uguali ad 1 nella mappa di Karnaugh
+</li>
+<li>Questi <b>rettangoli</b> sono composti da <b>2^p valori uguali ad 1</b>, e sono anche noti con il termine di <b>p-sottocubi</b>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Minimizzare con mappe di Karnaugh</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Per minimizzare il più possibile basta scegliere i più grandi rettangoli (p-sottocubi) che ricoprono gli 1 della mappa, 
+alcuni 1 possono essere ricoperti da più rettangoli.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Ipercurbi e Meppe di Karnaugh</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia ad ipercubo:
+</p>
+<ul class="org-ul">
+<li>ogni nodo dell&rsquo;ipercubo a n dimensioni è etichettato con un <b>numero binario a n cifre</b>.
+</li>
+<li>due nodi dell&rsquo;ipercubo sono connessi se la loro etichetta differisce per un solo bit.
+</li>
+<li>i <b>sottocubi</b> si riferiscono a specifci sottoinsiemi di nodi connessi.
+</li>
+</ul>
+
+<p>
+Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Funzioni incomplete</h3>
+<div class="outline-text-3" id="text-7-4">
+<p>
+Alcuni output di una funzione, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare,
+per questo sono detti output DON&rsquo;T CARE.
+Per esemopio nelle tabelle di verità o nelle mappe di Karnaugh possiamo avere degli <b>X</b> che stanno per DON&rsquo;T CARE.
+</p>
+
+<p>
+<b>Problema</b>
+</p>
+<ul class="org-ul">
+<li>L&rsquo;equazione logica e il corrispodente circuito <b>non possono essere incompleti</b>, essi devono produrre un risultato in
+corrispondenza di tutte le combinazioni dei valori di input.
+Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Algoritmo di Quine McCluskey</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Le mappe di Karnaugh servono per la minimizzazione a mano delle funzioni, ma si riscono a rappresentare al
+massimo 5 variabili
+</p>
+
+<p>
+Esiste un algoritmo detto <b>Algoritmo di Quine - McCluskey</b> che serve per sintetizzare funzioni logiche con
+più di 5 variabili in maniera automatica
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> George Boole (1815 - 1864)</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Definisce lo strumento concettuale che sta alla base del funzionamento del calcolatore elettronico: l&rsquo;algebra booleana
+</p>
+
+<p>
+Nel suo libro del 1854 crea il legame tra logica e algebra.
+Il suo lavoro in vita fu considerato pura matematica.
+</p>
+
+<p>
+Nel 1938 <b>Claude Shannon</b> dimostra che la logica simbolica di Boole può essere applicata per rappresentare
+le funzioni degli interruttori nei circuiti elettronici
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Claude Shannon (1916 - 2001)</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Nella sua tesi di master del 1938 dimostra che il fluire di un segnale elettrico attraverso
+una rete di interruttori segue le regole dell&rsquo;algebra di Boole.
+Questo pone la base teorica dei sistemi di codificazione, elaborazione e trasmissione
+digitale dell&rsquo;informazione.
+</p>
+
+<p>
+Nel 1948 pubblica una ricerca sul problema di ricostruire, con un certo grado di certezza, le informazioni
+trasmesse da un mittente. In questa ricerca conia la parola &ldquo;<b>bit</b>&rdquo; per designare l&rsquo;unità
+elementare d&rsquo;informazione.
+</p>
+
+<p>
+Nel 1949 pubblica uno studio che fonda la teoria matematica della crittografia.
+</p>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-05 Wed 21:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>
