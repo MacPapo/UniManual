@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Circuiti combinatori: ALU</title>
-<!-- 2021-12-30 Thu 23:33 -->
+<!-- 2022-01-05 Wed 15:19 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -226,7 +226,7 @@ $(function() {
 <div class="outline-text-2" id="text-1">
 <p>
 <b>Arithmetic Logic Unit</b>
-È un circuito combinatorio all'interno del processore per l'esecuzione di
+È un circuito combinatorio all&rsquo;interno del processore per l&rsquo;esecuzione di
 <b>istruzioni macchina</b> di tipo <b>aritmetico/logiche</b>
 </p>
 
@@ -234,23 +234,23 @@ $(function() {
 Esempi di istruzioni aritmetico/logiche:
 </p>
 <pre class="example">
-and $2, $3, $4     # $2 = $3 and $4
+  and $2, $3, $4     # $2 = $3 and $4
 
-or  $2, $3, $4     # $2 = $3 or  $4
+  or  $2, $3, $4     # $2 = $3 or  $4
 
-add $2, $3, $4     # $2 = $3  +  $4
+  add $2, $3, $4     # $2 = $3  +  $4
 
-sub $2, $3, $4     # $2 = $3  -  $4
+  sub $2, $3, $4     # $2 = $3  -  $4
 
-slt $2, $3, $4     # if($3 &lt; $4) $2 = 1 else $2 = 0
+  slt $2, $3, $4     # if($3 &lt; $4) $2 = 1 else $2 = 0
 
-bne $4, $5, Label  # Se $4 != $5, prossima istruzione caricata dall'indirizzo Label
+  bne $4, $5, Label  # Se $4 != $5, prossima istruzione caricata dall'indirizzo Label
 
-beq $4, $5, Label  # Se $4 == $5, prossima istruzione caricata dall'indirizzo Label
+  beq $4, $5, Label  # Se $4 == $5, prossima istruzione caricata dall'indirizzo Label
 </pre>
 
 <p>
-Quindi l'ALU deve essere in grado di eseguire:
+Quindi l&rsquo;ALU deve essere in grado di eseguire:
 </p>
 <ul class="org-ul">
 <li>Somme                   (<b>add</b>)
@@ -269,7 +269,7 @@ Quindi l'ALU deve essere in grado di eseguire:
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Addizionatore</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-L'ALU deve includere un addizionatore per realizzare le somme di numeri interi in complemento a 2
+L&rsquo;ALU deve includere un addizionatore per realizzare le somme di numeri interi in complemento a 2
 </p>
 
 <p>
@@ -296,12 +296,12 @@ Soluzione di compromesso, basato su una serie di <b>1-bit adder</b> collegati in
 </li>
 <li>Porte con <b>fan-in</b> limitato (<b>ammissibile</b>)
 </li>
-<li>Circuito che usa lo stesso metodo usato dall'algoritmo carta e penna a cui siamo abituati
+<li>Circuito che usa lo stesso metodo usato dall&rsquo;algoritmo carta e penna a cui siamo abituati
 </li>
 </ul>
 
 <p>
-La tabella di verità dell'addizionatore a singolo bit
+La tabella di verità dell&rsquo;addizionatore a singolo bit
 [Inserire tabella]
 </p>
 
@@ -353,24 +353,24 @@ Visto che la somma tra una coppia di bit <b>A</b> e <b>B</b> si esprime con <b>A
 1-bit ALU usata per eseguire le istruzioni macchina seguenti:
 </p>
 <pre class="example">
-and $2, $3, $4
-or  $2, $3, $4
-add $2, $3, $4
+    and $2, $3, $4
+    or  $2, $3, $4
+    add $2, $3, $4
 </pre>
 
 <ul class="org-ul">
 <li><b>OPERATION</b> è un <b>segnale di controllo</b> a 2bit usato per selezionare quale ingresso
 del multiplexer deve uscire
 <ul class="org-ul">
-<li>Determina il tipo di operazione che l'ALU deve eseguire
+<li>Determina il tipo di operazione che l&rsquo;ALU deve eseguire
 </li>
 </ul>
 </li>
-<li><b>l'ALU</b> è la tipica componente che fa parte dek <b>DATAPATH (Parte operativa)</b> del processore
+<li><b>l&rsquo;ALU</b> è la tipica componente che fa parte dek <b>DATAPATH (Parte operativa)</b> del processore
 </li>
-<li>La <b>Parte Controllo</b> comanda l'esecuzione delle varie istruzioni
+<li>La <b>Parte Controllo</b> comanda l&rsquo;esecuzione delle varie istruzioni
 <ul class="org-ul">
-<li>Settando opportunamente i segnali di controllo dell'ALU (e delle altre componenti della <b>Parte Operativa</b>)
+<li>Settando opportunamente i segnali di controllo dell&rsquo;ALU (e delle altre componenti della <b>Parte Operativa</b>)
 </li>
 </ul>
 </li>
@@ -383,7 +383,7 @@ del multiplexer deve uscire
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 Catena di 1-bit ALU con <b>Propagazione del Carry</b>
-Segnali di controllo per determinare l'operazione che l'ALU deve eseguire
+Segnali di controllo per determinare l&rsquo;operazione che l&rsquo;ALU deve eseguire
 </p>
 <ul class="org-ul">
 <li><b>OPERATION</b>: propagato a tutte le 1-bit ALU
@@ -411,13 +411,13 @@ Operazione di sottrazione:
 <li><b>$2 = $3 - $4</b> trasformata in:
 <b>$2 = $3 + (-$4)</b>
 </li>
-<li><b>(-$4)</b> significa che bisogna prima determinare l'opposto del <b>numero signed</b> contenuto in $4
+<li><b>(-$4)</b> significa che bisogna prima determinare l&rsquo;opposto del <b>numero signed</b> contenuto in $4
 </li>
-<li>L'ALU deve quindi possedere i circuiti predisposti per
+<li>L&rsquo;ALU deve quindi possedere i circuiti predisposti per
 <ul class="org-ul">
 <li><b>Invertire</b> il secondo operando e <b>sommare 1</b>
 </li>
-<li>Per sommare 1, basta porre ad 1 il <b>carry-in</b> dell'ALU
+<li>Per sommare 1, basta porre ad 1 il <b>carry-in</b> dell&rsquo;ALU
 </li>
 </ul>
 </li>
@@ -430,7 +430,7 @@ Operazione di sottrazione:
 <h2 id="sec-2"><span class="section-number-2">2</span> Implementazione NOR</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Per implementare <b>a NOR b</b> utilizziamo le proprietà dell'algebra per riutilizzare in parte
+Per implementare <b>a NOR b</b> utilizziamo le proprietà dell&rsquo;algebra per riutilizzare in parte
 le porte già presenti invece di introdurre una nuova porta
 </p>
 
@@ -459,7 +459,7 @@ Quindi per effettuare il confronto, possiamo semplicemente:
 <ul class="org-ul">
 <li><b>sottrarre</b> e controllare il <b>bit di segno</b>
 </li>
-<li>se <b>non c'è overflow</b> durante la sottrazione
+<li>se <b>non c&rsquo;è overflow</b> durante la sottrazione
 <ul class="org-ul">
 <li>Il valore del <b>bit di segno</b> del risultato della sottrazione può essere
 semplicemente assegnato al <b>bit meno semplificativo</b> dei 32bit in output
@@ -474,7 +474,7 @@ semplicemente assegnato al <b>bit meno semplificativo</b> dei 32bit in output
 Tutte le <b>1-bit ALU</b> devono quindi avere un <b>ingresso in più</b>
 </p>
 <ul class="org-ul">
-<li>L'input <b>LESS</b>, che verrà posto a 0 o a 1 sulla base del risultato dell'istruzione <b>slt</b>
+<li>L&rsquo;input <b>LESS</b>, che verrà posto a 0 o a 1 sulla base del risultato dell&rsquo;istruzione <b>slt</b>
 </li>
 </ul>
 </div>
@@ -488,11 +488,11 @@ Tutte le <b>1-bit ALU</b> devono quindi avere un <b>ingresso in più</b>
 La 1-bit ALU che determina la cifra più significativa è più complessa poichè
 </p>
 <ul class="org-ul">
-<li>Deve controllare l'<b>overflow</b>
+<li>Deve controllare l&rsquo;<b>overflow</b>
 </li>
 <li>Deve fornire, come ulteriore output, il bit di segno del risultato della sottrazione (<b>SET</b>)
 <ul class="org-ul">
-<li>Questo per permettere l'implementazione di <b>slt</b>
+<li>Questo per permettere l&rsquo;implementazione di <b>slt</b>
 </li>
 <li><b>Set</b> deve essere ridiretto verso la 1-bit ALU che fornirà in output il bit meno significativo
 del risultato
@@ -502,7 +502,7 @@ del risultato
 </ul>
 
 <p>
-Il blocco che controlla l'overflow lo fa sulla base
+Il blocco che controlla l&rsquo;overflow lo fa sulla base
 </p>
 <ul class="org-ul">
 <li>Del tipo di operazione (<b>sum</b> o <b>sub</b>), identificata tramite <b>BINVERT</b>
@@ -519,7 +519,7 @@ Il blocco che controlla l'overflow lo fa sulla base
 <h2 id="sec-4"><span class="section-number-2">4</span> ALU complessiva</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-Output <b>set</b> dell'ultima 1-bit ALU viene ridiretto sull'input <b>LESS</b> della prima 1-bit ALU
+Output <b>set</b> dell&rsquo;ultima 1-bit ALU viene ridiretto sull&rsquo;input <b>LESS</b> della prima 1-bit ALU
 </p>
 
 <p>
@@ -544,7 +544,7 @@ Vengono entrambi <b>asserted</b> (affermati) per sottrarre (<b>sub</b> e <b>slt<
 <h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> Bit di Operation</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
-I bit di Operation sono posti a 11 per far passare in output l'ultimo bit in ingresso ai <b>Multiplexer 4:1</b>
+I bit di Operation sono posti a 11 per far passare in output l&rsquo;ultimo bit in ingresso ai <b>Multiplexer 4:1</b>
 </p>
 </div>
 </div>
@@ -555,8 +555,8 @@ I bit di Operation sono posti a 11 per far passare in output l'ultimo bit in ing
 <h2 id="sec-5"><span class="section-number-2">5</span> SLT e OVERFLOW</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-Il circuito proposto per implementare l'ultima 1-bit ALU della catena potrebbe <b>NON FUNZIONARE</b> per
-il <b>slt</b> nel caso di overflow non è ottimale per quanto riguarda l'overflow
+Il circuito proposto per implementare l&rsquo;ultima 1-bit ALU della catena potrebbe <b>NON FUNZIONARE</b> per
+il <b>slt</b> nel caso di overflow non è ottimale per quanto riguarda l&rsquo;overflow
 </p>
 
 <p>
@@ -612,7 +612,7 @@ Se <b>a &gt;= 0</b> e <b>b &lt; 0</b>, allora <b>a &gt; b</b>, e possiamo porre 
 Se <b>a &lt; 0</b> e <b>b &gt;= 0</b>, allora <b>a &lt; b</b>, e possiamo porre direttamente <b>set = 1</b>
 </p>
 <ul class="org-ul">
-<li>Nei 2 casi di sopra, all'ALU viene comandato di eseguire una sottrazione, ma l'eventuale
+<li>Nei 2 casi di sopra, all&rsquo;ALU viene comandato di eseguire una sottrazione, ma l&rsquo;eventuale
 <b>OVERFLOW</b> verrà <b>ignorato</b>
 </li>
 </ul>
@@ -639,19 +639,19 @@ Abbiamo risparmiato un bit di controllo
 <li><b>Bnegato</b> al posto di:
 (<b>Binvert, CarryIn</b>)
 </li>
-<li>Nell'ALU precedente, infatti, (<b>Binvert, CarryIn</b>) venivano sempre asserted o deasserted assieme
+<li>Nell&rsquo;ALU precedente, infatti, (<b>Binvert, CarryIn</b>) venivano sempre asserted o deasserted assieme
 </li>
 </ul>
 
 <p>
-Abbiamo ulteriormente specializzato l'ALU per l'esecuzione delle istruzioni di <b>branch condizionato</b>
+Abbiamo ulteriormente specializzato l&rsquo;ALU per l&rsquo;esecuzione delle istruzioni di <b>branch condizionato</b>
 </p>
 <ul class="org-ul">
 <li><b>beq</b> e <b>bne</b>
 </li>
 <li>devo controllare se
 <ul class="org-ul">
-<li>Posso comandare all'ALU di sottrarre, e controllare se
+<li>Posso comandare all&rsquo;ALU di sottrarre, e controllare se
 <ul class="org-ul">
 <li><b>a - b = 0</b> oppure se <b>a - b != 0</b>
 </li>
@@ -673,7 +673,7 @@ Abbiamo ulteriormente specializzato l'ALU per l'esecuzione delle istruzioni di <
 <div class="outline-text-4" id="text-7-1-1">
 <p>
 comprende i segnali di controllo <b>Anegate</b>, <b>Bnegate</b> e <b>Operation</b>
-Gli ingressi a, b e l'uscita <b>RESULT</b> sono a 32bit.
+Gli ingressi a, b e l&rsquo;uscita <b>RESULT</b> sono a 32bit.
 </p>
 
 <p>
@@ -689,10 +689,10 @@ Gli ingressi a, b e l'uscita <b>RESULT</b> sono a 32bit.
 <h2 id="sec-8"><span class="section-number-2">8</span> ALU e Somma veloce</h2>
 <div class="outline-text-2" id="text-8">
 <p>
-Considerazioni sulla velocità dell'ALU nell'eseguire la somma:
+Considerazioni sulla velocità dell&rsquo;ALU nell&rsquo;eseguire la somma:
 </p>
 <ul class="org-ul">
-<li>L'ingresso <b>CarryIn</b> di ogni 1-bit adder dipende dal valore calcolato dall'1-bit adder precedente
+<li>L&rsquo;ingresso <b>CarryIn</b> di ogni 1-bit adder dipende dal valore calcolato dall&rsquo;1-bit adder precedente
 </li>
 <li>Il bit più significativo della somma deve quindi attendere 32 volte il tempo di attraversamento
 del segnale attraverso i vari <b>sommatori ==&gt; LENTO</b>
@@ -713,8 +713,8 @@ del segnale attraverso i vari <b>sommatori ==&gt; LENTO</b>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2021-12-30 Thu 23:33</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
+<p class="date">Created: 2022-01-05 Wed 15:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

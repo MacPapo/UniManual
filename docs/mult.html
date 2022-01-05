@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</title>
-<!-- 2021-12-30 Thu 23:33 -->
+<!-- 2022-01-05 Wed 15:19 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -243,10 +243,10 @@ Rimangono però altre due operazioni da realizzare:
 Nel <b>MIPS</b> abbiamo:
 </p>
 <pre class="example">
-mult  $5 $4   # Hi, Lo = $5 x $4 prodotto con segno
-multu $5 $4   # Hi, Lo = $5 x $4 prodotto senza segno
-div   $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione con segno
-divu  $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione senza segno
+  mult  $5 $4   # Hi, Lo = $5 x $4 prodotto con segno
+  multu $5 $4   # Hi, Lo = $5 x $4 prodotto senza segno
+  div   $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione con segno
+  divu  $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione senza segno
 </pre>
 </div>
 </div>
@@ -256,7 +256,7 @@ divu  $3 $4   # Hi = $3 mod $4, Lo = $3 / $4 divisione senza segno
 <h2 id="sec-2"><span class="section-number-2">2</span> Moltiplicazione: algoritmo carta e penna</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-Passi dell'algoritmo sono i seguenti:
+Passi dell&rsquo;algoritmo sono i seguenti:
 </p>
 <ul class="org-ul">
 <li>Considerare le cifre del <b>moltiplicatore</b> una alla volta, da destra a sinistra
@@ -315,7 +315,7 @@ Si basa su:
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Moltiplicazione: ottimizzazione</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-L'algoritmo di moltiplicazione precedente usa un registro a <b>64 bit</b> per il <b>moltiplicando</b> e,
+L&rsquo;algoritmo di moltiplicazione precedente usa un registro a <b>64 bit</b> per il <b>moltiplicando</b> e,
 conseguentemente, una <b>ALU a 64 bit</b> per la somma.
 </p>
 
@@ -326,7 +326,7 @@ da non influenzare i bit meno singnificativi del prodotto
 
 <p>
 Scalando il prodotto a destra, il moltiplicando può rimanere fisso e quindi sono necessari solo 32bit
-sia per il registro corrispodente che per l'ALU. ==&gt; il circuito diventa più semplice e la
+sia per il registro corrispodente che per l&rsquo;ALU. ==&gt; il circuito diventa più semplice e la
 moltiplicazione più veloce
 </p>
 
@@ -379,7 +379,7 @@ da cui: <b>Resto</b> = <b>Dividendo</b> - <b>Quoziente</b> x <b>Divisore</b>
 </p>
 
 <p>
-I passi dell'algoritmo sono i seguenti:
+I passi dell&rsquo;algoritmo sono i seguenti:
 </p>
 <ul class="org-ul">
 <li>Considerare gruppi di cifre del <b>dividendo</b>, partendo dalla cifra più significativa
@@ -455,8 +455,8 @@ Stabilire il segno del resto mediante la seguente regola:
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2021-12-30 Thu 23:33</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
+<p class="date">Created: 2022-01-05 Wed 15:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

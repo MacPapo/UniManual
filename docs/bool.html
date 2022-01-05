@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Algebra di Bool</title>
-<!-- 2021-12-30 Thu 00:01 -->
+<!-- 2022-01-05 Wed 15:19 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -201,7 +201,7 @@ $(function() {
 <li><a href="#sec-4">4. Funzioni Logiche</a>
 <ul class="nav">
 <li><a href="#sec-4-1">4.1. Tabelle di Verità</a></li>
-<li><a href="#sec-4-2">4.2. Proprietà dell'algebra di Boole</a></li>
+<li><a href="#sec-4-2">4.2. Proprietà dell&rsquo;algebra di Boole</a></li>
 <li><a href="#sec-4-3">4.3. NAND e NOR</a></li>
 </ul>
 </li>
@@ -247,14 +247,14 @@ I computer operano con segnali elettrici con valori di potenziale discreti.
 </ul>
 
 <p>
-L'aritmetica binaria è stata adottata proprio perché i
+L&rsquo;aritmetica binaria è stata adottata proprio perché i
 bit sono rappresentabili naturalmente
 tramite elementi elettronici in cui siamo in grado
 distinguere i 2 stati di potenziale elettronico ( <b>High</b> / <b>Low</b>)
 </p>
 
 <p>
-Il funzionamento dei circuiti elettronici può essere modellato tramite l'algebra di Boole
+Il funzionamento dei circuiti elettronici può essere modellato tramite l&rsquo;algebra di Boole
 </p>
 
 <ul class="org-ul">
@@ -272,7 +272,7 @@ Il funzionamento dei circuiti elettronici può essere modellato tramite l'algebr
 </li>
 <li><b>AND</b> (<b>A x B</b>): risultato uguale ad 1 (<b>TRUE</b>) solo se tutti gli input sono 1 (<b>TRUE</b>)
 </li>
-<li><b>NOT</b> (<b>~A</b>): risultato uguale all'inverso dell'input (0 -&gt; 1 uppure 1 -&gt; 0)
+<li><b>NOT</b> (<b>~A</b>): risultato uguale all&rsquo;inverso dell&rsquo;input (0 -&gt; 1 uppure 1 -&gt; 0)
 </li>
 </ul>
 </li>
@@ -289,7 +289,7 @@ Il funzionamento dei circuiti elettronici può essere modellato tramite l'algebr
 <li>possiamo associare <b>variabili logiche</b> con le varie <b>linee in input/output</b>
 </li>
 <li>Il circuito calcola una o più <b>funzioni logiche</b>, ciascuna espriminile tramite una
-combinazione di operazioni dell'algebra di Boole <b>sulle variabili in input</b>
+combinazione di operazioni dell&rsquo;algebra di Boole <b>sulle variabili in input</b>
 </li>
 </ul>
 </div>
@@ -301,7 +301,7 @@ combinazione di operazioni dell'algebra di Boole <b>sulle variabili in input</b>
 Circuiti combinatorio
 </p>
 <ul class="org-ul">
-<li>Senza elementi di memoria - produce output che dipeende funzionalmente solo dall'input
+<li>Senza elementi di memoria - produce output che dipeende funzionalmente solo dall&rsquo;input
 </li>
 </ul>
 
@@ -309,7 +309,7 @@ Circuiti combinatorio
 Circuiti sequenziali
 </p>
 <ul class="org-ul">
-<li>Con elementi di memoria - produce output che dipende non solo dall'input ma anche dallo stato della memoria
+<li>Con elementi di memoria - produce output che dipende non solo dall&rsquo;input ma anche dallo stato della memoria
 </li>
 </ul>
 </div>
@@ -349,7 +349,7 @@ combinazione dei bit in input
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Proprietà dell'algebra di Boole</h3>
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Proprietà dell&rsquo;algebra di Boole</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Proprietà:
@@ -427,8 +427,8 @@ Proprietà:
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> NAND e NOR</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
-<b>NAND</b> (inverso dell'operazione <b>AND</b>): ~(A x B) = A <b>nand</b> B
-<b>NOR</b>  (inverso dell'operazione <b>OR</b>):  ~(A + B) = A <b>nor</b>  B
+<b>NAND</b> (inverso dell&rsquo;operazione <b>AND</b>): ~(A x B) = A <b>nand</b> B
+<b>NOR</b>  (inverso dell&rsquo;operazione <b>OR</b>):  ~(A + B) = A <b>nor</b>  B
 </p>
 </div>
 </div>
@@ -508,14 +508,14 @@ Se i transistor <b>NMOS</b> sono più veloci:
 <div class="outline-text-3" id="text-5-4">
 <p>
 Ogni <b>funzione logica</b> può essere rappresentata come <b>equazione logica</b> o come <b>tabella di verità</b>
-Ogni <b>equazione logica</b> può essere scritta in forma canonica tramite l'uso degli operatori AND, OR, NOT.
+Ogni <b>equazione logica</b> può essere scritta in forma canonica tramite l&rsquo;uso degli operatori AND, OR, NOT.
 </p>
 
 <p>
 Forma canonica <b>SP</b> (somma di prodotti)
 </p>
 <ul class="org-ul">
-<li>Per ogni valore uguale ad 1 nell'output genera un prodotto (<b>mintermine</b>) degli input A, B, C dove gli input uguali
+<li>Per ogni valore uguale ad 1 nell&rsquo;output genera un prodotto (<b>mintermine</b>) degli input A, B, C dove gli input uguali
 a 0 appaiono negati.
 Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
 <b>esempio</b>: E = (~A * B) + (B * C)
@@ -526,7 +526,7 @@ Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fatt
 Forma canonica <b>PS</b> (prodotto di somme)
 </p>
 <ul class="org-ul">
-<li>Per ogni valore uguale ad 0 nell'output genera una somma (<b>maxtermine</b>) degli input A, B, C dove gli input uguali
+<li>Per ogni valore uguale ad 0 nell&rsquo;output genera una somma (<b>maxtermine</b>) degli input A, B, C dove gli input uguali
 a 1 appaiono negati.
 Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
 <b>esempio</b>: E = (~A + B) * (B + C)
@@ -572,14 +572,14 @@ costituita da 2 livelli:
 Scopo della minimizzazione:
 </p>
 <ul class="org-ul">
-<li>data un'equazione in forma normale, es. SP, si riduce il numero di prodotti oppure il numero di variabili coinvolte in 
+<li>data un&rsquo;equazione in forma normale, es. SP, si riduce il numero di prodotti oppure il numero di variabili coinvolte in 
 ogni prodotto.
-Tale processo permette l'uso di meno porte, un'arietà ridotta dato il decremento delle variabili e un 
+Tale processo permette l&rsquo;uso di meno porte, un&rsquo;arietà ridotta dato il decremento delle variabili e un 
 costo minore per il circuito.
 </li>
 </ul>
 <p>
-Le variabili <b>DON'T CARE</b> non hanno importanza ai fini della definizione dell'equazione, tradotto sono quelle variabili che 
+Le variabili <b>DON&rsquo;T CARE</b> non hanno importanza ai fini della definizione dell&rsquo;equazione, tradotto sono quelle variabili che 
 nel processo di minimizzazione (tipo <b>mappa di Karnaught</b>) non rimangono fisse.
 </p>
 </div>
@@ -592,7 +592,7 @@ nel processo di minimizzazione (tipo <b>mappa di Karnaught</b>) non rimangono fi
 <div class="outline-text-2" id="text-6">
 <p>
 Intuitivamente, per semplificare una tabella di verità di <b>N</b> variabili di input e minimizzare
-la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>DON'T CARE</b>, basta individuare:
+la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>DON&rsquo;T CARE</b>, basta individuare:
 </p>
 <ul class="org-ul">
 <li>2^1 (<b>coppie di</b>) righe <b>con output 1</b> dove
@@ -600,7 +600,7 @@ la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>D
 <li>i valori assunti da <b>N - 1</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori di <b>una</b> variabile (<b>X</b>) appaiono combinati con gli altri
-<b>N - 1</b> valori fissi ==&gt; la variabile <b>X</b> è <b>DON'T CARE</b>
+<b>N - 1</b> valori fissi ==&gt; la variabile <b>X</b> è <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
@@ -609,7 +609,7 @@ la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>D
 <li>i valori assunti da <b>N - 2</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori <b>due</b> variabili (<b>X,Y</b>) appaiono combinati con
-gli altri <b>N - 2</b> valori fissi ==&gt; le variabili <b>X</b> e <b>Y</b> sono <b>DON'T CARE</b>
+gli altri <b>N - 2</b> valori fissi ==&gt; le variabili <b>X</b> e <b>Y</b> sono <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
@@ -618,7 +618,7 @@ gli altri <b>N - 2</b> valori fissi ==&gt; le variabili <b>X</b> e <b>Y</b> sono
 <li>i valori assunti da <b>N - 3</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori di <b>tre</b> variabili <b>(X,Y,Z)</b> appaiono combinati con gli altri
-<b>N - 3</b> valori fissi ==&gt; le variabili <b>X, Y, Z</b> sono <b>DON'T CARE</b>
+<b>N - 3</b> valori fissi ==&gt; le variabili <b>X, Y, Z</b> sono <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
@@ -659,14 +659,14 @@ delle mappe:
 <div class="outline-text-3" id="text-7-1">
 <ul class="org-ul">
 <li>Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
-di varietà con variabili (1, 2, 3 variabili, ecc.) <b>DON'T CARE</b>
+di varietà con variabili (1, 2, 3 variabili, ecc.) <b>DON&rsquo;T CARE</b>
 </li>
 <li>Gli 1 corrispondono a queste righe risultano infatti <b>adiacenti</b> nella mappa corrispondente
 <ul class="org-ul">
-<li>Nel considerare l'adiacenza delle celle nella mappa, si tengono conto che i <b>bordi orizzontali/verticali</b> della mappa <b>è come se si toccassero</b>
+<li>Nel considerare l&rsquo;adiacenza delle celle nella mappa, si tengono conto che i <b>bordi orizzontali/verticali</b> della mappa <b>è come se si toccassero</b>
 </li>
 <li>Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
-variabili <b>DON'T CARE</b> diventano <b>rettangoli</b> di valori uguali ad 1 nella mappa di Karnaugh
+variabili <b>DON&rsquo;T CARE</b> diventano <b>rettangoli</b> di valori uguali ad 1 nella mappa di Karnaugh
 </li>
 <li>Questi <b>rettangoli</b> sono composti da <b>2^p valori uguali ad 1</b>, e sono anche noti con il termine di <b>p-sottocubi</b>
 </li>
@@ -693,9 +693,9 @@ alcuni 1 possono essere ricoperti da più rettangoli.
 La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia ad ipercubo:
 </p>
 <ul class="org-ul">
-<li>ogni nodo dell'ipercubo a n dimensioni è etichettato con un <b>numero binario a n cifre</b>.
+<li>ogni nodo dell&rsquo;ipercubo a n dimensioni è etichettato con un <b>numero binario a n cifre</b>.
 </li>
-<li>due nodi dell'ipercubo sono connessi se la loro etichetta differisce per un solo bit.
+<li>due nodi dell&rsquo;ipercubo sono connessi se la loro etichetta differisce per un solo bit.
 </li>
 <li>i <b>sottocubi</b> si riferiscono a specifci sottoinsiemi di nodi connessi.
 </li>
@@ -713,15 +713,15 @@ Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo
 <div class="outline-text-3" id="text-7-4">
 <p>
 Alcuni output di una funzione, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare,
-per questo sono detti output DON'T CARE.
-Per esemopio nelle tabelle di verità o nelle mappe di Karnaugh possiamo avere degli <b>X</b> che stanno per DON'T CARE.
+per questo sono detti output DON&rsquo;T CARE.
+Per esemopio nelle tabelle di verità o nelle mappe di Karnaugh possiamo avere degli <b>X</b> che stanno per DON&rsquo;T CARE.
 </p>
 
 <p>
 <b>Problema</b>
 </p>
 <ul class="org-ul">
-<li>L'equazione logica e il corrispodente circuito <b>non possono essere incompleti</b>, essi devono produrre un risultato in
+<li>L&rsquo;equazione logica e il corrispodente circuito <b>non possono essere incompleti</b>, essi devono produrre un risultato in
 corrispondenza di tutte le combinazioni dei valori di input.
 Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
 </li>
@@ -750,7 +750,7 @@ più di 5 variabili in maniera automatica
 <h2 id="sec-9"><span class="section-number-2">9</span> George Boole (1815 - 1864)</h2>
 <div class="outline-text-2" id="text-9">
 <p>
-Definisce lo strumento concettuale che sta alla base del funzionamento del calcolatore elettronico: l'algebra booleana
+Definisce lo strumento concettuale che sta alla base del funzionamento del calcolatore elettronico: l&rsquo;algebra booleana
 </p>
 
 <p>
@@ -771,15 +771,15 @@ le funzioni degli interruttori nei circuiti elettronici
 <div class="outline-text-2" id="text-10">
 <p>
 Nella sua tesi di master del 1938 dimostra che il fluire di un segnale elettrico attraverso
-una rete di interruttori segue le regole dell'algebra di Boole.
+una rete di interruttori segue le regole dell&rsquo;algebra di Boole.
 Questo pone la base teorica dei sistemi di codificazione, elaborazione e trasmissione
-digitale dell'informazione.
+digitale dell&rsquo;informazione.
 </p>
 
 <p>
 Nel 1948 pubblica una ricerca sul problema di ricostruire, con un certo grado di certezza, le informazioni
-trasmesse da un mittente. In questa ricerca conia la parola "<b>bit</b>" per designare l'unità
-elementare d'informazione.
+trasmesse da un mittente. In questa ricerca conia la parola &ldquo;<b>bit</b>&rdquo; per designare l&rsquo;unità
+elementare d&rsquo;informazione.
 </p>
 
 <p>
@@ -790,8 +790,8 @@ Nel 1949 pubblica uno studio che fonda la teoria matematica della crittografia.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2021-12-30 Thu 00:01</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.4.4)</p>
+<p class="date">Created: 2022-01-05 Wed 15:19</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>
