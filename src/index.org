@@ -1,0 +1,5 @@
+Ciao sono l'index
+
+[[file:it/ITlist.org][IT]]
+
+[[file:arch/Archlist.org][Architettura]]
