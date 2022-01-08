@@ -12,10 +12,9 @@
 ** DONE ALU
 ** DONE mult
 ** DONE memorie e circuiti sequenziali
-CLOSED: [2022-01-05 Wed 15:26]
-** TODO sintesi circuiti sequenziali
-** TODO esercizi circuiti sequenziali
-** TODO Progetto CPU (ciclo singolo)
+** DONE sintesi circuiti sequenziali
+** DONE esercizi circuiti sequenziali
+** STRT Progetto CPU (ciclo singolo)
 ** TODO Progetto CPU (multiciclo)
 ** TODO Valutazione delle prestazioni
 ** TODO Esercizi sulla valutazione delle prestazioni
@@ -30,3 +29,4 @@ CLOSED: [2022-01-05 Wed 15:26]
 ** [[file:alu.org][Circuiti combinatori: ALU]]
 ** [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
 ** [[file:sequenziali.org][Memorie e circuiti sequenziali]]
+** [[file:cpusingleclock.org][Progetto CPU a singolo ciclo]]

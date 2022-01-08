@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Circuiti combinatori</title>
+<title>Progetto CPU a singolo ciclo</title>
 <!-- 2022-01-08 Sat 14:29 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -195,228 +195,197 @@ $(function() {
 <div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
-<li><a href="#sec-1">1. Circuiti integrati</a>
+<li><a href="#sec-1">1. Processore: Datapath &amp; Control</a>
 <ul class="nav">
-<li><a href="#sec-1-1">1.1. Livelli di integrazione</a></li>
+<li><a href="#sec-1-1">1.1. Formati delle istruzioni</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Multiplexer</a></li>
-<li><a href="#sec-3">3. Demultiplexer</a></li>
-<li><a href="#sec-4">4. Decoder</a></li>
-<li><a href="#sec-5">5. PLA</a></li>
-<li><a href="#sec-6">6. ROM</a></li>
+<li><a href="#sec-2">2. Passi di progetto</a></li>
+<li><a href="#sec-3">3. Implementazione generica a singolo ciclo</a></li>
+<li><a href="#sec-4">4. Incremento del PC</a></li>
 </ul>
 </div>
 </nav>
-</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Circuiti combinatori</h1>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Progetto CPU a singolo ciclo</h1>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Circuiti integrati</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Processore: Datapath &amp; Control</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-I circuiti logici sono realizzati con <b>IC</b> ( circuiti integrati )
+Cerchiamo di progettare un processore MIPS-like semplificato
+in grado di eseguire solo:
 </p>
 
 <ul class="org-ul">
-<li>Realizzati su chip si silicio
+<li>Istruzioni di <b>memory-reference</b>: <b>lw</b>, <b>sw</b>
 </li>
-<li>Porte (<b>gate</b>) e fili depositati su chip di silicio, inseriti in un package
-e collegati all&rsquo;esterno con un certo insieme di <b>pin</b>.
+<li>Istruzioni <b>arithmetic-logic</b>: <b>add</b>, <b>sub</b>, <b>and</b>, <b>or</b>, <b>slt</b>
 </li>
-<li>Gli <b>IC</b> si distinguono per grado di integrazione
+<li>Istruzioni di <b>control-flow</b>: <b>beq</b>, <b>j</b>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Formati delle istruzioni</h3>
+<div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li>Da singole porte indipendenti, a circuiti più complessi
+<li>R-type:
+<ul class="org-ul">
+<li><b>op</b>             =  6 bit
+</li>
+<li><b>rs</b>             =  5 bit
+</li>
+<li><b>rt</b>             =  5 bit
+</li>
+<li><b>rd</b>             =  5 bit
+</li>
+<li><b>shamt</b>          =  5 bit
+</li>
+<li><b>funct</b>          =  6 bit
+</li>
+</ul>
+</li>
+
+<li>I-type:
+<ul class="org-ul">
+<li><b>op</b>             =  6 bit
+</li>
+<li><b>rs</b>             =  5 bit
+</li>
+<li><b>rt</b>             =  5 bit
+</li>
+<li><b>immediate</b>      = 16 bit
+</li>
+</ul>
+</li>
+
+<li>J-type:
+<ul class="org-ul">
+<li><b>op</b>             =  6 bit
+</li>
+<li><b>target address</b> = 26 bit
 </li>
 </ul>
 </li>
 </ul>
 </div>
 
-
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Livelli di integrazione</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Fammi spiegare:</h4>
+<div class="outline-text-4" id="text-1-1-1">
 <ul class="org-ul">
-<li><b>SSI</b> (Small Scale Integrated): 1 - 10 porte
+<li><b>op</b>: codice operativo dell&rsquo;istruzione
 </li>
-<li><b>MSI</b> (Medium Scale Integrated): 10 - 100 porte
+<li><b>rs, rt, rd</b>: dei registri sorgente (<b>rs,rt</b>) e destinazione (<b>rd</b>)
 </li>
-<li><b>LSI</b> (Large Scale Integrated): 100 - 100.000 porte
+<li><b>shamt</b>: shift amount ( è diverso da 0 solo per istruzioni di shift )
 </li>
-<li><b>VLSI</b> (Very Large Scale Integrated): &gt; 100.000
+<li><b>funct</b>: seleziona le varianti dell&rsquo;operazione specificata in <b>op</b>
+</li>
+<li><b>immediate</b>: offset dell&rsquo;indirizzo (load/store) o valore immediato ( op.aritmetiche )
+</li>
+<li><b>target address</b>: indirizzo target di un&rsquo;istruzione di jump
 </li>
 </ul>
-
-<p>
-Con tecnologia <b>SSI</b>, gli <b>IC</b> contenvano poche porte, direttamente
-collegate ai pin esterni
-</p>
-
-<p>
-Con tecnologia <b>MSI</b>, gli <b>IC</b> contenevano alcuni componenti base
-</p>
-<ul class="org-ul">
-<li>Circuiti comunemente usati nel progetto di computer
-</li>
-</ul>
-
-<p>
-Con tecnologia <b>VLSI</b>, un <b>IC</b> può oggi contenere una <b>CPU completa</b>
-</p>
-<ul class="org-ul">
-<li>Microprocessore
-</li>
-</ul>
+</div>
 </div>
 </div>
 </div>
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Multiplexer</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Passi di progetto</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-<b>n</b> input ed <b>1</b> output
-<b>log2n</b> segnali di controllo
-</p>
-
-<p>
-Il multiplexer, sulla base dei segni di controllo, seleziona quale tra gli <b>n</b> input
-verrà presentato come output del circuito.
-</p>
-
-<p>
-se S = 0: passa A
-se S = 1: passa B
-</p>
-
-<p>
-C = A ~S + BS
-</p>
+<ol class="org-ol">
+<li>Analizzare il set di istruzioni =&gt; verificare i requisiti del datapath
+<ul class="org-ul">
+<li>Il Datapath deve includere gli elementi di memoria corrispondenti ai registri dell&rsquo;<b>ISA</b>
+<ul class="org-ul">
+<li>Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l&rsquo;<b>ISA</b> ==&gt; es. <b>PC( Program counter )</b>
+</li>
+</ul>
+</li>
+<li>Analizza la semantica di ogni istruzione, data in termini di <b>trasferimenti dai registri</b>, ed eventuali <b>operazioni tra i registri</b>
+<ul class="org-ul">
+<li>Il datapath deve fornire i cammini per tutti i <b>register transfer</b> necessari, e gli accessi alla memoria
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Seleziona i vari componenti del datapath (es. ALU) e stabilisci la metodologia di clocking
+</li>
+<li>Assembla il datapath in accordo ai requisiti, aggiungendo i segnali di controllo
+</li>
+<li>Analizza l&rsquo;implementazione di ogni istruzione per determinare il <b>setting</b> dei segnali di controllo che provocano i vari <b>register transfer</b>
+</li>
+<li>Assembla la <b>logica di controllo</b> in accordo al punto <b>4</b>
+</li>
+</ol>
 </div>
 </div>
+
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Demultiplexer</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Implementazione generica a singolo ciclo</h2>
 <div class="outline-text-2" id="text-3">
+<ol class="org-ol">
+<li>Usa il registro <b>Program Counter</b> (<b>PC</b>), interno alla <b>CPU</b>, per fornire alla memoria l&rsquo;indirizzo dell&rsquo;istruzione
+</li>
+<li>Leggi l&rsquo;istruzione dalla memoria (<b>fetch</b>)
+</li>
+<li>Interpreta i campi dell&rsquo;istruzione per decidere esattamente cosa fare (<b>decode</b>)
+</li>
+<li>Usa l&rsquo;<b>ALU</b> per l&rsquo;esecuzione (*execute)
+<ul class="org-ul">
+<li><b>add/sub/and/or/slt</b> usano l&rsquo;<b>ALU</b> per le operazioni corrispondenti, e il <b>Register File</b> per accedere ai registri
+</li>
+<li>Le istruzioni di <b>lw/sw</b> usano l&rsquo;<b>ALU</b> per calcolare gli indirizzi di memoria
+</li>
+<li>L&rsquo;istruzione di <b>beq</b> usa l&rsquo;<b>ALU</b> per controllare l&rsquo;uguaglianza dei registri
+</li>
+</ul>
+</li>
+<li>Modifica il <b>PC</b> e reitera il ciclo
+</li>
+</ol>
+
 <p>
-Da 1 singola linea in <b>input</b>, a n linee in output
+=&gt; l&rsquo;ALU, il Register File, il PC dovranno far parte del Datapath
 </p>
-<ul class="org-ul">
-<li>log2n segnali di controllo (S)
-</li>
-<li>Se la linea in input è uguale a 0
-<ul class="org-ul">
-<li>Tutti gli output dovranno essere uguali a 0, indipendentemente da S
-</li>
-</ul>
-</li>
-<li>Se la linea in input è uguale a 1
-<ul class="org-ul">
-<li>Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
-</li>
-<li>L&rsquo;output da affermare dipende da S
-</li>
-</ul>
-</li>
-</ul>
 </div>
 </div>
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Decoder</h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> Incremento del PC</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-Componente con <b>n input</b> e <b>2^n output</b>
-</p>
-<ul class="org-ul">
-<li>Gli n input sono interpretati come un numero unsigned
-</li>
-<li>Se questo numero rappresenta il numero i, allora
-<ul class="org-ul">
-<li>Solo il bit in output di indice i (i = 0, 1, &#x2026;, 2^n-1) verrà posto ad 1
-</li>
-<li>Tutti gli altri verranno posti a 0 
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> PLA</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-<b>Programmable Logic Array</b>
-Componente per costruire funzioni logiche arbitrarie
-</p>
-<ul class="org-ul">
-<li>Permette di costruire funzioni in forma <b>SP</b>
-<ul class="org-ul">
-<li>Porte <b>AND</b> al primo livello, e porte <b>OR</b> al secondo livello
-</li>
-</ul>
-</li>
-
-<li><b>n input</b> e <b>o output</b>
-<ul class="org-ul">
-<li><b>m porte AND</b> ==&gt; <b>m</b> fissa un limite al numero di <b>mintermini</b> esprimibili
-</li>
-<li><b>o porte OR</b>  ==&gt; <b>o</b> fissa un limite al numero di funzioni differenti in forma canonica <b>SP</b>
-</li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> ROM</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-Memoria usabili anche per implementare, in maniera non minima, funzioni logiche arbitrarie
+Addizionatore aggiuntivo
 </p>
 
 <ul class="org-ul">
-<li><b>ROM</b> (Read Only Memory)
+<li>Necessario per realizzare, all&rsquo;interno dello steso ciclo di clock
 <ul class="org-ul">
-<li><b>PROM</b> (Programmable ROM)
--Scrivibile solo una volta
+<li>Il <b>Fetch</b> dell&rsquo;istruzione
 </li>
-<li><b>EPROM</b> (Erasable PROM)
-<ul class="org-ul">
-<li>Cancellabile con luce ultravioletta
+<li>l&rsquo;incremento del PC
 </li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
 
-<p>
-Data una <b>Tabella di Verità</b>, le <b>ROM</b> sono usate per memorizzare direttamente le diverse
-funzioni logiche
-</p>
-
-<p>
-Indirizzo a <b>n</b> bit
-</p>
+<li>Non possiamo usare l&rsquo;ALU principale perchè questa p già utilizzata per eseguire le istruzioni
 <ul class="org-ul">
-<li>Individua una specifica combinazione delle <b>n</b> variabili logiche in input
-</li>
-<li>Individua una cella di <b>Width</b> bit della <b>ROM</b>
+<li>Stiamo implementando una <b>CPU</b> a singolo ciclo
+Dove abbiamo risorse <b>replicate</b>
 </li>
 </ul>
+</li>
 
-<p>
-Ogni funzione:
-</p>
+<li>Nota che della memoria istruzioni viene letta una nuova isruzione ad ogni ciclo di clock
 <ul class="org-ul">
-<li>Singola colonna della <b>ROM</b>
+<li>Il segnale di <b>MemRead</b> deve essere sempre <b>affermato</b>
 </li>
-<li>Funzioni <b>Fully Encoded</b>
-</li>
-<li><b>PLA</b> più efficiente
+</ul>
 </li>
 </ul>
 </div>

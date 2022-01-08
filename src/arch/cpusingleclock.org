@@ -1,0 +1,79 @@
+#+TITLE: Progetto CPU a singolo ciclo
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Processore: Datapath & Control
+Cerchiamo di progettare un processore MIPS-like semplificato
+in grado di eseguire solo:
+
++ Istruzioni di *memory-reference*: *lw*, *sw*
++ Istruzioni *arithmetic-logic*: *add*, *sub*, *and*, *or*, *slt*
++ Istruzioni di *control-flow*: *beq*, *j*
+
+** Formati delle istruzioni
+
++ R-type:
+  - *op*             =  6 bit
+  - *rs*             =  5 bit
+  - *rt*             =  5 bit
+  - *rd*             =  5 bit
+  - *shamt*          =  5 bit
+  - *funct*          =  6 bit
+
++ I-type:
+  - *op*             =  6 bit
+  - *rs*             =  5 bit
+  - *rt*             =  5 bit
+  - *immediate*      = 16 bit
+
++ J-type:
+  - *op*             =  6 bit
+  - *target address* = 26 bit
+
+*** Fammi spiegare:
++ *op*: codice operativo dell'istruzione
++ *rs, rt, rd*: dei registri sorgente (*rs,rt*) e destinazione (*rd*)
++ *shamt*: shift amount ( è diverso da 0 solo per istruzioni di shift )
++ *funct*: seleziona le varianti dell'operazione specificata in *op*
++ *immediate*: offset dell'indirizzo (load/store) o valore immediato ( op.aritmetiche )
++ *target address*: indirizzo target di un'istruzione di jump
+
+* Passi di progetto
+
+1) Analizzare il set di istruzioni => verificare i requisiti del datapath
+   - Il Datapath deve includere gli elementi di memoria corrispondenti ai registri dell'*ISA*
+     - Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l'*ISA* ==> es. *PC( Program counter )*
+   - Analizza la semantica di ogni istruzione, data in termini di *trasferimenti dai registri*, ed eventuali *operazioni tra i registri*
+     - Il datapath deve fornire i cammini per tutti i *register transfer* necessari, e gli accessi alla memoria
+2) Seleziona i vari componenti del datapath (es. ALU) e stabilisci la metodologia di clocking
+3) Assembla il datapath in accordo ai requisiti, aggiungendo i segnali di controllo
+4) Analizza l'implementazione di ogni istruzione per determinare il *setting* dei segnali di controllo che provocano i vari *register transfer*
+5) Assembla la *logica di controllo* in accordo al punto *4*
+
+
+* Implementazione generica a singolo ciclo
+
+1) Usa il registro *Program Counter* (*PC*), interno alla *CPU*, per fornire alla memoria l'indirizzo dell'istruzione
+2) Leggi l'istruzione dalla memoria (*fetch*)
+3) Interpreta i campi dell'istruzione per decidere esattamente cosa fare (*decode*)
+4) Usa l'*ALU* per l'esecuzione (*execute)
+   - *add/sub/and/or/slt* usano l'*ALU* per le operazioni corrispondenti, e il *Register File* per accedere ai registri
+   - Le istruzioni di *lw/sw* usano l'*ALU* per calcolare gli indirizzi di memoria
+   - L'istruzione di *beq* usa l'*ALU* per controllare l'uguaglianza dei registri
+5) Modifica il *PC* e reitera il ciclo
+
+=> l'ALU, il Register File, il PC dovranno far parte del Datapath
+
+* Incremento del PC
+
+Addizionatore aggiuntivo
+
+- Necessario per realizzare, all'interno dello steso ciclo di clock
+  + Il *Fetch* dell'istruzione
+  + l'incremento del PC
+
+- Non possiamo usare l'ALU principale perchè questa p già utilizzata per eseguire le istruzioni
+  + Stiamo implementando una *CPU* a singolo ciclo
+    Dove abbiamo risorse *replicate*
+
+- Nota che della memoria istruzioni viene letta una nuova isruzione ad ogni ciclo di clock
+  - Il segnale di *MemRead* deve essere sempre *affermato*
