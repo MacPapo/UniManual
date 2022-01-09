@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Progetto CPU a singolo ciclo</title>
-<!-- 2022-01-08 Sat 14:29 -->
+<!-- 2022-01-09 Sun 23:39 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -203,6 +203,14 @@ $(function() {
 <li><a href="#sec-2">2. Passi di progetto</a></li>
 <li><a href="#sec-3">3. Implementazione generica a singolo ciclo</a></li>
 <li><a href="#sec-4">4. Incremento del PC</a></li>
+<li><a href="#sec-5">5. Controllo a singolo ciclo</a></li>
+<li><a href="#sec-6">6. Determiniamo il ciclo di clock per LW</a></li>
+<li><a href="#sec-7">7. Problemi con il singolo ciclo</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. Controllo ALU</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Ciclo fisso vs variabile</a></li>
 </ul>
 </div>
 </nav>
@@ -390,10 +398,221 @@ Dove abbiamo risorse <b>replicate</b>
 </ul>
 </div>
 </div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Controllo a singolo ciclo</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Il controllo della CPU a singolo ciclo è <b>combinatorio</b>
+Il <b>Datapath</b> è invece sequenziale
+</p>
+<ul class="org-ul">
+<li>I suoi output dipendono anche dal valore dei registri
+<ul class="org-ul">
+<li>ES. <b>ZERO</b>, oppure l&rsquo;indirizzo della memoria dati, oppure il valore da immagazzinare in memeoria in conseguenza di una store, dipendono dai valori dello <b>stato interno del DATAPATH</b> ( ovvero dal contenuto dei registri )
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Dobbiamo attendere che tutti i circuiti siano stabili, sia quelli del datapath che quelli del controllo, prima di attivare il fronte di <b>salita/discesa</b> del clock.
+</p>
+
+<p>
+Clock in <b>AND</b> con i <b>segnali di controllo di scrittura</b> ( registri/memoria )
+</p>
+<ul class="org-ul">
+<li>I valori vengono scritti in corrispondenza del fronte di salita/discesa del clock solo se i segnali relativi sono affermati
+</li>
+</ul>
+
+<p>
+Ciclo di clock determinato sulla base del cammino più lungo che i segnali elettrici devono attraversare
+</p>
+<ul class="org-ul">
+<li>ES: l&rsquo;istruzione <b>lw</b> è quella più costosa:
+<ul class="org-ul">
+<li>Reg. File(Read)
+</li>
+<li>ALU e Adders
+</li>
+<li>Mem. Dati
+</li>
+<li>Reg. File(Write)
+</li>
+</ul>
+</li>
+<li>i circuiti del controllo agiscono in parallelo alla lettura dei registri
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Determiniamo il ciclo di clock per LW</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Ipotiziamo i costi in ns per le varie componenti
+</p>
+<ul class="org-ul">
+<li>Mem. Istr/Dati: 200 ps
+</li>
+<li>Reg. File: 100 ps
+</li>
+<li>ALU: 200 ps
+</li>
+<li>Control: &lt; 100 ps
+</li>
+</ul>
+
+<p>
+Consideriamo l&rsquo;istruzione <b>LW</b>, che abbiamo detto essere la più costosa
+</p>
+<ul class="org-ul">
+<li>L&rsquo;unica che usa sia il <b>Register File in lettura/scrittura</b> che la <b>Memoria dati</b>
+</li>
+<li>Ciclo di clock lungo 800 ps
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Problemi con il singolo ciclo</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Il ciclo singolo e di lunghezza fissa <b>penalizza le istruzioni veloci</b>
+</p>
+
+<p>
+Anche se complesso, si potrebbe realizzare una CPU a ciclo di clock <b>variabile</b>
+con i seguenti vantaggi:
+</p>
+<ul class="org-ul">
+<li>Istruzioni diverse dalla <b>LW</b> eseguite in un tempo &lt; 8 ns, mentre se il ciclo è fisso sarebbero sempre necessari 8 ns
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Controllo ALU</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Dobbiamo definire il circuito che definisce i <b>4-bit di controllo</b> dell&rsquo;ALU (operation) da assegnare in base al
+tipo di istruzione, ovvero basandosi sui campi <b>op</b> e <b>funct</b>:
+</p>
+<ul class="org-ul">
+<li>0000 operazione di and
+</li>
+<li>0001 operazione di or
+</li>
+<li>0010 operazione di add, lw, sw
+</li>
+<li>0110 operazione di sub e beq
+</li>
+<li>0111 operazione di slt
+</li>
+</ul>
+
+<p>
+Il circuito sarà a due livelli:
+</p>
+<ol class="org-ol">
+<li>1° livello calcolerà ALUOp (ALUOp0 ALUOp1) in base all&rsquo;<b>op</b> code
+</li>
+<li>2° livello calcolerà affettivamente Operation in base al campo funct e ALUOp
+</li>
+</ol>
+
+<p>
+Il circuito di 1° livello dovrà semplicemente definire la configurazione dei bit (ALUOp1 ALUOp0) sulla base di op:
+</p>
+<ul class="org-ul">
+<li>00 se lw, sw (Operation=0010) (somma)
+</li>
+<li>01 se beq (Operation=0110) (sottrazione)
+</li>
+<li>10 se arithmetic/logic (Operation dipende dalla specifica istruzione definita dai bit nel funct)
+</li>
+</ul>
+
+<p>
+Definiamo ora la tabella di verità che sulla base di ALUOp e funct determina i 3 bit del controllo dell’ALU:
+</p>
+<ul class="org-ul">
+<li>Operation0 = (F3 or F0) and ALUOp1
+</li>
+<li>Operation1 = ~F2 or ~ALUOp1
+</li>
+<li>Operation2 = (F1 and ALUOp1) or AluOp0
+</li>
+<li>Operation3 è sempre a 0
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Ciclo fisso vs variabile</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Si consideri di conoscere che in un generico programma, le istruzioni sono combinate in accordo a questo mix:
+</p>
+<ul class="org-ul">
+<li>24% <b>load</b>
+</li>
+<li>12% <b>store</b>
+</li>
+<li>44% <b>formato-R</b>
+</li>
+<li>18% <b>branch</b>
+</li>
+<li>2%  <b>jump</b>
+</li>
+</ul>
+
+<p>
+Quale è la lunghezza media ( <b>periodo medio</b> ) del ciclo di clock nell&rsquo;implementazione a ciclo variabile?
+</p>
+<ul class="org-ul">
+<li><b>Periodo medio</b> = 800 x 24% + 700 x 12% + 600 x 44% + 500 x 18% + 200 x 2% = 630 ps
+</li>
+</ul>
+
+<p>
+Le prestazioni della CPU sono calcolabili rispetto a NI ( Numero Istruzioni eseguite da un programma )
+</p>
+
+<ul class="org-ul">
+<li>T_var = NI x periodo = NI x 630 ( variabile )
+</li>
+<li>T_fisso = NI x periodo = NI x 800 ( fisso )
+</li>
+</ul>
+
+<p>
+Facendo il rapporto: T_fisso / T_var = 800 / 630 = 1.27
+</p>
+
+<p>
+Quindi possiamo dire che l&rsquo;implementazione a clock variablie è l&rsquo;1.27 volte più veloce!
+</p>
+
+<p>
+Se consideriamo istruzioni più complesse della <b>LW</b>, come leistruzioni <b>FP</b> di moltiplicazione. l&rsquo;implementazione a ciclo fisso risulta ulteriormente <b>penalizzata</b>
+</p>
+</div>
+</div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-08 Sat 14:29</p>
+<p class="date">Created: 2022-01-09 Sun 23:39</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>

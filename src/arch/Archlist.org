@@ -14,8 +14,8 @@
 ** DONE memorie e circuiti sequenziali
 ** DONE sintesi circuiti sequenziali
 ** DONE esercizi circuiti sequenziali
-** STRT Progetto CPU (ciclo singolo)
-** TODO Progetto CPU (multiciclo)
+** DONE Progetto CPU (ciclo singolo)
+** DONE Progetto CPU (multiciclo)
 ** TODO Valutazione delle prestazioni
 ** TODO Esercizi sulla valutazione delle prestazioni
 
@@ -30,3 +30,4 @@
 ** [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
 ** [[file:sequenziali.org][Memorie e circuiti sequenziali]]
 ** [[file:cpusingleclock.org][Progetto CPU a singolo ciclo]]
+** [[file:cpumulticlock.org][Progetto CPU a multiciclo]]

@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Progetto CPU multiciclo</title>
+<!-- 2022-01-09 Sun 23:39 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Problemi con progetto a singolo ciclo</a></li>
+<li><a href="#sec-2">2. Datapath multiciclo</a></li>
+<li><a href="#sec-3">3. Suddivisione in passi del Datapath</a></li>
+<li><a href="#sec-4">4. Sequenza dei cinque passi di esecuzione</a></li>
+<li><a href="#sec-5">5. Controllo</a></li>
+<li><a href="#sec-6">6. Passo 1: Fetch dell&rsquo;istruzione</a></li>
+<li><a href="#sec-7">7. Passo 2: Decodifica istruzione &amp; Lettura registri</a></li>
+<li><a href="#sec-8">8. Passo 3: ( dipende dall&rsquo;istruzione )</a></li>
+<li><a href="#sec-9">9. Passo 4: (dipende dall&rsquo;istruzione)</a></li>
+<li><a href="#sec-10">10. Definizione del controllo</a></li>
+<li><a href="#sec-11">11. Costo istruzioni</a></li>
+<li><a href="#sec-12">12. Costo istruzioni</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Progetto CPU multiciclo</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Problemi con progetto a singolo ciclo</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Il problema del singolo ciclo
+</p>
+<ul class="org-ul">
+<li>Ciclo di clock <b>lungo</b>
+</li>
+<li>Istruzioni potenzialmente più veloci sono rallentate
+<ul class="org-ul">
+<li>Impiegano lo stesso tempo dell&rsquo;istruzione più lenta
+</li>
+</ul>
+</li>
+<li>Unità funzionali e collegamenti del Datapath sono <b>replicati</b>
+<ul class="org-ul">
+<li>Dobbiamo poter eseguire in parallelo tutti i passi computazionali necessari per l&rsquo;esecuzione di qualsiasi istruzione dell&rsquo;<b>ISA</b>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Possibile soluzione:
+</p>
+
+<ul class="org-ul">
+<li>Datapath &ldquo;<b>multiciclo</b>&rdquo;
+</li>
+<li>Usiamo un ciclo <b>più corto</b>
+</li>
+<li>Istruzioni differenti impiegano un numero di cicli diversi
+</li>
+<li>Unità funzionali possono essere usate più volte per eseguire la stessa istruzione ==&gt; meno <b>replicazione</b>
+<ul class="org-ul">
+<li>Basta usarle in cicli differenti
+</li>
+</ul>
+</li>
+<li>Registri aggiuntivi
+<ul class="org-ul">
+<li>Usati per memorizzare i risultati parziali nell&rsquo;esecuzione delle istruzioni
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Datapath multiciclo</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+<b>Registri interni</b> addizionali usati per memorizzare valori intermedi, da usare nel ciclo di clock successivi per <b>continuare</b> l&rsquo;esecuzione della stessa istruzione
+</p>
+
+<ul class="org-ul">
+<li><b>IR</b>
+</li>
+<li><b>MDR</b>
+</li>
+<li><b>A</b>
+</li>
+<li><b>B</b>
+</li>
+<li><b>ALUOut</b>
+</li>
+</ul>
+
+<p>
+Riuso di unità funzionali
+</p>
+<ul class="org-ul">
+<li>ALU usata anche per calcolare l&rsquo;indirizzo dei salti e incrementare il PC
+</li>
+<li>Memoria usata sia per leggere le istruzioni che per leggere/scrivere i dati
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Suddivisione in passi del Datapath</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Ogni <b>passo</b> da eseguire in un <b>ciclo di clock</b> ( ciclo più corto rispetto alla CPU a ciclo singolo )
+</p>
+
+<p>
+Importante il bilanciamento della quantità di lavoro eseguito nei vari passi, perchè dobbiamo fissare un ciclo di clock unico
+</p>
+
+<ul class="org-ul">
+<li>Determinato sulla base del passo più lungo, ovvero più costoso dal punto di vista computazionale
+</li>
+</ul>
+
+<p>
+Al termine di ogni ciclo i valori <b>intermedi</b> sono memorizzati nei <b>registri interni addizionali</b>: da impiegare nei cicli successivi della stessa istruzione
+</p>
+
+<p>
+<b>Register File</b> e <b>PC</b> sono invece impiegati per memorizzare valori da usare per l&rsquo;esecuzione di una <b>nuova</b> istruzione
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Sequenza dei cinque passi di esecuzione</h2>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li><b>Fetch dell&rsquo;istruzione e Incremento PC</b>
+</li>
+<li><b>Decodifica dell&rsquo;istruzione e Lettura dei registri ( e Addr. Branch )</b>
+</li>
+<li><b>R-type exe o Calcolo Indirizzo Memoria o Completa Branch o Completa Jump</b>
+<ul class="org-ul">
+<li>Dipende dal tipo di istruzione
+</li>
+</ul>
+</li>
+<li><b>Accesso alla memoria o Completa R-type ( Scrittura regs )</b>
+<ul class="org-ul">
+<li>Dipende dal tipo di istruzione
+</li>
+</ul>
+</li>
+<li><b>Write back ( Scritttura reg: solo LW )</b>
+</li>
+</ol>
+
+<p>
+<b>OGNI PASSO ESEGUITO IN UN CICLO DI CLOCK</b>
+<b>LE ISTRUZIONI IMPIEGANO DA 3 A 5 CICLI</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Controllo</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+I segnali di controllo alle varie unità funzionali e ai multiplexer non dipendono solo dal <b>tipo di istruzione</b>, ma anche dallo specifico <b>passo di esecuzione</b>
+</p>
+
+<p>
+Il <b>controllo</b> sarà implementato come <b>circuiti sequenziale</b>
+</p>
+
+<ul class="org-ul">
+<li>L&rsquo;output del circuito ( segnali di controllo ) dipenderà dallo <b>stato interno al circuito al tempo t_i</b>
+</li>
+<li><b>stato del circuito sequenziale = passo di esecuzione di un&rsquo;istruzione</b>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Passo 1: Fetch dell&rsquo;istruzione</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Usa PC per prelevare l&rsquo;istruzione dalla memoria e porla nell&rsquo;Instruction Register ( IR )
+</p>
+
+<p>
+Incrementa PC di 4, e rimetti il risultato nel PC
+</p>
+
+<p>
+<b>Passo identico per tutte le istruzioni</b>
+</p>
+
+<p>
+Usanod la notazione RTL:
+</p>
+<pre class="example">
+IR = M[PC];
+PC = PC + 4;
+</pre>
+
+<p>
+Durante questo passo ( stesso ciclo di clock ) usiamo:
+</p>
+<ul class="org-ul">
+<li>Memoria
+</li>
+<li>ALU
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Passo 2: Decodifica istruzione &amp; Lettura registri</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Leggi i registri <b>rs</b> e <b>rt</b>, e calcola l&rsquo;indirizzo del salto di <b>beq</b>
+</p>
+
+<p>
+IR ( <b>op</b> ) viene inviato al <b>controllo</b> per la decodifica e la determinazione dei passi successivi ==&gt; <b>Decodifica dell&rsquo;istruzione</b>
+</p>
+
+<pre class="example">
+A = Reg[ IR[ 25-21 ] ];
+B = Reg[ IR[ 20-16 ] ];
+ALUOut = PC + ( sign-ext( IR[ 15-0 ] ) &lt;&lt; 2 );
+</pre>
+
+<p>
+<b>Passo identico per tutte le istruzione</b>, ma potremmo anticipare del lavoro non necessario.
+</p>
+<ul class="org-ul">
+<li>Per certe istruzioni, i due campi ( <b>rs, rt</b> ) potremmo essere non significativi
+</li>
+<li>Calcoliamo l&rsquo;indirizzo a cui saltare, come se l&rsquo;istruzione fosse <b>beq</b>, ma il campo <b>imm16</b> potrebbe essere non significativo
+</li>
+</ul>
+
+<p>
+Quali i vantaggi di questo lavoro anticipato?
+</p>
+
+<p>
+Durante questo passo ( durante lo stesso ciclo di clock ) usiamo: <b>Register File</b> e <b>ALU</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Passo 3: ( dipende dall&rsquo;istruzione )</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Usaiamo l&rsquo;ALU in dipendenza del tipo di istruzione
+</p>
+
+<p>
+Il <b>controllo</b>, avendo già decodificato l&rsquo;istruzione letta al passo precedente, può già decidere i segnali da inviare al Datapath in relazione al tipo di istruzione
+</p>
+
+<ul class="org-ul">
+<li>R-Type exe:
+<ul class="org-ul">
+<li>ALUOut = A op B;
+</li>
+</ul>
+</li>
+
+<li>Calcolo Indirizzo Memoria (load/store)
+<ul class="org-ul">
+<li>ALUOut = A + sign-ext(IR[15-0])
+</li>
+</ul>
+</li>
+
+<li>Completa Branch
+<ul class="org-ul">
+<li>if (A == B) then PC = ALUOut;
+</li>
+</ul>
+</li>
+
+<li>Completa Jump
+<ul class="org-ul">
+<li>PC = PC[31-28] || (IR[25-0] &lt;&lt; 2);
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Passo 4: (dipende dall&rsquo;istruzione)</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+<b>LOAD</b> e <b>STORE</b> accedono alla memoria
+</p>
+
+<ul class="org-ul">
+<li><b>LOAD</b>
+<ul class="org-ul">
+<li>MDR = Memory[ALUOut]
+</li>
+</ul>
+</li>
+
+<li><b>STORE</b>
+<ul class="org-ul">
+<li>Memory[ALUOut] = B;
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Terminazione istruzioni R-Type
+</p>
+<ul class="org-ul">
+<li>Reg[ IR[15-11] ] = ALUOut;
+</li>
+</ul>
+
+<p>
+Durante questo passo usiamo:
+</p>
+<ul class="org-ul">
+<li><b>Register File (Write) oppure Memoria</b>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Definizione del controllo</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+Possiamo implementare il <b>controllo</b> della CPU come un <b>circuito sequenziale di Moore</b>, modellato con un automa a stati finiti
+</p>
+
+<p>
+<b>Automa</b>
+</p>
+<ul class="org-ul">
+<li>Ogni nodo corrisponde ad uno stato differente del circuito, in corrispondenza di un certo ciclo di clock
+</li>
+<li>Gli output del <b>controllo</b> (segni di controllo) dipendono dallo stato corrente
+</li>
+<li>Da 3 a 5 stati devono essere attraversati (ovvero, da 3 a 5 cicli di clock)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Costo istruzioni</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+Per le varie istruzioni, possiamo impiegare un numero differente di cicli
+</p>
+<ul class="org-ul">
+<li>Introduciamo il concetto di <b>CPI</b> ( Cicli Per Istruzione )
+</li>
+</ul>
+
+<p>
+Quant&rsquo;è il CPI delle varie istruzioni rispetto all&rsquo;architettura multi-ciclo?
+</p>
+
+<ul class="org-ul">
+<li><b>R-Type, sw: 4 cicli (tempo: 800 ps)</b>
+</li>
+<li><b>lw: 5 cicli ( tempo: 1000 ps = 1 ns )</b>
+</li>
+<li><b>beq, jump: 3 cicli (tempo: 600 ps)</b>
+</li>
+</ul>
+
+<p>
+L&rsquo;istruzione <b>lw</b> impiega ben 1 ns invece degli 800 ps dell&rsquo;architettura a singolo ciclo
+</p>
+<ul class="org-ul">
+<li>Purtroppo ciò è dovuto alla necessità di fissare il ciclo di clock abbastanza lungo da permettere l&rsquo;esecuzione di uno qualsiasi dei passi previsti per le varie istruzioni
+</li>
+
+<li>Il 5° passo della lw, anche se usa solo il <b>Register File</b> (latenza 100 ps), viene comunque eseguito in un ciclo di clock da 200 ps
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Costo istruzioni</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+Abbiamo ottenuto un risparmio solo per le istruzioni di <b>beq</b> e <b>jump</b>
+</p>
+
+<ul class="org-ul">
+<li>Se avessimo considerato istruzioni molto più lunghe ( come quelle <b>FP</b> ), non avremmo osservato questo <b>apparente</b> decadimento di prestazione nel passare all&rsquo;architettura multi-ciclo
+</li>
+
+<li>In quel caso, la scelta del ciclo singolo ci avrebbe costretto ad allungare a dismisura il ciclo di clock per eseguire le istruzioni <b>FP</b>
+</li>
+</ul>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-09 Sun 23:39</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>
