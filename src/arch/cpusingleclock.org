@@ -118,6 +118,33 @@ Anche se complesso, si potrebbe realizzare una CPU a ciclo di clock *variabile*
 con i seguenti vantaggi:
 + Istruzioni diverse dalla *LW* eseguite in un tempo < 8 ns, mentre se il ciclo è fisso sarebbero sempre necessari 8 ns
 
+** Controllo ALU
+  Dobbiamo definire il circuito che definisce i *4-bit di controllo* dell'ALU (operation) da assegnare in base al
+  tipo di istruzione, ovvero basandosi sui campi *op* e *funct*:
+  + 0000 operazione di and
+  + 0001 operazione di or
+  + 0010 operazione di add, lw, sw
+  + 0110 operazione di sub e beq
+  + 0111 operazione di slt
+
+  Il circuito sarà a due livelli:
+  1. 1° livello calcolerà ALUOp (ALUOp0 ALUOp1) in base all'*op* code
+  2. 2° livello calcolerà affettivamente Operation in base al campo funct e ALUOp
+
+  Il circuito di 1° livello dovrà semplicemente definire la configurazione dei bit (ALUOp1 ALUOp0) sulla base di op:
+  + 00 se lw, sw (Operation=0010) (somma)
+  + 01 se beq (Operation=0110) (sottrazione)
+  + 10 se arithmetic/logic (Operation dipende dalla specifica istruzione definita dai bit nel funct)
+
+  Definiamo ora la tabella di verità che sulla base di ALUOp e funct determina i 3 bit del controllo dell’ALU:
+  + Operation0 = (F3 or F0) and ALUOp1
+  + Operation1 = ~F2 or ~ALUOp1
+  + Operation2 = (F1 and ALUOp1) or AluOp0
+  + Operation3 è sempre a 0
+
+
+
+
 * Ciclo fisso vs variabile
 Si consideri di conoscere che in un generico programma, le istruzioni sono combinate in accordo a questo mix:
 - 24% *load*
@@ -139,3 +166,4 @@ Facendo il rapporto: T_fisso / T_var = 800 / 630 = 1.27
 Quindi possiamo dire che l'implementazione a clock variablie è l'1.27 volte più veloce!
 
 Se consideriamo istruzioni più complesse della *LW*, come leistruzioni *FP* di moltiplicazione. l'implementazione a ciclo fisso risulta ulteriormente *penalizzata*
+
