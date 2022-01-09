@@ -1,0 +1,4 @@
+#+TITLE: Progetto CPU multiciclo
+#+AUTHOR: Jacopo Costantini & Matteo Zambon
+
+* Problemi con progetto a singolo ciclo

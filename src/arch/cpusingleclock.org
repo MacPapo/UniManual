@@ -77,3 +77,65 @@ Addizionatore aggiuntivo
 
 - Nota che della memoria istruzioni viene letta una nuova isruzione ad ogni ciclo di clock
   - Il segnale di *MemRead* deve essere sempre *affermato*
+
+
+* Controllo a singolo ciclo
+
+Il controllo della CPU a singolo ciclo è *combinatorio*
+Il *Datapath* è invece sequenziale
+- I suoi output dipendono anche dal valore dei registri
+  - ES. *ZERO*, oppure l'indirizzo della memoria dati, oppure il valore da immagazzinare in memeoria in conseguenza di una store, dipendono dai valori dello *stato interno del DATAPATH* ( ovvero dal contenuto dei registri )
+
+Dobbiamo attendere che tutti i circuiti siano stabili, sia quelli del datapath che quelli del controllo, prima di attivare il fronte di *salita/discesa* del clock.
+
+Clock in *AND* con i *segnali di controllo di scrittura* ( registri/memoria )
+- I valori vengono scritti in corrispondenza del fronte di salita/discesa del clock solo se i segnali relativi sono affermati
+
+Ciclo di clock determinato sulla base del cammino più lungo che i segnali elettrici devono attraversare
+- ES: l'istruzione *lw* è quella più costosa:
+  + Reg. File(Read)
+  + ALU e Adders
+  + Mem. Dati
+  + Reg. File(Write)
+- i circuiti del controllo agiscono in parallelo alla lettura dei registri
+
+* Determiniamo il ciclo di clock per LW
+
+Ipotiziamo i costi in ns per le varie componenti
++ Mem. Istr/Dati: 200 ps
++ Reg. File: 100 ps
++ ALU: 200 ps
++ Control: < 100 ps
+
+Consideriamo l'istruzione *LW*, che abbiamo detto essere la più costosa
+- L'unica che usa sia il *Register File in lettura/scrittura* che la *Memoria dati*
+- Ciclo di clock lungo 800 ps
+
+* Problemi con il singolo ciclo
+Il ciclo singolo e di lunghezza fissa *penalizza le istruzioni veloci*
+
+Anche se complesso, si potrebbe realizzare una CPU a ciclo di clock *variabile*
+con i seguenti vantaggi:
++ Istruzioni diverse dalla *LW* eseguite in un tempo < 8 ns, mentre se il ciclo è fisso sarebbero sempre necessari 8 ns
+
+* Ciclo fisso vs variabile
+Si consideri di conoscere che in un generico programma, le istruzioni sono combinate in accordo a questo mix:
+- 24% *load*
+- 12% *store*
+- 44% *formato-R*
+- 18% *branch*
+- 2%  *jump*
+
+Quale è la lunghezza media ( *periodo medio* ) del ciclo di clock nell'implementazione a ciclo variabile?
++ *Periodo medio* = 800 x 24% + 700 x 12% + 600 x 44% + 500 x 18% + 200 x 2% = 630 ps
+
+Le prestazioni della CPU sono calcolabili rispetto a NI ( Numero Istruzioni eseguite da un programma )
+
+- T_var = NI x periodo = NI x 630 ( variabile )
+- T_fisso = NI x periodo = NI x 800 ( fisso )
+
+Facendo il rapporto: T_fisso / T_var = 800 / 630 = 1.27
+
+Quindi possiamo dire che l'implementazione a clock variablie è l'1.27 volte più veloce!
+
+Se consideriamo istruzioni più complesse della *LW*, come leistruzioni *FP* di moltiplicazione. l'implementazione a ciclo fisso risulta ulteriormente *penalizzata*
