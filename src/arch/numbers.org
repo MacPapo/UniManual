@@ -1,7 +1,7 @@
 #+TITLE: Rappresentazione dell'informazione
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
-* Rappresentazione dell'informazione
+
   Differenza tra simbolo e significato
     
     - La cifra ( lettera ) usata per scrivere è un simbolo che rappresenta l'informazione

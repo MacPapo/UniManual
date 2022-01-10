@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Architettura degli elaboratori</title>
-<!-- 2022-01-09 Sun 23:39 -->
+<!-- 2022-01-10 Mon 16:29 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -195,38 +195,19 @@ $(function() {
 <div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
-<li><a href="#sec-1">1. Cose da fare</a>
+<li><a href="#sec-1">1. Indice degli argomenti</a>
 <ul class="nav">
-<li><a href="#sec-1-1">1.1. introduzione</a></li>
-<li><a href="#sec-1-2">1.2. numbers</a></li>
-<li><a href="#sec-1-3">1.3. esempi numbers</a></li>
-<li><a href="#sec-1-4">1.4. algebra di bool</a></li>
-<li><a href="#sec-1-5">1.5. esempi algebra di bool</a></li>
-<li><a href="#sec-1-6">1.6. circuiti</a></li>
-<li><a href="#sec-1-7">1.7. ISA-MIMPS</a></li>
-<li><a href="#sec-1-8">1.8. ALU</a></li>
-<li><a href="#sec-1-9">1.9. mult</a></li>
-<li><a href="#sec-1-10">1.10. memorie e circuiti sequenziali</a></li>
-<li><a href="#sec-1-11">1.11. sintesi circuiti sequenziali</a></li>
-<li><a href="#sec-1-12">1.12. esercizi circuiti sequenziali</a></li>
-<li><a href="#sec-1-13">1.13. Progetto CPU (ciclo singolo)</a></li>
-<li><a href="#sec-1-14">1.14. Progetto CPU (multiciclo)</a></li>
-<li><a href="#sec-1-15">1.15. Valutazione delle prestazioni</a></li>
-<li><a href="#sec-1-16">1.16. Esercizi sulla valutazione delle prestazioni</a></li>
-</ul>
-</li>
-<li><a href="#sec-2">2. Indice degli argomenti</a>
-<ul class="nav">
-<li><a href="#sec-2-1">2.1. Introduzione</a></li>
-<li><a href="#sec-2-2">2.2. Rappresentazione dell&rsquo;informazione</a></li>
-<li><a href="#sec-2-3">2.3. Algebra di Bool</a></li>
-<li><a href="#sec-2-4">2.4. Circuiti combinatori</a></li>
-<li><a href="#sec-2-5">2.5. Linguaggio macchina e assembler MIPS</a></li>
-<li><a href="#sec-2-6">2.6. Circuiti combinatori: ALU</a></li>
-<li><a href="#sec-2-7">2.7. Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</a></li>
-<li><a href="#sec-2-8">2.8. Memorie e circuiti sequenziali</a></li>
-<li><a href="#sec-2-9">2.9. Progetto CPU a singolo ciclo</a></li>
-<li><a href="#sec-2-10">2.10. Progetto CPU a multiciclo</a></li>
+<li><a href="#sec-1-1">1.1. Introduzione</a></li>
+<li><a href="#sec-1-2">1.2. Rappresentazione dell&rsquo;informazione</a></li>
+<li><a href="#sec-1-3">1.3. Algebra di Bool</a></li>
+<li><a href="#sec-1-4">1.4. Circuiti combinatori</a></li>
+<li><a href="#sec-1-5">1.5. Linguaggio macchina e assembler MIPS</a></li>
+<li><a href="#sec-1-6">1.6. Circuiti combinatori: ALU</a></li>
+<li><a href="#sec-1-7">1.7. Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</a></li>
+<li><a href="#sec-1-8">1.8. Memorie e circuiti sequenziali</a></li>
+<li><a href="#sec-1-9">1.9. Progetto CPU a singolo ciclo</a></li>
+<li><a href="#sec-1-10">1.10. Progetto CPU a multiciclo</a></li>
+<li><a href="#sec-1-11">1.11. Valutazione prestazioni e legge di Amdahl</a></li>
 </ul>
 </li>
 </ul>
@@ -235,97 +216,46 @@ $(function() {
 </div><div class="col-md-9 col-md-pull-3"><h1 class="title">Architettura degli elaboratori</h1>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Cose da fare</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Indice degli argomenti</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <span class="label label-default DONE">DONE</span> introduzione</h3>
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <a href="introduzione.html">Introduzione</a></h3>
 </div>
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <span class="label label-default DONE">DONE</span> numbers</h3>
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <a href="numbers.html">Rappresentazione dell&rsquo;informazione</a></h3>
 </div>
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> <span class="label label-default DONE">DONE</span> esempi numbers</h3>
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> <a href="bool.html">Algebra di Bool</a></h3>
 </div>
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> <span class="label label-default DONE">DONE</span> algebra di bool</h3>
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> <a href="circuiti.html">Circuiti combinatori</a></h3>
 </div>
 <div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <span class="label label-default DONE">DONE</span> esempi algebra di bool</h3>
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <a href="isamips.html">Linguaggio macchina e assembler MIPS</a></h3>
 </div>
 <div id="outline-container-sec-1-6" class="outline-3">
-<h3 id="sec-1-6"><span class="section-number-3">1.6</span> <span class="label label-default DONE">DONE</span> circuiti</h3>
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> <a href="alu.html">Circuiti combinatori: ALU</a></h3>
 </div>
 <div id="outline-container-sec-1-7" class="outline-3">
-<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <span class="label label-default DONE">DONE</span> ISA-MIMPS</h3>
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <a href="mult.html">Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</a></h3>
 </div>
 <div id="outline-container-sec-1-8" class="outline-3">
-<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <span class="label label-default DONE">DONE</span> ALU</h3>
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <a href="sequenziali.html">Memorie e circuiti sequenziali</a></h3>
 </div>
 <div id="outline-container-sec-1-9" class="outline-3">
-<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <span class="label label-default DONE">DONE</span> mult</h3>
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <a href="cpusingleclock.html">Progetto CPU a singolo ciclo</a></h3>
 </div>
 <div id="outline-container-sec-1-10" class="outline-3">
-<h3 id="sec-1-10"><span class="section-number-3">1.10</span> <span class="label label-default DONE">DONE</span> memorie e circuiti sequenziali</h3>
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> <a href="cpumulticlock.html">Progetto CPU a multiciclo</a></h3>
 </div>
 <div id="outline-container-sec-1-11" class="outline-3">
-<h3 id="sec-1-11"><span class="section-number-3">1.11</span> <span class="label label-default DONE">DONE</span> sintesi circuiti sequenziali</h3>
-</div>
-<div id="outline-container-sec-1-12" class="outline-3">
-<h3 id="sec-1-12"><span class="section-number-3">1.12</span> <span class="label label-default DONE">DONE</span> esercizi circuiti sequenziali</h3>
-</div>
-<div id="outline-container-sec-1-13" class="outline-3">
-<h3 id="sec-1-13"><span class="section-number-3">1.13</span> <span class="label label-default DONE">DONE</span> Progetto CPU (ciclo singolo)</h3>
-</div>
-<div id="outline-container-sec-1-14" class="outline-3">
-<h3 id="sec-1-14"><span class="section-number-3">1.14</span> <span class="label label-default DONE">DONE</span> Progetto CPU (multiciclo)</h3>
-</div>
-<div id="outline-container-sec-1-15" class="outline-3">
-<h3 id="sec-1-15"><span class="section-number-3">1.15</span> <span class="label label-primary TODO">TODO</span> Valutazione delle prestazioni</h3>
-</div>
-<div id="outline-container-sec-1-16" class="outline-3">
-<h3 id="sec-1-16"><span class="section-number-3">1.16</span> <span class="label label-primary TODO">TODO</span> Esercizi sulla valutazione delle prestazioni</h3>
-</div>
-</div>
-
-
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Indice degli argomenti</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> <a href="introduzione.html">Introduzione</a></h3>
-</div>
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> <a href="numbers.html">Rappresentazione dell&rsquo;informazione</a></h3>
-</div>
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> <a href="bool.html">Algebra di Bool</a></h3>
-</div>
-<div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> <a href="circuiti.html">Circuiti combinatori</a></h3>
-</div>
-<div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> <a href="isamips.html">Linguaggio macchina e assembler MIPS</a></h3>
-</div>
-<div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> <a href="alu.html">Circuiti combinatori: ALU</a></h3>
-</div>
-<div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> <a href="mult.html">Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti</a></h3>
-</div>
-<div id="outline-container-sec-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> <a href="sequenziali.html">Memorie e circuiti sequenziali</a></h3>
-</div>
-<div id="outline-container-sec-2-9" class="outline-3">
-<h3 id="sec-2-9"><span class="section-number-3">2.9</span> <a href="cpusingleclock.html">Progetto CPU a singolo ciclo</a></h3>
-</div>
-<div id="outline-container-sec-2-10" class="outline-3">
-<h3 id="sec-2-10"><span class="section-number-3">2.10</span> <a href="cpumulticlock.html">Progetto CPU a multiciclo</a></h3>
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> <a href="valprest.html">Valutazione prestazioni e legge di Amdahl</a></h3>
 </div>
 </div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-09 Sun 23:39</p>
+<p class="date">Created: 2022-01-10 Mon 16:29</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>

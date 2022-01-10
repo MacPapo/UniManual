@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Valutazione delle prestazioni</title>
+<!-- 2022-01-10 Mon 16:31 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini &amp; Matteo Zambon">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Misure delle prestazioni di un computer</a>
+<ul class="nav">
+<li><a href="#sec-1-1">1.1. Tempo di esecuzione (latenza)</a></li>
+<li><a href="#sec-1-2">1.2. Throughput ( Banda di elaborazione )</a></li>
+<li><a href="#sec-1-3">1.3. Tempo di risposta</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Performance, Execution time, Speedup</a></li>
+<li><a href="#sec-3">3. Cicli di clock</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Clock rate</a></li>
+<li><a href="#sec-3-2">3.2. Miglioramento prestazioni</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Numero di cicli differenti per istruzioni differenti</a></li>
+<li><a href="#sec-5">5. Cicli di clock e prestazioni</a></li>
+<li><a href="#sec-6">6. Tempo di esecuzione e altre misure</a></li>
+<li><a href="#sec-7">7. I Benchmark</a>
+<ul class="nav">
+<li><a href="#sec-7-1">7.1. SPEC ( system performance evaluation cooperative )</a></li>
+<li><a href="#sec-7-2">7.2. Misure sintetiche per insiemi</a></li>
+<li><a href="#sec-7-3">7.3. SPECint e SPECfp</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Legge di Amdahl</a></li>
+<li><a href="#sec-9">9. Considerazioni finali</a>
+<ul class="nav">
+<li><a href="#sec-9-1">9.1. Confronto tra architettura singolo/multi ciclo</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Valutazione delle prestazioni</h1>
+<p>
+L&rsquo;approccio <b>RISC</b> ha semplificato l&rsquo;<b>ISA</b>, ma ha anche portato
+</p>
+<ul class="org-ul">
+<li>Sviluppo di tecniche di ottimizzazione molto spinte
+</li>
+<li>Nuova sensibilità per analisi più quantitative delle prestazioni dei sistemi
+
+<p>
+<b>NB: misurare oggettivamente le prestazioni è MOLTO DIFFICILE</b>
+</p>
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Misure delle prestazioni di un computer</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Tempo di esecuzione (latenza)</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>Quanto impiega il mio job ad essere eseguito a sistema scarico?
+</li>
+<li>Quanto devo attendere per una query di un database?
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Elapsed Time o Response Time</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>Tiene conto di ogni cosa (accessi al disco I/O), multiprogrammazione, attese nelle code (OS), ecc&#x2026;)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Tempo di CPU</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<ul class="org-ul">
+<li>Vogliamo distinguere rispetto ai tempi spesi per I/O e multiprogrammazione
+<ul class="org-ul">
+<li>ES: comando <b>UNIX</b> <b>time</b> ( time &lt;prog&gt; )
+<ul class="org-ul">
+<li>User CPU time: 90.7u ==&gt; Execution time
+</li>
+<li>System CPU time: 12.9s
+</li>
+<li>Elapsed time: 2:39
+</li>
+<li>100 x (90.7 + 12.9) / 159 = 63%
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Throughput ( Banda di elaborazione )</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Quanti job possono essere eseguiti assieme su una macchina?
+</li>
+<li>Qual è il tempo di esecuzione media?
+</li>
+<li>Quanto lavoro viene completato in un certo tempo?
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Performance</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Il termine <b>performance</b> è sinonimo di <b>Troughput</b> ed è usato come misura generica della velocità di un computer
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Tempo di risposta</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Il <b>tempo di risposta = tempo attesa in coda + tempo di esecuzione</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Performance, Execution time, Speedup</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Misuriamo il tempo di esecuzione (user CPU time) di un programmma su una macchina X: *Execution time_x
+</p>
+
+<p>
+Definiamo la Performance (troughput) come:
+</p>
+<ul class="org-ul">
+<li>Performance_x = 1 / Execution time_x
+</li>
+</ul>
+
+<p>
+Se la macchina X è più veloce di Y ad eseguire il programma
+</p>
+<ul class="org-ul">
+<li>Speedup = Execution time_y / Execution time_x = Performance_x / Performance_y = n
+</li>
+
+<li>X è n volte più veloce di Y
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Cicli di clock</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Legame tra tempo di esecuzione e numero di cicli di clock per eseguire un programma
+</p>
+
+<div class="center">
+<p>
+CPU time ( in sec. ) = numero di cicli x T (periodo del ciclo di clock in sec.)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Clock rate</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Clock rate (frequenza) = cicli al secondo (1 Hz = 1 cycle/sec)
+</p>
+<ul class="org-ul">
+<li>Freq = 1/T ( dove T è il periodo del ciclo di clock )
+</li>
+<li>T = 1/Freq (sec)
+
+<pre class="example">
+  Un clock a 200 Mhz (200 x 10^6 Hz) ha un periodo T di clock uguale a
+
+  (1/200 x 10^6) x 10^9 = 5 nanosecondi
+</pre>
+
+<p>
+Conoscendo il numero di cicli per l&rsquo;esecuzione di un programma e la frequenza del clock:
+</p>
+
+<ul class="org-ul">
+<li>CPU time (in sec) = num. cicli / Freq in Hz
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Miglioramento prestazioni</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>CPU time ( in sec ) = num. cicli x Periodo clock in sec
+</li>
+<li>CPU time ( in sec ) = num. cicli x Freq in Hz
+</li>
+</ul>
+
+<p>
+Per migliorare le prestazioni possiamo
+</p>
+<ul class="org-ul">
+<li><b>Diminuire</b> il numero di cicli per eseguire un programma, oppure
+</li>
+<li><b>Diminuire</b> il ciclo di clock (cycle time) oppure, detto in modo diverso
+</li>
+<li><b>aumentare</b> la frequenza ( clock rate )
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Numero di cicli differenti per istruzioni differenti</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>Moltiplicazioni impiegano più tempo delle addizioni
+</li>
+<li>Operazioni FP impiegano più tempo delle operazioni su interi
+</li>
+<li>L&rsquo;accesso alla memoria costa di più che accedere ai registri
+</li>
+</ul>
+
+<p>
+<b>NB: se cambiamo il ciclo di clock (frequenza) spesso otteniamo, come effetto collaterale, la modifica del numero di cicli necessari per eseguire le varie istruzioni</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Cicli di clock e prestazioni</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Per l&rsquo;esecuzione di un programma (CPU time) sono necessari
+</p>
+
+<ul class="org-ul">
+<li>Un certo # di istruzioni macchina ==&gt; IC (Instruction Count)
+</li>
+<li>Un certo # di cicli ==&gt; numero di Cicli
+</li>
+<li>Un certo numero di secondi ==&gt; T_exe
+</li>
+</ul>
+
+<p>
+Se non conosciamo T_exe ma conosciamo num di cicli, possiamo ricavare T_exe sulla base di
+</p>
+<ul class="org-ul">
+<li>Periodo clock o cycle time (secondi per ciclo)
+</li>
+<li>Frequenza o clock rate (cicli per secondi)
+</li>
+</ul>
+
+<p>
+Possiamo ricavare delle misure medie
+</p>
+<ul class="org-ul">
+<li><b>CPI</b> (cicli per istruzione) = num cicli / IC
+<ul class="org-ul">
+<li>Nota che il numero totale di cicli ( num cicli ) può essere ricavato sulla base di IC e CPI
+</li>
+<li>Un&rsquo;applicazioni FP-intensive potrebbe avere un CPI più alto della media!
+</li>
+</ul>
+</li>
+<li>MIPS (milioni di istruzioni per secondo) = IC/(T_exe x 10^6)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Tempo di esecuzione e altre misure</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Siamo interessati al tempo di esecuzione ( user CPU time )!!
+</p>
+
+<p>
+Le altre misure, prese singolarmente, potrebbero portarci a <b>conclusioni errate</b> nel valitare le prestazioni di un programma
+</p>
+
+<ul class="org-ul">
+<li>Num. di cicli per eseguire un programma
+</li>
+<li>IC = num di istruzioni in un programma
+</li>
+<li>FREQ = num di cicli per secondo
+</li>
+<li>CPI = num di cicli per istruzione
+</li>
+<li>Num medio di istruzioni eseguite per secondo (es. <b>MIPS</b>)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> I Benchmark</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Per misurare le prestazioni, è meglio eseguire applicazioni reali
+</p>
+
+<p>
+spesso si usano programmi che rappresentano classi di applicazioni
+come :
+</p>
+<ul class="org-ul">
+<li>compilatori/editor
+</li>
+<li>Applicazioni scientifiche
+</li>
+<li>Grafica
+</li>
+</ul>
+<p>
+Ecc&#x2026;
+</p>
+
+<p>
+Piccoli benchmark (kernel)
+</p>
+<ul class="org-ul">
+<li>sono comodi per i progettisti
+</li>
+<li>possono portare ad abusi
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> SPEC ( system performance evaluation cooperative )</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+Gli SPEC sono considerati un indicatore significativo delle prestazioni di un <b>hw</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Misure sintetiche per insiemi</h3>
+<div class="outline-text-3" id="text-7-2">
+<p>
+Nel confrontare piattaforme eseguendo programmi diversi può succedere che una piattaforma sia migliore nell&rsquo;esecuzione di un programma e peggiore rispetto all&rsquo;esecuzione di un altro
+</p>
+
+<p>
+Abbiamo bisogno di un indice complessivo rispetto alle prestazioni misurate per un certo mix di programmi
+</p>
+</div>
+
+<div id="outline-container-sec-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> Media Aritmetica (pesata)</h4>
+<div class="outline-text-4" id="text-7-2-1">
+<p>
+Media aritmetica pesata dei tempi di esecuzione dei vari programmi su una certa macchina
+</p>
+
+<p>
+[inserire latex]
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7-2-2" class="outline-4">
+<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> Media geometrica (pesata)</h4>
+<div class="outline-text-4" id="text-7-2-2">
+<p>
+Media geometrica pesata ancora dei tempi di esecuzione
+</p>
+
+<p>
+[inserire latex]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> SPECint e SPECfp</h3>
+<div class="outline-text-3" id="text-7-3">
+<p>
+SPECint e SPECfp fanno rispettivamente riferimento all&rsquo;esecuzione del mix di programmi (interni o a virgola mobile) per l&rsquo;elaborazione interna o FP
+</p>
+
+<p>
+Gli indici SPEC danno un&rsquo;indicazione complessiva del comportamento del mix di programmi su una data piattaforma
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Legge di Amdahl</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Questa semplice legge fissa un limite agli incrementi di prestazioni ottenibili (<b>SPEEDUP</b>) quando introduciamo delle ottimizzazioni
+</p>
+
+<ul class="org-ul">
+<li>1/s T_exe ==&gt; frazione di T_exe non modificata dalle ottimizzazioni
+</li>
+<li>(1-1/s)T_exe ==&gt; frazione di T_exe ridotta tramite le ottimizzazioni
+</li>
+<li>n  ==&gt; fattore del miglioramento ottenuto tramite le ottimizzazioni
+</li>
+
+<li>T_ott = 1/s T_exe + ((1 - 1/s)T_exe )/n
+</li>
+</ul>
+
+<p>
+La legge di Amdahl fissa un limite allo speedup massimo ottenibile
+</p>
+<ul class="org-ul">
+<li>Se l&rsquo;ottimizzazione è molto costante, n diventa molto grande, per cui possiamo approssimare
+
+<p>
+T_ott ~= 1/s T_exe
+</p>
+</li>
+
+<li>Il massimo Speedup ottenibile (per n molto grande)
+
+<p>
+Speedup_max = T_exe / (1/s T_exe) = s
+</p>
+</li>
+</ul>
+
+<p>
+Corollario alla legge di Amdahl (motivazione CPU RISC)
+È meglio rendere più veloci i casi più comuni (es. istruzioni più usate, per la cui esecuzione si impiega la maggior parte di T_exe)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Considerazioni finali</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+La misura delle prestazioni su una data piattaforma è significativa
+</p>
+<ul class="org-ul">
+<li>Se è relativa allo specifico programma
+</li>
+<li>Se è basata sul tempo totale di esecuzione effettivo
+</li>
+</ul>
+
+<p>
+Rispetto ad una data ISA gli incrementi delle prestazioni derivano da :
+</p>
+<ul class="org-ul">
+<li>Incremento della frequenza del clock ( se questo non aumenta considerevolmente il CPI )
+</li>
+<li>Miglioramento dell&rsquo;organizzazione del processore per abbassare il CPI
+</li>
+<li>Miglioramento del compilatore per ridurre CPI medio o IC
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Confronto tra architettura singolo/multi ciclo</h3>
+<div class="outline-text-3" id="text-9-1">
+</div><div id="outline-container-sec-9-1-1" class="outline-4">
+<h4 id="sec-9-1-1"><span class="section-number-4">9.1.1</span> Singolo Ciclo</h4>
+<div class="outline-text-4" id="text-9-1-1">
+<ul class="org-ul">
+<li>CPI = 1
+</li>
+<li>Ciclo di clock (periodo) = 800 ps
+<ul class="org-ul">
+<li>Calcolato sulla base dell&rsquo;istruzione più &ldquo;costosa&rdquo;: <b>lw</b>
+</li>
+</ul>
+</li>
+<li>T_exe = IC x CPI x Periodo_clock = IC x 800 ps
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-9-1-2" class="outline-4">
+<h4 id="sec-9-1-2"><span class="section-number-4">9.1.2</span> Multi ciclo</h4>
+<div class="outline-text-4" id="text-9-1-2">
+<p>
+necessario conoscere la frequenza delle varie istruzioni
+</p>
+
+<ul class="org-ul">
+<li><b>lw CPI_0 = 5</b> presenti nel <b>22% IC</b>
+</li>
+<li><b>sw CPI_1 = 4</b> presenti nel <b>11% IC</b>
+</li>
+<li><b>R-Type, CPI_2 = 4</b> presenti nel <b>49% IC</b>
+</li>
+<li><b>branch CPI_3 = 2</b>  presenti nel <b>16% IC</b>
+</li>
+<li><b>jump CPI_4 = 3</b> presenti nel <b>2% IC</b>
+</li>
+</ul>
+
+
+<ul class="org-ul">
+<li>*CPI_avg = 0.22 CPI_0 + 0.11 CPI_1 + 0.49 CPI_2 + 0.16 CPI_3 + 0.02 CPI_4 = 0.22 x 5 + 0.11 x 4 + 0.49 x 4 + 0.16 x 3 + 0.02 x 3 = 4.04
+</li>
+<li>T_exe = IC x CPI_avg x Periodo_clock = IC x 4.04 x 200 ps = IC x 808 ps
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
+<p class="date">Created: 2022-01-10 Mon 16:31</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

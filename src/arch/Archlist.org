@@ -1,25 +1,6 @@
 #+TITLE: Architettura degli elaboratori
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
-* Cose da fare
-** DONE introduzione
-** DONE numbers
-** DONE esempi numbers
-** DONE algebra di bool
-** DONE esempi algebra di bool
-** DONE circuiti
-** DONE ISA-MIMPS
-** DONE ALU
-** DONE mult
-** DONE memorie e circuiti sequenziali
-** DONE sintesi circuiti sequenziali
-** DONE esercizi circuiti sequenziali
-** DONE Progetto CPU (ciclo singolo)
-** DONE Progetto CPU (multiciclo)
-** TODO Valutazione delle prestazioni
-** TODO Esercizi sulla valutazione delle prestazioni
-
-
 * Indice degli argomenti
 ** [[file:introduzione.org][Introduzione]]
 ** [[file:numbers.org][Rappresentazione dell'informazione]]
@@ -31,3 +12,4 @@
 ** [[file:sequenziali.org][Memorie e circuiti sequenziali]]
 ** [[file:cpusingleclock.org][Progetto CPU a singolo ciclo]]
 ** [[file:cpumulticlock.org][Progetto CPU a multiciclo]]
+** [[file:valprest.org][Valutazione prestazioni e legge di Amdahl]]
