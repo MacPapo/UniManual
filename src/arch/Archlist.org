@@ -1,15 +1,15 @@
 #+TITLE: Architettura degli elaboratori
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
-* Indice degli argomenti
-** [[file:introduzione.org][Introduzione]]
-** [[file:numbers.org][Rappresentazione dell'informazione]]
-** [[file:bool.org][Algebra di Bool]]
-** [[file:circuiti.org][Circuiti combinatori]] 
-** [[file:isamips.org][Linguaggio macchina e assembler MIPS]]
-** [[file:alu.org][Circuiti combinatori: ALU]]
-** [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
-** [[file:sequenziali.org][Memorie e circuiti sequenziali]]
-** [[file:cpusingleclock.org][Progetto CPU a singolo ciclo]]
-** [[file:cpumulticlock.org][Progetto CPU a multiciclo]]
-** [[file:valprest.org][Valutazione prestazioni e legge di Amdahl]]
+Indice degli argomenti
+* [[file:introduzione.org][Introduzione]]
+* [[file:numbers.org][Rappresentazione dell'informazione]]
+* [[file:bool.org][Algebra di Bool]]
+* [[file:circuiti.org][Circuiti combinatori]]
+* [[file:isamips.org][Linguaggio macchina e assembler MIPS]]
+* [[file:alu.org][Circuiti combinatori: ALU]]
+* [[file:mult.org][Moltiplicazione e divisione tra numeri interi: algoritmi e circuiti]]
+* [[file:sequenziali.org][Memorie e circuiti sequenziali]]
+* [[file:cpusingleclock.org][Progetto CPU a singolo ciclo]]
+* [[file:cpumulticlock.org][Progetto CPU a multiciclo]]
+* [[file:valprest.org][Valutazione prestazioni e legge di Amdahl]]
