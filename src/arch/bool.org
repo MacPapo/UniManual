@@ -15,18 +15,21 @@
   Il funzionamento dei circuiti elettronici può essere modellato tramite l'algebra di Boole
 
   + Solo 2 valori:
-    1. Valore *TRUE* (*1* o *asserted*) ==> livello di potenziale *ALTO*
-    2. Valore *FALSE* (*0* o *deasserted*) ==> livello di potenziale *BASSO*
+    1. Valore *TRUE* (*1* o *asserted*) \rightarrow livello di potenziale *ALTO*
+    2. Valore *FALSE* (*0* o *deasserted*) \rightarrow livello di potenziale *BASSO*
   + Operazioni logiche Booleane: *SOMMA* (*OR*), *PRODOTTO* (*AND*), *INVERSIONE LOGICA* (*NOT*)
-    - *OR* (*A + B*): risultato uguale ad 1 (*TRUE*) se almeno un input è 1 (*TRUE*)
-    - *AND* (*A x B*): risultato uguale ad 1 (*TRUE*) solo se tutti gli input sono 1 (*TRUE*)
-    - *NOT* (*~A*): risultato uguale all'inverso dell'input (0 -> 1 uppure 1 -> 0)
+    - *OR* $(A + B)$: risultato uguale ad 1 (*TRUE*) se almeno un input è 1 (*TRUE*)
+    - *AND* $(A \times B)$: risultato uguale ad 1 (*TRUE*) solo se tutti gli input sono 1 (*TRUE*)
+    - *NOT* $( \sim A)$: risultato uguale all'inverso dell'input $(0 \rightarrow 1\; oppure\; 1 \rightarrow 0)$
     
 * Blocco logico
   - Circuito elettronico con linee (*fili*) in *input* e *output*
   - possiamo associare *variabili logiche* con le varie *linee in input/output*
   - Il circuito calcola una o più *funzioni logiche*, ciascuna espriminile tramite una
     combinazione di operazioni dell'algebra di Boole *sulle variabili in input*
+
+    [[../../.img/bl.png]]
+
 * Circuiti combinatori/sequenziali
   Circuiti combinatorio
   - Senza elementi di memoria - produce output che dipeende funzionalmente solo dall'input
@@ -41,42 +44,51 @@
 
 ** Tabelle di Verità
    Dati *n input bit*, il numero di configurazione possibili degli input, ovvero il numero di righe
-   della Tabella di verità, + *2^n*
+   della Tabella di verità, + $2^n$
    - Per ogni bit in output, la tabella contiene una colonna, con un valore definito per ognuna
      combinazione dei bit in input
 
-     [Inserire tabella]
+     [[../../.img/tb1.png]]
+
+     [[../../.img/ab.png]]
 
 ** Proprietà dell'algebra di Boole
    Proprietà:
    + *Identità*:
-     - *OR*:  A + 0 = A
-     - *AND*: A x 1 = A
+     - *OR*:  $A + 0 = A$
+     - *AND*: $A \times 1 = A$
    + *Nullo*:
-     - *OR*:  A + 1 = 1
-     - *AND*: A x 0 = 0
+     - *OR*:  $A + 1 = 1$
+     - *AND*: $A \times 0 = 0$
    + *Idempotente*:
-     - *OR*:  A + A = A
-     - *AND*: A x A = A
+     - *OR*:  $A + A = A$
+     - *AND*: $A \times A = A$
    + *Inverso*:
-     - *OR*:  A + (~A) = 1
-     - *AND*: A x (~A) = 0
+     - *OR*:  $A + ( \sim A) = 1$
+     - *AND*: $A \times ( \sim A) = 0$
    + *Commutativa*:
-     - *OR*:  A + B = B + A
-     - *AND*: A x B = B x A
+     - *OR*:  $A + B = B + A$
+     - *AND*: $A \times B = B \times A$
    + *Associativa*:
-     - *OR*:  A + (B + C) = (A + B) + C
-     - *AND*: A x (B x C) = (A x B) x C
+     - *OR*:  $A + (B + C) = (A + B) + C$
+     - *AND*: $A \times (B \times C) = (A \times B) \times C$
    + *Distributiva*:
-     - *OR*:  A x (B + C) = (A x B) + (A x C)
-     - *AND*: A + (B x C) = (A + B) x (A + C)
+     - *OR*:  $A \times (B + C) = (A \times B) + (A \times C)$
+     - *AND*: $A + (B \times C) = (A + B) \times (A + C)$
    + *DeMorgan*:
-     - *OR*:  ~(A + B) = (~A) x (~B)
-     - *AND*: ~(A x B) = (~A) + (~B)
+     - *OR*:  $\sim (A + B) = ( \sim A) \times ( \sim B)$
+     - *AND*: $\sim (A \times B) = ( \sim A) + ( \sim B)$
+
+[[../../.img/pl.png]]
 
 ** NAND e NOR
-   *NAND* (inverso dell'operazione *AND*): ~(A x B) = A *nand* B
-   *NOR*  (inverso dell'operazione *OR*):  ~(A + B) = A *nor*  B
+*NAND* (inverso dell'operazione *AND*): $\sim (A \times B) = A$ *nand* $B\\$
+
+[[../../.img/nand.png]]
+
+*NOR*  (inverso dell'operazione *OR*):  $\sim (A + B) = A$ *nor*  $B$
+
+[[../../.img/nor.png]]
 
 * Porte logiche e transistor
   Tecnologia *CMOS* (Complementary Metal Oxide Semiconductor) per realizzare transistor in sul silicio
@@ -88,11 +100,14 @@
    - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor diventa un *conduttore*
    - Se applichi un *BASSO* voltaggio (*GND*), il transistor interrompe la conduzione (*resistenza infinita*)
 
+     [[../../.img/nmos.png]]
+
 ** PMOS
    *P_Type Metal Oxide Semiconductor transistor*
    - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor interrompe la conduzione (*resistenza infinita*)
    - Se applichi un *BASSO* voltaggio (*GND*), il transistor diventa un *conduttore*
 
+     [[../../.img/pmos.png]]
 
 ** Confronto tra porte
    Se i transistor *PMOS* sono più veloci:
@@ -111,13 +126,17 @@
     - Per ogni valore uguale ad 1 nell'output genera un prodotto (*mintermine*) degli input A, B, C dove gli input uguali
       a 0 appaiono negati.
       Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
-      *esempio*: E = (~A * B) + (B * C)
-  
+      *esempio*: $E = (\sim A \cdot B) + (B \cdot C)$
+
+      [[../../.img/fcsp.png]]
+
   Forma canonica *PS* (prodotto di somme)
     - Per ogni valore uguale ad 0 nell'output genera una somma (*maxtermine*) degli input A, B, C dove gli input uguali
       a 1 appaiono negati.
       Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
-      *esempio*: E = (~A + B) * (B + C)
+      *esempio*: $E = (\sim A + B) \cdot (B + C)$
+
+      [[../../.img/fcps.png]]
 
 ** Dalla forma canonica ai circuiti
   - Da una equazione logica espressa come *somma di prodotti (SP)* si realizza una funzione logica di n input e 1 output,
@@ -139,23 +158,24 @@
   Le variabili *DON'T CARE* non hanno importanza ai fini della definizione dell'equazione, tradotto sono quelle variabili che 
   nel processo di minimizzazione (tipo *mappa di Karnaught*) non rimangono fisse.
 
+  [[../../.img/mini.png]]
 
 * Tecniche di minimizzazione
   Intuitivamente, per semplificare una tabella di verità di *N* variabili di input e minimizzare
   la corrispondente forma normale *SP*, ovvero per scoprire le variabili *DON'T CARE*, basta individuare:
-  + 2^1 (*coppie di*) righe *con output 1* dove
+  + $2^1$ (*coppie di*) righe *con output 1* dove
     - i valori assunti da *N - 1* variabili appaiono fissi
     - tutti i possibili valori di *una* variabile (*X*) appaiono combinati con gli altri
-      *N - 1* valori fissi ==> la variabile *X* è *DON'T CARE*
-  + 2^2 (*4-ple di*) righe con *output 1* dove
+      *N - 1* valori fissi $\rightarrow$ la variabile *X* è *DON'T CARE*
+  + $2^2$ (*4-ple di*) righe con *output 1* dove
     - i valori assunti da *N - 2* variabili appaiono fissi
     - tutti i possibili valori *due* variabili (*X,Y*) appaiono combinati con
-      gli altri *N - 2* valori fissi ==> le variabili *X* e *Y* sono *DON'T CARE*
-  + 2^3 (*8-ple di*) righe *con output 1* dove
+      gli altri *N - 2* valori fissi $\rightarrow$ le variabili *X* e *Y* sono *DON'T CARE*
+  + $2^3$ (*8-ple di*) righe *con output 1* dove
     - i valori assunti da *N - 3* variabili appaiono fissi
     - tutti i possibili valori di *tre* variabili *(X,Y,Z)* appaiono combinati con gli altri
-      *N - 3* valori fissi ==> le variabili *X, Y, Z* sono *DON'T CARE*
-  + 2^4 (*16-ple di*) righe *con output 1* dove ...
+      *N - 3* valori fissi $\rightarrow$ le variabili *X, Y, Z* sono *DON'T CARE*
+  + $2^4$ (*16-ple di*) righe *con output 1* dove ...
 
     
 * Mappe di Karnaugh
@@ -168,19 +188,25 @@
   - *da notare* le combinazioni delle variabili in input che *etichettiamo* i due assi
     delle mappe:
     - *Codice di Gray*: differenza di un singolo bit tra combinazioni consecutive
-    
+
+      [[../../.img/mk.png]]
+
 ** Scopo delle mappe
-   - Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
+   - Individuare facilmente insieme di righe ($2^1,\; 2^2,\; 2^3\;$ righe, ecc.) della tabella
      di varietà con variabili (1, 2, 3 variabili, ecc.) *DON'T CARE*
    - Gli 1 corrispondono a queste righe risultano infatti *adiacenti* nella mappa corrispondente
      + Nel considerare l'adiacenza delle celle nella mappa, si tengono conto che i *bordi orizzontali/verticali* della mappa *è come se si toccassero*
-     + Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
+     + Le combinazioni di $2^1,\; 2^2,\; 2^3$ righe della tabella di verità originale con 1, 2, 3
        variabili *DON'T CARE* diventano *rettangoli* di valori uguali ad 1 nella mappa di Karnaugh
-     + Questi *rettangoli* sono composti da *2^p valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
+     + Questi *rettangoli* sono composti da $2^p$ *valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
+
+       [[../../.img/esmk.png]]
 
 ** Minimizzare con mappe di Karnaugh
   Per minimizzare il più possibile basta scegliere i più grandi rettangoli (p-sottocubi) che ricoprono gli 1 della mappa, 
   alcuni 1 possono essere ricoperti da più rettangoli.
+
+  [[../../.img/esmk2.png]]
 
 ** Ipercurbi e Meppe di Karnaugh
   La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia ad ipercubo:
@@ -190,7 +216,10 @@
 
     Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
 
-    
+    [[../../.img/ipc.png]]
+
+    [[../../.img/ipc2.png]]
+
 ** Funzioni incomplete
   Alcuni output di una funzione, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare,
   per questo sono detti output DON'T CARE.
@@ -200,7 +229,11 @@
   - L'equazione logica e il corrispodente circuito *non possono essere incompleti*, essi devono produrre un risultato in
     corrispondenza di tutte le combinazioni dei valori di input.
     Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
-    
+
+
+  [[../../.img/funcinc.png]]
+
+
 * Algoritmo di Quine McCluskey
   Le mappe di Karnaugh servono per la minimizzazione a mano delle funzioni, ma si riscono a rappresentare al
   massimo 5 variabili

@@ -1,6 +1,7 @@
 #+TITLE: Progetto CPU multiciclo
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Problemi con progetto a singolo ciclo
 Il problema del singolo ciclo
 - Ciclo di clock *lungo*
@@ -14,12 +15,15 @@ Possibile soluzione:
 + Datapath "*multiciclo*"
 + Usiamo un ciclo *più corto*
 + Istruzioni differenti impiegano un numero di cicli diversi
-+ Unità funzionali possono essere usate più volte per eseguire la stessa istruzione ==> meno *replicazione*
++ Unità funzionali possono essere usate più volte per eseguire la stessa istruzione $\rightarrow$ meno *replicazione*
   - Basta usarle in cicli differenti
 + Registri aggiuntivi
   - Usati per memorizzare i risultati parziali nell'esecuzione delle istruzioni
 
 * Datapath multiciclo
+
+[[../../.img/dt.png]]
+
 *Registri interni* addizionali usati per memorizzare valori intermedi, da usare nel ciclo di clock successivi per *continuare* l'esecuzione della stessa istruzione
 
 - *IR*
@@ -34,6 +38,8 @@ Riuso di unità funzionali
 
 * Suddivisione in passi del Datapath
 
+[[../../.img/dt2.png]]
+
 Ogni *passo* da eseguire in un *ciclo di clock* ( ciclo più corto rispetto alla CPU a ciclo singolo )
 
 Importante il bilanciamento della quantità di lavoro eseguito nei vari passi, perchè dobbiamo fissare un ciclo di clock unico
@@ -43,6 +49,8 @@ Importante il bilanciamento della quantità di lavoro eseguito nei vari passi, p
 Al termine di ogni ciclo i valori *intermedi* sono memorizzati nei *registri interni addizionali*: da impiegare nei cicli successivi della stessa istruzione
 
 *Register File* e *PC* sono invece impiegati per memorizzare valori da usare per l'esecuzione di una *nuova* istruzione
+
+[[../../.img/multm.png]]
 
 * Sequenza dei cinque passi di esecuzione
 
@@ -60,10 +68,27 @@ Al termine di ogni ciclo i valori *intermedi* sono memorizzati nei *registri int
 * Controllo
 I segnali di controllo alle varie unità funzionali e ai multiplexer non dipendono solo dal *tipo di istruzione*, ma anche dallo specifico *passo di esecuzione*
 
+[[../../.img/controll.png]]
+
 Il *controllo* sarà implementato come *circuiti sequenziale*
 
 - L'output del circuito ( segnali di controllo ) dipenderà dallo *stato interno al circuito al tempo t_i*
 - *stato del circuito sequenziale = passo di esecuzione di un'istruzione*
+
+  [[../../.img/dtec.png]]
+* Segnali di controllo di 1 bit
+
+[[../../.img/sin1b.png]]
+
+Per istruzioni di *beq*: *PCWriteCond = 1* e *PCWrite = 0*
+Il segnale di scrittura di PC e infatti calcolato come:
+$PCWrite + (PCWriteCond \cdot Zero)$
+
+Se *Zero = 0* il valore di PC che punta alla prossima istruzione rimane invariato
+
+* Segnali di controllo di 2 bit
+
+[[../../.img/sin2b.png]]
 
 * Passo 1: Fetch dell'istruzione
 
@@ -83,11 +108,13 @@ Durante questo passo ( stesso ciclo di clock ) usiamo:
 - Memoria
 - ALU
 
+  [[../../.img/fetch.png]]
+
 * Passo 2: Decodifica istruzione & Lettura registri
 
 Leggi i registri *rs* e *rt*, e calcola l'indirizzo del salto di *beq*
 
-IR ( *op* ) viene inviato al *controllo* per la decodifica e la determinazione dei passi successivi ==> *Decodifica dell'istruzione*
+IR ( *op* ) viene inviato al *controllo* per la decodifica e la determinazione dei passi successivi $\rightarrow$ *Decodifica dell'istruzione*
 
 #+BEGIN_EXAMPLE
 A = Reg[ IR[ 25-21 ] ];
@@ -102,6 +129,8 @@ ALUOut = PC + ( sign-ext( IR[ 15-0 ] ) << 2 );
 Quali i vantaggi di questo lavoro anticipato?
 
 Durante questo passo ( durante lo stesso ciclo di clock ) usiamo: *Register File* e *ALU*
+
+[[../../.img/dec.png]]
 
 * Passo 3: ( dipende dall'istruzione )
 
@@ -121,6 +150,12 @@ Il *controllo*, avendo già decodificato l'istruzione letta al passo precedente,
 + Completa Jump
   - PC = PC[31-28] || (IR[25-0] << 2);
 
+    [[../../.img/dip.png]]
+
+    [[../../.img/dip2.png]]
+
+    [[../../.img/dip3.png]]
+
 * Passo 4: (dipende dall'istruzione)
 
 *LOAD* e *STORE* accedono alla memoria
@@ -137,6 +172,14 @@ Terminazione istruzioni R-Type
 Durante questo passo usiamo:
 - *Register File (Write) oppure Memoria*
 
+  [[../../.img/dip4.png]]
+
+* Passo 5: Write-back (LOAD)
+[[../../.img/load.png]]
+
+* Riassumendo
+[[../../.img/rias.png]]
+
 * Definizione del controllo
 
 Possiamo implementare il *controllo* della CPU come un *circuito sequenziale di Moore*, modellato con un automa a stati finiti
@@ -145,6 +188,23 @@ Possiamo implementare il *controllo* della CPU come un *circuito sequenziale di 
 - Ogni nodo corrisponde ad uno stato differente del circuito, in corrispondenza di un certo ciclo di clock
 - Gli output del *controllo* (segni di controllo) dipendono dallo stato corrente
 - Da 3 a 5 stati devono essere attraversati (ovvero, da 3 a 5 cicli di clock)
+
+  [[../../.img/controllo.png]]
+* Automa Completo
++ Etichette interne ai nodi
+  - Corrispondono ai segnali che il Controllo deve inviare al Datapath
++ Etichette sugli archi
+  - Dipendono dagli input del controllo ovvero dal valore del campo *Op* dell'istruzione letta
++ 10 stati
+  + Ogni stato associato con un'etichetta mnemonica, e anche con un identificatore numerico
+
+    [[../../.img/aut.png]]
+* Componenti CPU ( Datapath + Control ) e Memoria
+[[../../.img/cpu.png]]
+
+* Dimensione ciclo di clock
+
+[[../../.img/dim.png]]
 
 * Costo istruzioni
 
@@ -169,3 +229,9 @@ Abbiamo ottenuto un risparmio solo per le istruzioni di *beq* e *jump*
 - Se avessimo considerato istruzioni molto più lunghe ( come quelle *FP* ), non avremmo osservato questo *apparente* decadimento di prestazione nel passare all'architettura multi-ciclo
 
 - In quel caso, la scelta del ciclo singolo ci avrebbe costretto ad allungare a dismisura il ciclo di clock per eseguire le istruzioni *FP*
+* Circuito sequenziale che implementa il controllo
+[[../../.img/circ1.png]]
+** Realizzazione del blocco combinatorio
+[[../../.img/circ3.png]]
+* Automa rappresentato da un microprogramma
+[[../../.img/mic.png]]

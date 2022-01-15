@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Memorie e circuiti sequenziali</title>
-<!-- 2022-01-08 Sat 14:29 -->
+<!-- 2022-01-15 Sat 18:26 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -242,6 +268,7 @@ $(function() {
 </nav>
 </div><div class="col-md-9 col-md-pull-3"><h1 class="title">Memorie e circuiti sequenziali</h1>
 
+
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Circuiti combinatori vs sequenziali</h2>
 <div class="outline-text-2" id="text-1">
@@ -285,6 +312,12 @@ Possiamo organizzare le porte logiche in modo da realizzare un elemento di memor
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> S-R Latch</h2>
 <div class="outline-text-2" id="text-3">
+
+<figure>
+<p><img src="../../.img/srlatch.png" class="img-responsive" alt="srlatch.png">
+</p>
+</figure>
+
 <p>
 L&rsquo;<b>S-R Latch</b> è un circuito composto da 2 porte NOR concatenate
 </p>
@@ -304,6 +337,12 @@ Anche se <b>(S,R)=(0,0)</b>, gli output del latch possono comunque essere divers
 </li>
 </ul>
 
+
+<figure>
+<p><img src="../../.img/srlatch2.png" class="img-responsive" alt="srlatch2.png">
+</p>
+</figure>
+
 <p>
 Poniamo per esempio (S,R)=(1,0) per effettuare il <b>setting del latch a sinistra</b>
 </p>
@@ -320,6 +359,12 @@ Poniamo per esempio (S,R)=(0,1) per effettuare il <b>resetting del latch a destr
 </li>
 </ul>
 
+
+
+<figure>
+<p><img src="../../.img/srlatch3.png" class="img-responsive" alt="srlatch3.png">
+</p>
+</figure>
 
 <p>
 La combinazione (S,R) = (0,0) viene detta combinazione di riposo, 
@@ -350,7 +395,7 @@ per la memorizzazione
 </ul>
 
 <p>
-<b>Soluzione</b> =&gt;  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l&rsquo;inizio di un gradino e quello successivo
+<b>Soluzione</b> \(\rightarrow\)  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l&rsquo;inizio di un gradino e quello successivo
               viene scelto abbastanza grande da assicurare la stabilità degli output del circuito
 </p>
 <ul class="org-ul">
@@ -362,9 +407,11 @@ per la memorizzazione
 </li>
 </ul>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/cl.png" class="img-responsive" alt="cl.png">
 </p>
+</figure>
 </div>
 </div>
 
@@ -383,9 +430,9 @@ Se il periodo T è espresso in <b>sec</b>
 Se T = 10 nsec qual è la franquenza del clock?
 </p>
 <ul class="org-ul">
-<li>1 nsec = 10^-9 sec
+<li>\(1 nsec = 10^{-9} sec\)
 </li>
-<li>Freq = 1/T = 1/(10*10-9)= 108Hz=108Hz=102 *106 Hz=100 MHz
+<li>Freq = \(1/T = 1/(10 \times 10^{-9})\) = 108Hz = 108Hz = \(102 \times 106\) Hz=100 MHz
 </li>
 </ul>
 
@@ -393,9 +440,9 @@ Se T = 10 nsec qual è la franquenza del clock?
 Se T = 1 nsec, qual è la differenza del clock?
 </p>
 <ul class="org-ul">
-<li>1 nsec = 10^-9 sec
+<li>\(1 nsec = 10^{-9} sec\)
 </li>
-<li>Freq=1/T=1/10-9=109Hz=1 GHz
+<li>Freq=\(1/T = 1/10^{-9} = 109\) Hz = 1 GHz
 </li>
 </ul>
 </div>
@@ -404,9 +451,15 @@ Se T = 1 nsec, qual è la differenza del clock?
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> Latch clockato (D-latch)</h2>
 <div class="outline-text-2" id="text-6">
+
+<figure>
+<p><img src="../../.img/dlatch.png" class="img-responsive" alt="dlatch.png">
+</p>
+</figure>
+
 <p>
 <b>D=1</b> corrisponde al <b>setting</b>
--S=1 e R=0
+  -S=1 e R=0
 </p>
 
 <p>
@@ -429,9 +482,11 @@ Se il segnale C fosse invertito (porta NOT aggiuntiva), il latch memorizzerebbe 
 (cioè quando il clock è deasserted)
 </p>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/ddlatch2.png" class="img-responsive" alt="ddlatch2.png">
 </p>
+</figure>
 </div>
 </div>
 
@@ -447,12 +502,14 @@ Il segnale D, ottenuto solitamente come output di un circuito combinatorio
 <li>deve rimanere stabile per tutta la durata del livello alto di C (Setup time)
 </li>
 <li>deve infine rimanere stabile per un altro periodo di tempo per evitare malfunzionamenti (Hold time)
+
+
+<figure>
+<p><img src="../../.img/ddlatch.png" class="img-responsive" alt="ddlatch.png">
+</p>
+</figure>
 </li>
 </ul>
-
-<p>
-[circuito]
-</p>
 </div>
 
 <div id="outline-container-sec-7-1" class="outline-3">
@@ -470,9 +527,11 @@ Gli output possono temporaneamente cambiare da valori corretti a valori errati, 
 </li>
 </ul>
 
-<p>
-[ciurcuito]
+
+<figure>
+<p><img src="../../.img/rit.png" class="img-responsive" alt="rit.png">
 </p>
+</figure>
 </div>
 </div>
 </div>
@@ -488,9 +547,17 @@ Il periodo T deve essere scelto abbastanza lungo affinché l’output del circui
 </li>
 </ul>
 
-<p>
-[ciurcuito]
+
+<figure>
+<p><img src="../../.img/cl2.png" class="img-responsive" alt="cl2.png">
 </p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/cl3.png" class="img-responsive" alt="cl3.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -518,15 +585,23 @@ del clock
 Questo comportamento è noto come <b>trasparenza</b> del latch
 </p>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/dlatch3.png" class="img-responsive" alt="dlatch3.png">
 </p>
+</figure>
 </div>
 </div>
 
 <div id="outline-container-sec-10" class="outline-2">
 <h2 id="sec-10"><span class="section-number-2">10</span> Elemento di memoria usato come input e output</h2>
 <div class="outline-text-2" id="text-10">
+
+<figure>
+<p><img src="../../.img/el.png" class="img-responsive" alt="el.png">
+</p>
+</figure>
+
 <p>
 Durante ogni periodo di clock
 </p>
@@ -538,6 +613,13 @@ Durante ogni periodo di clock
 <li>il nuovo valore memorizzato dovebbe essere usato come <b>input del circuito di durante il ciclo di clock successivo</b>
 </li>
 </ul>
+
+
+
+<figure>
+<p><img src="../../.img/el2.png" class="img-responsive" alt="el2.png">
+</p>
+</figure>
 
 <p>
 l&rsquo;<b>elemento di memoria</b> deve essere usato sia come input che come output durante lo stesso ciclo di clock.
@@ -553,11 +635,8 @@ Il D-latch precedente funzionerebbe in questo caso ?
 <p>
 entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizzato nel latch
 </p>
-
-<p>
-[circuito]
-</p>
 </div>
+
 
 <div id="outline-container-sec-10-1" class="outline-3">
 <h3 id="sec-10-1"><span class="section-number-3">10.1</span> Metodologia di timing</h3>
@@ -586,6 +665,12 @@ non faccia in tempo ad arrivare a causa dell’istantaneità della memorizzazion
 </ul>
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/time.png" class="img-responsive" alt="time.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -597,9 +682,17 @@ Il generatore di impulsi permette appunto di <b>generare impulsi brevissimi</b>
 in corrispondenza del fronte di salita di un segnale a gradino
 </p>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/gen.png" class="img-responsive" alt="gen.png">
 </p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/gen2.png" class="img-responsive" alt="gen2.png">
+</p>
+</figure>
 </div>
 </div>
 </div>
@@ -616,9 +709,11 @@ in corrispondenza dell’impulso.
 Metodologia edge-triggered di tipo <b>rising triggered</b>.
 </p>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/flip.png" class="img-responsive" alt="flip.png">
 </p>
+</figure>
 
 <p>
 Il segnale <b>memorizzato comincia a fluire subito fuori dal flip-flop</b>.
@@ -636,6 +731,12 @@ Il Flip-flop di tipo D usabile come input e output durante uno stesso ciclo di c
 </p>
 <ul class="org-ul">
 <li>realizzato ponendo in serie 2 D-latch: il <b>primo viene detto master</b> e il <b>secondo slave</b>
+
+
+<figure>
+<p><img src="../../.img/dflip.png" class="img-responsive" alt="dflip.png">
+</p>
+</figure>
 </li>
 </ul>
 
@@ -649,9 +750,11 @@ Metodologia edge-triggered:
 </li>
 </ul>
 
-<p>
-[circuito]
+
+<figure>
+<p><img src="../../.img/dflip2.png" class="img-responsive" alt="dflip2.png">
 </p>
+</figure>
 </div>
 </div>
 
@@ -724,6 +827,18 @@ Registro di stato realizzato con flip-flop che impiegano una metodologia <b>f*al
 <li>durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/circ.png" class="img-responsive" alt="circ.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/circ2.png" class="img-responsive" alt="circ2.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -731,10 +846,10 @@ Registro di stato realizzato con flip-flop che impiegano una metodologia <b>f*al
 <h2 id="sec-15"><span class="section-number-2">15</span> Tipi di circuito (Mealy vs Moore)</h2>
 <div class="outline-text-2" id="text-15">
 <ul class="org-ul">
-<li><b>INPUT(ti) e OUTPUT(ti)</b> i valori presenti, rispettivamente, sugli input e gli
+<li>\(INPUT(t_i)\) e \(OUTPUT(t_i)\) i valori presenti, rispettivamente, sugli input e gli
 output dei circuiti combinatori al tempo ti 
 </li>
-<li><b>STATE(ti)</b> i valori presenti nei registri di stato al tempo ti
+<li>\(STATE(t_i)\) i valori presenti nei registri di stato al tempo ti
 </li>
 </ul>
 
@@ -742,9 +857,9 @@ output dei circuiti combinatori al tempo ti
 <b>Circuito sequenziale di Mealy</b>
 </p>
 <ul class="org-ul">
-<li>OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+<li>\(OUTPUT(t_i) = d(INPUT(t_i), STATE(t_i))\)
 </li>
-<li>NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti)) 
+<li>\(NEXT_STATE(t_i + 1) = l(INPUT(t_i), STATE(t_i))\)
 </li>
 </ul>
 
@@ -752,9 +867,9 @@ output dei circuiti combinatori al tempo ti
 <b>Circuito sequenziale di Moore</b>
 </p>
 <ul class="org-ul">
-<li>OUTPUT(ti) = d(STATE(ti))
+<li>\(OUTPUT(t_i) = d(STATE(t_i))\)
 </li>
-<li>NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti))
+<li>\(NEXT_STATE(t_i+1) = l(INPUT(t_i), STATE(t_i))\)
 </li>
 </ul>
 
@@ -766,7 +881,7 @@ Definiamo quindi i due tipi di circuito:
 <b>Circuito sequenziale di Mealy</b>
 </p>
 <ul class="org-ul">
-<li>OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+<li>\(OUTPUT(t_i) = d(INPUT(t_i), STATE(t_i))\)
 </li>
 </ul>
 
@@ -774,19 +889,25 @@ Definiamo quindi i due tipi di circuito:
 <b>Circuito sequenziale di Moore</b>
 </p>
 <ul class="org-ul">
-<li>OUTPUT(ti) = d(STATE(ti))
+<li>\(OUTPUT(t_i) = d(STATE(t_i))\)
 </li>
 <li>valore dell’output al tempo ti dipende solo dal valore dei registri di stato
 </li>
 </ul>
 
 <p>
-STATE(ti) modificato alla fine del ciclo di clock precedente (ti-1) in base a:
+\(STATE(t_i)\) modificato alla fine del ciclo di clock precedente \((t_i-1)\) in base a:
 </p>
 <ul class="org-ul">
-<li><b>input</b> a quel tempo presenti in ingresso al circuito: INPUT(ti-1)
+<li><b>input</b> a quel tempo presenti in ingresso al circuito: \(INPUT(t_i-1)\)
 </li>
-<li><b>stato</b> a quel tempo memorizzato nei registri: STATE(ti-1)
+<li><b>stato</b> a quel tempo memorizzato nei registri: \(STATE(t_i-1)\)
+
+
+<figure>
+<p><img src="../../.img/mvm.png" class="img-responsive" alt="mvm.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -819,6 +940,12 @@ espresso graficamente tramite un <b>automa a stati finiti</b>
 <li>etichette sui nodi e sugli archi (input/output)
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/stat.png" class="img-responsive" alt="stat.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -852,6 +979,12 @@ Nel Datapath della CPU, il clock non entra direttamente nei vari flip-flop:
 </p>
 <ul class="org-ul">
 <li>viene messo in <b>AND</b> con un segnale di controllo: Write
+
+
+<figure>
+<p><img src="../../.img/sreg.png" class="img-responsive" alt="sreg.png">
+</p>
+</figure>
 </li>
 
 <li>Lettura del Register File
@@ -882,8 +1015,20 @@ Nota che il Register file fornisce sempre in output una coppia di registri:
 <li><b>non significativi</b>, se i controlli Read Reg1 e Read Reg2 non lo sono
 </li>
 <li>in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
+
+
+<figure>
+<p><img src="../../.img/rreg.png" class="img-responsive" alt="rreg.png">
+</p>
+</figure>
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/lreg.png" class="img-responsive" alt="lreg.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -910,6 +1055,12 @@ Il segnale di <b>Write</b> (a sua volta in AND con il clock) abilita solo uno de
 Se il segnale di <b>Write è non affermato</b>, i possibili valori spuri in input non verranno memorizzati nel <b>Register file</b>
 </p>
 
+
+<figure>
+<p><img src="../../.img/creg.png" class="img-responsive" alt="creg.png">
+</p>
+</figure>
+
 <ul class="org-ul">
 <li>Lettura/Scrittura nel Register File
 </li>
@@ -930,6 +1081,12 @@ il valore ritornato dalla lettura sarà quello memorizzato in un ciclo di clock 
 <div id="outline-container-sec-19" class="outline-2">
 <h2 id="sec-19"><span class="section-number-2">19</span> Memoria principale</h2>
 <div class="outline-text-2" id="text-19">
+
+<figure>
+<p><img src="../../.img/mem.png" class="img-responsive" alt="mem.png">
+</p>
+</figure>
+
 <p>
 La dimensione del Register File è piccola:
 </p>
@@ -967,6 +1124,7 @@ La <b>SRAM</b> (Static RAM) è più <b>veloce</b>:
 </li>
 </ul>
 
+
 <p>
 La <b>DRAM</b> (Dynamic RAM) è più <b>capiente ma più lenta</b>:
 </p>
@@ -988,6 +1146,12 @@ La <b>DRAM</b> (Dynamic RAM) è più <b>capiente ma più lenta</b>:
 <div id="outline-container-sec-21" class="outline-2">
 <h2 id="sec-21"><span class="section-number-2">21</span> SRAM</h2>
 <div class="outline-text-2" id="text-21">
+
+<figure>
+<p><img src="../../.img/sram.png" class="img-responsive" alt="sram.png">
+</p>
+</figure>
+
 <p>
 SRAM realizzata come matrice di latch <b>HxW</b>:
 </p>
@@ -1001,6 +1165,12 @@ SRAM realizzata come matrice di latch <b>HxW</b>:
 <li><b>singolo indirizzo</b> per <b>lettura</b> o <b>scrittura</b>
 </li>
 <li>non è possibile <b>scrivere</b> e <b>leggere contemporaneamente</b>, a differenza del <b>Register File</b>
+
+
+<figure>
+<p><img src="../../.img/sram2.png" class="img-responsive" alt="sram2.png">
+</p>
+</figure>
 </li>
 </ul>
 
@@ -1053,6 +1223,12 @@ Esempio 2:
 <div id="outline-container-sec-22" class="outline-2">
 <h2 id="sec-22"><span class="section-number-2">22</span> Realizzazione SRAM</h2>
 <div class="outline-text-2" id="text-22">
+
+<figure>
+<p><img src="../../.img/sram3.png" class="img-responsive" alt="sram3.png">
+</p>
+</figure>
+
 <p>
 Tecniche realizzative diverse rispetto a quelle del register file:
 </p>
@@ -1122,6 +1298,12 @@ Chip <b>Enable</b> e <b>Output Enable</b> sono stati <b>omessi per semplicità</
 (Output Enable in AND con Enable, a sua volta determinato dal decoder)
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/sram4.png" class="img-responsive" alt="sram4.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -1133,6 +1315,12 @@ Nel caso precedente abbiamo evitato l’uso dei <b>Multiplexer</b>, ma rimane il
 Per ovviare, decodifica degli indirizzi a due livelli.
 Usiamo un decoder più piccolo e una batteria di piccoli Multiplexer.
 </p>
+
+
+<figure>
+<p><img src="../../.img/sram5.png" class="img-responsive" alt="sram5.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -1150,12 +1338,18 @@ La <b>DRAM è meno costosa</b>, perché è realizzata con un solo transistor per
 grazie al segnale affermato della <b>Word line</b>
 </li>
 <li>la specifica <b>Word line</b> è attivata sulla base dell’indirizzo di <b>memoria richiesto</b>
+
+
+<figure>
+<p><img src="../../.img/dram.png" class="img-responsive" alt="dram.png">
+</p>
+</figure>
 </li>
 </ul>
 
 <p>
 I <b>condensatori</b> mantengono i valori memorizzati solo per alcuni <b>ms</b>.
-Necessario il <b>refresh dinamico delle DRAM</b>, effettuato leggendo, e subito riscrivendo i valori appena letti.
+  Necessario il <b>refresh dinamico delle DRAM</b>, effettuato leggendo, e subito riscrivendo i valori appena letti.
 </p>
 
 
@@ -1179,6 +1373,12 @@ Parte <b>alta</b> e <b>bassa</b> dell’indirizzo considerate come indirizzo di 
 </li>
 </ul>
 
+
+<figure>
+<p><img src="../../.img/dram2.png" class="img-responsive" alt="dram2.png">
+</p>
+</figure>
+
 <p>
 Possibile accesso ottimizzato a <b>bit</b> di memoria consecutivi:
 </p>
@@ -1186,6 +1386,12 @@ Possibile accesso ottimizzato a <b>bit</b> di memoria consecutivi:
 <li>contenuti nei <b>column latches</b> dopo un accesso di RIGA
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/dram3.png" class="img-responsive" alt="dram3.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -1226,8 +1432,8 @@ Nota che celle consecutive hanno indirizzi che solitamente differiscono solo per
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-08 Sat 14:29</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+<p class="date">Created: 2022-01-15 Sat 18:26</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

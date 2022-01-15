@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Algebra di Bool</title>
-<!-- 2022-01-08 Sat 14:29 -->
+<!-- 2022-01-15 Sat 18:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -260,19 +286,19 @@ Il funzionamento dei circuiti elettronici può essere modellato tramite l&rsquo;
 <ul class="org-ul">
 <li>Solo 2 valori:
 <ol class="org-ol">
-<li>Valore <b>TRUE</b> (<b>1</b> o <b>asserted</b>) ==&gt; livello di potenziale <b>ALTO</b>
+<li>Valore <b>TRUE</b> (<b>1</b> o <b>asserted</b>) &rarr; livello di potenziale <b>ALTO</b>
 </li>
-<li>Valore <b>FALSE</b> (<b>0</b> o <b>deasserted</b>) ==&gt; livello di potenziale <b>BASSO</b>
+<li>Valore <b>FALSE</b> (<b>0</b> o <b>deasserted</b>) &rarr; livello di potenziale <b>BASSO</b>
 </li>
 </ol>
 </li>
 <li>Operazioni logiche Booleane: <b>SOMMA</b> (<b>OR</b>), <b>PRODOTTO</b> (<b>AND</b>), <b>INVERSIONE LOGICA</b> (<b>NOT</b>)
 <ul class="org-ul">
-<li><b>OR</b> (<b>A + B</b>): risultato uguale ad 1 (<b>TRUE</b>) se almeno un input è 1 (<b>TRUE</b>)
+<li><b>OR</b> \((A + B)\): risultato uguale ad 1 (<b>TRUE</b>) se almeno un input è 1 (<b>TRUE</b>)
 </li>
-<li><b>AND</b> (<b>A x B</b>): risultato uguale ad 1 (<b>TRUE</b>) solo se tutti gli input sono 1 (<b>TRUE</b>)
+<li><b>AND</b> \((A \times B)\): risultato uguale ad 1 (<b>TRUE</b>) solo se tutti gli input sono 1 (<b>TRUE</b>)
 </li>
-<li><b>NOT</b> (<b>~A</b>): risultato uguale all&rsquo;inverso dell&rsquo;input (0 -&gt; 1 uppure 1 -&gt; 0)
+<li><b>NOT</b> \(( \sim A)\): risultato uguale all&rsquo;inverso dell&rsquo;input \((0 \rightarrow 1\; oppure\; 1 \rightarrow 0)\)
 </li>
 </ul>
 </li>
@@ -290,10 +316,17 @@ Il funzionamento dei circuiti elettronici può essere modellato tramite l&rsquo;
 </li>
 <li>Il circuito calcola una o più <b>funzioni logiche</b>, ciascuna espriminile tramite una
 combinazione di operazioni dell&rsquo;algebra di Boole <b>sulle variabili in input</b>
+
+
+<figure>
+<p><img src="../../.img/bl.png" class="img-responsive" alt="bl.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Circuiti combinatori/sequenziali</h2>
 <div class="outline-text-2" id="text-3">
@@ -334,15 +367,23 @@ Una funzione logica è completamente specificata da
 <div class="outline-text-3" id="text-4-1">
 <p>
 Dati <b>n input bit</b>, il numero di configurazione possibili degli input, ovvero il numero di righe
-della Tabella di verità, + <b>2^n</b>
+della Tabella di verità, + \(2^n\)
 </p>
 <ul class="org-ul">
 <li>Per ogni bit in output, la tabella contiene una colonna, con un valore definito per ognuna
 combinazione dei bit in input
 
-<p>
-[Inserire tabella]
+
+<figure>
+<p><img src="../../.img/tb1.png" class="img-responsive" alt="tb1.png">
 </p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/ab.png" class="img-responsive" alt="ab.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -357,69 +398,75 @@ Proprietà:
 <ul class="org-ul">
 <li><b>Identità</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + 0 = A
+<li><b>OR</b>:  \(A + 0 = A\)
 </li>
-<li><b>AND</b>: A x 1 = A
+<li><b>AND</b>: \(A \times 1 = A\)
 </li>
 </ul>
 </li>
 <li><b>Nullo</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + 1 = 1
+<li><b>OR</b>:  \(A + 1 = 1\)
 </li>
-<li><b>AND</b>: A x 0 = 0
+<li><b>AND</b>: \(A \times 0 = 0\)
 </li>
 </ul>
 </li>
 <li><b>Idempotente</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + A = A
+<li><b>OR</b>:  \(A + A = A\)
 </li>
-<li><b>AND</b>: A x A = A
+<li><b>AND</b>: \(A \times A = A\)
 </li>
 </ul>
 </li>
 <li><b>Inverso</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + (~A) = 1
+<li><b>OR</b>:  \(A + ( \sim A) = 1\)
 </li>
-<li><b>AND</b>: A x (~A) = 0
+<li><b>AND</b>: \(A \times ( \sim A) = 0\)
 </li>
 </ul>
 </li>
 <li><b>Commutativa</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + B = B + A
+<li><b>OR</b>:  \(A + B = B + A\)
 </li>
-<li><b>AND</b>: A x B = B x A
+<li><b>AND</b>: \(A \times B = B \times A\)
 </li>
 </ul>
 </li>
 <li><b>Associativa</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A + (B + C) = (A + B) + C
+<li><b>OR</b>:  \(A + (B + C) = (A + B) + C\)
 </li>
-<li><b>AND</b>: A x (B x C) = (A x B) x C
+<li><b>AND</b>: \(A \times (B \times C) = (A \times B) \times C\)
 </li>
 </ul>
 </li>
 <li><b>Distributiva</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  A x (B + C) = (A x B) + (A x C)
+<li><b>OR</b>:  \(A \times (B + C) = (A \times B) + (A \times C)\)
 </li>
-<li><b>AND</b>: A + (B x C) = (A + B) x (A + C)
+<li><b>AND</b>: \(A + (B \times C) = (A + B) \times (A + C)\)
 </li>
 </ul>
 </li>
 <li><b>DeMorgan</b>:
 <ul class="org-ul">
-<li><b>OR</b>:  ~(A + B) = (~A) x (~B)
+<li><b>OR</b>:  \(\sim (A + B) = ( \sim A) \times ( \sim B)\)
 </li>
-<li><b>AND</b>: ~(A x B) = (~A) + (~B)
-</li>
-</ul>
+<li><b>AND</b>: \(\sim (A \times B) = ( \sim A) + ( \sim B)\)
 </li>
 </ul>
+</li>
+</ul>
+
+
+<figure>
+<p><img src="../../.img/pl.png" class="img-responsive" alt="pl.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -427,9 +474,24 @@ Proprietà:
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> NAND e NOR</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
-<b>NAND</b> (inverso dell&rsquo;operazione <b>AND</b>): ~(A x B) = A <b>nand</b> B
-<b>NOR</b>  (inverso dell&rsquo;operazione <b>OR</b>):  ~(A + B) = A <b>nor</b>  B
+<b>NAND</b> (inverso dell&rsquo;operazione <b>AND</b>): \(\sim (A \times B) = A\) <b>nand</b> \(B\\\)
 </p>
+
+
+<figure>
+<p><img src="../../.img/nand.png" class="img-responsive" alt="nand.png">
+</p>
+</figure>
+
+<p>
+<b>NOR</b>  (inverso dell&rsquo;operazione <b>OR</b>):  \(\sim (A + B) = A\) <b>nor</b>  \(B\)
+</p>
+
+
+<figure>
+<p><img src="../../.img/nor.png" class="img-responsive" alt="nor.png">
+</p>
+</figure>
 </div>
 </div>
 </div>
@@ -457,6 +519,12 @@ comandati da un segnale elettrico
 <li>Se applichi un <b>ALTO</b> voltaggio (<b>Vdd</b>), il transistor diventa un <b>conduttore</b>
 </li>
 <li>Se applichi un <b>BASSO</b> voltaggio (<b>GND</b>), il transistor interrompe la conduzione (<b>resistenza infinita</b>)
+
+
+<figure>
+<p><img src="../../.img/nmos.png" class="img-responsive" alt="nmos.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -472,11 +540,16 @@ comandati da un segnale elettrico
 <li>Se applichi un <b>ALTO</b> voltaggio (<b>Vdd</b>), il transistor interrompe la conduzione (<b>resistenza infinita</b>)
 </li>
 <li>Se applichi un <b>BASSO</b> voltaggio (<b>GND</b>), il transistor diventa un <b>conduttore</b>
+
+
+<figure>
+<p><img src="../../.img/pmos.png" class="img-responsive" alt="pmos.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
 </div>
-
 
 <div id="outline-container-sec-5-3" class="outline-3">
 <h3 id="sec-5-3"><span class="section-number-3">5.3</span> Confronto tra porte</h3>
@@ -518,7 +591,13 @@ Forma canonica <b>SP</b> (somma di prodotti)
 <li>Per ogni valore uguale ad 1 nell&rsquo;output genera un prodotto (<b>mintermine</b>) degli input A, B, C dove gli input uguali
 a 0 appaiono negati.
 Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
-<b>esempio</b>: E = (~A * B) + (B * C)
+<b>esempio</b>: \(E = (\sim A \cdot B) + (B \cdot C)\)
+
+
+<figure>
+<p><img src="../../.img/fcsp.png" class="img-responsive" alt="fcsp.png">
+</p>
+</figure>
 </li>
 </ul>
 
@@ -529,7 +608,13 @@ Forma canonica <b>PS</b> (prodotto di somme)
 <li>Per ogni valore uguale ad 0 nell&rsquo;output genera una somma (<b>maxtermine</b>) degli input A, B, C dove gli input uguali
 a 1 appaiono negati.
 Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
-<b>esempio</b>: E = (~A + B) * (B + C)
+<b>esempio</b>: \(E = (\sim A + B) \cdot (B + C)\)
+
+
+<figure>
+<p><img src="../../.img/fcps.png" class="img-responsive" alt="fcps.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -582,10 +667,15 @@ costo minore per il circuito.
 Le variabili <b>DON&rsquo;T CARE</b> non hanno importanza ai fini della definizione dell&rsquo;equazione, tradotto sono quelle variabili che 
 nel processo di minimizzazione (tipo <b>mappa di Karnaught</b>) non rimangono fisse.
 </p>
-</div>
-</div>
-</div>
 
+
+<figure>
+<p><img src="../../.img/mini.png" class="img-responsive" alt="mini.png">
+</p>
+</figure>
+</div>
+</div>
+</div>
 
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> Tecniche di minimizzazione</h2>
@@ -595,34 +685,34 @@ Intuitivamente, per semplificare una tabella di verità di <b>N</b> variabili di
 la corrispondente forma normale <b>SP</b>, ovvero per scoprire le variabili <b>DON&rsquo;T CARE</b>, basta individuare:
 </p>
 <ul class="org-ul">
-<li>2^1 (<b>coppie di</b>) righe <b>con output 1</b> dove
+<li>\(2^1\) (<b>coppie di</b>) righe <b>con output 1</b> dove
 <ul class="org-ul">
 <li>i valori assunti da <b>N - 1</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori di <b>una</b> variabile (<b>X</b>) appaiono combinati con gli altri
-<b>N - 1</b> valori fissi ==&gt; la variabile <b>X</b> è <b>DON&rsquo;T CARE</b>
+<b>N - 1</b> valori fissi \(\rightarrow\) la variabile <b>X</b> è <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
-<li>2^2 (<b>4-ple di</b>) righe con <b>output 1</b> dove
+<li>\(2^2\) (<b>4-ple di</b>) righe con <b>output 1</b> dove
 <ul class="org-ul">
 <li>i valori assunti da <b>N - 2</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori <b>due</b> variabili (<b>X,Y</b>) appaiono combinati con
-gli altri <b>N - 2</b> valori fissi ==&gt; le variabili <b>X</b> e <b>Y</b> sono <b>DON&rsquo;T CARE</b>
+gli altri <b>N - 2</b> valori fissi \(\rightarrow\) le variabili <b>X</b> e <b>Y</b> sono <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
-<li>2^3 (<b>8-ple di</b>) righe <b>con output 1</b> dove
+<li>\(2^3\) (<b>8-ple di</b>) righe <b>con output 1</b> dove
 <ul class="org-ul">
 <li>i valori assunti da <b>N - 3</b> variabili appaiono fissi
 </li>
 <li>tutti i possibili valori di <b>tre</b> variabili <b>(X,Y,Z)</b> appaiono combinati con gli altri
-<b>N - 3</b> valori fissi ==&gt; le variabili <b>X, Y, Z</b> sono <b>DON&rsquo;T CARE</b>
+<b>N - 3</b> valori fissi \(\rightarrow\) le variabili <b>X, Y, Z</b> sono <b>DON&rsquo;T CARE</b>
 </li>
 </ul>
 </li>
-<li>2^4 (<b>16-ple di</b>) righe <b>con output 1</b> dove &#x2026;
+<li>\(2^4\) (<b>16-ple di</b>) righe <b>con output 1</b> dove &#x2026;
 </li>
 </ul>
 </div>
@@ -648,6 +738,12 @@ particolare combinazione di variabili in input
 delle mappe:
 <ul class="org-ul">
 <li><b>Codice di Gray</b>: differenza di un singolo bit tra combinazioni consecutive
+
+
+<figure>
+<p><img src="../../.img/mk.png" class="img-responsive" alt="mk.png">
+</p>
+</figure>
 </li>
 </ul>
 </li>
@@ -658,17 +754,23 @@ delle mappe:
 <h3 id="sec-7-1"><span class="section-number-3">7.1</span> Scopo delle mappe</h3>
 <div class="outline-text-3" id="text-7-1">
 <ul class="org-ul">
-<li>Individuare facilmente insieme di righe (2^1, 2^2, 2^3 righe, ecc.) della tabella
+<li>Individuare facilmente insieme di righe (\(2^1,\; 2^2,\; 2^3\;\) righe, ecc.) della tabella
 di varietà con variabili (1, 2, 3 variabili, ecc.) <b>DON&rsquo;T CARE</b>
 </li>
 <li>Gli 1 corrispondono a queste righe risultano infatti <b>adiacenti</b> nella mappa corrispondente
 <ul class="org-ul">
 <li>Nel considerare l&rsquo;adiacenza delle celle nella mappa, si tengono conto che i <b>bordi orizzontali/verticali</b> della mappa <b>è come se si toccassero</b>
 </li>
-<li>Le combinazioni di 2^1, 2^2, 2^3 righe della tabella di verità originale con 1, 2, 3
+<li>Le combinazioni di \(2^1,\; 2^2,\; 2^3\) righe della tabella di verità originale con 1, 2, 3
 variabili <b>DON&rsquo;T CARE</b> diventano <b>rettangoli</b> di valori uguali ad 1 nella mappa di Karnaugh
 </li>
-<li>Questi <b>rettangoli</b> sono composti da <b>2^p valori uguali ad 1</b>, e sono anche noti con il termine di <b>p-sottocubi</b>
+<li>Questi <b>rettangoli</b> sono composti da \(2^p\) <b>valori uguali ad 1</b>, e sono anche noti con il termine di <b>p-sottocubi</b>
+
+
+<figure>
+<p><img src="../../.img/esmk.png" class="img-responsive" alt="esmk.png">
+</p>
+</figure>
 </li>
 </ul>
 </li>
@@ -683,6 +785,12 @@ variabili <b>DON&rsquo;T CARE</b> diventano <b>rettangoli</b> di valori uguali a
 Per minimizzare il più possibile basta scegliere i più grandi rettangoli (p-sottocubi) che ricoprono gli 1 della mappa, 
 alcuni 1 possono essere ricoperti da più rettangoli.
 </p>
+
+
+<figure>
+<p><img src="../../.img/esmk2.png" class="img-responsive" alt="esmk2.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -704,9 +812,20 @@ La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia 
 <p>
 Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
 </p>
-</div>
-</div>
 
+
+<figure>
+<p><img src="../../.img/ipc.png" class="img-responsive" alt="ipc.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/ipc2.png" class="img-responsive" alt="ipc2.png">
+</p>
+</figure>
+</div>
+</div>
 
 <div id="outline-container-sec-7-4" class="outline-3">
 <h3 id="sec-7-4"><span class="section-number-3">7.4</span> Funzioni incomplete</h3>
@@ -726,9 +845,17 @@ corrispondenza di tutte le combinazioni dei valori di input.
 Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
 </li>
 </ul>
+
+
+
+<figure>
+<p><img src="../../.img/funcinc.png" class="img-responsive" alt="funcinc.png">
+</p>
+</figure>
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> Algoritmo di Quine McCluskey</h2>
@@ -790,8 +917,8 @@ Nel 1949 pubblica uno studio che fonda la teoria matematica della crittografia.
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-08 Sat 14:29</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+<p class="date">Created: 2022-01-15 Sat 18:32</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

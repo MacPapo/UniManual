@@ -1,6 +1,7 @@
 #+TITLE: Circuiti combinatori
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Circuiti integrati
   I circuiti logici sono realizzati con *IC* ( circuiti integrati )
 
@@ -28,25 +29,49 @@
 
 * Multiplexer
   *n* input ed *1* output
-  *log2n* segnali di controllo
+  + possono essere usati per definire una qualsiasi funzione
+    logica di $log_2n$ segnali di controllo
+    - funzione definita da una *tabella di verità* con *n righe*
+    - Le $log_2n$ variabili in input della funzione logica diventano
+    i segnali di controllo del multiplexer
+
+    [[../../.img/mult.png]]
+
+    [[../../.img/mult2.png]]
+
+  + Ogni riga della tabella di verità
+    - Corrisponde ad uno degli *n input del multiplexer*, collegari
+      ad un generatore di tensione ( o alla terra )
+    - se l'output, associato alla riga della tabella di verità, è 1 o 0
+
+      [[../../.img/mult3.png]]
+
+  Grande spreco di porte
+  + Circuito /fully encoded/
+  + Porte *AND* con arietà meggiore del necessario (+1)
 
   Il multiplexer, sulla base dei segni di controllo, seleziona quale tra gli *n* input
   verrà presentato come output del circuito.
 
-  se S = 0: passa A
-  se S = 1: passa B
+  + se S = 0: passa A
+  + se S = 1: passa B
 
-  C = A ~S + BS
-  
+  $C = A \sim S + BS$
+
+  [[../../.img/mult4.png]]
+
 * Demultiplexer
   Da 1 singola linea in *input*, a n linee in output
-  - log2n segnali di controllo (S)
+  - $log_2n$ segnali di controllo (S)
   - Se la linea in input è uguale a 0
     - Tutti gli output dovranno essere uguali a 0, indipendentemente da S
   - Se la linea in input è uguale a 1
     - Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
     - L'output da affermare dipende da S
-            
+
+      [[../../.img/demult.png]]
+
+
 * Decoder
   Componente con *n input* e *2^n output*
   - Gli n input sono interpretati come un numero unsigned
@@ -54,20 +79,28 @@
     + Solo il bit in output di indice i (i = 0, 1, ..., 2^n-1) verrà posto ad 1
     + Tutti gli altri verranno posti a 0 
 
+    [[../../.img/demult2.png]]
+
 * PLA
   *Programmable Logic Array*
   Componente per costruire funzioni logiche arbitrarie
   - Permette di costruire funzioni in forma *SP*
     - Porte *AND* al primo livello, e porte *OR* al secondo livello
 
+    [[../../.img/pla.png]]
+
   - *n input* e *o output*
     + *m porte AND* ==> *m* fissa un limite al numero di *mintermini* esprimibili
     + *o porte OR*  ==> *o* fissa un limite al numero di funzioni differenti in forma canonica *SP*
-      
+
+    [[../../.img/pla2.png]]
+
+    [[../../.img/pla3.png]]
+
 * ROM
   Memoria usabili anche per implementare, in maniera non minima, funzioni logiche arbitrarie
 
-  - *ROM* (Read Only Memory)
+  + *ROM* (Read Only Memory)
     - *PROM* (Programmable ROM)
       -Scrivibile solo una volta
     - *EPROM* (Erasable PROM)
@@ -84,3 +117,5 @@
   + Singola colonna della *ROM*
   + Funzioni *Fully Encoded*
   + *PLA* più efficiente
+
+    [[../../.img/rom.png]]

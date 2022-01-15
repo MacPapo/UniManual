@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Progetto CPU a singolo ciclo</title>
-<!-- 2022-01-09 Sun 23:39 -->
+<!-- 2022-01-15 Sat 17:32 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -203,18 +229,19 @@ $(function() {
 <li><a href="#sec-2">2. Passi di progetto</a></li>
 <li><a href="#sec-3">3. Implementazione generica a singolo ciclo</a></li>
 <li><a href="#sec-4">4. Incremento del PC</a></li>
-<li><a href="#sec-5">5. Controllo a singolo ciclo</a></li>
-<li><a href="#sec-6">6. Determiniamo il ciclo di clock per LW</a></li>
-<li><a href="#sec-7">7. Problemi con il singolo ciclo</a>
-<ul class="nav">
-<li><a href="#sec-7-1">7.1. Controllo ALU</a></li>
-</ul>
-</li>
-<li><a href="#sec-8">8. Ciclo fisso vs variabile</a></li>
+<li><a href="#sec-5">5. Calcolo dell&rsquo;indirizzo di Branch</a></li>
+<li><a href="#sec-6">6. Controllo ALU</a></li>
+<li><a href="#sec-7">7. Datapath esteso per l&rsquo;esecuzione delle Jump</a></li>
+<li><a href="#sec-8">8. Componenti CPU (Datapath + Control) e Memoria</a></li>
+<li><a href="#sec-9">9. Controllo a singolo ciclo</a></li>
+<li><a href="#sec-10">10. Determiniamo il ciclo di clock per LW</a></li>
+<li><a href="#sec-11">11. Problemi con il singolo ciclo</a></li>
+<li><a href="#sec-12">12. Ciclo fisso vs variabile</a></li>
 </ul>
 </div>
 </nav>
 </div><div class="col-md-9 col-md-pull-3"><h1 class="title">Progetto CPU a singolo ciclo</h1>
+
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Processore: Datapath &amp; Control</h2>
@@ -237,6 +264,12 @@ in grado di eseguire solo:
 <div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Formati delle istruzioni</h3>
 <div class="outline-text-3" id="text-1-1">
+
+<figure>
+<p><img src="../../.img/type.png" class="img-responsive" alt="type.png">
+</p>
+</figure>
+
 <ul class="org-ul">
 <li>R-type:
 <ul class="org-ul">
@@ -296,6 +329,19 @@ in grado di eseguire solo:
 <li><b>target address</b>: indirizzo target di un&rsquo;istruzione di jump
 </li>
 </ul>
+
+
+
+<figure>
+<p><img src="../../.img/type2.png" class="img-responsive" alt="type2.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/type3.png" class="img-responsive" alt="type3.png">
+</p>
+</figure>
 </div>
 </div>
 </div>
@@ -305,11 +351,11 @@ in grado di eseguire solo:
 <h2 id="sec-2"><span class="section-number-2">2</span> Passi di progetto</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
-<li>Analizzare il set di istruzioni =&gt; verificare i requisiti del datapath
+<li>Analizzare il set di istruzioni \(\rightarrow\) verificare i requisiti del datapath
 <ul class="org-ul">
 <li>Il Datapath deve includere gli elementi di memoria corrispondenti ai registri dell&rsquo;<b>ISA</b>
 <ul class="org-ul">
-<li>Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l&rsquo;<b>ISA</b> ==&gt; es. <b>PC( Program counter )</b>
+<li>Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l&rsquo;<b>ISA</b> \(\rightarrow\) es. <b>PC( Program counter )</b>
 </li>
 </ul>
 </li>
@@ -359,8 +405,20 @@ in grado di eseguire solo:
 </ol>
 
 <p>
-=&gt; l&rsquo;ALU, il Register File, il PC dovranno far parte del Datapath
+\(\rightarrow\) l&rsquo;ALU, il Register File, il PC dovranno far parte del Datapath
 </p>
+
+
+<figure>
+<p><img src="../../.img/rtl.png" class="img-responsive" alt="rtl.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/imp.png" class="img-responsive" alt="imp.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -370,6 +428,12 @@ in grado di eseguire solo:
 <p>
 Addizionatore aggiuntivo
 </p>
+
+
+<figure>
+<p><img src="../../.img/pc.png" class="img-responsive" alt="pc.png">
+</p>
+</figure>
 
 <ul class="org-ul">
 <li>Necessario per realizzare, all&rsquo;interno dello steso ciclo di clock
@@ -396,13 +460,184 @@ Dove abbiamo risorse <b>replicate</b>
 </ul>
 </li>
 </ul>
-</div>
-</div>
 
+
+<figure>
+<p><img src="../../.img/pc2.png" class="img-responsive" alt="pc2.png">
+</p>
+</figure>
+</div>
+</div>
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Controllo a singolo ciclo</h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> Calcolo dell&rsquo;indirizzo di Branch</h2>
 <div class="outline-text-2" id="text-5">
+<p>
+Ulteriore addizionatore \(\rightarrow\) ancora risorse replicate
+</p>
+
+<ul class="org-ul">
+<li>necessario per realizzare il calcolo dell&rsquo;indirizzo di salto di branch
+
+
+<figure>
+<p><img src="../../.img/pc3.png" class="img-responsive" alt="pc3.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/pc4.png" class="img-responsive" alt="pc4.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/pc5.png" class="img-responsive" alt="pc5.png">
+</p>
+</figure>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Controllo ALU</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Dobbiamo definire il circuito di controllo per calcolare i <b>4bit di controllo dell&rsquo;ALU</b> (<b>operation</b>) da assegnare come segue in base al tipo di istruzione, ovvero ai campi <b>op</b> e <b>funct</b> dell&rsquo;istruzione
+</p>
+
+
+<figure>
+<p><img src="../../.img/is.png" class="img-responsive" alt="is.png">
+</p>
+</figure>
+
+<ul class="org-ul">
+<li>Il circuito sarà a 2 livelli
+<ul class="org-ul">
+<li>Il primo livello calcolerà \(ALUOp = ( ALUOp_{1} \; ALUOp_{0} )\) in base all&rsquo;<b>op</b> code
+</li>
+<li>Il secondo livello calcolerà effettivamente <b>operation</b> in base al campo <b>funct</b> e a <b>ALUOp</b>
+</li>
+</ul>
+</li>
+
+<li>Il circuito di primo livello dovrà semplicemente definire la configurazione dei bit \((ALUOp_{1} \; ALUOp_{0})\) sulla base di <b>op</b>
+
+
+<figure>
+<p><img src="../../.img/ctrl.png" class="img-responsive" alt="ctrl.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/ctrl2.png" class="img-responsive" alt="ctrl2.png">
+</p>
+</figure>
+</li>
+
+<li>Definiamo ora la tabella di verità che sulla base di <b>ALUOp</b> e <b>funct</b> determina i 3 bit del controllo dell&rsquo;ALU (<b>operation</b>)
+</li>
+</ul>
+
+
+<figure>
+<p><img src="../../.img/ctrl3.png" class="img-responsive" alt="ctrl3.png">
+</p>
+</figure>
+
+<ul class="org-ul">
+<li>A partire dalla tabella qui sopra possiamo definire il circuito <b>ALUControl</b> per il calcolo di <b>Operation</b>
+
+<ul class="org-ul">
+<li>Operation 0
+<img src="../../.img/op0.png" class="img-responsive" alt="op0.png">
+</li>
+
+<li>Operation 1
+<img src="../../.img/op1.png" class="img-responsive" alt="op1.png">
+</li>
+
+<li>Operation 2
+<img src="../../.img/op2.png" class="img-responsive" alt="op2.png">
+</li>
+
+<li>Operation 3
+<img src="../../.img/op3.png" class="img-responsive" alt="op3.png">
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+<figure>
+<p><img src="../../.img/dc.png" class="img-responsive" alt="dc.png">
+</p>
+</figure>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Datapath esteso per l&rsquo;esecuzione delle Jump</h2>
+<div class="outline-text-2" id="text-7">
+
+<figure>
+<p><img src="../../.img/dj.png" class="img-responsive" alt="dj.png">
+</p>
+</figure>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Componenti CPU (Datapath + Control) e Memoria</h2>
+<div class="outline-text-2" id="text-8">
+
+<figure>
+<p><img src="../../.img/cp.png" class="img-responsive" alt="cp.png">
+</p>
+</figure>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Controllo a singolo ciclo</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Il controllo per la realizzazione a singolo ciclo è molto semplice
+</p>
+
+<ul class="org-ul">
+<li>Definito da una coppia di tabelle di verità
+</li>
+<li>Circuito <b>combinatorio</b>
+</li>
+</ul>
+
+<p>
+Il circuito principale si basa sul <b>codice dell&rsquo;operazione</b> da eseguire
+<img src="../../.img/cts.png" class="img-responsive" alt="cts.png">
+</p>
+
+<p>
+Il controllo secondario determina l&rsquo;ingresso all&rsquo;ALU, ovvero il segnale <b>Operation</b>
+</p>
+
+
+<figure>
+<p><img src="../../.img/cts2.png" class="img-responsive" alt="cts2.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/cts3.png" class="img-responsive" alt="cts3.png">
+</p>
+</figure>
+
 <p>
 Il controllo della CPU a singolo ciclo è <b>combinatorio</b>
 Il <b>Datapath</b> è invece sequenziale
@@ -450,9 +685,15 @@ Ciclo di clock determinato sulla base del cammino più lungo che i segnali elett
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Determiniamo il ciclo di clock per LW</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Determiniamo il ciclo di clock per LW</h2>
+<div class="outline-text-2" id="text-10">
+
+<figure>
+<p><img src="../../.img/clw.png" class="img-responsive" alt="clw.png">
+</p>
+</figure>
+
 <p>
 Ipotiziamo i costi in ns per le varie componenti
 </p>
@@ -479,9 +720,9 @@ Consideriamo l&rsquo;istruzione <b>LW</b>, che abbiamo detto essere la più cost
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Problemi con il singolo ciclo</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> Problemi con il singolo ciclo</h2>
+<div class="outline-text-2" id="text-11">
 <p>
 Il ciclo singolo e di lunghezza fissa <b>penalizza le istruzioni veloci</b>
 </p>
@@ -492,75 +733,20 @@ con i seguenti vantaggi:
 </p>
 <ul class="org-ul">
 <li>Istruzioni diverse dalla <b>LW</b> eseguite in un tempo &lt; 8 ns, mentre se il ciclo è fisso sarebbero sempre necessari 8 ns
-</li>
-</ul>
-</div>
 
-<div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Controllo ALU</h3>
-<div class="outline-text-3" id="text-7-1">
-<p>
-Dobbiamo definire il circuito che definisce i <b>4-bit di controllo</b> dell&rsquo;ALU (operation) da assegnare in base al
-tipo di istruzione, ovvero basandosi sui campi <b>op</b> e <b>funct</b>:
-</p>
-<ul class="org-ul">
-<li>0000 operazione di and
-</li>
-<li>0001 operazione di or
-</li>
-<li>0010 operazione di add, lw, sw
-</li>
-<li>0110 operazione di sub e beq
-</li>
-<li>0111 operazione di slt
-</li>
-</ul>
 
-<p>
-Il circuito sarà a due livelli:
+<figure>
+<p><img src="../../.img/pb.png" class="img-responsive" alt="pb.png">
 </p>
-<ol class="org-ol">
-<li>1° livello calcolerà ALUOp (ALUOp0 ALUOp1) in base all&rsquo;<b>op</b> code
-</li>
-<li>2° livello calcolerà affettivamente Operation in base al campo funct e ALUOp
-</li>
-</ol>
-
-<p>
-Il circuito di 1° livello dovrà semplicemente definire la configurazione dei bit (ALUOp1 ALUOp0) sulla base di op:
-</p>
-<ul class="org-ul">
-<li>00 se lw, sw (Operation=0010) (somma)
-</li>
-<li>01 se beq (Operation=0110) (sottrazione)
-</li>
-<li>10 se arithmetic/logic (Operation dipende dalla specifica istruzione definita dai bit nel funct)
-</li>
-</ul>
-
-<p>
-Definiamo ora la tabella di verità che sulla base di ALUOp e funct determina i 3 bit del controllo dell’ALU:
-</p>
-<ul class="org-ul">
-<li>Operation0 = (F3 or F0) and ALUOp1
-</li>
-<li>Operation1 = ~F2 or ~ALUOp1
-</li>
-<li>Operation2 = (F1 and ALUOp1) or AluOp0
-</li>
-<li>Operation3 è sempre a 0
+</figure>
 </li>
 </ul>
 </div>
 </div>
-</div>
 
-
-
-
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Ciclo fisso vs variabile</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Ciclo fisso vs variabile</h2>
+<div class="outline-text-2" id="text-12">
 <p>
 Si consideri di conoscere che in un generico programma, le istruzioni sono combinate in accordo a questo mix:
 </p>
@@ -581,7 +767,7 @@ Si consideri di conoscere che in un generico programma, le istruzioni sono combi
 Quale è la lunghezza media ( <b>periodo medio</b> ) del ciclo di clock nell&rsquo;implementazione a ciclo variabile?
 </p>
 <ul class="org-ul">
-<li><b>Periodo medio</b> = 800 x 24% + 700 x 12% + 600 x 44% + 500 x 18% + 200 x 2% = 630 ps
+<li><b>Periodo medio</b> = \(800 \times 24% + 700 \times 12% + 600 \times 44% + 500 \times 18% + 200 \times 2% = 630\) ps
 </li>
 </ul>
 
@@ -590,14 +776,14 @@ Le prestazioni della CPU sono calcolabili rispetto a NI ( Numero Istruzioni eseg
 </p>
 
 <ul class="org-ul">
-<li>T_var = NI x periodo = NI x 630 ( variabile )
+<li>\(T_{var} = NI \times periodo = NI \times 630\) ( variabile )
 </li>
-<li>T_fisso = NI x periodo = NI x 800 ( fisso )
+<li>\(T_{fisso} = NI \times periodo = NI \times 800\) ( fisso )
 </li>
 </ul>
 
 <p>
-Facendo il rapporto: T_fisso / T_var = 800 / 630 = 1.27
+Facendo il rapporto: \(T_{fisso} / T_{var} = 800 / 630 = 1.27\)
 </p>
 
 <p>
@@ -612,8 +798,8 @@ Se consideriamo istruzioni più complesse della <b>LW</b>, come leistruzioni <b>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-09 Sun 23:39</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+<p class="date">Created: 2022-01-15 Sat 17:32</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

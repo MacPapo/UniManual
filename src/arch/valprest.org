@@ -2,7 +2,6 @@
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 
-
 L'approccio *RISC* ha semplificato l'*ISA*, ma ha anche portato
 - Sviluppo di tecniche di ottimizzazione molto spinte
 - Nuova sensibilità per analisi più quantitative delle prestazioni dei sistemi
@@ -20,11 +19,13 @@ L'approccio *RISC* ha semplificato l'*ISA*, ma ha anche portato
 *** Tempo di CPU
 - Vogliamo distinguere rispetto ai tempi spesi per I/O e multiprogrammazione
   - ES: comando *UNIX* *time* ( time <prog> )
-    + User CPU time: 90.7u ==> Execution time
+    + User CPU time: 90.7u $\times$ Execution time
     + System CPU time: 12.9s
     + Elapsed time: 2:39
-    + 100 x (90.7 + 12.9) / 159 = 63%
+    + $100 \times (90.7 + 12.9) / 159 = 63%$
+
 **  Throughput ( Banda di elaborazione )
+
 - Quanti job possono essere eseguiti assieme su una macchina?
 - Qual è il tempo di esecuzione media?
 - Quanto lavoro viene completato in un certo tempo?
@@ -36,13 +37,13 @@ Il termine *performance* è sinonimo di *Troughput* ed è usato come misura gene
 Il *tempo di risposta = tempo attesa in coda + tempo di esecuzione*
 
 * Performance, Execution time, Speedup
-Misuriamo il tempo di esecuzione (user CPU time) di un programmma su una macchina X: *Execution time_x
+Misuriamo il tempo di esecuzione (user CPU time) di un programmma su una macchina X: $ExecutionTime_x$
 
 Definiamo la Performance (troughput) come:
-- Performance_x = 1 / Execution time_x
+- $Performance_x = 1 / Execution time_x$
 
 Se la macchina X è più veloce di Y ad eseguire il programma
-- Speedup = Execution time_y / Execution time_x = Performance_x / Performance_y = n
+- $Speedup = Execution time_y / Execution time_x = Performance_x / Performance_y = n$
 
 - X è n volte più veloce di Y
 
@@ -55,14 +56,12 @@ CPU time ( in sec. ) = numero di cicli x T (periodo del ciclo di clock in sec.)
 
 ** Clock rate
 Clock rate (frequenza) = cicli al secondo (1 Hz = 1 cycle/sec)
-+ Freq = 1/T ( dove T è il periodo del ciclo di clock )
-+ T = 1/Freq (sec)
++ $Freq = 1/T$ ( dove T è il periodo del ciclo di clock )
++ $T = 1/Freq$ (sec)
 
-  #+BEGIN_EXAMPLE
-  Un clock a 200 Mhz (200 x 10^6 Hz) ha un periodo T di clock uguale a
+  Un clock a 200 Mhz ($200 x 10^6$ Hz) ha un periodo T di clock uguale a
 
-  (1/200 x 10^6) x 10^9 = 5 nanosecondi
-  #+END_EXAMPLE
+  $(1/200 \times 10^6) \times 10^9 = 5$ nanosecondi
 
   Conoscendo il numero di cicli per l'esecuzione di un programma e la frequenza del clock:
 
@@ -90,11 +89,11 @@ Per migliorare le prestazioni possiamo
 
 Per l'esecuzione di un programma (CPU time) sono necessari
 
-- Un certo # di istruzioni macchina ==> IC (Instruction Count)
-- Un certo # di cicli ==> numero di Cicli
-- Un certo numero di secondi ==> T_exe
+- Un certo # di istruzioni macchina $\rightarrow$ IC (Instruction Count)
+- Un certo # di cicli $\rightarrow$ numero di Cicli
+- Un certo numero di secondi $\rightarrow T_{exe}$
 
-Se non conosciamo T_exe ma conosciamo num di cicli, possiamo ricavare T_exe sulla base di
+Se non conosciamo $T_{exe}$ ma conosciamo num di cicli, possiamo ricavare $T_{exe}$ sulla base di
 - Periodo clock o cycle time (secondi per ciclo)
 - Frequenza o clock rate (cicli per secondi)
 
@@ -102,7 +101,7 @@ Possiamo ricavare delle misure medie
 + *CPI* (cicli per istruzione) = num cicli / IC
   - Nota che il numero totale di cicli ( num cicli ) può essere ricavato sulla base di IC e CPI
   - Un'applicazioni FP-intensive potrebbe avere un CPI più alto della media!
-+ MIPS (milioni di istruzioni per secondo) = IC/(T_exe x 10^6)
++ *MIPS* (milioni di istruzioni per secondo) = $IC/(T_{exe} \times 10^6)$
 
 * Tempo di esecuzione e altre misure
 Siamo interessati al tempo di esecuzione ( user CPU time )!!
@@ -116,10 +115,9 @@ Le altre misure, prese singolarmente, potrebbero portarci a *conclusioni errate*
 - Num medio di istruzioni eseguite per secondo (es. *MIPS*)
 
 * I Benchmark
-Per misurare le prestazioni, è meglio eseguire applicazioni reali
-
-spesso si usano programmi che rappresentano classi di applicazioni
-come :
+Per misurare le prestazioni, è meglio eseguire applicazioni.
+Spesso si usano programmi che rappresentano classi di applicazioni
+come:
 - compilatori/editor
 - Applicazioni scientifiche
 - Grafica
@@ -141,12 +139,9 @@ Abbiamo bisogno di un indice complessivo rispetto alle prestazioni misurate per 
 *** Media Aritmetica (pesata)
 Media aritmetica pesata dei tempi di esecuzione dei vari programmi su una certa macchina
 
-[inserire latex]
-
 *** Media geometrica (pesata)
 Media geometrica pesata ancora dei tempi di esecuzione
 
-[inserire latex]
 
 ** SPECint e SPECfp
 SPECint e SPECfp fanno rispettivamente riferimento all'esecuzione del mix di programmi (interni o a virgola mobile) per l'elaborazione interna o FP
@@ -154,25 +149,26 @@ SPECint e SPECfp fanno rispettivamente riferimento all'esecuzione del mix di pro
 Gli indici SPEC danno un'indicazione complessiva del comportamento del mix di programmi su una data piattaforma
 
 * Legge di Amdahl
+
 Questa semplice legge fissa un limite agli incrementi di prestazioni ottenibili (*SPEEDUP*) quando introduciamo delle ottimizzazioni
 
-- 1/s T_exe ==> frazione di T_exe non modificata dalle ottimizzazioni
-- (1-1/s)T_exe ==> frazione di T_exe ridotta tramite le ottimizzazioni
-- n  ==> fattore del miglioramento ottenuto tramite le ottimizzazioni
+- $1/s \cdot T_{exe} \rightarrow$ frazione di T_exe non modificata dalle ottimizzazioni
+- $(1 - 1/s) \cdot T_{exe} \rightarrow$ frazione di T_exe ridotta tramite le ottimizzazioni
+- $n \rightarrow$ fattore del miglioramento ottenuto tramite le ottimizzazioni
 
-+ T_ott = 1/s T_exe + ((1 - 1/s)T_exe )/n
++ $T_{ott} = 1/s \cdot T_{exe} + ((1 - 1/s) \cdot T_{exe} )/n$
 
 La legge di Amdahl fissa un limite allo speedup massimo ottenibile
 - Se l'ottimizzazione è molto costante, n diventa molto grande, per cui possiamo approssimare
 
-  T_ott ~= 1/s T_exe
+  $T_{ott} \cong 1/s \cdot T_{exe}$
 
 - Il massimo Speedup ottenibile (per n molto grande)
 
-  Speedup_max = T_exe / (1/s T_exe) = s
+  $Speedup_{max} = T_{exe} / (1/s \cdot T_{exe}) = s$
 
 Corollario alla legge di Amdahl (motivazione CPU RISC)
-È meglio rendere più veloci i casi più comuni (es. istruzioni più usate, per la cui esecuzione si impiega la maggior parte di T_exe)
+È meglio rendere più veloci i casi più comuni (es. istruzioni più usate, per la cui esecuzione si impiega la maggior parte di $T_{exe}$)
 
 * Considerazioni finali
 La misura delle prestazioni su una data piattaforma è significativa
@@ -189,7 +185,7 @@ Rispetto ad una data ISA gli incrementi delle prestazioni derivano da :
   - CPI = 1
   - Ciclo di clock (periodo) = 800 ps
     - Calcolato sulla base dell'istruzione più "costosa": *lw*
-  - T_exe = IC x CPI x Periodo_clock = IC x 800 ps
+  - $T_{exe} = IC \times CPI \times Periodo_{clock} = IC \times 800 ps$
 
 
 *** Multi ciclo
@@ -202,5 +198,5 @@ necessario conoscere la frequenza delle varie istruzioni
 - *jump CPI_4 = 3* presenti nel *2% IC*
 
 
-+ *CPI_avg = 0.22 CPI_0 + 0.11 CPI_1 + 0.49 CPI_2 + 0.16 CPI_3 + 0.02 CPI_4 = 0.22 x 5 + 0.11 x 4 + 0.49 x 4 + 0.16 x 3 + 0.02 x 3 = 4.04
-+ T_exe = IC x CPI_avg x Periodo_clock = IC x 4.04 x 200 ps = IC x 808 ps
++ $CPI_{avg} = 0.22 CPI_{0} + 0.11 CPI_{1} + 0.49 {CPI_2} + 0.16 CPI_{3} + 0.02 CPI_{4} = 0.22 \times 5 + 0.11 \times 4 + 0.49 \times 4 + 0.16 \times 3 + 0.02 \times 3 = 4.04$
++ $T_{exe} = IC \times CPI_{avg} \times Periodo_{clock} = IC \times 4.04 \times 200 ps = IC \times 808 ps$

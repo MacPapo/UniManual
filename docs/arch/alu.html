@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Circuiti combinatori: ALU</title>
-<!-- 2022-01-08 Sat 14:29 -->
+<!-- 2022-01-15 Sat 13:23 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -202,31 +228,32 @@ $(function() {
 </ul>
 </li>
 <li><a href="#sec-2">2. Implementazione NOR</a></li>
-<li><a href="#sec-3">3. 1-bit ALU per il bit più significativo</a></li>
-<li><a href="#sec-4">4. ALU complessiva</a>
+<li><a href="#sec-3">3. Istruzioni di confronto</a></li>
+<li><a href="#sec-4">4. 1-bit ALU per il bit più significativo</a></li>
+<li><a href="#sec-5">5. ALU complessiva</a>
 <ul class="nav">
-<li><a href="#sec-4-1">4.1. Segnali di controllo</a></li>
+<li><a href="#sec-5-1">5.1. Segnali di controllo</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. SLT e OVERFLOW</a></li>
-<li><a href="#sec-6">6. Circuito per SLT</a></li>
-<li><a href="#sec-7">7. ALU FINALE</a>
+<li><a href="#sec-6">6. SLT e OVERFLOW</a></li>
+<li><a href="#sec-7">7. Circuito per SLT</a></li>
+<li><a href="#sec-8">8. ALU FINALE</a>
 <ul class="nav">
-<li><a href="#sec-7-1">7.1. Simboli usati per per rappresentare la ALU nella CPU</a></li>
+<li><a href="#sec-8-1">8.1. Simboli usati per per rappresentare la ALU nella CPU</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8. ALU e Somma veloce</a></li>
+<li><a href="#sec-9">9. ALU e Somma veloce</a></li>
 </ul>
 </div>
 </nav>
 </div><div class="col-md-9 col-md-pull-3"><h1 class="title">Circuiti combinatori: ALU</h1>
 
+
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Alu</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<b>Arithmetic Logic Unit</b>
-È un circuito combinatorio all&rsquo;interno del processore per l&rsquo;esecuzione di
+<b>Arithmetic Logic Unit</b> è un circuito combinatorio all&rsquo;interno del processore per l&rsquo;esecuzione di
 <b>istruzioni macchina</b> di tipo <b>aritmetico/logiche</b>
 </p>
 
@@ -276,13 +303,19 @@ L&rsquo;ALU deve includere un addizionatore per realizzare le somme di numeri in
 Circuito combinatorio che implementa un addizionatore a <b>n</b> bit
 </p>
 <ul class="org-ul">
-<li>Dati <b>2 x n</b> input:  A_n-1 &#x2026; A_0  B_n-1 &#x2026; B_0
+<li>Dati <b>2 x n</b> input:  \(A_n-1\; ...\; A_0\;  B_n-1\; ...\; B_0\)
 </li>
-<li><b>n + 1</b> diverse funzioni di output: <b>Rip C_n-1</b> &#x2026; C_0
+<li><b>n + 1</b> diverse funzioni di output: \(Rip\; C_{n-1}\;  ...\; C_0\)
 </li>
 <li>Solo due livelli di logica, ma con porte <b>AND</b> e <b>OR</b> con molti input
 <ul class="org-ul">
 <li><b>Fan-in</b> delle porte molto elevato (non ammissibile)
+
+
+<figure>
+<p><img src="../../.img/add.png" class="img-responsive" alt="add.png">
+</p>
+</figure>
 </li>
 </ul>
 </li>
@@ -302,8 +335,13 @@ Soluzione di compromesso, basato su una serie di <b>1-bit adder</b> collegati in
 
 <p>
 La tabella di verità dell&rsquo;addizionatore a singolo bit
-[Inserire tabella]
 </p>
+
+
+<figure>
+<p><img src="../../.img/adde.png" class="img-responsive" alt="adde.png">
+</p>
+</figure>
 
 <p>
 La funzione <b>SUM</b> non può essere semplificata
@@ -341,6 +379,18 @@ Visto che la somma tra una coppia di bit <b>A</b> e <b>B</b> si esprime con <b>A
 <li><b>SUM = (A xor B) xor RIP</b>
 </li>
 <li><b>RIP_OUT = A B + (A xor B) RIP</b>
+
+
+<figure>
+<p><img src="../../.img/xor.png" class="img-responsive" alt="xor.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/xor2.png" class="img-responsive" alt="xor2.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -366,7 +416,7 @@ del multiplexer deve uscire
 </li>
 </ul>
 </li>
-<li><b>l&rsquo;ALU</b> è la tipica componente che fa parte dek <b>DATAPATH (Parte operativa)</b> del processore
+<li><b>l&rsquo;ALU</b> è la tipica componente che fa parte del <b>DATAPATH (Parte operativa)</b> del processore
 </li>
 <li>La <b>Parte Controllo</b> comanda l&rsquo;esecuzione delle varie istruzioni
 <ul class="org-ul">
@@ -375,6 +425,12 @@ del multiplexer deve uscire
 </ul>
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/1balu.png" class="img-responsive" alt="1balu.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -387,6 +443,12 @@ Segnali di controllo per determinare l&rsquo;operazione che l&rsquo;ALU deve ese
 </p>
 <ul class="org-ul">
 <li><b>OPERATION</b>: propagato a tutte le 1-bit ALU
+
+
+<figure>
+<p><img src="../../.img/32bitalu.png" class="img-responsive" alt="32bitalu.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -422,6 +484,12 @@ Operazione di sottrazione:
 </ul>
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/inve.png" class="img-responsive" alt="inve.png">
+</p>
+</figure>
 </div>
 </div>
 </div>
@@ -435,13 +503,20 @@ le porte già presenti invece di introdurre una nuova porta
 </p>
 
 <p>
-<b>a NOR b = NOT (a + b) = deMorgan</b>
+\(\\a\; NOR\; b = NOT\; (a + b) = deMorgan\\\)
+\(\\(NOT\; a)\; AND\; (NOT\; b)\\\)
 </p>
 
 <p>
-<b>(NOT a) AND (NOT b)</b>
+<img src="../../.img/tnor.png" class="img-responsive" alt="tnor.png">
+<img src="../../.img/nor2.png" class="img-responsive" alt="nor2.png">
 </p>
+</div>
+</div>
 
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Istruzioni di confronto</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 slt $2, $3, $4 (set less than)
 </p>
@@ -475,15 +550,20 @@ Tutte le <b>1-bit ALU</b> devono quindi avere un <b>ingresso in più</b>
 </p>
 <ul class="org-ul">
 <li>L&rsquo;input <b>LESS</b>, che verrà posto a 0 o a 1 sulla base del risultato dell&rsquo;istruzione <b>slt</b>
+
+
+<figure>
+<p><img src="../../.img/conf.png" class="img-responsive" alt="conf.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
 </div>
 
-
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> 1-bit ALU per il bit più significativo</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> 1-bit ALU per il bit più significativo</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 La 1-bit ALU che determina la cifra più significativa è più complessa poichè
 </p>
@@ -512,12 +592,18 @@ Il blocco che controlla l&rsquo;overflow lo fa sulla base
 <li>Il segno del risultato
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/sin.png" class="img-responsive" alt="sin.png">
+</p>
+</figure>
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> ALU complessiva</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> ALU complessiva</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 Output <b>set</b> dell&rsquo;ultima 1-bit ALU viene ridiretto sull&rsquo;input <b>LESS</b> della prima 1-bit ALU
 </p>
@@ -525,35 +611,45 @@ Output <b>set</b> dell&rsquo;ultima 1-bit ALU viene ridiretto sull&rsquo;input <
 <p>
 Tutti i bit <b>LESS</b> delle varie 1-bit ALU (eccetto la prima) vengono posti a 0
 </p>
+
+
+<figure>
+<p><img src="../../.img/aluc.png" class="img-responsive" alt="aluc.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/taluc.png" class="img-responsive" alt="taluc.png">
+</p>
+</figure>
 </div>
 
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Segnali di controllo</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li><b>Binvert e CarryIn</b>
 
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Segnali di controllo</h3>
-<div class="outline-text-3" id="text-4-1">
-</div><div id="outline-container-sec-4-1-1" class="outline-4">
-<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> Binvert e CarryIn</h4>
-<div class="outline-text-4" id="text-4-1-1">
 <p>
 Vengono entrambi <b>asserted</b> (affermati) per sottrarre (<b>sub</b> e <b>slt</b>)
 </p>
-</div>
-</div>
+</li>
 
-<div id="outline-container-sec-4-1-2" class="outline-4">
-<h4 id="sec-4-1-2"><span class="section-number-4">4.1.2</span> Bit di Operation</h4>
-<div class="outline-text-4" id="text-4-1-2">
+<li><b>Bit di Operation</b>
+
 <p>
 I bit di Operation sono posti a 11 per far passare in output l&rsquo;ultimo bit in ingresso ai <b>Multiplexer 4:1</b>
 </p>
-</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> SLT e OVERFLOW</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> SLT e OVERFLOW</h2>
+<div class="outline-text-2" id="text-6">
 <p>
 Il circuito proposto per implementare l&rsquo;ultima 1-bit ALU della catena potrebbe <b>NON FUNZIONARE</b> per
 il <b>slt</b> nel caso di overflow non è ottimale per quanto riguarda l&rsquo;overflow
@@ -564,15 +660,17 @@ Caso di malfunzionamento relativo a <b>slt</b>:  <b>slt X2, X3, X4</b>
 </p>
 
 <p>
-se X3 &gt; 0 e X4 &lt; 0
+se \(X3 > 0\) e \(X4 < 0\)
 </p>
 <ul class="org-ul">
-<li>potremmo concludere direttamente che è vero che X3 &gt; X4 ==&gt; X2 = 0
+<li>potremmo concludere direttamente che è vero che
+\(X3 > X4 \longrightarrow X2 = 0\)
 </li>
 </ul>
 
 <p>
-Se invece <b>sottraiamo</b> per implementare <b>slt</b>, finiamo per sommare due numeri positivi (<b>X3 + (-X4)</b>)
+Se invece <b>sottraiamo</b> per implementare <b>slt</b>, finiamo per sommare due numeri positivi
+\((X3 + (-X4))\)
 </p>
 <ul class="org-ul">
 <li>potremmo avere <b>overflow</b>, ottenendo così un bit di segno (<b>SET</b>) non valido
@@ -581,25 +679,26 @@ Se invece <b>sottraiamo</b> per implementare <b>slt</b>, finiamo per sommare due
 </ul>
 
 <p>
-Un ragionamento analogo può essere fatto nel caso in cui X3 &lt; 0 e X4 &gt; 0
+Un ragionamento analogo può essere fatto nel caso in cui
+\(X3 < 0\) e \(X4 > 0\)
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Circuito per SLT</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Circuito per SLT</h2>
+<div class="outline-text-2" id="text-7">
 <p>
 <b>Set</b> deve essere determinato in modo da evitare il malfunzionamento precedente,
 relativo a un overflow non voluto
 Siano
 </p>
 <ul class="org-ul">
-<li><b>a = a_31 &#x2026; a_0</b> e <b>b = b_31 &#x2026; b_0</b> i due numeri da confrontare
+<li>\(a = a_31\; ...\; a_0\;\) e \(b = b_31\; ...\; b_0*\) i due numeri da confrontare
 </li>
-<li><b>res = res_31 &#x2026; res_0</b> il risultato degli 1-bit <b>adder</b>
+<li>\(res = res_31\; ...\; res_0\) il risultato degli 1-bit <b>adder</b>
 </li>
-<li><b>c = c_31 &#x2026; c_0</b> il risultato della ALU, che potrà solo essere:
+<li>\(c = c_31\; ...\; c_0\) il risultato della ALU, che potrà solo essere:
 <ul class="org-ul">
 <li>0&#x2026;..01 oppure 0&#x2026;.00
 </li>
@@ -607,9 +706,10 @@ Siano
 </li>
 </ul>
 
+
 <p>
-Se <b>a &gt;= 0</b> e <b>b &lt; 0</b>, allora <b>a &gt; b</b>, e possiamo porre direttamente <b>Set = 0</b>
-Se <b>a &lt; 0</b> e <b>b &gt;= 0</b>, allora <b>a &lt; b</b>, e possiamo porre direttamente <b>set = 1</b>
+Se \(a \geq 0\) e \(b < 0\), allora \(a > b\), e possiamo porre direttamente <b>Set = 0</b>
+Se \(a < 0\) e \(b \leq 0\), allora \(a < b\), e possiamo porre direttamente <b>Set = 1</b>
 </p>
 <ul class="org-ul">
 <li>Nei 2 casi di sopra, all&rsquo;ALU viene comandato di eseguire una sottrazione, ma l&rsquo;eventuale
@@ -618,20 +718,26 @@ Se <b>a &lt; 0</b> e <b>b &gt;= 0</b>, allora <b>a &lt; b</b>, e possiamo porre 
 </ul>
 
 <p>
-Se <b>a &gt; 0</b> e <b>b &gt; 0</b>, oppure se <b>a &lt; 0</b> e <b>b &lt; 0</b>, allora
+Se \(a > 0\) e \(b > 0\), oppure se \(a < 0\) e \(b < 0\), allora
 </p>
 <ul class="org-ul">
 <li>Possiamo considerare il risultato della sottrazione, e possiamo porre <b>SET = res_31</b>
 </li>
 <li>In questi casi <b>non</b> si può verificare <b>OVERFLOW</b>, per cui <b>res_31</b>, conterrà il bit di segno corretto
+
+
+<figure>
+<p><img src="../../.img/slt.png" class="img-responsive" alt="slt.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> ALU FINALE</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> ALU FINALE</h2>
+<div class="outline-text-2" id="text-8">
 <p>
 Abbiamo risparmiato un bit di controllo
 </p>
@@ -659,35 +765,42 @@ Abbiamo ulteriormente specializzato l&rsquo;ALU per l&rsquo;esecuzione delle ist
 </li>
 </ul>
 </li>
-<li>Zero = 1 &lt;==&gt; a - b == 0 (a = b)
+<li>Zero = \(1 \iff a - b = 0 \cdot (a = b)\)
+
+
+<figure>
+<p><img src="../../.img/aluf.png" class="img-responsive" alt="aluf.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
 
-
-<div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Simboli usati per per rappresentare la ALU nella CPU</h3>
-<div class="outline-text-3" id="text-7-1">
-</div><div id="outline-container-sec-7-1-1" class="outline-4">
-<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> ALU operation</h4>
-<div class="outline-text-4" id="text-7-1-1">
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Simboli usati per per rappresentare la ALU nella CPU</h3>
+<div class="outline-text-3" id="text-8-1">
+</div><div id="outline-container-sec-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> ALU operation</h4>
+<div class="outline-text-4" id="text-8-1-1">
 <p>
 comprende i segnali di controllo <b>Anegate</b>, <b>Bnegate</b> e <b>Operation</b>
 Gli ingressi a, b e l&rsquo;uscita <b>RESULT</b> sono a 32bit.
 </p>
 
-<p>
-[Inserire tabella]
+
+<figure>
+<p><img src="../../.img/calu.png" class="img-responsive" alt="calu.png">
 </p>
+</figure>
 </div>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> ALU e Somma veloce</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> ALU e Somma veloce</h2>
+<div class="outline-text-2" id="text-9">
 <p>
 Considerazioni sulla velocità dell&rsquo;ALU nell&rsquo;eseguire la somma:
 </p>
@@ -695,7 +808,8 @@ Considerazioni sulla velocità dell&rsquo;ALU nell&rsquo;eseguire la somma:
 <li>L&rsquo;ingresso <b>CarryIn</b> di ogni 1-bit adder dipende dal valore calcolato dall&rsquo;1-bit adder precedente
 </li>
 <li>Il bit più significativo della somma deve quindi attendere 32 volte il tempo di attraversamento
-del segnale attraverso i vari <b>sommatori ==&gt; LENTO</b>
+del segnale attraverso i vari
+<b>sommatori \(\rightarrow\) LENTO</b>
 </li>
 </ul>
 
@@ -713,8 +827,8 @@ del segnale attraverso i vari <b>sommatori ==&gt; LENTO</b>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-08 Sat 14:29</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+<p class="date">Created: 2022-01-15 Sat 13:23</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

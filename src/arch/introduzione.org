@@ -1,6 +1,7 @@
 #+TITLE: Introduzione ad Architettura degli elaboratori
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Calcolatori elettronici
    Basati su tecnologie in rapidissima evoluzione
    Valvole → Transistor → IC = Integrated Circuit, VLSI = Very Large Scale Integration
@@ -288,7 +289,7 @@ Compilatori, assemblatori, OS, Word processor, ecc... è tutto software
                 
                 - Per quanto riguarda i numeri negativi, per ottenere direttamente il valore di un numero negativo su n posizioni, basta considerare
                     - Il Bit di segno ( = 1 ) in posizione $n-1$ con peso : $-2^{n-1}$
-                    - Tutti gli altri bit in posizione $i\$ con peso $2^i$
+                    - Tutti gli altri bit in posizione $i$ con peso $2^i$
                       
             - Cambio di segno
                 

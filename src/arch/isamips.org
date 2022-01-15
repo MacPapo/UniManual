@@ -1,6 +1,7 @@
 #+TITLE: Linguaggio macchina e assembler MIPS
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Istruzioni e Linguaggio Macchina
   I *Linguaggi Macchina* sono composti da *istruzioni macchina*,
   codificate in binario, con *formato* ben definito
@@ -16,13 +17,15 @@
   Programmi (come i dati) memorizzati in memoria
   - La *CPU* legge le istruzioni dalla memoria (come i dati)
 
-  *Ciclo macchina* ==> *FETCH* - *DECODE* - *EXECUTE*
+  *Ciclo macchina* \rightarrow *FETCH* - *DECODE* - *EXECUTE*
   - *CPU legge* (*FETCH*): L'istruzione corrente (indirizzata dal *PC*, ovvero *Program Counter*),
     e la pone in un registro speciale interno.
   - *CPU* usa i bit dell'istruzione per *controllare* (decodificare) le azioni da svolgere,
     e su questa base *esegue* l'istruzione
   - *CPU* determina la *prossima* istruzione e ripetere il ciclo
-    
+
+    [[../../.img/st.png]]
+
 * Livello di astrazione
   Livelli e Linguaggi
   - Linguaggio ad *Alto Livello*
@@ -30,6 +33,8 @@
   - Linguaggio *Macchina*
 
   Il linguaggio più astratto omette dettagli, ma ci permette di trattare la complessità
+
+  [[../../.img/astr.png]]
 
 * Istruzioni Aritmetiche del MIPS
   *MIPS*
@@ -80,12 +85,14 @@
   - Compilatori associa variabili con registri
   - *Register File* fa parte del *Datapath* del processore
 
+    [[../../.img/rem.png]]
+
   Cosa succede con programmi con tanti dati (tante variabili, o array)?
   - Usiamo la memoria centrale
   - Memoria *MIPS* indirizzata al BYTE
 
-  sw (Store Word):  reg ==> word in memoria
-  lw (Load Word):   word in memoria ==> reg
+  sw (Store Word):  reg \rightarrow word in memoria
+  lw (Load Word):   word in memoria \rightarrow reg
 
   Esempio:
   - C code:
@@ -99,7 +106,7 @@
     sw  $15, 32($4)
     #+END_EXAMPLE
 
-  Indirizzo della word in memoria &A[8]: $4 +32 -> displacement
+  Indirizzo della word in memoria &A[8]: $4 +32 \rightarrow displacement
   *Nota* che *sw* ha la destinazione come ultimo operando
   *Ricorda* che gli operandi delle istruzioni aritmetiche sono registri, non celle di memoria!
 
@@ -135,6 +142,9 @@
   - shamt: utilizzato pe le istruzioni di shift, posto a zero per le altre istruzioni ( 5 bit)
   - funct: seleziona la specifica variante dell'operazione base definita nel campo op ( 6 bit )
 
+    [[../../.img/rtype.png]]
+
+
   L'insieme dei bit costituiscono 32 bit ovvero 4B
 
   Formato istruzioni lw e sw
@@ -146,10 +156,12 @@
   - Anche lw/sw sono lunghe 4B
   - Displacement nell'istruzione (*operando immediato* = 2B)
 
+    [[../../.img/rtype2.png]]
+
   Esempio: lw $9, 32($18)
   - op: operazione base dell'istruzione ( 6 bit )
   - rs: registro del primo operando, es. 18 ( 5 bit ) 
-  - *rt*: in questo caso è il registro di destinazione, es. 9 ( 5 bit )
+  - rt: in questo caso è il registro di destinazione, es. 9 ( 5 bit )
   - 16 bit number: guardando l'esempio è 32
 
 ** Istruzioni di controllo
@@ -166,10 +178,15 @@
       lw $4,100($5)     $4 = Memory[$5+100]
       sw $4,100($5)     Memory[$5+100] = $4
 
-      bne $4,$5,Label   Se $s4 != $s5, prossima istr. caricata dall’indirizzo Label
-      beq $4,$5,Label   Se $s4  = $s5, prossima istr. caricata dall’indirizzo Label
+      bne $4,$5,Label   Se $s4 != $s5, prossima istr.
+                        caricata dall’indirizzo Label
+
+      beq $4,$5,Label   Se $s4  = $s5,
+                        prossima istr. caricata dall’indirizzo Label
      #+END_EXAMPLE
 
+[[../../.img/jtype.png]]
 
 ** Riassumendo
-  
+
+[[../../.img/ris.png]]

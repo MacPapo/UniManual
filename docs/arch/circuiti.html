@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Circuiti combinatori</title>
-<!-- 2022-01-08 Sat 14:29 -->
+<!-- 2022-01-15 Sat 13:05 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -209,6 +235,7 @@ $(function() {
 </div>
 </nav>
 </div><div class="col-md-9 col-md-pull-3"><h1 class="title">Circuiti combinatori</h1>
+
 
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Circuiti integrati</h2>
@@ -276,22 +303,81 @@ Con tecnologia <b>VLSI</b>, un <b>IC</b> può oggi contenere una <b>CPU completa
 <div class="outline-text-2" id="text-2">
 <p>
 <b>n</b> input ed <b>1</b> output
-<b>log2n</b> segnali di controllo
 </p>
+<ul class="org-ul">
+<li>possono essere usati per definire una qualsiasi funzione
+logica di \(log_2n\) segnali di controllo
+<ul class="org-ul">
+<li>funzione definita da una <b>tabella di verità</b> con <b>n righe</b>
+</li>
+<li>Le \(log_2n\) variabili in input della funzione logica diventano
+</li>
+</ul>
+<p>
+i segnali di controllo del multiplexer
+</p>
+
+
+<figure>
+<p><img src="../../.img/mult.png" class="img-responsive" alt="mult.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/mult2.png" class="img-responsive" alt="mult2.png">
+</p>
+</figure>
+</li>
+
+<li>Ogni riga della tabella di verità
+<ul class="org-ul">
+<li>Corrisponde ad uno degli <b>n input del multiplexer</b>, collegari
+ad un generatore di tensione ( o alla terra )
+</li>
+<li>se l&rsquo;output, associato alla riga della tabella di verità, è 1 o 0
+
+
+<figure>
+<p><img src="../../.img/mult3.png" class="img-responsive" alt="mult3.png">
+</p>
+</figure>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Grande spreco di porte
+</p>
+<ul class="org-ul">
+<li>Circuito <i>fully encoded</i>
+</li>
+<li>Porte <b>AND</b> con arietà meggiore del necessario (+1)
+</li>
+</ul>
 
 <p>
 Il multiplexer, sulla base dei segni di controllo, seleziona quale tra gli <b>n</b> input
 verrà presentato come output del circuito.
 </p>
 
-<p>
-se S = 0: passa A
-se S = 1: passa B
-</p>
+<ul class="org-ul">
+<li>se S = 0: passa A
+</li>
+<li>se S = 1: passa B
+</li>
+</ul>
 
 <p>
-C = A ~S + BS
+\(C = A \sim S + BS\)
 </p>
+
+
+<figure>
+<p><img src="../../.img/mult4.png" class="img-responsive" alt="mult4.png">
+</p>
+</figure>
 </div>
 </div>
 
@@ -302,7 +388,7 @@ C = A ~S + BS
 Da 1 singola linea in <b>input</b>, a n linee in output
 </p>
 <ul class="org-ul">
-<li>log2n segnali di controllo (S)
+<li>\(log_2n\) segnali di controllo (S)
 </li>
 <li>Se la linea in input è uguale a 0
 <ul class="org-ul">
@@ -315,12 +401,19 @@ Da 1 singola linea in <b>input</b>, a n linee in output
 <li>Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
 </li>
 <li>L&rsquo;output da affermare dipende da S
+
+
+<figure>
+<p><img src="../../.img/demult.png" class="img-responsive" alt="demult.png">
+</p>
+</figure>
 </li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+
 
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Decoder</h2>
@@ -338,6 +431,12 @@ Componente con <b>n input</b> e <b>2^n output</b>
 <li>Tutti gli altri verranno posti a 0 
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/demult2.png" class="img-responsive" alt="demult2.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -356,6 +455,12 @@ Componente per costruire funzioni logiche arbitrarie
 <li>Porte <b>AND</b> al primo livello, e porte <b>OR</b> al secondo livello
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/pla.png" class="img-responsive" alt="pla.png">
+</p>
+</figure>
 </li>
 
 <li><b>n input</b> e <b>o output</b>
@@ -365,6 +470,18 @@ Componente per costruire funzioni logiche arbitrarie
 <li><b>o porte OR</b>  ==&gt; <b>o</b> fissa un limite al numero di funzioni differenti in forma canonica <b>SP</b>
 </li>
 </ul>
+
+
+<figure>
+<p><img src="../../.img/pla2.png" class="img-responsive" alt="pla2.png">
+</p>
+</figure>
+
+
+<figure>
+<p><img src="../../.img/pla3.png" class="img-responsive" alt="pla3.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -417,6 +534,12 @@ Ogni funzione:
 <li>Funzioni <b>Fully Encoded</b>
 </li>
 <li><b>PLA</b> più efficiente
+
+
+<figure>
+<p><img src="../../.img/rom.png" class="img-responsive" alt="rom.png">
+</p>
+</figure>
 </li>
 </ul>
 </div>
@@ -424,8 +547,8 @@ Ogni funzione:
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini &amp; Matteo Zambon</p>
-<p class="date">Created: 2022-01-08 Sat 14:29</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27.2 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+<p class="date">Created: 2022-01-15 Sat 13:05</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
 </body>

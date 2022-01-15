@@ -2,12 +2,12 @@
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
 
-  Differenza tra simbolo e significato
+* Differenza tra simbolo e significato
     
     - La cifra ( lettera ) usata per scrivere è un simbolo che rappresenta l'informazione
     - Il concetto di numero ( suono ) corrisponde al significato dell'informazione
     
-    Per comunicare/rappresentare informazioni è quindi necessario usare dei simboli
+    Per *comunicare/rappresentare* informazioni è quindi necessario usare dei simboli
     
     - È necessaria una convenzione ( rappresentazione, codifica o codice ) per associare i simboli con il loro significato
     - Codifica o Codice
@@ -23,16 +23,16 @@
         
         Solitamente, i codici fanno riferimento a sequenze di simboli di lunghezza finita
         
-        - Alfabeto di $N\$ simboli e Sequenza di lunghezza $k$
-            - $N^k \$ configurazioni possibili
+        - Alfabeto di $N$ simboli e Sequenza di lunghezza $k$
+            - $N^k$ configurazioni possibili
         - Rispetto ad un alfabeto binario $(\ N = 2\ )$
-            - Numero totale di configurazioni : $\ 2^k$
-            - $2^k >= s\$ ( dove $s\$ è la cardinalità dell'insieme $D\$ dei dati )
-            - n Es.: se D comprende le 26 lettere dell’alfabeto inglese (s=26)
-           - n sono necessarie almeno sequenze di K simboli binari, con K >= 5
+            - Numero totale di configurazioni : $2^k$
+            - $2^k \geq s$ ( dove $s$ è la cardinalità dell'insieme $D$ dei dati )
+            - n Es.: se D comprende le 26 lettere dell’alfabeto inglese $(s=26)$
+            - n sono necessarie almeno sequenze di $K$ simboli binari, con $K \geq 5$
     
 * Codifica e tipo di informazione
-         La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
+        La codifica delle informazioni non numeriche può essere effettuata in maniera semi arbitraria
         
         - Basta fissare una convenzione per permettere di riconoscere i dati
         
@@ -42,53 +42,55 @@
         - Di solito si adotta il sistema di numerazione arabica, o posizionale
 
 ** Codifica dei numeri
-           Sistema di numerazione arabico in case 10 $\ (\ B = 10\ )$
+        Sistema di numerazione arabico in case 10 $\ (\ B = 10\ )$
         
-        - Cifre ( simboli ) appartenenti all'alfabeto di 10 simboli $\ A=\{\ 0,1,...,9\ \}$
-        - Il simbolo con $0\$ corrisponde al numero zero, ..., il simbolo 9 corrisponde al numero nove
-        - Simboli con valore diverso in base alla posizione nella stringa di simboli in $A\$ ( unità, decine, centinaia, migliaia, ecc... )
+        - Cifre ( simboli ) appartenenti all'alfabeto di 10 simboli $A=\{ 0,1,...,9 \}$
+        - Il simbolo con $0$ corrisponde al numero zero, ..., il simbolo $9$ corrisponde al numero nove
+        - Simboli con valore diverso in base alla posizione nella stringa di simboli in $A$ ( unità, decine, centinaia, migliaia, ecc... )
 
 * Sistema di codifica posizionale
-           Codificare i numeri in una generica base $B$
+        Codificare i numeri in una generica base $B$
         
-        - Fissare un alfabeto $A\$ di $B\$ simboli
+        - Fissare un alfabeto $A$ di $B$ simboli
         - Fissare una corrispondenza tra
-            - i $B\$ simboli di $A\ \iff$i Primi $B\$ numeri naturali $\{\ 0,1,2,...,\ B-1\ \}$
-        - Numeri maggiori di $B\$ rappresentabili come stringhe di simboli $\ d_i \in A$
-            - $d_{n-1}\ ...\ d_1\ d_0$
+            - i $B$ simboli di $A \iff$ Primi $B$ numeri naturali $\{0,\; 1,\; 2,\; ...,\; B-1\}$
+        - Numeri maggiori di $B$ rappresentabili come stringhe di simboli $d_i \; in\; A$
+            - $d_{n-1}\; ...\; d_1\; d_0$
         - Valore numerico della stringa, dove la significatività delle cifre è espressa in base alle varie potenze di $B$
-            - $B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1 \ +\ B^0 \times d_0$
+            - $B^{n-1} \times d_{n-1} +\; ...\; + B^1 \times d_1 + B^0 \times d_0$
 
 ** Numeri naturali in base 2
-          Alfabeto binario $A = \{ 0,1\}$, dove i simboli sono detti bit, con 0 corrispondente a zero ed 1 corrispondente al numero uno
+
+Alfabeto binario $A = \{ 0,\;1 \}$, dove i simboli sono detti bit, con 0 corrispondente a zero ed 1 corrispondente al numero uno
         
-        - Nei calcolatori i numeri sono rappresentati come sequenze di bit di lunghezza finita
-        - Numeri rappresentati in notazione arabica, con base $B = 2\$ ( numeri binari )
-            - $d_{n-1} \ ...\ d_1\ d_0\ \$ dove $\ d_i \in \{0,1\}$
++ Nei calcolatori i numeri sono rappresentati come sequenze di bit di lunghezza finita
+  + Numeri rappresentati in notazione arabica, con base $B = 2$ ( numeri binari )
+    - $d_{n-1} \;...\; d_1\; d_0$ dove $d_i \;in\; \{0,1\}$
+
+      Con stringhe di $n$ bit, sono rappresentabili $2^n$ dati ( numeri diversi )
         
-        Con stringhe di $n$ bit, sono rappresentabili $2^n$ dati ( numeri diversi )
+    - Dal numero $0$ al numero $2^n-1$
         
-        - Dal numero $0$ al numero $2^n-1$
+      Il valore numerico corrispondente, dove la significatività delle cifre è espressa sulla base di una potenza di $B = 2$
         
-        Il valore numerico corrispondente, dove la significatività delle cifre è espressa sulla base di una potenza di $B = 2$
-        
-        - $2^{n-1} \times d_{n-1}\ +\ ...\ +\ 2^1 \times d_1 \ +\ 2^0 \times d_0$
+      - $2^{n-1} \times d_{n-1} + ... + 2^1 \times d_1 + 2^0 \times d_0$
 
 ** Conversione inversa
-           Da base 10 a base $B$
+
+Da base 10 a base $B$
         
-        Procedimento per divisione intere successive
+Procedimento per divisione intere successive
         
-        Sia dato un certo numero naturale $N_{10}$ rappresentabile in base $B$ come stringa di $n$ simboli $d_{n-1}\ ...\ d_1\ d_0$ il cui valore è
+Sia dato un certo numero naturale $N_{10}$ rappresentabile in base $B$ come stringa di $n$ simboli $d_{n-1} ... d_1\; d_0$ il cui valore è
         
-        $$N_{10} = B^{n-1} \times d_{n-1}\ +\ ...\ +\ B^1 \times d_1\ +\ B^0 \times d_0$$
+$N_{10} = B^{n-1} \times d_{n-1} + \;...\; + B^1 \times d_1 + B^0 \times d_0$
         
-        Se dividiamo per $B$
+Se dividiamo per $B$
         
-        - Otteniamo $d_0$ come resto
-            - Quoziente:$\ \ \ B^{n-2} \times d_{n-1}\ +\ ...\ +\ B^0 \times d_1$
-            - Resto: $\ \ \ \ \ \ \ \ \ d_0, \ 0 <= d_0 < B$
-        - Possiamo iterare il procedimento, ottenendo $d_1, d_2, d_3\$ ecc... fino ad ottenere un Quoziente = 0
++ Otteniamo $d_0$ come resto
+  - Quoziente:$B^{n-2} \times d_{n-1} + ... + B^0 \times d_1$
+  - Resto: $d_0,\; 0 \leq d_0 < B$
+        - Possiamo iterare il procedimento, ottenendo $d_1, d_2, d_3$ ecc... fino ad ottenere un Quoziente = 0
     
 ** Rappresentazione ottale ed esadecimale
            
@@ -104,26 +106,27 @@
         
         - Rappresentazione Ottale
             
-            $B = 8,\ A = \{0,1,2,3,4,5,6,7\}$
+            $B = 8,\; A = \{0,1,2,3,4,5,6,7\}$
             
             Come convertire:
             
-            - Sia dato un numero binario di 10 cifre: $d_9\ ...\ d_1\ d_0$, il cui valore è
+            - Sia dato un numero binario di 10 cifre: $d_9\; ...\; d_1\; d_0$, il cui valore è
                 
                 $$\sum_{i=0}^{9}2^i \times d_i$$
                 
             - Raggruppiamo le cifre: da destra a triplette
             - Poniamo in evidenza la più grande potenza di 2 comune possibile
-                - $(2^0 \times d_9)\times2^9\ +\ (2^2 \times d_8 + 2^1 \times d_7 + 2^0 \times d_6)\times2^6\ +\ (2^2 \times d_5 + 2^1 \times d_4 + 2^0 \times d_3)\times2^3\ +\ (2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0)\times2^0$
+                - $(2^0 \times d_9) \times 2^9 + (2^2 \times d_8 + 2^1 \times d_7 + 2^0 \times d_6) \times 2^6 + (2^2 \times d_5 + 2^1 \times d_4 + 2^0 \times d_3) \times 2^3 + (2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0) \times 2^0$
                 - I termini fra parentesi sono numeri compresi tra 0 e 7
                     - Si possono far corrispondere ai simboli dell'alfabeto ottale
                     - I fattori messi in evidenza corrispondono alle potenze di $B = 8$
                         - $2^0 = 8^0\ \ \ \ 2^3 = 8^1\ \ \ \ 2^6=8^2\ \ \ \ 2^9=8^3$
                         - Da binario ad ottale: $\ 1001010111_2 = 1\ \ 000\ \ 010\ \ 111 = 1127_8$
                         - Da ottale a binario: $\ 267_8 = 010\ \ 110\ \ 111 = 10110111_2$
+
         - Rappresentazione Esadecimale
             
-            $B = 16,\ A = \{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F\}$
+            $B = 16,\; A = \{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F\}$
             
             Come convertire:
             
@@ -134,7 +137,7 @@
             - Raggruppiamo le cifre: da destra, 4 a 4
             - Poniamo in evidenza la più grande potenza di 2 possibile
                 
-                $$(2^1 \times d_9\ +\ 2^0 \times d_8)\times2^8\ +\ (2^3 \times d_7 + 2^2 \times d_6 + 2^1 \times d_5 \ +\ 2^0 \times d_4)\times2^4\ +\ (2^3 \times d_3 + 2^2 \times d_2 + 2^1 \times d_1 \ +\ 2^0 \times d_0)\times2^0$$
+                $(2^1 \times d_9 + 2^0 \times d_8) \times 2^8 + (2^3 \times d_7 + 2^2 \times d_6 + 2^1 \times d_5 + 2^0 \times d_4) \times 2^4 + (2^3 \times d_3 + 2^2 \times d_2 + 2^1 \times d_1 + 2^0 \times d_0) \times 2^0$
                 
                 I termini tra parentesi sono numeri compresi tra 0 e 15
                 
@@ -142,59 +145,65 @@
                 
                 I fattori messi in evidenza corrispondono alle potenze di $B = 16$
                 
-                - $2^0 = 16^0\ \ \ 2^4 = 16^1\ \ \ 2^8 = 16^2$
-                    - Da binario ad esadecimale: $\\1001011111_2 = 10\ \ 0101\ \ 1111 = 25F_{16}$
-                    - Da esadecimale a binario: $\\A67_{16} = 1010\ \ 0110\ \ \ 0111 = 101001100111_2$
+                - $2^0 = 16^0\; 2^4 = 16^1\; 2^8 = 16^2$
+                    - Da binario ad esadecimale: $1001011111_2 = 10\; 0101 \; 1111 = 25F_{16}$
+                    - Da esadecimale a binario: $A67_{16} = 1010\; 0110\; 0111 = 101001100111_2$
 
 ** Numeri naturali binari
-           Il processore che studieremo ( MIPS ) rappresenta i numeri interi su 32Bit ( 32 bit = 1 word )
+Il processore che studieremo ( MIPS ) rappresenta i numeri interi su 32Bit ( 32 bit = 1 word )
         
-        I numeri interi senza segno ( unsigned ) rappresentabili su 32Bit sono:
+I numeri interi senza segno ( unsigned ) rappresentabili su 32Bit sono:
         
           
-        I numeri intero senza segno ( unsigned ) rappresentabili su 64Bit sono:  
+I numeri intero senza segno ( unsigned ) rappresentabili su 64Bit sono: 
         
          
-        - Somma di numeri ( naturali ) binari
-            
-            Sia $A = 13_{10} = 01101_2$ e $\ B = 11_{10} = 01011_2$
-            
-             
-        - Algoritmo di somma di numeri ( naturali ) binari
-            
-            Per la somma di numeri rappresentati in binario possiamo adottare la stessa procedura usata per sommare numeri decimali
+- Somma di numeri ( naturali ) binari
+    Sia $A = 13_{10} = 01101_2$ e $\ B = 11_{10} = 01011_2$
+    - Algoritmo di somma di numeri ( naturali ) binari
+
+      Per la somma di numeri rappresentati in binario possiamo adottare la stessa procedura usata per sommare numeri decimali
 
 ** Overflow
-           L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
+
+L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
         
-        $\Longrightarrow$ il riporto ( significa, cioè pari a 1 ) fluisce fuori
+$\Longrightarrow$ il riporto ( significa, cioè pari a 1 ) fluisce fuori
+[[../../.img/overflow.png]]
 
 ** Sottrazione e numeri relativi
-   Per fare la sottrazione si usa una particolare rappresentazione dei numeri relativ
-   Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per la somma.
 
-   [Aggiungere schemino rappresentazioni]
+Per fare la sottrazione si usa una particolare rappresentazione dei numeri relativi
+
+Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per la somma.
+
+[[../../.img/rap.png]]
 
 ** Caratteristiche delle rappresentazioni
-    - Bilanciamento:
-      Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
-      
-    - Numero di zeri:
-      la rappresentazione in modulo e segno. e quella in complemento a uno,
-      hanno 2 rappresentazioni per lo zero
-      
-    - Semplicità delle operazioni: per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
-      per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre
-* Complemento a 2
-   Per il complemento a 2 il bit più significativo corrisponde al segno ( 0 negativo e 1 positivo )
 
-   [ inserire schemino ]
+- Bilanciamento:
+
+  Nel complemento a due, nessun numero positivo corrisponde al più piccolo valore negativo
+
+- Numero di zeri:
+
+  la rappresentazione in modulo e segno e quella in complemento a uno, hanno 2 rappresentazioni per lo zero
+      
+- Semplicità delle operazioni:
+  per il modulo e segno bisogna prima guardare i segni e confrontare i moduli,
+  per decidere sia il segno del risultato, e sia per decidere se bisogna sommare o sottrarre
+
+* Complemento a 2
+
+   Per il complemento a 2 il bit più significativo corrisponde al segno (0 negativo e 1 positivo)
+
+   [[../../.img/cp2.png]]
 
 *** Valore
     - Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
     - Per quanto riguarda i negativi, per ottenere il valore bisogna considerare
-      - Il bit di segno ( =1 ) in posizione n - 1 con peso: -2^n-1
-      - Tutti gli altri bit in posizione i con peso 2^i
+      - Il bit di segno ( =1 ) in posizione $n - 1$ con peso: $-2^{n-1}$
+      - Tutti gli altri bit in posizione i con peso $2^i$
 
 *** Cambio di segno
     Dato un numero positivo N con bit di segno uguale a 0
@@ -227,44 +236,46 @@
      Somma algebrica di due *numeri positivi* A e B la cui somma
      non può essere rappresentata su n bit in complemento a 2
 
-     - Overflow se A + B >= 2^n-1
-       *Overflow* -> due  ultimi riporti discordi
-       *NON OVERFLOW* -> due ultimi riporti concordi
+     - Overflow se $A + B \geq 2^{n-1}$
+       *Overflow* $\rightarrow$ due  ultimi riporti discordi
+       *NON OVERFLOW* $\rightarrow$ due ultimi riporti concordi
 
      Somma algebrica di due *numeri negativi* A e B la cui somma non
      può essere rappresentata su n-bit in complemento a 2
 
-     - Overflow se |A |+ |B| >= 2^n-1
-       *Overflow* -> due  ultimi riporti discordi
-       *NON OVERFLOW* -> due ultimi riporti concordi
+     - Overflow se $|A|+ |B| \geq 2^{n-1}$
+       *Overflow* $\rightarrow$ due  ultimi riporti discordi
+       *NON OVERFLOW* $\rightarrow$ due ultimi riporti concordi
 
 * Numeri razionali a virgola fissa
    Conversione da base 10 a base 2
-   da 10,5(base 10) ->  1010,1(base 2)
+   da 10,5(base 10) $\rightarrow$  1010,1(base 2)
 
-   [inserire specchietto conversione frazionaria
+   [[../../.img/frq.png]]
 
-   [inserire problemi]
+   [[../../.img/esfrq.png]]
 
 * Numeri razionali a virgola mobile
    Notazione a *virgola mobile* o *Floating Point*
 
    Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
-   [Inserire mantissa]
+   [[../../.img/virg.png]]
 
    In base 2, l'esponente E si riferisce ad una potenza di 2
-   - *segno*, *esponente*, *mantissa* -> (-1)^2 * 2^E * M
+   - *segno*, *esponente*, *mantissa* \rightarrow $(-1)^2 \times 2^E \times M$
 
    Dati i bit disponibili per la rappresentazione FP, si suddividono in:
    - Un bit per il segno
    - Un gruppo di bit per Esponente
    - Un gruppo di bit per la Mantissa
 
-   Una volta fissato il numero di bit totali per la rappresentazione dei numeri razionali a virgola mobile rimane da decidere:
-   - Quanti bit assegnare alla mantissa?
-     Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.
-   - Quanti bit assegnare per l'esponente?
-     Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili
+     [[../../.img/gp.png]]
+
+    Una volta fissato il numero di bit totali per la rappresentazione dei numeri razionali a virgola mobile rimane da decidere:
+    - Quanti bit assegnare alla mantissa?
+      Maggiore è il numero di bit e maggiore è l'accuratezza con cui si riescono a rappresentare i numeri.
+    - Quanti bit assegnare per l'esponente?
+      Aumentando i bit si aumenta l'intervallo dei numeri rappresentabili
 
    *OVERFLOW*: si ha quando l'esponente positivo è troppo grande per
    poter essere rappresentato con il numero di bit assegnato all'esponente
@@ -276,35 +287,42 @@
         - 1 bit per il segno
         - 8 bit per l'esponente
         - 23 bit per la mantissa
+
+        [[../../.img/ieee754.png]]
+
     2. Doppia precisione  ( 64 BIT )
         - 1 bit per il segno
         - 11 bit per l'esponente
         - 20 bit per la mantissa
         - 32 bit aggiuntivi per la mantissa
-    
+
+        [[../../.img/ieee75464.png]]
+
     La *Notazione polarizzata* è usata per rappresentare l'esponente:
         - Singola precisione: gli esponenti variano da -126  a +127
         - Doppia precisione:  gli esponenti variano da -1022 a +1023
-    
-    Il valore di un numero in notazione polarizzata vale: (-1)^S * (1 + M) * 2^(E - polarizzazione)
+
+        [[../../.img/ieee754exp.png]]
+
+    Il valore di un numero in notazione polarizzata vale:
+    $(-1)^S \times (1 + M) \times 2^{(E -\; polarizzazione)}$
 
 ** Somma di numeri FP (Floating Point)
-    1.  Confronto dell'esponente dei due numeri, shift, del numero con l'esponente più piccolo, a destra fino
-        a che non è allineato a l'esponente maggiore.
-    2.  Somma della rappresentazione in binario dei numeri.
-    3.  Normalizzazione della somma, scorrere verso destra oppure verso sinistra sino al bit più significativo
-        aumentando o diminuendo l'esponente. 
-        -   Destra   - aumento dell'esponente.
-        -   Sinistra - diminuzione dell'esponente.
-    4. Verifico OVERFLOW o UNDERFLOW
+
+1. Confronto dell'esponente dei due numeri, shift, del numero con l'esponente più piccolo, a destra fino a che non è allineato a l'esponente maggiore.
+2. Somma della rappresentazione in binario dei numeri.
+3. Normalizzazione della somma, scorrere verso destra oppure verso sinistra sino al bit più significativo aumentando o diminuendo l'esponente.
+    -   Destra   - aumento dell'esponente.
+    -   Sinistra - diminuzione dell'esponente.
+4. Verifico OVERFLOW o UNDERFLOW
 
 ** Parità
-    Per scoprire i singoli errori si aggiunge un bit di parità:
-        - bit aggiuntivo è uguale a 0 *se* il numero di bit a 1 è pari.
-        - bit aggiuntivo è uguale a 1 *se* il numero di bit a 1 è dispari.
+
+Per scoprire i singoli errori si aggiunge un bit di parità:
+
+- bit aggiuntivo è uguale a 0 *se* il numero di bit a 1 è pari.
+- bit aggiuntivo è uguale a 1 *se* il numero di bit a 1 è dispari.
     
-    Con un bit di parità non scopriremo *mai* un numero di errori doppi o in generale pari.
+Con un bit di parità non scopriremo *mai* un numero di errori doppi o in generale pari.
 
-    Usare un bit di parità significa significa usare una *codifica non minimale*.
-
-
+Usare un bit di parità significa significa usare una *codifica non minimale*.

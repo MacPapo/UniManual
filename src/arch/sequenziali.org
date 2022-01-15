@@ -1,6 +1,7 @@
 #+TITLE: Memorie e circuiti sequenziali
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Circuiti combinatori vs sequenziali
   I *circuiti combinatori* sono in grado di calcolare funzioni che dipendono *solo* dai dati in *input*
 
@@ -19,12 +20,16 @@
   - Si, un elemento in grado di memorizzare un singolo bit è il *LATCH*
 
 * S-R Latch
-  L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
+[[../../.img/srlatch.png]]
+
+L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - *S* sta per *Set*
   - *R* sta per *Reset*
   Anche se *(S,R)=(0,0)*, gli output del latch possono comunque essere diversi
   - l'*output* è infatti il valore memorizzato nel latch
   - verificare che il latch a *sinistra memorizza il valore 0*, mentre quello a *destra il valore 1*
+
+[[../../.img/srlatch2.png]]
 
   Poniamo per esempio (S,R)=(1,0) per effettuare il *setting del latch a sinistra*
   - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando S=0)
@@ -32,6 +37,8 @@
   Poniamo per esempio (S,R)=(0,1) per effettuare il *resetting del latch a destra*
   - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando R=0)
 
+
+[[../../.img/srlatch3.png]]
 
   La combinazione (S,R) = (0,0) viene detta combinazione di riposo, 
   perché semplicemente mantiene il valore memorizzato in precedenza
@@ -46,28 +53,31 @@
   - bisogna evitare che durante questo intervallo, gli *output intermedi* del circuito vengano presentati al latch
     per la memorizzazione
   
-  *Soluzione* =>  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l'inizio di un gradino e quello successivo
+  *Soluzione* $\rightarrow$  usiamo un segnale a gradino, detto clock, il cui intervallo di tempo tra l'inizio di un gradino e quello successivo
                 viene scelto abbastanza grande da assicurare la stabilità degli output del circuito
                 - usiamo il *clock* per abilitare la scrittura nei latch
                 - il clock determina il ritmo dei calcoli e delle relative operazioni di memorizzazione
                 - il ciurcuito diventa sincrono
 
-  [circuito]
+  [[../../.img/cl.png]]
 
 * Unità di misura
   Se il periodo T è espresso in *sec*
     - Frequenza di clock: Freq = 1/T Hz (numero di cicli al secondo)
 
   Se T = 10 nsec qual è la franquenza del clock?
-  - 1 nsec = 10^-9 sec
-  - Freq = 1/T = 1/(10*10-9)= 108Hz=108Hz=102 *106 Hz=100 MHz
+  - $1 nsec = 10^{-9} sec$
+  - Freq = $1/T = 1/(10 \times 10^{-9})$ = 108Hz = 108Hz = $102 \times 106$ Hz=100 MHz
 
   Se T = 1 nsec, qual è la differenza del clock?
-  - 1 nsec = 10^-9 sec
-  - Freq=1/T=1/10-9=109Hz=1 GHz
+  - $1 nsec = 10^{-9} sec$
+  - Freq=$1/T = 1/10^{-9} = 109$ Hz = 1 GHz
 
 * Latch clockato (D-latch)
-  *D=1* corrisponde al *setting*
+
+[[../../.img/dlatch.png]]
+
+*D=1* corrisponde al *setting*
   -S=1 e R=0
 
   *D=0* corrisponde al *resetting*
@@ -82,7 +92,7 @@
   Se il segnale C fosse invertito (porta NOT aggiuntiva), il latch memorizzerebbe sul valore basso del clock 
   (cioè quando il clock è deasserted)
 
-  [circuito]
+  [[../../.img/ddlatch2.png]]
 
 * Diagramma temporale del D-latch
   Il segnale D, ottenuto solitamente come output di un circuito combinatorio
@@ -90,7 +100,7 @@
   - deve rimanere stabile per tutta la durata del livello alto di C (Setup time)
   - deve infine rimanere stabile per un altro periodo di tempo per evitare malfunzionamenti (Hold time)
 
-  [circuito]
+    [[../../.img/ddlatch.png]]
 
 ** Ritardi nella propagazione dei segnali nei circuiti
   I circuiti reali hanno *ritardi non-nulli*, che dipendono dai cammini, ovvero delle porte e dai fili, attraversati
@@ -99,13 +109,15 @@
   - questo fenomeno è noto come glitch
   - dopo un certo intervallo, con alta probabilità i segnali si stabilizzano
 
-  [ciurcuito]
+  [[../../.img/rit.png]]
 
 * Periodo del ciclo di clock
   Il periodo T deve essere scelto abbastanza lungo affinché l’output del circuito combinatorio si stabilizzi
   - deve essere stabile un po’ prima D del periodo di apertura del latch C (setup time), e lo deve rimanere per un certo tempo (hold time)
 
-  [ciurcuito]
+  [[../../.img/cl2.png]]
+
+  [[../../.img/cl3.png]]
 
 * D-latch clockato: fenomeno della trasparenza
   Osserviamo il seguendo comportamente del D-latch clockato:
@@ -118,21 +130,26 @@
 
   Questo comportamento è noto come *trasparenza* del latch
 
-  [circuito]
+[[../../.img/dlatch3.png]]
 
 * Elemento di memoria usato come input e output
-  Durante ogni periodo di clock
+
+[[../../.img/el.png]]
+
+Durante ogni periodo di clock
   - il circuito combinatorio dovrebbe calcolare una funzione sulla base dell'attuale valore *dell'elemento di memoria* (stato del circuito)
   - l'output calcolato dovrebbe diventare il nuovo valore da memorizzare nell'elemento di memoria (nuovo stato del circuito)
   - il nuovo valore memorizzato dovebbe essere usato come *input del circuito di durante il ciclo di clock successivo*
 
-  l'*elemento di memoria* deve essere usato sia come input che come output durante lo stesso ciclo di clock.
+
+  [[../../.img/el2.png]]
+
+l'*elemento di memoria* deve essere usato sia come input che come output durante lo stesso ciclo di clock.
 
 Il D-latch precedente funzionerebbe in questo caso ?
 - Purtroppo no, perché se il clock rimane alto per molto tempo, allora il valore memorizzato nel latch potrebbe nel frattempo fluire fuori, 
 entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizzato nel latch
 
-[circuito]
 
 ** Metodologia di timing
   Si possono progettare componenti di memoria, in cui la memorizzazione può avvenire in vari istanti rispetto al segnale a gradino del clock
@@ -145,11 +162,15 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
       non faccia in tempo ad arrivare a causa dell’istantaneità della memorizzazione
     + gli elementi di memoria di tipo edge-triggered si chiamano flip-flop
 
+[[../../.img/time.png]]
+
 ** Generatore di impulsi
   Il generatore di impulsi permette appunto di *generare impulsi brevissimi*
   in corrispondenza del fronte di salita di un segnale a gradino
 
-  [circuito]
+[[../../.img/gen.png]]
+
+[[../../.img/gen2.png]]
 
 * Flip-Flop semplice con generato di impulsi
   Il *flip - flop semplice memorizza istantaneamente* il valore di D (input) sul fronte di salita del clock: 
@@ -157,7 +178,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
 
   Metodologia edge-triggered di tipo *rising triggered*.
 
-  [circuito]
+  [[../../.img/flip.png]]
 
   Il segnale *memorizzato comincia a fluire subito fuori dal flip-flop*.
   Causa brevità dell’impulso, il segnale “non fa però in tempo” a entrare/uscire nel/dal circuito combinatorio a valle, 
@@ -167,11 +188,13 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   Il Flip-flop di tipo D usabile come input e output durante uno stesso ciclo di clock:
   - realizzato ponendo in serie 2 D-latch: il *primo viene detto master* e il *secondo slave*
 
-  Metodologia edge-triggered:
+    [[../../.img/dflip.png]]
+
+Metodologia edge-triggered:
   - rispetto al flip-flop precedente, questo è di tipo *falling triggered*
   - per semplicità, possiamo pensare che la memorizzazione avvenga in maniera istantanea su fronte di discesa del clock C
 
-  [circuito]
+  [[../../.img/dflip2.png]]
 
 * Funzionamento
   1. Il primo latch è aperto e pronto per memorizzare D. Il valore memorizzato Q’ fluisce fuori, 
@@ -199,31 +222,37 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   Registro di stato realizzato con flip-flop che impiegano una metodologia *f*alling edge triggered*
   - durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
 
+[[../../.img/circ.png]]
+
+[[../../.img/circ2.png]]
+
 * Tipi di circuito (Mealy vs Moore)
-  - *INPUT(ti) e OUTPUT(ti)* i valori presenti, rispettivamente, sugli input e gli
+  - $INPUT(t_i)$ e $OUTPUT(t_i)$ i valori presenti, rispettivamente, sugli input e gli
     output dei circuiti combinatori al tempo ti 
-  - *STATE(ti)* i valori presenti nei registri di stato al tempo ti
+  - $STATE(t_i)$ i valori presenti nei registri di stato al tempo ti
 
   *Circuito sequenziale di Mealy*
-  - OUTPUT(ti) = d(INPUT(ti), STATE(ti))
-  - NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti)) 
+  - $OUTPUT(t_i) = d(INPUT(t_i), STATE(t_i))$
+  - $NEXT_STATE(t_i + 1) = l(INPUT(t_i), STATE(t_i))$
   
   *Circuito sequenziale di Moore*
-  - OUTPUT(ti) = d(STATE(ti))
-  - NEXT_STATE(ti+1) = l(INPUT(ti), STATE(ti))
+  - $OUTPUT(t_i) = d(STATE(t_i))$
+  - $NEXT_STATE(t_i+1) = l(INPUT(t_i), STATE(t_i))$
 
   Definiamo quindi i due tipi di circuito:
   
   *Circuito sequenziale di Mealy*
-  - OUTPUT(ti) = d(INPUT(ti), STATE(ti))
+  - $OUTPUT(t_i) = d(INPUT(t_i), STATE(t_i))$
   
   *Circuito sequenziale di Moore*
-  - OUTPUT(ti) = d(STATE(ti))
+  - $OUTPUT(t_i) = d(STATE(t_i))$
   - valore dell’output al tempo ti dipende solo dal valore dei registri di stato
 
-  STATE(ti) modificato alla fine del ciclo di clock precedente (ti-1) in base a:
-  - *input* a quel tempo presenti in ingresso al circuito: INPUT(ti-1)
-  - *stato* a quel tempo memorizzato nei registri: STATE(ti-1)
+  $STATE(t_i)$ modificato alla fine del ciclo di clock precedente $(t_i-1)$ in base a:
+  - *input* a quel tempo presenti in ingresso al circuito: $INPUT(t_i-1)$
+  - *stato* a quel tempo memorizzato nei registri: $STATE(t_i-1)$
+
+    [[../../.img/mvm.png]]
 
 * Sintesi di reti sequenziali
   Per sintetizzare il circuito sequenziale in maniera diretta basta conoscere le *tabelle di verità delle funzioni*:
@@ -236,6 +265,8 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - grafo diretto
   - nodi *(stati)* + archi *(transizioni di stato)*
   - etichette sui nodi e sugli archi (input/output)
+
+[[../../.img/stat.png]]
 
 * Register File
   La *Parte Operativa (Datapath)* della CPU contiene, oltre all’ALU, alcuni registri che memorizzano, all’interno della CPU, 
@@ -251,6 +282,8 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   Nel Datapath della CPU, il clock non entra direttamente nei vari flip-flop:
   - viene messo in *AND* con un segnale di controllo: Write
 
+    [[../../.img/sreg.png]]
+
   * Lettura del Register File
   2 *MUX* 32:1
   - larghi *32* bit
@@ -263,6 +296,10 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - *non significativi*, se i controlli Read Reg1 e Read Reg2 non lo sono
   - in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
 
+    [[../../.img/rreg.png]]
+
+[[../../.img/lreg.png]]
+
 * Scrittura del Register File
   *Decoder* che decodifica il segnale di controllo Write Reg (5 bit)
   - *32* bit in output
@@ -271,6 +308,8 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - il segnale di *Write* è infatti in *AND* con l’output del *Decoder*
 
   Se il segnale di *Write è non affermato*, i possibili valori spuri in input non verranno memorizzati nel *Register file*
+
+  [[../../.img/creg.png]]
 
   * Lettura/Scrittura nel Register File
   *Domanda*: cosa succede se uno stesso registro del Register file viene acceduto in lettura e scrittura 
@@ -281,7 +320,10 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   il valore ritornato dalla lettura sarà quello memorizzato in un ciclo di clock precedente.
 
 * Memoria principale
-  La dimensione del Register File è piccola:
+
+[[../../.img/mem.png]]
+
+La dimensione del Register File è piccola:
   - registri usati per memorizzare singole variabili di tipo semplice
   - purtroppo per memorizzare dati strutturati e codice di programma, sono tipicamente necessari diversi KB o MB
 
@@ -295,7 +337,8 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - è usata per realizzare *memorie veloci*, come le *memorie cache*
   - tempi di accesso intorno a 0,5 - 2,5 ns
 
-  La *DRAM* (Dynamic RAM) è più *capiente ma più lenta*:
+
+La *DRAM* (Dynamic RAM) è più *capiente ma più lenta*:
   - tempi di accesso intorno a 50-70 ns
   - non è realizzata tramite *latch*
   - ogni bit è memorizzato tramite un *condensatore*
@@ -303,14 +346,19 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - è usata per realizzare *memorie capienti* come quella principale
 
 * SRAM
-  SRAM realizzata come matrice di latch *HxW*:
+
+    [[../../.img/sram.png]]
+
+SRAM realizzata come matrice di latch *HxW*:
   - *larghezza* o *ampiezza W* (numero di latch per ogni cella)
   - *altezza H* (numero di celle indirizzabili)
   - per ragioni costruttive *W è spesso piccolo*
   - *singolo indirizzo* per *lettura* o *scrittura*
   - non è possibile *scrivere* e *leggere contemporaneamente*, a differenza del *Register File*
 
-  Esempio 1:
+    [[../../.img/sram2.png]]
+
+Esempio 1:
   - *256K X 1* (256K celle da 1 bit = 256Kb)
 
   Esempio 2:
@@ -329,7 +377,10 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - Dato in output in Dout
 
 * Realizzazione SRAM
-  Tecniche realizzative diverse rispetto a quelle del register file:
+
+[[../../.img/sram3.png]]
+
+Tecniche realizzative diverse rispetto a quelle del register file:
   - il *register file* impiega *decoder* (per selezionare il registro da scrivere) e
     *multiplexer* (per selezionale il registro da leggere)
 
@@ -358,10 +409,14 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - solo se *Output Enable* è affermato, la coppia Dout[0-1] dovrebbe essere abilitata ad uscire 
     (Output Enable in AND con Enable, a sua volta determinato dal decoder)
 
+[[../../.img/sram4.png]]
+
 ** SRAM a due livelli
   Nel caso precedente abbiamo evitato l’uso dei *Multiplexer*, ma rimane il problema del *Decoder* grande
   Per ovviare, decodifica degli indirizzi a due livelli.
   Usiamo un decoder più piccolo e una batteria di piccoli Multiplexer.
+
+[[../../.img/sram5.png]]
 
 ** DRAM
   Gli elementi di memoria di tipo *DRAM* sono *meno costosi* e più capienti rispetto al tipo *SRAM*, ma sono più lenti.
@@ -371,7 +426,9 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
     grazie al segnale affermato della *Word line*
   - la specifica *Word line* è attivata sulla base dell’indirizzo di *memoria richiesto*
 
-  I *condensatori* mantengono i valori memorizzati solo per alcuni *ms*.
+    [[../../.img/dram.png]]
+
+I *condensatori* mantengono i valori memorizzati solo per alcuni *ms*.
   Necessario il *refresh dinamico delle DRAM*, effettuato leggendo, e subito riscrivendo i valori appena letti.
 
 
@@ -383,8 +440,12 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   - indirizzo di *RIGA* ha effetto sul *Decoder*
   - indirizzo di *COLONN*A* ha effetto sul *Mux*
 
+[[../../.img/dram2.png]]
+
   Possibile accesso ottimizzato a *bit* di memoria consecutivi:
   - contenuti nei *column latches* dopo un accesso di RIGA
+
+[[../../.img/dram3.png]]
 
 ** SSRAM e SDRAM
   Abbiamo visto che per diminuire la complessità dei decoder è opportuno suddividere gli indirizzi in 2 blocchi:

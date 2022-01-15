@@ -1,6 +1,7 @@
 #+TITLE: Progetto CPU a singolo ciclo
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Processore: Datapath & Control
 Cerchiamo di progettare un processore MIPS-like semplificato
 in grado di eseguire solo:
@@ -10,6 +11,8 @@ in grado di eseguire solo:
 + Istruzioni di *control-flow*: *beq*, *j*
 
 ** Formati delle istruzioni
+
+[[../../.img/type.png]]
 
 + R-type:
   - *op*             =  6 bit
@@ -37,11 +40,16 @@ in grado di eseguire solo:
 + *immediate*: offset dell'indirizzo (load/store) o valore immediato ( op.aritmetiche )
 + *target address*: indirizzo target di un'istruzione di jump
 
+
+[[../../.img/type2.png]]
+
+[[../../.img/type3.png]]
+
 * Passi di progetto
 
-1) Analizzare il set di istruzioni => verificare i requisiti del datapath
+1) Analizzare il set di istruzioni $\rightarrow$ verificare i requisiti del datapath
    - Il Datapath deve includere gli elementi di memoria corrispondenti ai registri dell'*ISA*
-     - Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l'*ISA* ==> es. *PC( Program counter )*
+     - Tipicamente sono necessari altri registri, usati internamente o non referenziabili direttamente attraverso l'*ISA* $\rightarrow$ es. *PC( Program counter )*
    - Analizza la semantica di ogni istruzione, data in termini di *trasferimenti dai registri*, ed eventuali *operazioni tra i registri*
      - Il datapath deve fornire i cammini per tutti i *register transfer* necessari, e gli accessi alla memoria
 2) Seleziona i vari componenti del datapath (es. ALU) e stabilisci la metodologia di clocking
@@ -61,11 +69,17 @@ in grado di eseguire solo:
    - L'istruzione di *beq* usa l'*ALU* per controllare l'uguaglianza dei registri
 5) Modifica il *PC* e reitera il ciclo
 
-=> l'ALU, il Register File, il PC dovranno far parte del Datapath
+$\rightarrow$ l'ALU, il Register File, il PC dovranno far parte del Datapath
+
+[[../../.img/rtl.png]]
+
+[[../../.img/imp.png]]
 
 * Incremento del PC
 
 Addizionatore aggiuntivo
+
+[[../../.img/pc.png]]
 
 - Necessario per realizzare, all'interno dello steso ciclo di clock
   + Il *Fetch* dell'istruzione
@@ -78,8 +92,77 @@ Addizionatore aggiuntivo
 - Nota che della memoria istruzioni viene letta una nuova isruzione ad ogni ciclo di clock
   - Il segnale di *MemRead* deve essere sempre *affermato*
 
+[[../../.img/pc2.png]]
+
+* Calcolo dell'indirizzo di Branch
+Ulteriore addizionatore $\rightarrow$ ancora risorse replicate
+
++ necessario per realizzare il calcolo dell'indirizzo di salto di branch
+
+  [[../../.img/pc3.png]]
+
+  [[../../.img/pc4.png]]
+
+  [[../../.img/pc5.png]]
+
+* Controllo ALU
+
+Dobbiamo definire il circuito di controllo per calcolare i *4bit di controllo dell'ALU* (*operation*) da assegnare come segue in base al tipo di istruzione, ovvero ai campi *op* e *funct* dell'istruzione
+
+[[../../.img/is.png]]
+
++ Il circuito sarà a 2 livelli
+  - Il primo livello calcolerà $ALUOp = ( ALUOp_{1} \; ALUOp_{0} )$ in base all'*op* code
+  - Il secondo livello calcolerà effettivamente *operation* in base al campo *funct* e a *ALUOp*
+
++ Il circuito di primo livello dovrà semplicemente definire la configurazione dei bit $(ALUOp_{1} \; ALUOp_{0})$ sulla base di *op*
+
+  [[../../.img/ctrl.png]]
+
+  [[../../.img/ctrl2.png]]
+
++ Definiamo ora la tabella di verità che sulla base di *ALUOp* e *funct* determina i 3 bit del controllo dell'ALU (*operation*)
+
+[[../../.img/ctrl3.png]]
+
++ A partire dalla tabella qui sopra possiamo definire il circuito *ALUControl* per il calcolo di *Operation*
+
+  + Operation 0
+    [[../../.img/op0.png]]
+
+  + Operation 1
+    [[../../.img/op1.png]]
+
+  + Operation 2
+    [[../../.img/op2.png]]
+
+  + Operation 3
+    [[../../.img/op3.png]]
+
+
+[[../../.img/dc.png]]
+
+* Datapath esteso per l'esecuzione delle Jump
+[[../../.img/dj.png]]
+
+* Componenti CPU (Datapath + Control) e Memoria
+[[../../.img/cp.png]]
 
 * Controllo a singolo ciclo
+
+Il controllo per la realizzazione a singolo ciclo è molto semplice
+
++ Definito da una coppia di tabelle di verità
++ Circuito *combinatorio*
+
+Il circuito principale si basa sul *codice dell'operazione* da eseguire
+[[../../.img/cts.png]]
+
+Il controllo secondario determina l'ingresso all'ALU, ovvero il segnale *Operation*
+
+[[../../.img/cts2.png]]
+
+[[../../.img/cts3.png]]
 
 Il controllo della CPU a singolo ciclo è *combinatorio*
 Il *Datapath* è invece sequenziale
@@ -101,6 +184,8 @@ Ciclo di clock determinato sulla base del cammino più lungo che i segnali elett
 
 * Determiniamo il ciclo di clock per LW
 
+[[../../.img/clw.png]]
+
 Ipotiziamo i costi in ns per le varie componenti
 + Mem. Istr/Dati: 200 ps
 + Reg. File: 100 ps
@@ -112,38 +197,14 @@ Consideriamo l'istruzione *LW*, che abbiamo detto essere la più costosa
 - Ciclo di clock lungo 800 ps
 
 * Problemi con il singolo ciclo
+
 Il ciclo singolo e di lunghezza fissa *penalizza le istruzioni veloci*
 
 Anche se complesso, si potrebbe realizzare una CPU a ciclo di clock *variabile*
 con i seguenti vantaggi:
 + Istruzioni diverse dalla *LW* eseguite in un tempo < 8 ns, mentre se il ciclo è fisso sarebbero sempre necessari 8 ns
 
-** Controllo ALU
-  Dobbiamo definire il circuito che definisce i *4-bit di controllo* dell'ALU (operation) da assegnare in base al
-  tipo di istruzione, ovvero basandosi sui campi *op* e *funct*:
-  + 0000 operazione di and
-  + 0001 operazione di or
-  + 0010 operazione di add, lw, sw
-  + 0110 operazione di sub e beq
-  + 0111 operazione di slt
-
-  Il circuito sarà a due livelli:
-  1. 1° livello calcolerà ALUOp (ALUOp0 ALUOp1) in base all'*op* code
-  2. 2° livello calcolerà affettivamente Operation in base al campo funct e ALUOp
-
-  Il circuito di 1° livello dovrà semplicemente definire la configurazione dei bit (ALUOp1 ALUOp0) sulla base di op:
-  + 00 se lw, sw (Operation=0010) (somma)
-  + 01 se beq (Operation=0110) (sottrazione)
-  + 10 se arithmetic/logic (Operation dipende dalla specifica istruzione definita dai bit nel funct)
-
-  Definiamo ora la tabella di verità che sulla base di ALUOp e funct determina i 3 bit del controllo dell’ALU:
-  + Operation0 = (F3 or F0) and ALUOp1
-  + Operation1 = ~F2 or ~ALUOp1
-  + Operation2 = (F1 and ALUOp1) or AluOp0
-  + Operation3 è sempre a 0
-
-
-
+  [[../../.img/pb.png]]
 
 * Ciclo fisso vs variabile
 Si consideri di conoscere che in un generico programma, le istruzioni sono combinate in accordo a questo mix:
@@ -154,16 +215,15 @@ Si consideri di conoscere che in un generico programma, le istruzioni sono combi
 - 2%  *jump*
 
 Quale è la lunghezza media ( *periodo medio* ) del ciclo di clock nell'implementazione a ciclo variabile?
-+ *Periodo medio* = 800 x 24% + 700 x 12% + 600 x 44% + 500 x 18% + 200 x 2% = 630 ps
++ *Periodo medio* = $800 \times 24% + 700 \times 12% + 600 \times 44% + 500 \times 18% + 200 \times 2% = 630$ ps
 
 Le prestazioni della CPU sono calcolabili rispetto a NI ( Numero Istruzioni eseguite da un programma )
 
-- T_var = NI x periodo = NI x 630 ( variabile )
-- T_fisso = NI x periodo = NI x 800 ( fisso )
+- $T_{var} = NI \times periodo = NI \times 630$ ( variabile )
+- $T_{fisso} = NI \times periodo = NI \times 800$ ( fisso )
 
-Facendo il rapporto: T_fisso / T_var = 800 / 630 = 1.27
+Facendo il rapporto: $T_{fisso} / T_{var} = 800 / 630 = 1.27$
 
 Quindi possiamo dire che l'implementazione a clock variablie è l'1.27 volte più veloce!
 
 Se consideriamo istruzioni più complesse della *LW*, come leistruzioni *FP* di moltiplicazione. l'implementazione a ciclo fisso risulta ulteriormente *penalizzata*
-

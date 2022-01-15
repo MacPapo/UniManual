@@ -1,9 +1,9 @@
 #+TITLE: Circuiti combinatori: ALU
 #+AUTHOR: Jacopo Costantini & Matteo Zambon
 
+
 * Alu
-  *Arithmetic Logic Unit*
-  È un circuito combinatorio all'interno del processore per l'esecuzione di
+  *Arithmetic Logic Unit* è un circuito combinatorio all'interno del processore per l'esecuzione di
   *istruzioni macchina* di tipo *aritmetico/logiche*
 
   Esempi di istruzioni aritmetico/logiche:
@@ -33,19 +33,22 @@
 ** Addizionatore
    L'ALU deve includere un addizionatore per realizzare le somme di numeri interi in complemento a 2
 
-   Circuito combinatorio che implementa un addizionatore a *n* bit
-   - Dati *2 x n* input:  A_n-1 ... A_0  B_n-1 ... B_0
-   - *n + 1* diverse funzioni di output: *Rip C_n-1* ... C_0
+Circuito combinatorio che implementa un addizionatore a *n* bit
+   - Dati *2 x n* input:  $A_n-1\; ...\; A_0\;  B_n-1\; ...\; B_0$
+   - *n + 1* diverse funzioni di output: $Rip\; C_{n-1}\;  ...\; C_0$
    - Solo due livelli di logica, ma con porte *AND* e *OR* con molti input
      - *Fan-in* delle porte molto elevato (non ammissibile)
 
-   Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequenza
+       [[../../.img/add.png]]
+
+Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequenza
    - Il segnale deve attraversare più livelli di logica
    - Porte con *fan-in* limitato (*ammissibile*)
    - Circuito che usa lo stesso metodo usato dall'algoritmo carta e penna a cui siamo abituati
 
    La tabella di verità dell'addizionatore a singolo bit
-   [Inserire tabella]
+
+   [[../../.img/adde.png]]
 
    La funzione *SUM* non può essere semplificata
    - Ben 4 porte *AND*
@@ -62,6 +65,10 @@
     - *SUM = (A xor B) xor RIP*
     - *RIP_OUT = A B + (A xor B) RIP*
 
+      [[../../.img/xor.png]]
+
+      [[../../.img/xor2.png]]
+
 *** 1-bit ALU
     1-bit ALU usata per eseguire le istruzioni macchina seguenti:
     #+BEGIN_EXAMPLE asm
@@ -73,14 +80,18 @@
     - *OPERATION* è un *segnale di controllo* a 2bit usato per selezionare quale ingresso
       del multiplexer deve uscire
       - Determina il tipo di operazione che l'ALU deve eseguire
-    - *l'ALU* è la tipica componente che fa parte dek *DATAPATH (Parte operativa)* del processore
+    - *l'ALU* è la tipica componente che fa parte del *DATAPATH (Parte operativa)* del processore
     - La *Parte Controllo* comanda l'esecuzione delle varie istruzioni
       - Settando opportunamente i segnali di controllo dell'ALU (e delle altre componenti della *Parte Operativa*)
+
+    [[../../.img/1balu.png]]
 
 *** 32-bit ALU
     Catena di 1-bit ALU con *Propagazione del Carry*
     Segnali di controllo per determinare l'operazione che l'ALU deve eseguire
     - *OPERATION*: propagato a tutte le 1-bit ALU
+
+      [[../../.img/32bitalu.png]]
 
 ** Inversione e sottrazione
    La 1-bit ALU precedente può essere resa più complessa per poter eseguire:
@@ -94,14 +105,19 @@
      + *Invertire* il secondo operando e *sommare 1*
      + Per sommare 1, basta porre ad 1 il *carry-in* dell'ALU
 
+  [[../../.img/inve.png]]
+
 * Implementazione NOR
   Per implementare *a NOR b* utilizziamo le proprietà dell'algebra per riutilizzare in parte
   le porte già presenti invece di introdurre una nuova porta
 
-  *a NOR b = NOT (a + b) = deMorgan*
+  $\\a\; NOR\; b = NOT\; (a + b) = deMorgan\\$
+  $\\(NOT\; a)\; AND\; (NOT\; b)\\$
 
-  *(NOT a) AND (NOT b)*
+  [[../../.img/tnor.png]]
+  [[../../.img/nor2.png]]
 
+* Istruzioni di confronto
   slt $2, $3, $4 (set less than)
   - $2 = 1 se è vero che $3 < $4
   - $2 = 0 altrimenti
@@ -116,7 +132,8 @@
 
   Tutte le *1-bit ALU* devono quindi avere un *ingresso in più*
   - L'input *LESS*, che verrà posto a 0 o a 1 sulla base del risultato dell'istruzione *slt*
-    
+
+    [[../../.img/conf.png]]
   
 * 1-bit ALU per il bit più significativo
   La 1-bit ALU che determina la cifra più significativa è più complessa poichè
@@ -131,18 +148,25 @@
   - I segni degli operandi
   - Il segno del risultato
 
+[[../../.img/sin.png]]
+
 * ALU complessiva
   Output *set* dell'ultima 1-bit ALU viene ridiretto sull'input *LESS* della prima 1-bit ALU
 
   Tutti i bit *LESS* delle varie 1-bit ALU (eccetto la prima) vengono posti a 0
 
-  
+  [[../../.img/aluc.png]]
+
+  [[../../.img/taluc.png]]
+
 ** Segnali di controllo
    
-*** Binvert e CarryIn
++ *Binvert e CarryIn*
+
     Vengono entrambi *asserted* (affermati) per sottrarre (*sub* e *slt*)
 
-*** Bit di Operation
++ *Bit di Operation*
+
     I bit di Operation sono posti a 11 per far passare in output l'ultimo bit in ingresso ai *Multiplexer 4:1*
 
 * SLT e OVERFLOW
@@ -151,32 +175,38 @@
 
   Caso di malfunzionamento relativo a *slt*:  *slt X2, X3, X4*
 
-  se X3 > 0 e X4 < 0
-  - potremmo concludere direttamente che è vero che X3 > X4 ==> X2 = 0
+  se $X3 > 0$ e $X4 < 0$
+  - potremmo concludere direttamente che è vero che
+    $X3 > X4 \longrightarrow X2 = 0$
 
-  Se invece *sottraiamo* per implementare *slt*, finiamo per sommare due numeri positivi (*X3 + (-X4)*)
+  Se invece *sottraiamo* per implementare *slt*, finiamo per sommare due numeri positivi
+  $(X3 + (-X4))$
   - potremmo avere *overflow*, ottenendo così un bit di segno (*SET*) non valido
     (uguale a 1, invece che uguale a 0)
 
-  Un ragionamento analogo può essere fatto nel caso in cui X3 < 0 e X4 > 0
+  Un ragionamento analogo può essere fatto nel caso in cui
+  $X3 < 0$ e $X4 > 0$
   
 * Circuito per SLT
   *Set* deve essere determinato in modo da evitare il malfunzionamento precedente,
   relativo a un overflow non voluto
   Siano
-  - *a = a_31 ... a_0* e *b = b_31 ... b_0* i due numeri da confrontare
-  - *res = res_31 ... res_0* il risultato degli 1-bit *adder*
-  - *c = c_31 ... c_0* il risultato della ALU, che potrà solo essere:
+  - $a = a_31\; ...\; a_0\;$ e $b = b_31\; ...\; b_0*$ i due numeri da confrontare
+  - $res = res_31\; ...\; res_0$ il risultato degli 1-bit *adder*
+  - $c = c_31\; ...\; c_0$ il risultato della ALU, che potrà solo essere:
     + 0.....01 oppure 0....00
 
-  Se *a >= 0* e *b < 0*, allora *a > b*, e possiamo porre direttamente *Set = 0*
-  Se *a < 0* e *b >= 0*, allora *a < b*, e possiamo porre direttamente *set = 1*
+
+  Se $a \geq 0$ e $b < 0$, allora $a > b$, e possiamo porre direttamente *Set = 0*
+  Se $a < 0$ e $b \leq 0$, allora $a < b$, e possiamo porre direttamente *Set = 1*
   - Nei 2 casi di sopra, all'ALU viene comandato di eseguire una sottrazione, ma l'eventuale
     *OVERFLOW* verrà *ignorato*
 
-  Se *a > 0* e *b > 0*, oppure se *a < 0* e *b < 0*, allora
+  Se $a > 0$ e $b > 0$, oppure se $a < 0$ e $b < 0$, allora
   - Possiamo considerare il risultato della sottrazione, e possiamo porre *SET = res_31*
   - In questi casi *non* si può verificare *OVERFLOW*, per cui *res_31*, conterrà il bit di segno corretto
+
+    [[../../.img/slt.png]]
 
 * ALU FINALE
   Abbiamo risparmiato un bit di controllo
@@ -189,8 +219,9 @@
   + devo controllare se
     - Posso comandare all'ALU di sottrarre, e controllare se
       - *a - b = 0* oppure se *a - b != 0*
-  + Zero = 1 <==> a - b == 0 (a = b)
+  + Zero = $1 \iff a - b = 0 \cdot (a = b)$
 
+    [[../../.img/aluf.png]]
     
 ** Simboli usati per per rappresentare la ALU nella CPU
    
@@ -198,14 +229,15 @@
     comprende i segnali di controllo *Anegate*, *Bnegate* e *Operation*
     Gli ingressi a, b e l'uscita *RESULT* sono a 32bit.
 
-    [Inserire tabella]
+[[../../.img/calu.png]]
 
     
 * ALU e Somma veloce
   Considerazioni sulla velocità dell'ALU nell'eseguire la somma:
   - L'ingresso *CarryIn* di ogni 1-bit adder dipende dal valore calcolato dall'1-bit adder precedente
   - Il bit più significativo della somma deve quindi attendere 32 volte il tempo di attraversamento
-    del segnale attraverso i vari *sommatori ==> LENTO*
+    del segnale attraverso i vari
+    *sommatori $\rightarrow$ LENTO*
 
   ...ci sono metodi per velocizzare il calcolo del riporto?
   - Si, il *metodo del Carry Lookahead*
