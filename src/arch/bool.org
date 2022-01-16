@@ -28,7 +28,7 @@
   - Il circuito calcola una o più *funzioni logiche*, ciascuna espriminile tramite una
     combinazione di operazioni dell'algebra di Boole *sulle variabili in input*
 
-    [[../.img/bl.png]]
+    [[../../img/bl.png]]
 
 * Circuiti combinatori/sequenziali
   Circuiti combinatorio
@@ -48,9 +48,9 @@
    - Per ogni bit in output, la tabella contiene una colonna, con un valore definito per ognuna
      combinazione dei bit in input
 
-     [[../.img/tb1.png]]
+     [[../../img/tb1.png]]
 
-     [[../.img/ab.png]]
+     [[../../img/ab.png]]
 
 ** Proprietà dell'algebra di Boole
    Proprietà:
