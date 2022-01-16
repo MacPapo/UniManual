@@ -35,16 +35,16 @@
     - Le $log_2n$ variabili in input della funzione logica diventano
     i segnali di controllo del multiplexer
 
-    [[../../.img/mult.png]]
+    [[../img/mult.png]]
 
-    [[../../.img/mult2.png]]
+    [[../img/mult2.png]]
 
   + Ogni riga della tabella di verità
     - Corrisponde ad uno degli *n input del multiplexer*, collegari
       ad un generatore di tensione ( o alla terra )
     - se l'output, associato alla riga della tabella di verità, è 1 o 0
 
-      [[../../.img/mult3.png]]
+      [[../img/mult3.png]]
 
   Grande spreco di porte
   + Circuito /fully encoded/
@@ -58,7 +58,7 @@
 
   $C = A \sim S + BS$
 
-  [[../../.img/mult4.png]]
+  [[../img/mult4.png]]
 
 * Demultiplexer
   Da 1 singola linea in *input*, a n linee in output
@@ -69,7 +69,7 @@
     - Uno solo output dovrà essere uguale a 1m tutti gli altri saranno 0
     - L'output da affermare dipende da S
 
-      [[../../.img/demult.png]]
+      [[../img/demult.png]]
 
 
 * Decoder
@@ -79,7 +79,7 @@
     + Solo il bit in output di indice i (i = 0, 1, ..., 2^n-1) verrà posto ad 1
     + Tutti gli altri verranno posti a 0 
 
-    [[../../.img/demult2.png]]
+    [[../img/demult2.png]]
 
 * PLA
   *Programmable Logic Array*
@@ -87,15 +87,15 @@
   - Permette di costruire funzioni in forma *SP*
     - Porte *AND* al primo livello, e porte *OR* al secondo livello
 
-    [[../../.img/pla.png]]
+    [[../img/pla.png]]
 
   - *n input* e *o output*
     + *m porte AND* ==> *m* fissa un limite al numero di *mintermini* esprimibili
     + *o porte OR*  ==> *o* fissa un limite al numero di funzioni differenti in forma canonica *SP*
 
-    [[../../.img/pla2.png]]
+    [[../img/pla2.png]]
 
-    [[../../.img/pla3.png]]
+    [[../img/pla3.png]]
 
 * ROM
   Memoria usabili anche per implementare, in maniera non minima, funzioni logiche arbitrarie
@@ -118,4 +118,4 @@
   + Funzioni *Fully Encoded*
   + *PLA* più efficiente
 
-    [[../../.img/rom.png]]
+    [[../img/rom.png]]

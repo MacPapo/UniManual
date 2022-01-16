@@ -39,7 +39,7 @@ Circuito combinatorio che implementa un addizionatore a *n* bit
    - Solo due livelli di logica, ma con porte *AND* e *OR* con molti input
      - *Fan-in* delle porte molto elevato (non ammissibile)
 
-       [[../../.img/add.png]]
+       [[../img/add.png]]
 
 Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequenza
    - Il segnale deve attraversare più livelli di logica
@@ -48,7 +48,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
 
    La tabella di verità dell'addizionatore a singolo bit
 
-   [[../../.img/adde.png]]
+   [[../img/adde.png]]
 
    La funzione *SUM* non può essere semplificata
    - Ben 4 porte *AND*
@@ -65,9 +65,9 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
     - *SUM = (A xor B) xor RIP*
     - *RIP_OUT = A B + (A xor B) RIP*
 
-      [[../../.img/xor.png]]
+      [[../img/xor.png]]
 
-      [[../../.img/xor2.png]]
+      [[../img/xor2.png]]
 
 *** 1-bit ALU
     1-bit ALU usata per eseguire le istruzioni macchina seguenti:
@@ -84,14 +84,14 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
     - La *Parte Controllo* comanda l'esecuzione delle varie istruzioni
       - Settando opportunamente i segnali di controllo dell'ALU (e delle altre componenti della *Parte Operativa*)
 
-    [[../../.img/1balu.png]]
+    [[../img/1balu.png]]
 
 *** 32-bit ALU
     Catena di 1-bit ALU con *Propagazione del Carry*
     Segnali di controllo per determinare l'operazione che l'ALU deve eseguire
     - *OPERATION*: propagato a tutte le 1-bit ALU
 
-      [[../../.img/32bitalu.png]]
+      [[../img/32bitalu.png]]
 
 ** Inversione e sottrazione
    La 1-bit ALU precedente può essere resa più complessa per poter eseguire:
@@ -105,7 +105,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
      + *Invertire* il secondo operando e *sommare 1*
      + Per sommare 1, basta porre ad 1 il *carry-in* dell'ALU
 
-  [[../../.img/inve.png]]
+  [[../img/inve.png]]
 
 * Implementazione NOR
   Per implementare *a NOR b* utilizziamo le proprietà dell'algebra per riutilizzare in parte
@@ -114,8 +114,8 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
   $\\a\; NOR\; b = NOT\; (a + b) = deMorgan\\$
   $\\(NOT\; a)\; AND\; (NOT\; b)\\$
 
-  [[../../.img/tnor.png]]
-  [[../../.img/nor2.png]]
+  [[../img/tnor.png]]
+  [[../img/nor2.png]]
 
 * Istruzioni di confronto
   slt $2, $3, $4 (set less than)
@@ -133,7 +133,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
   Tutte le *1-bit ALU* devono quindi avere un *ingresso in più*
   - L'input *LESS*, che verrà posto a 0 o a 1 sulla base del risultato dell'istruzione *slt*
 
-    [[../../.img/conf.png]]
+    [[../img/conf.png]]
   
 * 1-bit ALU per il bit più significativo
   La 1-bit ALU che determina la cifra più significativa è più complessa poichè
@@ -148,16 +148,16 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
   - I segni degli operandi
   - Il segno del risultato
 
-[[../../.img/sin.png]]
+[[../img/sin.png]]
 
 * ALU complessiva
   Output *set* dell'ultima 1-bit ALU viene ridiretto sull'input *LESS* della prima 1-bit ALU
 
   Tutti i bit *LESS* delle varie 1-bit ALU (eccetto la prima) vengono posti a 0
 
-  [[../../.img/aluc.png]]
+  [[../img/aluc.png]]
 
-  [[../../.img/taluc.png]]
+  [[../img/taluc.png]]
 
 ** Segnali di controllo
    
@@ -206,7 +206,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
   - Possiamo considerare il risultato della sottrazione, e possiamo porre *SET = res_31*
   - In questi casi *non* si può verificare *OVERFLOW*, per cui *res_31*, conterrà il bit di segno corretto
 
-    [[../../.img/slt.png]]
+    [[../img/slt.png]]
 
 * ALU FINALE
   Abbiamo risparmiato un bit di controllo
@@ -221,7 +221,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
       - *a - b = 0* oppure se *a - b != 0*
   + Zero = $1 \iff a - b = 0 \cdot (a = b)$
 
-    [[../../.img/aluf.png]]
+    [[../img/aluf.png]]
     
 ** Simboli usati per per rappresentare la ALU nella CPU
    
@@ -229,7 +229,7 @@ Soluzione di compromesso, basato su una serie di *1-bit adder* collegati in sequ
     comprende i segnali di controllo *Anegate*, *Bnegate* e *Operation*
     Gli ingressi a, b e l'uscita *RESULT* sono a 32bit.
 
-[[../../.img/calu.png]]
+[[../img/calu.png]]
 
     
 * ALU e Somma veloce

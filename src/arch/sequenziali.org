@@ -20,7 +20,7 @@
   - Si, un elemento in grado di memorizzare un singolo bit è il *LATCH*
 
 * S-R Latch
-[[../../.img/srlatch.png]]
+[[../img/srlatch.png]]
 
 L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - *S* sta per *Set*
@@ -29,7 +29,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - l'*output* è infatti il valore memorizzato nel latch
   - verificare che il latch a *sinistra memorizza il valore 0*, mentre quello a *destra il valore 1*
 
-[[../../.img/srlatch2.png]]
+[[../img/srlatch2.png]]
 
   Poniamo per esempio (S,R)=(1,0) per effettuare il *setting del latch a sinistra*
   - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando S=0)
@@ -38,7 +38,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - il valore memorizzato passa da 0 a 1 (e viene poi mantenuto riportando R=0)
 
 
-[[../../.img/srlatch3.png]]
+[[../img/srlatch3.png]]
 
   La combinazione (S,R) = (0,0) viene detta combinazione di riposo, 
   perché semplicemente mantiene il valore memorizzato in precedenza
@@ -59,7 +59,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
                 - il clock determina il ritmo dei calcoli e delle relative operazioni di memorizzazione
                 - il ciurcuito diventa sincrono
 
-  [[../../.img/cl.png]]
+  [[../img/cl.png]]
 
 * Unità di misura
   Se il periodo T è espresso in *sec*
@@ -75,7 +75,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
 
 * Latch clockato (D-latch)
 
-[[../../.img/dlatch.png]]
+[[../img/dlatch.png]]
 
 *D=1* corrisponde al *setting*
   -S=1 e R=0
@@ -92,7 +92,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   Se il segnale C fosse invertito (porta NOT aggiuntiva), il latch memorizzerebbe sul valore basso del clock 
   (cioè quando il clock è deasserted)
 
-  [[../../.img/ddlatch2.png]]
+  [[../img/ddlatch2.png]]
 
 * Diagramma temporale del D-latch
   Il segnale D, ottenuto solitamente come output di un circuito combinatorio
@@ -100,7 +100,7 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - deve rimanere stabile per tutta la durata del livello alto di C (Setup time)
   - deve infine rimanere stabile per un altro periodo di tempo per evitare malfunzionamenti (Hold time)
 
-    [[../../.img/ddlatch.png]]
+    [[../img/ddlatch.png]]
 
 ** Ritardi nella propagazione dei segnali nei circuiti
   I circuiti reali hanno *ritardi non-nulli*, che dipendono dai cammini, ovvero delle porte e dai fili, attraversati
@@ -109,15 +109,15 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
   - questo fenomeno è noto come glitch
   - dopo un certo intervallo, con alta probabilità i segnali si stabilizzano
 
-  [[../../.img/rit.png]]
+  [[../img/rit.png]]
 
 * Periodo del ciclo di clock
   Il periodo T deve essere scelto abbastanza lungo affinché l’output del circuito combinatorio si stabilizzi
   - deve essere stabile un po’ prima D del periodo di apertura del latch C (setup time), e lo deve rimanere per un certo tempo (hold time)
 
-  [[../../.img/cl2.png]]
+  [[../img/cl2.png]]
 
-  [[../../.img/cl3.png]]
+  [[../img/cl3.png]]
 
 * D-latch clockato: fenomeno della trasparenza
   Osserviamo il seguendo comportamente del D-latch clockato:
@@ -130,11 +130,11 @@ L'*S-R Latch* è un circuito composto da 2 porte NOR concatenate
 
   Questo comportamento è noto come *trasparenza* del latch
 
-[[../../.img/dlatch3.png]]
+[[../img/dlatch3.png]]
 
 * Elemento di memoria usato come input e output
 
-[[../../.img/el.png]]
+[[../img/el.png]]
 
 Durante ogni periodo di clock
   - il circuito combinatorio dovrebbe calcolare una funzione sulla base dell'attuale valore *dell'elemento di memoria* (stato del circuito)
@@ -142,7 +142,7 @@ Durante ogni periodo di clock
   - il nuovo valore memorizzato dovebbe essere usato come *input del circuito di durante il ciclo di clock successivo*
 
 
-  [[../../.img/el2.png]]
+  [[../img/el2.png]]
 
 l'*elemento di memoria* deve essere usato sia come input che come output durante lo stesso ciclo di clock.
 
@@ -162,15 +162,15 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
       non faccia in tempo ad arrivare a causa dell’istantaneità della memorizzazione
     + gli elementi di memoria di tipo edge-triggered si chiamano flip-flop
 
-[[../../.img/time.png]]
+[[../img/time.png]]
 
 ** Generatore di impulsi
   Il generatore di impulsi permette appunto di *generare impulsi brevissimi*
   in corrispondenza del fronte di salita di un segnale a gradino
 
-[[../../.img/gen.png]]
+[[../img/gen.png]]
 
-[[../../.img/gen2.png]]
+[[../img/gen2.png]]
 
 * Flip-Flop semplice con generato di impulsi
   Il *flip - flop semplice memorizza istantaneamente* il valore di D (input) sul fronte di salita del clock: 
@@ -178,7 +178,7 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
 
   Metodologia edge-triggered di tipo *rising triggered*.
 
-  [[../../.img/flip.png]]
+  [[../img/flip.png]]
 
   Il segnale *memorizzato comincia a fluire subito fuori dal flip-flop*.
   Causa brevità dell’impulso, il segnale “non fa però in tempo” a entrare/uscire nel/dal circuito combinatorio a valle, 
@@ -188,13 +188,13 @@ entrare nel circuito, e un valore scorretto potrebbe finire per essere memorizza
   Il Flip-flop di tipo D usabile come input e output durante uno stesso ciclo di clock:
   - realizzato ponendo in serie 2 D-latch: il *primo viene detto master* e il *secondo slave*
 
-    [[../../.img/dflip.png]]
+    [[../img/dflip.png]]
 
 Metodologia edge-triggered:
   - rispetto al flip-flop precedente, questo è di tipo *falling triggered*
   - per semplicità, possiamo pensare che la memorizzazione avvenga in maniera istantanea su fronte di discesa del clock C
 
-  [[../../.img/dflip2.png]]
+  [[../img/dflip2.png]]
 
 * Funzionamento
   1. Il primo latch è aperto e pronto per memorizzare D. Il valore memorizzato Q’ fluisce fuori, 
@@ -222,9 +222,9 @@ Metodologia edge-triggered:
   Registro di stato realizzato con flip-flop che impiegano una metodologia *f*alling edge triggered*
   - durante il periodo ti, il prossimo stato viene calcolato ovvero lo stato al tempo ti+1, ma viene memorizzato solo in corrispondenza del fronte di discesa del clock
 
-[[../../.img/circ.png]]
+[[../img/circ.png]]
 
-[[../../.img/circ2.png]]
+[[../img/circ2.png]]
 
 * Tipi di circuito (Mealy vs Moore)
   - $INPUT(t_i)$ e $OUTPUT(t_i)$ i valori presenti, rispettivamente, sugli input e gli
@@ -252,7 +252,7 @@ Metodologia edge-triggered:
   - *input* a quel tempo presenti in ingresso al circuito: $INPUT(t_i-1)$
   - *stato* a quel tempo memorizzato nei registri: $STATE(t_i-1)$
 
-    [[../../.img/mvm.png]]
+    [[../img/mvm.png]]
 
 * Sintesi di reti sequenziali
   Per sintetizzare il circuito sequenziale in maniera diretta basta conoscere le *tabelle di verità delle funzioni*:
@@ -266,7 +266,7 @@ Metodologia edge-triggered:
   - nodi *(stati)* + archi *(transizioni di stato)*
   - etichette sui nodi e sugli archi (input/output)
 
-[[../../.img/stat.png]]
+[[../img/stat.png]]
 
 * Register File
   La *Parte Operativa (Datapath)* della CPU contiene, oltre all’ALU, alcuni registri che memorizzano, all’interno della CPU, 
@@ -282,7 +282,7 @@ Metodologia edge-triggered:
   Nel Datapath della CPU, il clock non entra direttamente nei vari flip-flop:
   - viene messo in *AND* con un segnale di controllo: Write
 
-    [[../../.img/sreg.png]]
+    [[../img/sreg.png]]
 
   * Lettura del Register File
   2 *MUX* 32:1
@@ -296,9 +296,9 @@ Metodologia edge-triggered:
   - *non significativi*, se i controlli Read Reg1 e Read Reg2 non lo sono
   - in tal caso, i circuiti che potenzialmente potrebbero usarli, devono ignorali
 
-    [[../../.img/rreg.png]]
+    [[../img/rreg.png]]
 
-[[../../.img/lreg.png]]
+[[../img/lreg.png]]
 
 * Scrittura del Register File
   *Decoder* che decodifica il segnale di controllo Write Reg (5 bit)
@@ -309,7 +309,7 @@ Metodologia edge-triggered:
 
   Se il segnale di *Write è non affermato*, i possibili valori spuri in input non verranno memorizzati nel *Register file*
 
-  [[../../.img/creg.png]]
+  [[../img/creg.png]]
 
   * Lettura/Scrittura nel Register File
   *Domanda*: cosa succede se uno stesso registro del Register file viene acceduto in lettura e scrittura 
@@ -321,7 +321,7 @@ Metodologia edge-triggered:
 
 * Memoria principale
 
-[[../../.img/mem.png]]
+[[../img/mem.png]]
 
 La dimensione del Register File è piccola:
   - registri usati per memorizzare singole variabili di tipo semplice
@@ -347,7 +347,7 @@ La *DRAM* (Dynamic RAM) è più *capiente ma più lenta*:
 
 * SRAM
 
-    [[../../.img/sram.png]]
+    [[../img/sram.png]]
 
 SRAM realizzata come matrice di latch *HxW*:
   - *larghezza* o *ampiezza W* (numero di latch per ogni cella)
@@ -356,7 +356,7 @@ SRAM realizzata come matrice di latch *HxW*:
   - *singolo indirizzo* per *lettura* o *scrittura*
   - non è possibile *scrivere* e *leggere contemporaneamente*, a differenza del *Register File*
 
-    [[../../.img/sram2.png]]
+    [[../img/sram2.png]]
 
 Esempio 1:
   - *256K X 1* (256K celle da 1 bit = 256Kb)
@@ -378,7 +378,7 @@ Esempio 1:
 
 * Realizzazione SRAM
 
-[[../../.img/sram3.png]]
+[[../img/sram3.png]]
 
 Tecniche realizzative diverse rispetto a quelle del register file:
   - il *register file* impiega *decoder* (per selezionare il registro da scrivere) e
@@ -409,14 +409,14 @@ Tecniche realizzative diverse rispetto a quelle del register file:
   - solo se *Output Enable* è affermato, la coppia Dout[0-1] dovrebbe essere abilitata ad uscire 
     (Output Enable in AND con Enable, a sua volta determinato dal decoder)
 
-[[../../.img/sram4.png]]
+[[../img/sram4.png]]
 
 ** SRAM a due livelli
   Nel caso precedente abbiamo evitato l’uso dei *Multiplexer*, ma rimane il problema del *Decoder* grande
   Per ovviare, decodifica degli indirizzi a due livelli.
   Usiamo un decoder più piccolo e una batteria di piccoli Multiplexer.
 
-[[../../.img/sram5.png]]
+[[../img/sram5.png]]
 
 ** DRAM
   Gli elementi di memoria di tipo *DRAM* sono *meno costosi* e più capienti rispetto al tipo *SRAM*, ma sono più lenti.
@@ -426,7 +426,7 @@ Tecniche realizzative diverse rispetto a quelle del register file:
     grazie al segnale affermato della *Word line*
   - la specifica *Word line* è attivata sulla base dell’indirizzo di *memoria richiesto*
 
-    [[../../.img/dram.png]]
+    [[../img/dram.png]]
 
 I *condensatori* mantengono i valori memorizzati solo per alcuni *ms*.
   Necessario il *refresh dinamico delle DRAM*, effettuato leggendo, e subito riscrivendo i valori appena letti.
@@ -440,12 +440,12 @@ I *condensatori* mantengono i valori memorizzati solo per alcuni *ms*.
   - indirizzo di *RIGA* ha effetto sul *Decoder*
   - indirizzo di *COLONN*A* ha effetto sul *Mux*
 
-[[../../.img/dram2.png]]
+[[../img/dram2.png]]
 
   Possibile accesso ottimizzato a *bit* di memoria consecutivi:
   - contenuti nei *column latches* dopo un accesso di RIGA
 
-[[../../.img/dram3.png]]
+[[../img/dram3.png]]
 
 ** SSRAM e SDRAM
   Abbiamo visto che per diminuire la complessità dei decoder è opportuno suddividere gli indirizzi in 2 blocchi:

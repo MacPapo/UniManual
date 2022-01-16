@@ -24,7 +24,7 @@
     e su questa base *esegue* l'istruzione
   - *CPU* determina la *prossima* istruzione e ripetere il ciclo
 
-    [[../../.img/st.png]]
+    [[../img/st.png]]
 
 * Livello di astrazione
   Livelli e Linguaggi
@@ -34,7 +34,7 @@
 
   Il linguaggio più astratto omette dettagli, ma ci permette di trattare la complessità
 
-  [[../../.img/astr.png]]
+  [[../img/astr.png]]
 
 * Istruzioni Aritmetiche del MIPS
   *MIPS*
@@ -85,7 +85,7 @@
   - Compilatori associa variabili con registri
   - *Register File* fa parte del *Datapath* del processore
 
-    [[../../.img/rem.png]]
+    [[../img/rem.png]]
 
   Cosa succede con programmi con tanti dati (tante variabili, o array)?
   - Usiamo la memoria centrale
@@ -142,7 +142,7 @@
   - shamt: utilizzato pe le istruzioni di shift, posto a zero per le altre istruzioni ( 5 bit)
   - funct: seleziona la specifica variante dell'operazione base definita nel campo op ( 6 bit )
 
-    [[../../.img/rtype.png]]
+    [[../img/rtype.png]]
 
 
   L'insieme dei bit costituiscono 32 bit ovvero 4B
@@ -156,7 +156,7 @@
   - Anche lw/sw sono lunghe 4B
   - Displacement nell'istruzione (*operando immediato* = 2B)
 
-    [[../../.img/rtype2.png]]
+    [[../img/rtype2.png]]
 
   Esempio: lw $9, 32($18)
   - op: operazione base dell'istruzione ( 6 bit )
@@ -185,8 +185,8 @@
                         prossima istr. caricata dall’indirizzo Label
      #+END_EXAMPLE
 
-[[../../.img/jtype.png]]
+[[../img/jtype.png]]
 
 ** Riassumendo
 
-[[../../.img/ris.png]]
+[[../img/ris.png]]

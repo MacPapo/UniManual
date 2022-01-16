@@ -79,16 +79,16 @@
      - *OR*:  $\sim (A + B) = ( \sim A) \times ( \sim B)$
      - *AND*: $\sim (A \times B) = ( \sim A) + ( \sim B)$
 
-[[../../.img/pl.png]]
+[[../img/pl.png]]
 
 ** NAND e NOR
 *NAND* (inverso dell'operazione *AND*): $\sim (A \times B) = A$ *nand* $B\\$
 
-[[../../.img/nand.png]]
+[[../img/nand.png]]
 
 *NOR*  (inverso dell'operazione *OR*):  $\sim (A + B) = A$ *nor*  $B$
 
-[[../../.img/nor.png]]
+[[../img/nor.png]]
 
 * Porte logiche e transistor
   Tecnologia *CMOS* (Complementary Metal Oxide Semiconductor) per realizzare transistor in sul silicio
@@ -100,14 +100,14 @@
    - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor diventa un *conduttore*
    - Se applichi un *BASSO* voltaggio (*GND*), il transistor interrompe la conduzione (*resistenza infinita*)
 
-     [[../../.img/nmos.png]]
+     [[../img/nmos.png]]
 
 ** PMOS
    *P_Type Metal Oxide Semiconductor transistor*
    - Se applichi un *ALTO* voltaggio (*Vdd*), il transistor interrompe la conduzione (*resistenza infinita*)
    - Se applichi un *BASSO* voltaggio (*GND*), il transistor diventa un *conduttore*
 
-     [[../../.img/pmos.png]]
+     [[../img/pmos.png]]
 
 ** Confronto tra porte
    Se i transistor *PMOS* sono più veloci:
@@ -128,7 +128,7 @@
       Ciascun prodotto vale 1 solo per quella determinata riga e quei determinati fattori.
       *esempio*: $E = (\sim A \cdot B) + (B \cdot C)$
 
-      [[../../.img/fcsp.png]]
+      [[../img/fcsp.png]]
 
   Forma canonica *PS* (prodotto di somme)
     - Per ogni valore uguale ad 0 nell'output genera una somma (*maxtermine*) degli input A, B, C dove gli input uguali
@@ -136,7 +136,7 @@
       Ciascuna somma vale 0 solo per quella determinata riga e quei determinati fattori.
       *esempio*: $E = (\sim A + B) \cdot (B + C)$
 
-      [[../../.img/fcps.png]]
+      [[../img/fcps.png]]
 
 ** Dalla forma canonica ai circuiti
   - Da una equazione logica espressa come *somma di prodotti (SP)* si realizza una funzione logica di n input e 1 output,
@@ -158,7 +158,7 @@
   Le variabili *DON'T CARE* non hanno importanza ai fini della definizione dell'equazione, tradotto sono quelle variabili che 
   nel processo di minimizzazione (tipo *mappa di Karnaught*) non rimangono fisse.
 
-  [[../../.img/mini.png]]
+  [[../img/mini.png]]
 
 * Tecniche di minimizzazione
   Intuitivamente, per semplificare una tabella di verità di *N* variabili di input e minimizzare
@@ -189,7 +189,7 @@
     delle mappe:
     - *Codice di Gray*: differenza di un singolo bit tra combinazioni consecutive
 
-      [[../../.img/mk.png]]
+      [[../img/mk.png]]
 
 ** Scopo delle mappe
    - Individuare facilmente insieme di righe ($2^1,\; 2^2,\; 2^3\;$ righe, ecc.) della tabella
@@ -200,13 +200,13 @@
        variabili *DON'T CARE* diventano *rettangoli* di valori uguali ad 1 nella mappa di Karnaugh
      + Questi *rettangoli* sono composti da $2^p$ *valori uguali ad 1*, e sono anche noti con il termine di *p-sottocubi*
 
-       [[../../.img/esmk.png]]
+       [[../img/esmk.png]]
 
 ** Minimizzare con mappe di Karnaugh
   Per minimizzare il più possibile basta scegliere i più grandi rettangoli (p-sottocubi) che ricoprono gli 1 della mappa, 
   alcuni 1 possono essere ricoperti da più rettangoli.
 
-  [[../../.img/esmk2.png]]
+  [[../img/esmk2.png]]
 
 ** Ipercurbi e Meppe di Karnaugh
   La mappa di Karnaugh è la rappresentazione tabellare di un grafo con topologia ad ipercubo:
@@ -216,9 +216,9 @@
 
     Riassumendo negli ipercubi le etichette dei nodi connessi differiscono di 1 solo bit (distanza di Hamming = 1).
 
-    [[../../.img/ipc.png]]
+    [[../img/ipc.png]]
 
-    [[../../.img/ipc2.png]]
+    [[../img/ipc2.png]]
 
 ** Funzioni incomplete
   Alcuni output di una funzione, ovvero gli output corrispondendi a particolari configurazioni degli input, possono non interessare,
@@ -231,7 +231,7 @@
     Si sceglie di inserire nelle celle 1 o 0 per ottenere una migliore ottimizzazione, al posto che inserire una X.
 
 
-  [[../../.img/funcinc.png]]
+  [[../img/funcinc.png]]
 
 
 * Algoritmo di Quine McCluskey

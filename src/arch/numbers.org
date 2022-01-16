@@ -169,7 +169,7 @@ I numeri intero senza segno ( unsigned ) rappresentabili su 64Bit sono: 
 L'Overflow si veridica quando il risultato è troppo grande per essere rappresentato nel numero finito di bit messo a disposizione dalle rappresentazioni dei numeri
         
 $\Longrightarrow$ il riporto ( significa, cioè pari a 1 ) fluisce fuori
-[[../../.img/overflow.png]]
+[[../img/overflow.png]]
 
 ** Sottrazione e numeri relativi
 
@@ -177,7 +177,7 @@ Per fare la sottrazione si usa una particolare rappresentazione dei numeri relat
 
 Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per la somma.
 
-[[../../.img/rap.png]]
+[[../img/rap.png]]
 
 ** Caratteristiche delle rappresentazioni
 
@@ -197,7 +197,7 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
 
    Per il complemento a 2 il bit più significativo corrisponde al segno (0 negativo e 1 positivo)
 
-   [[../../.img/cp2.png]]
+   [[../img/cp2.png]]
 
 *** Valore
     - Il valore corrispondente alla rappresentazione dei numeri positivi è quello solito
@@ -251,15 +251,15 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
    Conversione da base 10 a base 2
    da 10,5(base 10) $\rightarrow$  1010,1(base 2)
 
-   [[../../.img/frq.png]]
+   [[../img/frq.png]]
 
-   [[../../.img/esfrq.png]]
+   [[../img/esfrq.png]]
 
 * Numeri razionali a virgola mobile
    Notazione a *virgola mobile* o *Floating Point*
 
    Si usa la notazione scientifica, con l'esponente per far fluttuare la virgola
-   [[../../.img/virg.png]]
+   [[../img/virg.png]]
 
    In base 2, l'esponente E si riferisce ad una potenza di 2
    - *segno*, *esponente*, *mantissa* \rightarrow $(-1)^2 \times 2^E \times M$
@@ -269,7 +269,7 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
    - Un gruppo di bit per Esponente
    - Un gruppo di bit per la Mantissa
 
-     [[../../.img/gp.png]]
+     [[../img/gp.png]]
 
     Una volta fissato il numero di bit totali per la rappresentazione dei numeri razionali a virgola mobile rimane da decidere:
     - Quanti bit assegnare alla mantissa?
@@ -288,7 +288,7 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
         - 8 bit per l'esponente
         - 23 bit per la mantissa
 
-        [[../../.img/ieee754.png]]
+        [[../img/ieee754.png]]
 
     2. Doppia precisione  ( 64 BIT )
         - 1 bit per il segno
@@ -296,13 +296,13 @@ Questa rappresentazione utilizza lo stesso algoritmo efficiente utilizzato per l
         - 20 bit per la mantissa
         - 32 bit aggiuntivi per la mantissa
 
-        [[../../.img/ieee75464.png]]
+        [[../img/ieee75464.png]]
 
     La *Notazione polarizzata* è usata per rappresentare l'esponente:
         - Singola precisione: gli esponenti variano da -126  a +127
         - Doppia precisione:  gli esponenti variano da -1022 a +1023
 
-        [[../../.img/ieee754exp.png]]
+        [[../img/ieee754exp.png]]
 
     Il valore di un numero in notazione polarizzata vale:
     $(-1)^S \times (1 + M) \times 2^{(E -\; polarizzazione)}$
