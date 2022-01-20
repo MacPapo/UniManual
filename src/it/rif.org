@@ -13,3 +13,201 @@ I puntatori sono dei tipi del linguaggio con le stesse proprieta' di tutti gli a
 Possiamo quindi dichiarare variabili puntatore ed assegnare a queste dei puntatori ad altre variabili.
 
 Come posso visualizzare il valore di una variabile di tipo contatore, e cioè un indirizzo di memoria?
+
+- Nell'invocazione della *printf* useremo *%p* nella specifica del formato ('p' sta per pointer).
+  La funzione supporta però solo la stampa di puntatori di tipo *void**; in questo caso il tipo *void** è inteso come un tipo "speciale" a cui tutti gli altri puntatori possono essere convertiti (*cast*) senza perdita di informazione. Quindi, dovremo convertire (*casting*) a *void** un puntatore che vogliamo visualizzare a schermo.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int x = 10, y = 100;
+    int *p_x = &x;
+    int *p_y = &y;
+    int *p_z = p_x;
+
+    printf("indirizzo di x: %p \n", (void*) p_x);
+    printf("indirizzo di y: %p \n", (void*) p_y);
+    printf("indirizzo di z: %p \n", (void*) p_z);
+    printf("Dimensione del puntatore: %lubytes \n", sizeof(p_z));
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+| indirizzo  | di  | x:         | 0x16b96b5c8 |
+| indirizzo  | di  | y:         | 0x16b96b5c4 |
+| indirizzo  | di  | z:         | 0x16b96b5c8 |
+| Dimensione | del | puntatore: |      8bytes |
+
+Posso modificare il contenuto di una variabile puntatore memorizzando un altro puntatore, ma posso modificare la locazione di memoria "riferita" dal puntatore?
+
++ Si!, con l'operatore di dereferenziazione * che permette di accederem sia in lettura che in scrittura, alla locazione di memoria riferita dal puntatore
+
+#+begin_quote
+Nota il significato diverso del simbolo * nella dichiarazione di vairabili e nella dereferenziazione (e nella moltiplicazione)
+#+end_quote
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int x = 10, y = 100;
+    int *p_x = &x;
+    int *p_y = &y;
+    int *p_z = p_x;
+
+    *p_x = 33;
+    *p_y = 66;
+    *p_z = 99;
+
+    printf("valore di x: %d \n",  x);
+    printf("valore riferimento p_x: %d \n", (void*) *p_x);
+    printf("valore di z: %d \n",  y);
+    printf("valore riferimento p_y: %d \n",*p_y);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+| valore | di          | x:   | 99 |
+| valore | riferimento | p_x: | 99 |
+| valore | di          | z:   | 66 |
+| valore | riferimento | p_y: | 66 |
+
+Di seguito due usi più interessanti dei puntatori.
+
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+void min_max_avg(float a, float b, float *min, float *max, float *avg)
+{
+    if(a >= b)
+    {
+        *max = a;
+        *min = b;
+    } else
+    {
+        *max = b;
+        *min = a;
+    }
+    *avg = (a + b)/2.0f;
+}
+
+int main()
+{
+    float N = 10.0;
+    float M = 20.0;
+
+    float minimum, maximum, avarage;
+
+    min_max_avg(N, M, &minimum, &maximum, &avarage);
+    printf("minimum: %f\n", minimum);
+    printf("maximum: %f\n", maximum);
+    printf("avarage: %f\n", avarage);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+| minimum: | 10.0 |
+| maximum: | 20.0 |
+| avarage: | 15.0 |
+
+Funzione *min_max_avg*:
+
+- Visto che il *return* statement ci consente di "restiture" un solo valore di ritorno, possiamo usare i riferimenti per "produrre" più valori.
+- La funzione calcola *min, max, avg* di due numeri float e li memorizza nelle tre locazioni di memoria identificate dai puntatori ricevuti come parametro
+- Sta al chiamante dichiarare le variabili che conteranno il risultato e poi passarne l'indirizzo alla funzione *min_max_avg*
+- La funzione ha come tipo di ritorno *void* perché, nel nostro esempio, non "produce" valori di ritorno effettivi
+
+* Lettura dell'input utente: scanf
+
+#+begin_quote
+La funzione *scanf* è complementare alla funzione *printf*: invece di scrivere a console (standard output) legge l'input da tastiera (standard input). Come *printf* ha due parametri:
+
+- Stringa di formattazione
+- Puntatore alla variabile dove il valore letto verrà memorizzato
+#+end_quote
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int x = 0;
+    printf("Scrivi un numero intero\n");
+    scanf("%d", &x);
+    printf("Il valore letto di x è: %d\n", x);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+| Scrivi | un     | numero | intero |   |    |   |
+| Il     | valore | letto  | di     | x | è: | 0 |
+
+* While
+
+** Esercizio: Algoritmo di Erone
+
+Scrivere un programma che legga in input un numero e una tolleranza e che calcoli la radice quadrata di un numero z applicando l'algoritmo di Erone ( o metodo Babilonese, o Newton ).
+
+Data una stima iniziale $x_{0}$, la regola di aggiornamento della stima è:
+
+$$x_{i+1} = \frac{1}{2}(x_{i} + \frac{z}{x_{1}})$$
+
+È interessante notare che il numero di cifre decimali corrette all'incirca raddoppia ad ogni iterazione.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <math.h>
+
+void Erone(float z, float tol)
+{
+    int i;
+    float x, x_old;
+
+    x_old = z;
+    x = z / 2.0f;
+
+    while( fabs(x - x_old) > tol )
+    {
+        x_old = x;
+        x = 0.5f * (x_old + z / x_old);
+        printf("Stima: %.15f\n", x);
+    }
+}
+
+int main()
+{
+    float N = 1024;
+    float tol = 0.000001;
+
+    /*
+      scanf("%f", &N);
+      scanf("%f"m &tol);
+    ,*/
+    Erone(N, tol);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+| Stima: |              257.0 |
+| Stima: | 130.49221801757812 |
+| Stima: |  69.16971588134766 |
+| Stima: | 41.986942291259766 |
+| Stima: |  33.18773651123047 |
+| Stima: |  32.02125549316406 |
+| Stima: |  32.00000762939453 |
+| Stima: |               32.0 |
+| Stima: |               32.0 |

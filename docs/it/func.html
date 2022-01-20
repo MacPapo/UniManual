@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Funzioni</title>
-<!-- 2022-01-19 Mer 14:58 -->
+<!-- 2022-01-20 Thu 12:17 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -209,7 +209,7 @@ $(function() {
 <div class="outline-text-2" id="text-1">
 <blockquote>
 <p>
-Una funzione e&rsquo; un costrutto che associa un corpo( una sequenza di dichiarazioni e statement ) ad un *identificatore*(il nome della funzione).
+Una funzione è un costrutto che associa un corpo( una sequenza di dichiarazioni e statement ) ad un *identificatore*(il nome della funzione).
 </p>
 </blockquote>
 
@@ -373,7 +373,7 @@ Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x = x + 
 </li>
 <li>L&rsquo;identificatore <b>x</b> fa riferimento alla variabile e parametro <b>x</b> definito nella funzione <b>succ</b> (<b>block scope</b>)
 </li>
-<li>Non c&rsquo;e&rsquo; modo di usare un identificatore per accedere alle variabili <b>x</b> e <b>z</b> definite nella funzione main. I due scope sono &ldquo;indipendenti&rdquo; e &ldquo;invisibili&rdquo; l&rsquo;uno dall&rsquo;altro: questo permette di scrivere funzioni &ldquo;di libreria&rdquo; senza temere interferenze con il resto del software.
+<li>Non c&rsquo;è modo di usare un identificatore per accedere alle variabili <b>x</b> e <b>z</b> definite nella funzione main. I due scope sono &ldquo;indipendenti&rdquo; e &ldquo;invisibili&rdquo; l&rsquo;uno dall&rsquo;altro: questo permette di scrivere funzioni &ldquo;di libreria&rdquo; senza temere interferenze con il resto del software.
 
 
 <figure>
@@ -419,7 +419,7 @@ Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x = x + 
 <ul class="org-ul">
 <li>L&rsquo;identificatore <b>x</b> fa riferimento alla variabile e parametro <b>x</b> definito nella funzione <b>succ</b> (<b>block scope</b>)
 </li>
-<li>L&rsquo;identificatore <b>z</b> non trova riscontro con nessuna variabile nello scope della funzione <b>succ</b>, quindi viene cercata una variabile definita nel <b>file scope</b> ( o <b>scope globale</b> ) dove e&rsquo; in effetti definita una variabile <b>z</b> che viene quindi letta
+<li>L&rsquo;identificatore <b>z</b> non trova riscontro con nessuna variabile nello scope della funzione <b>succ</b>, quindi viene cercata una variabile definita nel <b>file scope</b> ( o <b>scope globale</b> ) dove è in effetti definita una variabile <b>z</b> che viene quindi letta
 </li>
 <li>Nel caso <b>z</b> non fosse stata presente nemmeno nel <b>file scope</b>, avremmo avuto un errore a tempo di compilazione
 </li>
@@ -471,11 +471,11 @@ Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x += z</
 </p>
 
 <ul class="org-ul">
-<li>L&rsquo;identificatore <b>x</b> non e&rsquo; definito nel blocco interno alla funzione (<b>nested scope</b>) ma e&rsquo; definito come parametro <b>x</b> della funzione <b>succ</b> (<b>block scope</b>)
+<li>L&rsquo;identificatore <b>x</b> non è definito nel blocco interno alla funzione (<b>nested scope</b>) ma è definito come parametro <b>x</b> della funzione <b>succ</b> (<b>block scope</b>)
 </li>
 <li>L&rsquo;identificatore fa riferimento alla variabile <b>z</b> definita nel blocco interno alla funzione (<b>nested scope</b>) con valore 1000
 </li>
-<li>E&rsquo; possibile avere diversi <b>scope</b> annidati l&rsquo;uno dentro l&rsquo;altro; le variabili dichiarate in queti scope &ldquo;muoiono&rdquo; alla fine dello stesso, e se hanno lo stesso identificatore di altre variabili in scope esterni &ldquo;nascondono&rdquo; quest&rsquo;ultime rendendo impossibile accederle tramite il loro identificatore
+<li>È possibile avere diversi <b>scope</b> annidati l&rsquo;uno dentro l&rsquo;altro; le variabili dichiarate in queti scope &ldquo;muoiono&rdquo; alla fine dello stesso, e se hanno lo stesso identificatore di altre variabili in scope esterni &ldquo;nascondono&rdquo; quest&rsquo;ultime rendendo impossibile accederle tramite il loro identificatore
 </li>
 <li>La dichiarazione int z = 10 nella funzione main non modifica il contenuto della variabile z
 nel file scope, ma crea una nuova variabile nello scope della funzione stessa
@@ -536,7 +536,7 @@ Quella sopra non può essere l’implementazione di cui abbiamo bisogno:
 </p>
 
 <ul class="org-ul">
-<li>Nell’invocazione di inc(x) viene valutata l’espressione x e una copia del valore viene compiato nella variabile &ldquo;locale&rdquo; dell&rsquo;ambiente della funzione <b>inc</b>. E&rsquo; la copia ad essere incrementata ma non la variabile originale.
+<li>Nell’invocazione di inc(x) viene valutata l’espressione x e una copia del valore viene compiato nella variabile &ldquo;locale&rdquo; dell&rsquo;ambiente della funzione <b>inc</b>. È la copia ad essere incrementata ma non la variabile originale.
 </li>
 </ul>
 
@@ -550,7 +550,7 @@ Quella sopra non può essere l’implementazione di cui abbiamo bisogno:
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2022-01-19 Mer 14:58</p>
+<p class="date">Created: 2022-01-20 Thu 12:17</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>

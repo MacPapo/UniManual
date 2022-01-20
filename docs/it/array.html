@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Array</title>
+<!-- 2022-01-20 Thu 15:02 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Creazione di un array</a></li>
+<li><a href="#sec-2">2. Come accedere agli elementi di un array</a></li>
+<li><a href="#sec-3">3. Conversione implicita al tipo puntatore</a></li>
+<li><a href="#sec-4">4. Aritmetica dei puntatori</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Array</h1>
+<blockquote>
+<p>
+Un <b>array</b> è una sequenza congiunta di valori/&ldquo;oggetti&rdquo;/informazioni dello stesso tipo.
+</p>
+</blockquote>
+
+<p>
+Dato un tipo X, è possibile costruire un array di valori di tipo X specificando il numero di elementi desiderati. Il tipo X può essere un tipo primitivo come <b>int, double, char,ecc..</b> oppure un tipo definito dall&rsquo;utente.
+</p>
+
+<p>
+Un array ha le seguenti proprietà:
+</p>
+
+<ul class="org-ul">
+<li>Ha una <b>dimensione fissa</b> (numero di elementi), definita al momento della creazione dell&rsquo;array e non può essere modificata nel corso del programma
+</li>
+<li>Un array ha tutti gli elementi dello <b>stesso tipo</b>
+</li>
+<li>Gli elementi sono memorizzati in <b>locazioni contigue</b> di memoria
+</li>
+<li>Accedere ad un elemento di un array richiede <b>tempo costante</b> indipendentemente dalla sua posizione
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Creazione di un array</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Un array di interi, ad esempio, può essere dichiarato (creato) così:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">my_array</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span>;
+</pre>
+</div>
+
+<p>
+In ANSI C, la dimensione deve essere costante di tipo int. Il motivo è che la dimensione deve essere nota al momento della compilazione del codice. ANSI C è molto restrittivo e, al contrario di altri linguaggi, <i>non</i> consente nemmeno una dichiarazione come la seguente:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">N</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">my_array</span><span style="color: #7382a0;">[</span>N<span style="color: #7382a0;">]</span>;
+</pre>
+</div>
+
+<p>
+La ragione è che, essendo N una variabile, il compilatore non la considera una costante e non ne permette l&rsquo;uso come dimensione di un array. E possibile specificare alcuni o tutti i valori contenuti di un array al momento della creazione:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">f</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span>;           <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">valori non inizializzati</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span><span style="color: #9c739c;">}</span>;   <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">primi due valori specificati altri inizializzati a 0</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">c</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">}</span>;     <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">primo valore specificato altri inizializzati a 0</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">d</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">}</span>;  <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">dimensione dedotta automaticamente</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">e</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span>,<span style="color: #465953; background-color: #d2ebe3;">5</span>,<span style="color: #465953; background-color: #d2ebe3;">6</span><span style="color: #9c739c;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">error: excess elements in array initializer</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">f</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{}</span>;      <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">error: empty initializer</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+Sebbene ci siano casi particolari e comportamenti diversi da parte di compilatori diversi, è bene assumere che un array ( o variabili ) non esplicitamente inizializzati contenga valori casuali e quindi inutilizzabili.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Come accedere agli elementi di un array</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+L&rsquo;operatore [] permette di accedere agli elementi di un array specificando la posizione a cui vogliamo accedere in lettura o in scrittura.  La prima posizione ha <i>indice 0</i>, mentre l&rsquo;ultima ha indice pari alla dimensione diminuita di 1.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">}</span>;
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">accessi in lettura</span><span style="color: #b9a992;"> */</span>
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">primo elemento</span><span style="color: #b9a992;">*/</span>
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">ultimo elemento</span><span style="color: #b9a992;">*/</span>
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">MAI! staimo leggendo una locazione di memoria fuori controllo!</span><span style="color: #b9a992;">*/</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">accessi in scrittura</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">v</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #7382a0;">]</span> = <span style="color: #465953; background-color: #d2ebe3;">13</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">primo elemento</span><span style="color: #b9a992;">*/</span>
+<span style="color: #605a52; background-color: #f7f3ee;">v</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #7382a0;">]</span> = <span style="color: #465953; background-color: #d2ebe3;">17</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">ultimo elemento</span><span style="color: #b9a992;">*/</span>
+<span style="color: #605a52; background-color: #f7f3ee;">v</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">10</span><span style="color: #7382a0;">]</span> = <span style="color: #465953; background-color: #d2ebe3;">33</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">MAI! stiamo scrivendo una locazione di memoria fuori controllo!</span><span style="color: #b9a992;">*/</span>
+
+</pre>
+</div>
+
+<p>
+Output:
+</p>
+<pre class="example">
+1
+4
+1177202309
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Conversione implicita al tipo puntatore</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Le variabili di tipo array hanno un comportamento diverso dalle altre variabili dei tipi base.
+</p>
+
+<p>
+<b>L&rsquo;assegnamento non è possibile</b>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">}</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span>;
+b = a; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">error: array type 'int [4]' is not assignable</span><span style="color: #b9a992;">*/</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>Un array di tipo X può essere (anche implicitamente ed automaticamente) convertito ad un tipo puntatore a X, e viceversa.</b>
+</p>
+</blockquote>
+
+<p>
+Questo significa, ad esempio, che possiamo assegnare un array di <b>int</b> ad una variabile di tipo puntatore <b>int*</b>; o, più in generale, possiamo assegnare un array di <b>X</b>, dove <b>X</b> è un tipo qualunque, ad una variabile di tipo puntatore <b>X*</b>.
+</p>
+
+<p>
+Così come accade per i tipi array, così anche una variabile di tipo puntatore come ad esempio <b>int*</b> supporta l&rsquo;operatore []. In questo caso assumiamo che un array sia presente in memoria a partire dalla locazione memorizzata nel variabile puntatore.
+</p>
+
+<p>
+Più precisamente, un array convertito ad un puntatore è di fatto un puntatore al primo elemento dell&rsquo;array stesso. Un puntatore supporta l&rsquo;operatore [] come se fosse una array memorizzato in memoria a partire dall&rsquo;indirizzo contenuto nella variabili puntatore.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">}</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">b</span> = a;
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a[0]: %d\n"</span>, a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"b[0]: %d\n"</span>, b<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+Output:
+</p>
+<pre class="example">
+a[0]: 1
+b[0]: 1
+</pre>
+
+<p>
+Questa trasformazione accede sempre nel caso dei parametri di una funzione.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">somma</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">comput sum of all elements</span><span style="color: #b9a992;"> */</span>
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span>,<span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #7382a0;">}</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">s</span> = somma<span style="color: #7382a0;">(</span>x<span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+La variabile di tipo array <b>x</b> viene implicitamente e correttamente convertita (coercion) in variabile di tipo <b>int*</b>. Il parametro <b>v</b> conterrà l&rsquo;indirizzo di memoria del primo elemento dell&rsquo;array <b>x</b>.
+</p>
+
+<blockquote>
+<p>
+Usando <b>v</b> possiamo modificare gli elementi dell&rsquo;array <b>x</b>, ma non <b>x</b> stesso, ovvero possiamo fare in modo che <b>x</b> punti ad una diversa locazione di memoria.
+</p>
+</blockquote>
+
+<p>
+La conversione implicita viene sempre applicata nel caso dei parametri di una funzione. In particolare le seguenti dichiarazioni di funzione sono tutte equivalenti alla prima. Questa significa, che anche se è possibile dichiarare un parametro come <b>int arr[4]</b> la dimensione 4 viene del tutti ignorata (questo non è vero per array a più dimensioni).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">fun_0</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">arr</span><span style="color: #7382a0;">)</span> <span style="color: #7382a0;">{</span><span style="color: #b9a992;">/*</span><span style="color: #b9a992;">...</span><span style="color: #b9a992;">*/</span><span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">fun_1</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">arr</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span> <span style="color: #7382a0;">{</span><span style="color: #b9a992;">/*</span><span style="color: #b9a992;">...</span><span style="color: #b9a992;">*/</span><span style="color: #7382a0;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">parameter equivalent to int* arr</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">fun_2</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">arr</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span> <span style="color: #7382a0;">{</span><span style="color: #b9a992;">/*</span><span style="color: #b9a992;">...</span><span style="color: #b9a992;">*/</span><span style="color: #7382a0;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">parameter equivalent to int* arr</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">fun_3</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">arr</span><span style="color: #9c739c;">[]</span><span style="color: #7382a0;">)</span> <span style="color: #7382a0;">{</span><span style="color: #b9a992;">/*</span><span style="color: #b9a992;">...</span><span style="color: #b9a992;">*/</span><span style="color: #7382a0;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">parameter equivalent to int* arr</span><span style="color: #b9a992;">  */</span>
+</pre>
+</div>
+
+<blockquote>
+<p>
+<b>BEST PRACTICE</b>: In generale, vorremmo scrivere funzioni che possano manipolare array di dimensione qualsiasi. Quindi è consigliabili usare sempre il tipo <b>int*</b> nella dichiarazione dei parametri.
+</p>
+</blockquote>
+
+<p>
+<b>Da array a puntatori and back</b>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">}</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">b</span> = &amp;a<span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #7382a0;">]</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">c</span> = &amp;a<span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">1</span><span style="color: #7382a0;">]</span>;
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a[0]: %d\n"</span>, a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"b[0]: %d\n"</span>, b<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+printf<span style="color: #7382a0;">(</span><span style="color: #525643; background-color: #e2e9c1;">"c[0]: %d\n"</span>, c<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+Output:
+</p>
+<pre class="example">
+a[0]: 1
+b[0]: 1
+c[0]: 2
+</pre>
+
+<p>
+Nella dichiarazione di <b>b</b> stiamo applicando l&rsquo;operatore &amp; al primo elemento dell&rsquo;array <b>a</b>, e come risultato otteniamo quindi l&rsquo;indirizzo di quest&rsquo;ultimo. Essendo <b>b</b> un puntatore, accetta l&rsquo;operatore di accesso [].
+</p>
+
+<p>
+Nella dichiarazione di <b>c</b> stiamo applicando l&rsquo;operatore &amp; al <i>secondo</i> elemento dell&rsquo;array <b>a</b>, e come risultato otteniamo quindi l&rsquo;indirizzo di quest&rsquo;ultimo. Essendo <b>c</b> un puntatore, accetta l&rsquo;operatore di accesso []. Nota che infatti visualizzando <b>c[0]</b> otteniamo il secondo elemento di <b>a</b>. In un certo senso possiamo dire che <b>a,b</b> e <b>c</b> possono essere interpretati come tre array che si sovrappongono.
+</p>
+
+<p>
+<b>Fine dello scope</b>
+</p>
+
+<p>
+Cosa succede quanto le variabili <b>a,b</b> e <b>c</b> dell&rsquo;esempio precedente raggiunto la fine dello scope?
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">1</span>,<span style="color: #465953; background-color: #d2ebe3;">2</span>,<span style="color: #465953; background-color: #d2ebe3;">3</span>,<span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">b</span> = &amp;a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">c</span> = &amp;a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">1</span><span style="color: #9c739c;">]</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<p>
+Non abbiamo tre array ma un array e due puntatori!
+</p>
+
+<ul class="org-ul">
+<li>La variabile <b>c</b> è di tipo <b>int*</b>, e lo spazio dedicato a questo puntatore viene deallocato.
+</li>
+<li>Analogamente per la variabile <b>c</b>
+</li>
+<li>La variabile <b>a</b> è un array di 4 elementi è occupa un numero di locazione di memoria continue necessarie per memorizzare 4 interi (4 x 4 byte). Questa memoria viene de-allocata.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Aritmetica dei puntatori</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Il linguaggio supporta operazioni aritmetiche sui puntatori con significato speifico.
+</p>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2022-01-20 Thu 15:02</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

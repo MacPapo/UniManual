@@ -1,0 +1,181 @@
+#+TITLE: Array
+
+#+begin_quote
+Un *array* è una sequenza congiunta di valori/"oggetti"/informazioni dello stesso tipo.
+#+end_quote
+
+Dato un tipo X, è possibile costruire un array di valori di tipo X specificando il numero di elementi desiderati. Il tipo X può essere un tipo primitivo come *int, double, char,ecc..* oppure un tipo definito dall'utente.
+
+Un array ha le seguenti proprietà:
+
++ Ha una *dimensione fissa* (numero di elementi), definita al momento della creazione dell'array e non può essere modificata nel corso del programma
++ Un array ha tutti gli elementi dello *stesso tipo*
++ Gli elementi sono memorizzati in *locazioni contigue* di memoria
++ Accedere ad un elemento di un array richiede *tempo costante* indipendentemente dalla sua posizione
+
+** Creazione di un array
+
+Un array di interi, ad esempio, può essere dichiarato (creato) così:
+#+begin_src C
+int my_array[4];
+#+end_src
+
+In ANSI C, la dimensione deve essere costante di tipo int. Il motivo è che la dimensione deve essere nota al momento della compilazione del codice. ANSI C è molto restrittivo e, al contrario di altri linguaggi, /non/ consente nemmeno una dichiarazione come la seguente:
+#+begin_src C
+int N = 10;
+int my_array[N];
+#+end_src
+
+La ragione è che, essendo N una variabile, il compilatore non la considera una costante e non ne permette l'uso come dimensione di un array. E possibile specificare alcuni o tutti i valori contenuti di un array al momento della creazione:
+
+#+begin_src C -n 1
+void f()
+{
+    int a[4];           /* valori non inizializzati */
+    int b[4] = {1,2};   /* primi due valori specificati altri inizializzati a 0*/
+    int c[4] = {0};     /* primo valore specificato altri inizializzati a 0*/
+    int d[] = {1,2,3,4};  /* dimensione dedotta automaticamente*/
+    int e[4] = {1,2,4,5,6} /* error: excess elements in array initializer*/
+    int f[4] = {};      /* error: empty initializer */
+    return;
+}
+#+end_src
+
+#+begin_quote
+Sebbene ci siano casi particolari e comportamenti diversi da parte di compilatori diversi, è bene assumere che un array ( o variabili ) non esplicitamente inizializzati contenga valori casuali e quindi inutilizzabili.
+#+end_quote
+
+** Come accedere agli elementi di un array
+
+L'operatore [] permette di accedere agli elementi di un array specificando la posizione a cui vogliamo accedere in lettura o in scrittura.  La prima posizione ha /indice 0/, mentre l'ultima ha indice pari alla dimensione diminuita di 1.
+
+#+begin_src C -n 1
+int v[4] = {1,2,3,4};
+
+/* accessi in lettura */
+printf("%d", v[0]); /* primo elemento*/
+printf("%d", v[3]); /* ultimo elemento*/
+printf("%d", v[4]); /* MAI! staimo leggendo una locazione di memoria fuori controllo!*/
+
+/* accessi in scrittura */
+v[0] = 13; /*primo elemento*/
+v[3] = 17; /*ultimo elemento*/
+v[10] = 33; /*MAI! stiamo scrivendo una locazione di memoria fuori controllo!*/
+
+#+end_src
+
+Output:
+#+begin_example
+1
+4
+1177202309
+#+end_example
+
+** Conversione implicita al tipo puntatore
+
+Le variabili di tipo array hanno un comportamento diverso dalle altre variabili dei tipi base.
+
+*L'assegnamento non è possibile*
+#+begin_src C -n 1
+int a[4] = {1,2,3,4};
+int b[4];
+b = a; /* error: array type 'int [4]' is not assignable*/
+#+end_src
+
+#+begin_quote
+*Un array di tipo X può essere (anche implicitamente ed automaticamente) convertito ad un tipo puntatore a X, e viceversa.*
+#+end_quote
+
+Questo significa, ad esempio, che possiamo assegnare un array di *int* ad una variabile di tipo puntatore *int**; o, più in generale, possiamo assegnare un array di *X*, dove *X* è un tipo qualunque, ad una variabile di tipo puntatore *X**.
+
+Così come accade per i tipi array, così anche una variabile di tipo puntatore come ad esempio *int** supporta l'operatore []. In questo caso assumiamo che un array sia presente in memoria a partire dalla locazione memorizzata nel variabile puntatore.
+
+Più precisamente, un array convertito ad un puntatore è di fatto un puntatore al primo elemento dell'array stesso. Un puntatore supporta l'operatore [] come se fosse una array memorizzato in memoria a partire dall'indirizzo contenuto nella variabili puntatore.
+
+#+begin_src C -n 1
+int a[4] = {1,2,3,4};
+int *b = a;
+printf("a[0]: %d\n", a[0]);
+printf("b[0]: %d\n", b[0]);
+#+end_src
+
+Output:
+#+begin_example
+a[0]: 1
+b[0]: 1
+#+end_example
+
+Questa trasformazione accede sempre nel caso dei parametri di una funzione.
+
+#+begin_src C -n 1
+int somma(int* v)
+{
+    /* comput sum of all elements */
+}
+
+int x[5] = {1,2,3,4,5};
+int s = somma(x);
+#+end_src
+
+La variabile di tipo array *x* viene implicitamente e correttamente convertita (coercion) in variabile di tipo *int**. Il parametro *v* conterrà l'indirizzo di memoria del primo elemento dell'array *x*.
+
+#+begin_quote
+Usando *v* possiamo modificare gli elementi dell'array *x*, ma non *x* stesso, ovvero possiamo fare in modo che *x* punti ad una diversa locazione di memoria.
+#+end_quote
+
+La conversione implicita viene sempre applicata nel caso dei parametri di una funzione. In particolare le seguenti dichiarazioni di funzione sono tutte equivalenti alla prima. Questa significa, che anche se è possibile dichiarare un parametro come *int arr[4]* la dimensione 4 viene del tutti ignorata (questo non è vero per array a più dimensioni).
+
+#+begin_src C -n 1
+void fun_0(int* arr) {/*...*/}
+
+void fun_1(int arr[4]) {/*...*/} /* parameter equivalent to int* arr */
+void fun_2(int arr[5]) {/*...*/} /* parameter equivalent to int* arr */
+void fun_3(int arr[]) {/*...*/} /* parameter equivalent to int* arr  */
+#+end_src
+
+#+begin_quote
+*BEST PRACTICE*: In generale, vorremmo scrivere funzioni che possano manipolare array di dimensione qualsiasi. Quindi è consigliabili usare sempre il tipo *int** nella dichiarazione dei parametri.
+#+end_quote
+
+*Da array a puntatori and back*
+#+begin_src C -n 1
+int a[4] = {1,2,3,4};
+int *b = &a[0];
+int *c = &a[1];
+printf("a[0]: %d\n", a[0]);
+printf("b[0]: %d\n", b[0]);
+printf("c[0]: %d\n", c[0]);
+#+end_src
+
+Output:
+#+begin_example
+a[0]: 1
+b[0]: 1
+c[0]: 2
+#+end_example
+
+Nella dichiarazione di *b* stiamo applicando l'operatore & al primo elemento dell'array *a*, e come risultato otteniamo quindi l'indirizzo di quest'ultimo. Essendo *b* un puntatore, accetta l'operatore di accesso [].
+
+Nella dichiarazione di *c* stiamo applicando l'operatore & al /secondo/ elemento dell'array *a*, e come risultato otteniamo quindi l'indirizzo di quest'ultimo. Essendo *c* un puntatore, accetta l'operatore di accesso []. Nota che infatti visualizzando *c[0]* otteniamo il secondo elemento di *a*. In un certo senso possiamo dire che *a,b* e *c* possono essere interpretati come tre array che si sovrappongono.
+
+*Fine dello scope*
+
+Cosa succede quanto le variabili *a,b* e *c* dell'esempio precedente raggiunto la fine dello scope?
+
+#+begin_src C -n 1
+{
+    int a[4] = {1,2,3,4};
+    int* b = &a[0];
+    int* c = &a[1];
+}
+#+end_src
+
+Non abbiamo tre array ma un array e due puntatori!
+
+- La variabile *c* è di tipo *int**, e lo spazio dedicato a questo puntatore viene deallocato.
+- Analogamente per la variabile *c*
+- La variabile *a* è un array di 4 elementi è occupa un numero di locazione di memoria continue necessarie per memorizzare 4 interi (4 x 4 byte). Questa memoria viene de-allocata.
+
+** Aritmetica dei puntatori
+
+Il linguaggio supporta operazioni aritmetiche sui puntatori con significato speifico.

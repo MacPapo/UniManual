@@ -5,3 +5,4 @@
 * [[file:ifthenelse.org][If Then Else]]
 * [[file:func.org][Funzioni]]
 * [[file:rif.org][Riferimenti]]
+* [[file:array.org][Array]]

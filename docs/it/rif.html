@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>Riferimenti</title>
-<!-- 2022-01-19 Mer 14:58 -->
+<!-- 2022-01-20 Thu 12:57 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="generator" content="Org-mode">
@@ -189,6 +189,32 @@ $(function() {
     $('.bs-docs-sidebar').affix();
 });
 </script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
 </head>
 <body>
 <div id="content" class="container">
@@ -196,6 +222,12 @@ $(function() {
 <div id="text-table-of-contents" class="bs-docs-sidebar">
 <ul class="nav">
 <li><a href="#sec-1">1. Riferimenti</a></li>
+<li><a href="#sec-2">2. Lettura dell&rsquo;input utente: scanf</a></li>
+<li><a href="#sec-3">3. While</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Esercizio: Algoritmo di Erone</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </nav>
@@ -210,18 +242,454 @@ Il linguaggio ci permette di conoscere questa locazione con l&rsquo;operatore <b
 </p>
 
 <p>
-Data una variabile <b>int x = 10;</b>, quel e&rsquo; il tipo dell&rsquo;espressione <b>&amp;x</b>?
+Data una variabile <b>int x = 10;</b>, quel è il tipo dell&rsquo;espressione <b>&amp;x</b>?
 </p>
 <ul class="org-ul">
-<li>In questo caso il tipo e&rsquo; detto <i>puntatore</i> a intero, e viene formalizzato nel linguaggio come <b>int</b>.*
+<li>In questo caso il tipo è detto <i>puntatore</i> a intero, e viene formalizzato nel linguaggio come <b>int*</b>.
 </li>
 </ul>
+
+<p>
+I puntatori sono dei tipi del linguaggio con le stesse proprieta&rsquo; di tutti gli altri tipi.
+Possiamo quindi dichiarare variabili puntatore ed assegnare a queste dei puntatori ad altre variabili.
+</p>
+
+<p>
+Come posso visualizzare il valore di una variabile di tipo contatore, e cioè un indirizzo di memoria?
+</p>
+
+<ul class="org-ul">
+<li>Nell&rsquo;invocazione della <b>printf</b> useremo <b>%p</b> nella specifica del formato (&rsquo;p&rsquo; sta per pointer).
+La funzione supporta però solo la stampa di puntatori di tipo <b>void*</b>; in questo caso il tipo <b>void*</b> è inteso come un tipo &ldquo;speciale&rdquo; a cui tutti gli altri puntatori possono essere convertiti (<b>cast</b>) senza perdita di informazione. Quindi, dovremo convertire (<b>casting</b>) a <b>void*</b> un puntatore che vogliamo visualizzare a schermo.
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #4c5361; background-color: #dde4f2;">y</span> = <span style="color: #465953; background-color: #d2ebe3;">100</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_x</span> = &amp;x;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_y</span> = &amp;y;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_z</span> = p_x;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"indirizzo di x: %p \n"</span>, <span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">void</span>*<span style="color: #81895d;">)</span> p_x<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"indirizzo di y: %p \n"</span>, <span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">void</span>*<span style="color: #81895d;">)</span> p_y<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"indirizzo di z: %p \n"</span>, <span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">void</span>*<span style="color: #81895d;">)</span> p_z<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Dimensione del puntatore: %lubytes \n"</span>, <span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #81895d;">(</span>p_z<span style="color: #81895d;">)</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">indirizzo</td>
+<td class="text-left">di</td>
+<td class="text-left">x:</td>
+<td class="text-right">0x16b1135c8</td>
+</tr>
+
+<tr>
+<td class="text-left">indirizzo</td>
+<td class="text-left">di</td>
+<td class="text-left">y:</td>
+<td class="text-right">0x16b1135c4</td>
+</tr>
+
+<tr>
+<td class="text-left">indirizzo</td>
+<td class="text-left">di</td>
+<td class="text-left">z:</td>
+<td class="text-right">0x16b1135c8</td>
+</tr>
+
+<tr>
+<td class="text-left">Dimensione</td>
+<td class="text-left">del</td>
+<td class="text-left">puntatore:</td>
+<td class="text-right">8bytes</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Posso modificare il contenuto di una variabile puntatore memorizzando un altro puntatore, ma posso modificare la locazione di memoria &ldquo;riferita&rdquo; dal puntatore?
+</p>
+
+<ul class="org-ul">
+<li>Si!, con l&rsquo;operatore di dereferenziazione * che permette di accederem sia in lettura che in scrittura, alla locazione di memoria riferita dal puntatore
+</li>
+</ul>
+
+<blockquote>
+<p>
+Nota il significato diverso del simbolo * nella dichiarazione di vairabili e nella dereferenziazione (e nella moltiplicazione)
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #4c5361; background-color: #dde4f2;">y</span> = <span style="color: #465953; background-color: #d2ebe3;">100</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_x</span> = &amp;x;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_y</span> = &amp;y;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">p_z</span> = p_x;
+
+    *p_x = <span style="color: #465953; background-color: #d2ebe3;">33</span>;
+    *p_y = <span style="color: #465953; background-color: #d2ebe3;">66</span>;
+    *p_z = <span style="color: #465953; background-color: #d2ebe3;">99</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"valore di x: %d \n"</span>,  x<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"valore riferimento p_x: %d \n"</span>, <span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">void</span>*<span style="color: #81895d;">)</span> *p_x<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"valore di z: %d \n"</span>,  y<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"valore riferimento p_y: %d \n"</span>,*p_y<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">valore</td>
+<td class="text-left">di</td>
+<td class="text-left">x:</td>
+<td class="text-right">99</td>
+</tr>
+
+<tr>
+<td class="text-left">valore</td>
+<td class="text-left">riferimento</td>
+<td class="text-left">p_x:</td>
+<td class="text-right">99</td>
+</tr>
+
+<tr>
+<td class="text-left">valore</td>
+<td class="text-left">di</td>
+<td class="text-left">z:</td>
+<td class="text-right">66</td>
+</tr>
+
+<tr>
+<td class="text-left">valore</td>
+<td class="text-left">riferimento</td>
+<td class="text-left">p_y:</td>
+<td class="text-right">66</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Di seguito due usi più interessanti dei puntatori.
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">min_max_avg</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span>, <span style="color: #605a52; background-color: #f7f3ee;">float</span> *<span style="color: #4c5361; background-color: #dde4f2;">min</span>, <span style="color: #605a52; background-color: #f7f3ee;">float</span> *<span style="color: #4c5361; background-color: #dde4f2;">max</span>, <span style="color: #605a52; background-color: #f7f3ee;">float</span> *<span style="color: #4c5361; background-color: #dde4f2;">avg</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>a &gt;= b<span style="color: #9c739c;">)</span>
+    <span style="color: #9c739c;">{</span>
+        *max = a;
+        *min = b;
+    <span style="color: #9c739c;">}</span> <span style="color: #614c61; background-color: #f1ddf1;">else</span>
+    <span style="color: #9c739c;">{</span>
+        *max = b;
+        *min = a;
+    <span style="color: #9c739c;">}</span>
+    *avg = <span style="color: #9c739c;">(</span>a + b<span style="color: #9c739c;">)</span>/<span style="color: #465953; background-color: #d2ebe3;">2.0f</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">N</span> = <span style="color: #465953; background-color: #d2ebe3;">10.0</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">M</span> = <span style="color: #465953; background-color: #d2ebe3;">20.0</span>;
+
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">minimum</span>, <span style="color: #4c5361; background-color: #dde4f2;">maximum</span>, <span style="color: #4c5361; background-color: #dde4f2;">avarage</span>;
+
+    min_max_avg<span style="color: #9c739c;">(</span>N, M, &amp;minimum, &amp;maximum, &amp;avarage<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"minimum: %f\n"</span>, minimum<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"maximum: %f\n"</span>, maximum<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"avarage: %f\n"</span>, avarage<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">minimum:</td>
+<td class="text-right">10.0</td>
+</tr>
+
+<tr>
+<td class="text-left">maximum:</td>
+<td class="text-right">20.0</td>
+</tr>
+
+<tr>
+<td class="text-left">avarage:</td>
+<td class="text-right">15.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Funzione <b>min_max_avg</b>:
+</p>
+
+<ul class="org-ul">
+<li>Visto che il <b>return</b> statement ci consente di &ldquo;restiture&rdquo; un solo valore di ritorno, possiamo usare i riferimenti per &ldquo;produrre&rdquo; più valori.
+</li>
+<li>La funzione calcola <b>min, max, avg</b> di due numeri float e li memorizza nelle tre locazioni di memoria identificate dai puntatori ricevuti come parametro
+</li>
+<li>Sta al chiamante dichiarare le variabili che conteranno il risultato e poi passarne l&rsquo;indirizzo alla funzione <b>min_max_avg</b>
+</li>
+<li>La funzione ha come tipo di ritorno <b>void</b> perché, nel nostro esempio, non &ldquo;produce&rdquo; valori di ritorno effettivi
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Lettura dell&rsquo;input utente: scanf</h2>
+<div class="outline-text-2" id="text-2">
+<blockquote>
+<p>
+La funzione <b>scanf</b> è complementare alla funzione <b>printf</b>: invece di scrivere a console (standard output) legge l&rsquo;input da tastiera (standard input). Come <b>printf</b> ha due parametri:
+</p>
+
+<ul class="org-ul">
+<li>Stringa di formattazione
+</li>
+<li>Puntatore alla variabile dove il valore letto verrà memorizzato
+</li>
+</ul>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Scrivi un numero intero\n"</span><span style="color: #9c739c;">)</span>;
+    scanf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, &amp;x<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Il valore letto di x &#232;: %d\n"</span>, x<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">Scrivi</td>
+<td class="text-left">un</td>
+<td class="text-left">numero</td>
+<td class="text-left">intero</td>
+<td class="text-left">&#xa0;</td>
+<td class="text-left">&#xa0;</td>
+<td class="text-right">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="text-left">Il</td>
+<td class="text-left">valore</td>
+<td class="text-left">letto</td>
+<td class="text-left">di</td>
+<td class="text-left">x</td>
+<td class="text-left">è:</td>
+<td class="text-right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> While</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Esercizio: Algoritmo di Erone</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Scrivere un programma che legga in input un numero e una tolleranza e che calcoli la radice quadrata di un numero z applicando l&rsquo;algoritmo di Erone ( o metodo Babilonese, o Newton ).
+</p>
+
+<p>
+Data una stima iniziale \(x_{0}\), la regola di aggiornamento della stima è:
+</p>
+
+<p>
+\[x_{i+1} = \frac{1}{2}(x_{i} + \frac{z}{x_{1}})\]
+</p>
+
+<p>
+È interessante notare che il numero di cifre decimali corrette all&rsquo;incirca raddoppia ad ogni iterazione.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">math.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">Erone</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span>, <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">tol</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span>, <span style="color: #4c5361; background-color: #dde4f2;">x_old</span>;
+
+    x_old = z;
+    x = z / <span style="color: #465953; background-color: #d2ebe3;">2.0f</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">while</span><span style="color: #9c739c;">(</span> fabs<span style="color: #81895d;">(</span>x - x_old<span style="color: #81895d;">)</span> &gt; tol <span style="color: #9c739c;">)</span>
+    <span style="color: #9c739c;">{</span>
+        x_old = x;
+        x = <span style="color: #465953; background-color: #d2ebe3;">0.5f</span> * <span style="color: #81895d;">(</span>x_old + z / x_old<span style="color: #81895d;">)</span>;
+        printf<span style="color: #81895d;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Stima: %.15f\n"</span>, x<span style="color: #81895d;">)</span>;
+    <span style="color: #9c739c;">}</span>
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">N</span> = <span style="color: #465953; background-color: #d2ebe3;">1024</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">float</span> <span style="color: #4c5361; background-color: #dde4f2;">tol</span> = <span style="color: #465953; background-color: #d2ebe3;">0.000001</span>;
+
+    <span style="color: #b9a992;">/*</span>
+<span style="color: #b9a992;">      scanf("%f", &amp;N);</span>
+<span style="color: #b9a992;">      scanf("%f"m &amp;tol);</span>
+<span style="color: #b9a992;">    */</span>
+    Erone<span style="color: #9c739c;">(</span>N, tol<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">257.0</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">130.49221801757812</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">69.16971588134766</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">41.986942291259766</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">33.18773651123047</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">32.02125549316406</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">32.00000762939453</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">32.0</td>
+</tr>
+
+<tr>
+<td class="text-left">Stima:</td>
+<td class="text-right">32.0</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div></div></div>
 <footer id="postamble" class="">
 <div><p class="author">Author: Jacopo Costantini</p>
-<p class="date">Created: 2022-01-19 Mer 14:58</p>
+<p class="date">Created: 2022-01-20 Thu 12:57</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
 </div>
 </footer>
