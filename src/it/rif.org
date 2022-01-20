@@ -1,0 +1,15 @@
+#+TITLE: Riferimenti
+#+AUTHOR: Jacopo Costantini
+
+* Riferimenti
+
+Le variabili sono memorizzate in una precisa locazione di memoria.
+Il linguaggio ci permette di conoscere questa locazione con l'operatore *&*.
+
+Data una variabile *int x = 10;*, quel è il tipo dell'espressione *&x*?
+- In questo caso il tipo è detto /puntatore/ a intero, e viene formalizzato nel linguaggio come *int**.
+
+I puntatori sono dei tipi del linguaggio con le stesse proprieta' di tutti gli altri tipi.
+Possiamo quindi dichiarare variabili puntatore ed assegnare a queste dei puntatori ad altre variabili.
+
+Come posso visualizzare il valore di una variabile di tipo contatore, e cioè un indirizzo di memoria?

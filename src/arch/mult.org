@@ -29,7 +29,7 @@
   + Scalare il prodotto intermedio di una cifra alla volta verso sx (*shift a sx*)
   + il *prodotto finale* si ottiene dalla somma di tutti i prodotti intermedi
 
-    [[../img/molt.png]]
+    [[../img/arch/molt.png]]
 
 ** Algoritmo carta e penna (Base 2)
    In base 2, la presenza delle sole cifre 0 e 1 semplifica i vari prodotti?
@@ -40,7 +40,7 @@
      + *moltiplicatore* (n bit) *moltiplicando* (n bit) $\rightarrow$ *prodotto* (2n bit)
    - In generale, per rappresentare il risultato abbiamo bisogno del doppio dei bit dei due fattori del prodotto
 
-     [[../img/moltb2.png]]
+     [[../img/arch/moltb2.png]]
 
 ** Moltiplicazione tra numeri interi
    Si basa su:
@@ -49,11 +49,11 @@
      (dalla meno significativa alla più significativa)
    + *Somma* di *moltiplicando* e *prodotto* accumulato fino a quel momento
 
-     [[../img/scmolt.png]]
+     [[../img/arch/scmolt.png]]
 
-     [[../img/scmolt2.png]]
+     [[../img/arch/scmolt2.png]]
 
-     [[../img/cmolt.png]]
+     [[../img/arch/cmolt.png]]
 
 ** Moltiplicazione: ottimizzazione
    L'algoritmo di moltiplicazione precedente usa un registro a *64 bit* per il *moltiplicando* e,
@@ -70,11 +70,11 @@
    - *SHIFT* a destra del *prodotto* per non influenzare le cifre meno significative dei prodotti parziali
    - ad ogni passo vengono sommati il *moltiplicando* e i 32 bit più significativi del *prodotto*
 
-     [[../img/molto.png]]
+     [[../img/arch/molto.png]]
 
-     [[../img/tmolto.png]]
+     [[../img/arch/tmolto.png]]
 
-     [[../img/cmolto2.png]]
+     [[../img/arch/cmolto2.png]]
 
 ** Segno della moltiplicazione
    Il modo più semplice di gestire il segno è il seguente:
@@ -86,7 +86,7 @@
    *ATTENZIONE*: gli algoritmi possono limitarsi ad effettuare solo 31 iterazioni,
    lasciando i segni fuori dal calcolo
 
-   [[../img/sinm.png]]
+   [[../img/arch/sinm.png]]
 
 Esiste un algoritmi,detto *Algoritmo di Booth*, che consente di moltiplicare direttamente numeri con segno.
 
@@ -95,7 +95,7 @@ Esiste un algoritmi,detto *Algoritmo di Booth*, che consente di moltiplicare dir
   Si ha: *Dividendo* = *Quoziente* x *Divisore* + *Resto*
   da cui: *Resto* = *Dividendo* - *Quoziente* x *Divisore*
 
-  [[../img/div.png]]
+  [[../img/arch/div.png]]
 
   I passi dell'algoritmo sono i seguenti:
   + Considerare gruppi di cifre del *dividendo*, partendo dalla cifra più significativa
@@ -112,7 +112,7 @@ Esiste un algoritmi,detto *Algoritmo di Booth*, che consente di moltiplicare dir
   ad ogni passo si effettua quindi la sottrazione (dividendo - divisore) e si controlla il segno del risultato.
   Poiché il dividendo è memorizzato nel registro resto la sottrazione da effettuare è (resto - divisore)
 
-  [[../img/divb2.png]]
+  [[../img/arch/divb2.png]]
 
 ** Divisione tra interi (ottimizzazioni)
   Analogamente al caso della moltiplicazione, sono stati studiati dei raffinamenti per l’algoritmo della divisione. 
@@ -120,7 +120,7 @@ Esiste un algoritmi,detto *Algoritmo di Booth*, che consente di moltiplicare dir
   + Il registro del resto viene shiftato a sinistra
   + Il divisore viene sottratto solo dalla parte alta del registro Resto
 
-    [[../img/adiv.png]]
+    [[../img/arch/adiv.png]]
 
 Analogamente al caso della moltiplicazione, il modo più semplice di gestire
   il segno è il seguente:
@@ -129,14 +129,14 @@ Analogamente al caso della moltiplicazione, il modo più semplice di gestire
   - stabilire il segno del quoziente mediante la regola dei segni, ricordando i segni originali 
     (quoziente *negativo* se i segni di dividendo e divisore sono discordi, *positivo* altrimenti)
 
-[[../img/cdiv.png]]
+[[../img/arch/cdiv.png]]
 
   Stabilire il segno del resto mediante la seguente regola:
   - dividendo e resto devono avere lo stesso segno
 * Somma floating-point
 
-[[../img/sfp.png]]
+[[../img/arch/sfp.png]]
 
-[[../img/gsfp.png]]
+[[../img/arch/gsfp.png]]
 
-[[../img/cfp.png]]
+[[../img/arch/cfp.png]]

@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Variabili e Operandi</title>
+<!-- 2022-01-19 Mer 12:07 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Tipo double</a></li>
+<li><a href="#sec-2">2. Operatore di assegnamento</a></li>
+<li><a href="#sec-3">3. Operatori di incremento e decremento</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Variabili e Operandi</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Tipo double</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Con il tipo <b>double</b> possiamo rappresentare un intervallo di numeri reali molto ampio.
+Il numero totale di numeri distinti rappresentabili \(\rightarrow\) <b>numero massimo di
+configurazioni diverse con 64BIT</b>
+</p>
+
+<ul class="org-ul">
+<li>Double \(\Rightarrow 2^{64}\)
+</li>
+<li>float  \(\Rightarrow 2^{32}\)
+</li>
+</ul>
+
+<p>
+Questo significa che introdurremo delle approssimazioni nei nostri calcoli.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span> <span style="color: #465953; background-color: #d2ebe3;">0.1</span> + <span style="color: #465953; background-color: #d2ebe3;">0.1</span> + <span style="color: #465953; background-color: #d2ebe3;">0.1</span> == <span style="color: #465953; background-color: #d2ebe3;">0.3</span> <span style="color: #9c739c;">)</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Uguaglianza soddisfatta\n"</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Uguaglianza NON soddisfatta\n"</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+Uguaglianza NON soddisfatta
+</pre>
+
+
+<p>
+Per via della base 2 nella rappresentazione binaria il risultato in output e&rsquo; errato.
+Per lo stesso motivo non possiamo rappresentare il risultato di \(1/3 \; (=0.3333...)\)
+in base 10 con un numero finito di cifre visto che 2 non e&rsquo; divisore della base 10, cosi&rsquo;
+come non possiamo rappesentare \(0.1 = 1/10 = 1/(5 \cdot 2)\) in base due con un numero finito
+di cifre perche&rsquo; 5 non e&rsquo; divisore della base 2.
+</p>
+
+<blockquote>
+<p>
+E&rsquo; buona pratica quindi misurare se la differenza tra i due numeri e&rsquo; inferiore
+ad una certa soglia di tolleranza
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Operatore di assegnamento</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+L&rsquo;assegnamento e&rsquo; un&rsquo;espressione che come la somma, produce un valore.
+Il valore corrisponde all&rsquo;espressione alla destra dell&rsquo;operatore <b>=</b>.
+</p>
+
+<p>
+A differenza delle espressioni usuali, l&rsquo;espressione di assegnamento hai il <i>side-effect</i>
+di cambiare il contenuto della memoria, memorizzando il contenuto dell&rsquo;espressione
+a destra dell&rsquo;operatore <b>=</b> nella locazione di memoria identificata dall&rsquo;espressione a
+sinistra dell&rsquo;operatore <b>=</b>.
+</p>
+
+<p>
+Consideriamo il codice seguente con il relativo output.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #4c5361; background-color: #dde4f2;">b</span>, <span style="color: #4c5361; background-color: #dde4f2;">c</span>;
+
+    a = b = c = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a %d\n"</span>, a<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"b %d\n"</span>, b<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"c %d\n"</span>, c<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">a</td>
+<td class="text-right">10</td>
+</tr>
+
+<tr>
+<td class="text-left">b</td>
+<td class="text-right">10</td>
+</tr>
+
+<tr>
+<td class="text-left">c</td>
+<td class="text-right">10</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+L&rsquo;espressione
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">a = b = c = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+</pre>
+</div>
+
+<p>
+e&rsquo; equivalente all&rsquo;espressione
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">a = <span style="color: #7382a0;">(</span>b = <span style="color: #9c739c;">(</span>c = <span style="color: #465953; background-color: #d2ebe3;">10</span><span style="color: #9c739c;">)</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+perche&rsquo; l&rsquo;operatore <b>=</b> e&rsquo; associato da destra a sinistra.
+Quindi l&rsquo;ordine di assegnamento e&rsquo; quello (da destra verso sinistra) corrispondente
+alle parentesi.
+</p>
+
+<ul class="org-ul">
+<li>prima viene valutata l&rsquo;espressione <b>c = 10</b>, che risulta nel valore 10
+</li>
+<li>dopo viene valutata l&rsquo;espressione <b>b = &#x2026;</b> e quindi <b>b = 10</b>, e anche questa espressione risulta nel valore 10
+</li>
+<li>infine viene valutata l&rsquo;espressione <b>a = &#x2026;</b> e quindi <b>a = 10</b> che risulta nel valore 10
+</li>
+</ul>
+
+<blockquote>
+<p>
+L&rsquo;espressione in ogni statement di assegnamento <b>x = z;</b> \(\rightarrow\) (nota il ;) risulta
+in un valore che pero&rsquo; non viene mai utilizzato ed e&rsquo; quindi ignorato.
+</p>
+</blockquote>
+
+<p>
+Poiche&rsquo; il valore risultante dell&rsquo;espressione di assegnamento e&rsquo; un valore valido come tutti gli altri, a questo possiamo applicare altre operazioni come nel codice seguente
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #4c5361; background-color: #dde4f2;">b</span>, <span style="color: #4c5361; background-color: #dde4f2;">c</span>;
+
+    b = <span style="color: #465953; background-color: #d2ebe3;">20</span>;
+    a = b + <span style="color: #9c739c;">(</span> c = <span style="color: #465953; background-color: #d2ebe3;">10</span> <span style="color: #9c739c;">)</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a %d\n"</span>, a<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"b %d\n"</span>, b<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"c %d\n"</span>, c<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">a</td>
+<td class="text-right">30</td>
+</tr>
+
+<tr>
+<td class="text-left">b</td>
+<td class="text-right">20</td>
+</tr>
+
+<tr>
+<td class="text-left">c</td>
+<td class="text-right">10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Operatori di incremento e decremento</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+L&rsquo;operatore di incremento/decremento puo&rsquo; essere sia suffisso che prefisso: <b>i++</b> o <b>++i</b>.
+Possiamo dire che entrambe le espressioni hanno un <i>side-effect</i>, ovvero cambiano il contenuto
+della variabile <b>i</b> incrementandola di 1.
+</p>
+
+<ul class="org-ul">
+<li>Nel caso del <b>prefisso</b>:
+Il valore prodotto e&rsquo; il valore della variabile incrementata
+</li>
+<li>Nel caso del <b>suffisso</b>:
+Il valore prodotto e&rsquo; il valore della variabile senza alcuna modifica.
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #4c5361; background-color: #dde4f2;">b</span> = <span style="color: #465953; background-color: #d2ebe3;">20</span>, <span style="color: #4c5361; background-color: #dde4f2;">c</span>, <span style="color: #4c5361; background-color: #dde4f2;">d</span>;
+    c = a++;
+    d = ++b;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a %d\n"</span>, a<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"b %d\n"</span>, b<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"c %d\n"</span>, c<span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"d %d\n"</span>, d<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-condensed">
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="text-left">a</td>
+<td class="text-right">11</td>
+</tr>
+
+<tr>
+<td class="text-left">b</td>
+<td class="text-right">21</td>
+</tr>
+
+<tr>
+<td class="text-left">c</td>
+<td class="text-right">10</td>
+</tr>
+
+<tr>
+<td class="text-left">d</td>
+<td class="text-right">21</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Ma cosa succede nel codice seguente?
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C">i = ++i + i++;
+i = i++ + <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+</pre>
+</div>
+
+<p>
+In generale, e&rsquo; definito un ordinamento di valutazione per alcune espressioni del linguaggio, ma non per tutte.
+</p>
+
+<blockquote>
+<p>
+Nei casi sopra non e&rsquo; definito quale dei due incrementi viene eseguito per primo, o se
+l&rsquo;incremento suffisso viene eseguito dopo l&rsquo;assegnamento.
+E&rsquo; una mancanza nella definizione del linguaggio.
+In questi casi il comportamento viene deciso dal compilatore in base all&rsquo;implementazione
+o strategie di ottimizzazione del codice.
+</p>
+
+<p>
+Il risulto quindi <b>non e&rsquo; definito</b>
+</p>
+
+<p>
+ogni compilatore e ogni esecuzione potrebbe portare a risultati diversi.
+</p>
+</blockquote>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2022-01-19 Mer 12:07</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Funzioni</title>
+<!-- 2022-01-19 Mer 14:58 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Definizione di funzione</a></li>
+<li><a href="#sec-2">2. Best practices</a></li>
+<li><a href="#sec-3">3. Scope</a></li>
+<li><a href="#sec-4">4. Best practices</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Funzioni</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Definizione di funzione</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+Una funzione e&rsquo; un costrutto che associa un corpo( una sequenza di dichiarazioni e statement ) ad un *identificatore*(il nome della funzione).
+</p>
+</blockquote>
+
+<p>
+Le funzioni possono accettare <b>0</b> o piu&rsquo; <b>parametri</b> che vengono inizializzati con gli <b>argomenti</b>
+usati al momento della chiamata (tempo di esecuzione).
+</p>
+
+<p>
+Le funzioni possono avere un <b>return</b> statement che definisce il valore &ldquo;prodotto&rdquo; dalla funzione
+e restituito al chiamante.
+</p>
+
+<p>
+Il tipo speciale <b>void</b> viene usato per specificare nessun parametro/valore di ritorno.
+</p>
+
+<p>
+<b>ESEMPIO</b>: Scrivere una funzione che dato un numero intero restituisca il numero successivo.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">succ</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> x + <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, succ<span style="color: #81895d;">(</span><span style="color: #465953; background-color: #d2ebe3;">10</span><span style="color: #81895d;">)</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<p>
+Ma cosa succede davvero?
+</p>
+
+<p>
+Possiamo dire che ogni funzione, quando invocata, crea un proprio ambiente(<b>activation record</b>)
+in memoria (organizzata come una pila o <b>stack</b>) per gestire i parametri e le variabili dichiarate nel corpo della funzione.
+<img src="../img/info/arec1.png" class="img-responsive" alt="arec1.png">
+</p>
+
+<p>
+Se il codice
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">succ</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> x + z;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">y</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, succ<span style="color: #81895d;">(</span>y<span style="color: #81895d;">)</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<p>
+Otteniamo:
+<img src="../img/info/arec2.png" class="img-responsive" alt="arec2.png">
+</p>
+
+
+<p>
+<b>Importante:</b>
+</p>
+<ul class="org-ul">
+<li>L&rsquo;ambiente di una funzione viene creato al momento dell&rsquo;invocazione e distrutto all&rsquo;uscita dal corpo della funzione (alla fine del blocco o al <b>return</b>). Le variabili (parametri dichiarate) all&rsquo;interno di una funzione cessano di esistere al termine di questa. Chiamate diverse useranno memoria diversa. Le vairabili dichiarate in una funzione e i suoi parametri non sono accessibili da altre funzioni.
+</li>
+<li>Gli argomenti usati per invocare una funzione sono espressi e possono essere arbitrariamente complessi.
+</li>
+<li>Il valore risultante dall&rsquo;espressione usata come argomento (nell&rsquo;esempio semplicemente &ldquo;y&rdquo;)
+viene copiato nella variabile che memorizza il parametro della funzione.
+</li>
+<li>Se una fuinzione ha un parametro chiamato <b>x</b>, non significa che deve essere invocato con una variabile di nome <b>x</b> come argomento.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Best practices</h2>
+<div class="outline-text-2" id="text-2">
+<ol class="org-ol">
+<li>Mai scrivere lo stesso codice in punti diversi del nostro software!
+Definire una funzione e invocarla quando serve.
+</li>
+<li>Decomporre un problema in sotto-problemi semplici e scrivere una funzione per ciascuno.
+</li>
+<li>Disaccoppiare visualizzazione da computazione. Scrivere funzioni specializzate per risolvere problemi specifici e altre funzioni per la visualizzazione o in generale l&rsquo;interazione con l&rsquo;utente
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Scope</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Ci sono 2 scope principali:
+</p>
+
+<ul class="org-ul">
+<li><b>File scope</b>: identificatori dichiarati all&rsquo;esterno di qualunque blocco sono visibili dal punto della dichiarazione fino alla fine del file.
+</li>
+<li><b>Block scope</b>: identificatori dichiarati nella dichiarazione di una funzione o all&rsquo;interno di un blocco sono visibili dal punto della dichiarazione fino alla fine del blocco corrispondente.
+</li>
+</ul>
+
+<p>
+I blocchi possono essere annidati (<b>nasted</b>)
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">succ</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+    x = x + z;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> x;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = succ<span style="color: #9c739c;">(</span>z<span style="color: #9c739c;">)</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, x<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+11
+</pre>
+
+
+<p>
+Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x = x + z</b> :
+</p>
+
+<ul class="org-ul">
+<li>L&rsquo;identificatore <b>z</b> fa riferimento alla variabile <b>z</b> definita nella funzione <b>succ</b> (<b>block scope</b>)
+</li>
+<li>L&rsquo;identificatore <b>x</b> fa riferimento alla variabile e parametro <b>x</b> definito nella funzione <b>succ</b> (<b>block scope</b>)
+</li>
+<li>Non c&rsquo;e&rsquo; modo di usare un identificatore per accedere alle variabili <b>x</b> e <b>z</b> definite nella funzione main. I due scope sono &ldquo;indipendenti&rdquo; e &ldquo;invisibili&rdquo; l&rsquo;uno dall&rsquo;altro: questo permette di scrivere funzioni &ldquo;di libreria&rdquo; senza temere interferenze con il resto del software.
+
+
+<figure>
+<p><img src="../img/info/succ.png" class="img-responsive" alt="succ.png">
+</p>
+</figure>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">100</span>;
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">succ</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    x = x + z;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> x;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">w</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = succ<span style="color: #9c739c;">(</span>w<span style="color: #9c739c;">)</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, x<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+110
+</pre>
+
+
+<p>
+Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x = x + z</b>:
+</p>
+
+<ul class="org-ul">
+<li>L&rsquo;identificatore <b>x</b> fa riferimento alla variabile e parametro <b>x</b> definito nella funzione <b>succ</b> (<b>block scope</b>)
+</li>
+<li>L&rsquo;identificatore <b>z</b> non trova riscontro con nessuna variabile nello scope della funzione <b>succ</b>, quindi viene cercata una variabile definita nel <b>file scope</b> ( o <b>scope globale</b> ) dove e&rsquo; in effetti definita una variabile <b>z</b> che viene quindi letta
+</li>
+<li>Nel caso <b>z</b> non fosse stata presente nemmeno nel <b>file scope</b>, avremmo avuto un errore a tempo di compilazione
+</li>
+<li>Si, si possono dichiarare variabili fuori dalle funzioni; queste vengono tipicamente chiamate <b>variabili globali</b>
+</li>
+</ul>
+
+
+<figure>
+<p><img src="../img/info/succ2.png" class="img-responsive" alt="succ2.png">
+</p>
+</figure>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">100</span>;
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">succ</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    x = x + z;
+    <span style="color: #9c739c;">{</span>
+        <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">1000</span>;
+        x += z;
+    <span style="color: #9c739c;">}</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> x;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span> = <span style="color: #465953; background-color: #d2ebe3;">10</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = succ<span style="color: #9c739c;">(</span>z<span style="color: #9c739c;">)</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, x<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+1110
+</pre>
+
+
+<p>
+Nell&rsquo;esempio sopra quando nella funzione <b>succ</b> scriviamo <b>x += z</b>:
+</p>
+
+<ul class="org-ul">
+<li>L&rsquo;identificatore <b>x</b> non e&rsquo; definito nel blocco interno alla funzione (<b>nested scope</b>) ma e&rsquo; definito come parametro <b>x</b> della funzione <b>succ</b> (<b>block scope</b>)
+</li>
+<li>L&rsquo;identificatore fa riferimento alla variabile <b>z</b> definita nel blocco interno alla funzione (<b>nested scope</b>) con valore 1000
+</li>
+<li>E&rsquo; possibile avere diversi <b>scope</b> annidati l&rsquo;uno dentro l&rsquo;altro; le variabili dichiarate in queti scope &ldquo;muoiono&rdquo; alla fine dello stesso, e se hanno lo stesso identificatore di altre variabili in scope esterni &ldquo;nascondono&rdquo; quest&rsquo;ultime rendendo impossibile accederle tramite il loro identificatore
+</li>
+<li>La dichiarazione int z = 10 nella funzione main non modifica il contenuto della variabile z
+nel file scope, ma crea una nuova variabile nello scope della funzione stessa
+</li>
+<li>Non è invece possibile dichiarare due variabili con lo stesso identificatore nello stesso scope (sarebbero indistinguibili), e otterremmo un errore a tempo di compilazione
+
+
+<figure>
+<p><img src="../img/info/succ3.png" class="img-responsive" alt="succ3.png">
+</p>
+</figure>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Best practices</h2>
+<div class="outline-text-2" id="text-4">
+<blockquote>
+<p>
+Mai usare variabili globali. Essendo accessibili da tutte le funzioni definite nel file, non possiamo fare nessuna assunzione sul loro contenuto (es. assumere che una variabile sia positiva)
+e questo mette a rischio il buon funzionamento delle singole funzioni.
+</p>
+</blockquote>
+
+<p>
+Ci sono delle eccezioni, ma non vi pentirete di limitare l&rsquo;uso delle variabili globali.
+</p>
+
+
+<p>
+Domanda posso implementare la funzione incrementa, che data una variabile intera la incrementa di 1?
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">inc</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    x = x + <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span> = <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    inc<span style="color: #9c739c;">(</span>x<span style="color: #9c739c;">)</span>;
+
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d\n"</span>, x<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<p>
+Quella sopra non può essere l’implementazione di cui abbiamo bisogno:
+</p>
+
+<ul class="org-ul">
+<li>Nell’invocazione di inc(x) viene valutata l’espressione x e una copia del valore viene compiato nella variabile &ldquo;locale&rdquo; dell&rsquo;ambiente della funzione <b>inc</b>. E&rsquo; la copia ad essere incrementata ma non la variabile originale.
+</li>
+</ul>
+
+
+<figure>
+<p><img src="../img/info/inc.png" class="img-responsive" alt="inc.png">
+</p>
+</figure>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2022-01-19 Mer 14:58</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

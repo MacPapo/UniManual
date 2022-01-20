@@ -1,0 +1,57 @@
+#+TITLE: If Then Else
+#+AUTHOR: Jacopo Costantini
+
+* Dangling Else
+
+Il codice seguente è per noi ambiguo,
+a quale dei due *if* è associato l'ultimo else?
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int a = 10, b = 20;
+
+    if( a < 10 )
+    {
+        printf("Statement 1\n");
+    } else if ( b == 20 ){
+        printf("Statement 2\n");
+    } else {
+        printf("Statement 3\n");
+    }
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: Statement 2
+
+1. Se pensiamo sia associato a *if* ( a < 10 ) allora il codice dovrebbe visualizzare "Statement 3".
+2. Se invece pensiamo sia associato a *if* (b == 20) allora il codice dovrebbe visualizzare "Statement 2".
+
+La corretta interpretazione del codice è che il secondo *if-else* sia lo statement nel
+ramo *else* del primo *if*, come esplicitato nel codice equivalente qui sotto.
+
+#+begin_src C -n 1
+#include <stdio.h>
+
+int main()
+{
+    int a = 10, b = 20;
+
+    if(a < 10)
+    {
+        printf("Statement 1\n");
+    } else {
+        if(b == 20)
+        {
+            printf("Statement 2\n");
+        } else {
+            printf("Statement 3\n");
+        }
+    }
+    return 0;
+}
+#+end_src

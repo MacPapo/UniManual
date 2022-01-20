@@ -1,0 +1,171 @@
+#+TITLE: Variabili e Operandi
+#+AUTHOR: Jacopo Costantini
+
+* Tipo double
+
+Con il tipo *double* possiamo rappresentare un intervallo di numeri reali molto ampio.
+Il numero totale di numeri distinti rappresentabili $\rightarrow$ *numero massimo di
+configurazioni diverse con 64BIT*
+
++ Double $\Rightarrow 2^{64}$
++ float  $\Rightarrow 2^{32}$
+
+Questo significa che introdurremo delle approssimazioni nei nostri calcoli.
+
+#+BEGIN_SRC C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    if( 0.1 + 0.1 + 0.1 == 0.3 )
+        printf("Uguaglianza soddisfatta\n");
+    else
+        printf("Uguaglianza NON soddisfatta\n");
+
+    return 0;
+}
+#+END_SRC
+
+#+RESULTS:
+: Uguaglianza NON soddisfatta
+
+Per via della base 2 nella rappresentazione binaria il risultato in output e' errato.
+Per lo stesso motivo non possiamo rappresentare il risultato di $1/3 \; (=0.3333...)$
+in base 10 con un numero finito di cifre visto che 2 non e' divisore della base 10, cosi'
+come non possiamo rappesentare $0.1 = 1/10 = 1/(5 \cdot 2)$ in base due con un numero finito
+di cifre perche' 5 non e' divisore della base 2.
+
+#+begin_quote
+E' buona pratica quindi misurare se la differenza tra i due numeri e' inferiore
+ad una certa soglia di tolleranza
+#+end_quote
+
+* Operatore di assegnamento
+
+L'assegnamento e' un'espressione che come la somma, produce un valore.
+Il valore corrisponde all'espressione alla destra dell'operatore *=*.
+
+A differenza delle espressioni usuali, l'espressione di assegnamento hai il /side-effect/
+di cambiare il contenuto della memoria, memorizzando il contenuto dell'espressione
+a destra dell'operatore *=* nella locazione di memoria identificata dall'espressione a
+sinistra dell'operatore *=*.
+
+Consideriamo il codice seguente con il relativo output.
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int a, b, c;
+
+    a = b = c = 10;
+
+    printf("a %d\n", a);
+    printf("b %d\n", b);
+    printf("c %d\n", c);
+}
+#+end_src
+
+#+RESULTS:
+| a | 10 |
+| b | 10 |
+| c | 10 |
+
+L'espressione
+#+begin_src C -n 1
+a = b = c = 10;
+#+end_src
+
+e' equivalente all'espressione
+#+begin_src C -n 1
+a = (b = (c = 10));
+#+end_src
+
+perche' l'operatore *=* e' associato da destra a sinistra.
+Quindi l'ordine di assegnamento e' quello (da destra verso sinistra) corrispondente
+alle parentesi.
+
+- prima viene valutata l'espressione *c = 10*, che risulta nel valore 10
+- dopo viene valutata l'espressione *b = ...* e quindi *b = 10*, e anche questa espressione risulta nel valore 10
+- infine viene valutata l'espressione *a = ...* e quindi *a = 10* che risulta nel valore 10
+
+#+begin_quote
+L'espressione in ogni statement di assegnamento *x = z;* $\rightarrow$ (nota il ;) risulta
+in un valore che pero' non viene mai utilizzato ed e' quindi ignorato.
+#+end_quote
+
+Poiche' il valore risultante dell'espressione di assegnamento e' un valore valido come tutti gli altri, a questo possiamo applicare altre operazioni come nel codice seguente
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int a, b, c;
+
+    b = 20;
+    a = b + ( c = 10 );
+
+    printf("a %d\n", a);
+    printf("b %d\n", b);
+    printf("c %d\n", c);
+}
+#+end_src
+
+#+RESULTS:
+| a | = | 30 |
+| b | = | 20 |
+| c | = | 10 |
+
+* Operatori di incremento e decremento
+
+L'operatore di incremento/decremento puo' essere sia suffisso che prefisso: *i++* o *++i*.
+Possiamo dire che entrambe le espressioni hanno un /side-effect/, ovvero cambiano il contenuto
+della variabile *i* incrementandola di 1.
+
++ Nel caso del *prefisso*:
+  Il valore prodotto e' il valore della variabile incrementata
++ Nel caso del *suffisso*:
+  Il valore prodotto e' il valore della variabile senza alcuna modifica.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int main()
+{
+    int a = 10, b = 20, c, d;
+    c = a++;
+    d = ++b;
+
+    printf("a %d\n", a);
+    printf("b %d\n", b);
+    printf("c %d\n", c);
+    printf("d %d\n", d);
+}
+#+end_src
+
+#+RESULTS:
+| a | 11 |
+| b | 21 |
+| c | 10 |
+| d | 21 |
+
+Ma cosa succede nel codice seguente?
+#+begin_src C -n 1
+i = ++i + i++;
+i = i++ + 1;
+#+end_src
+
+In generale, e' definito un ordinamento di valutazione per alcune espressioni del linguaggio, ma non per tutte.
+
+#+begin_quote
+Nei casi sopra non e' definito quale dei due incrementi viene eseguito per primo, o se
+l'incremento suffisso viene eseguito dopo l'assegnamento.
+E' una mancanza nella definizione del linguaggio.
+In questi casi il comportamento viene deciso dal compilatore in base all'implementazione
+o strategie di ottimizzazione del codice.
+
+Il risulto quindi *non e' definito*
+
+ogni compilatore e ogni esecuzione potrebbe portare a risultati diversi.
+#+end_quote
