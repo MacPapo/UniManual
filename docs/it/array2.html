@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Ancora su Array Multidimensionali Statici vs Dinamici</title>
+<!-- 2022-01-21 Fri 15:05 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Array multidimensionali</a></li>
+<li><a href="#sec-2">2. Array 2D Statici</a></li>
+<li><a href="#sec-3">3. Array 2D Dinamici</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Array 2D Dinamici <i>flattened</i></a></li>
+<li><a href="#sec-3-2">3.2. Array di Array</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Puntatori a Righe</a></li>
+<li><a href="#sec-5">5. Esempio Puntatori</a>
+<ul class="nav">
+<li><a href="#sec-5-1">5.1. Note Sintattiche sui Tipi Puntatori ad Array in C</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Ancora su Array Multidimensionali Statici vs Dinamici</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Array multidimensionali</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Gli array multidimensionali in C sono una questione sottile. Limitiamoci agli array bidimensionali per cominciare, tenendo presente che tutto ciò che diremo scala anche a dimensioni addizionali. Definiamo innanzitutto il significato del termine statico e del termine dinamico:
+</p>
+
+<ul class="org-ul">
+<li><i>statica</i> è una struttura dati (un array in questo caso) che viene memorizzato nello <b>stack</b>;
+</li>
+<li><i>dinamica</i> invece è una struttura dati che viene memorizzata nello <b>heap</b>.
+</li>
+</ul>
+
+<p>
+Cosa sono lo <b>stack</b> e lo <b>heap</b>?
+</p>
+
+<ul class="org-ul">
+<li>Lo <i>stack</i> è la memoria dove vengono memorizzate le variabili in linguaggio <b>C</b>, è la memoria che contiene l’ambiente delle variabili delle funzioni e dei blocchi (detto anche <b>scope</b>) ed è <b>statica</b> nel senso che la sua grandezza è calcolata dal compilatore e rimane costante per tutta la durata del programma;
+</li>
+<li>Lo <i>heap</i> è la memoria allocata dalle <b>malloc()</b>, è la <b>memoria dinamica</b> appunto perché si può <b>allocare</b> e <b>deallocare</b> liberamente. Viene anche chiamato <b>memoria dinamica</b>.
+</li>
+</ul>
+
+<p>
+La vera differenza non è tanto nel tipo di memoria, perché in realtà i computer hanno un solo tipo di memoria, ma nel modo in cui viene gestita. Lo stack è un <b>pezzo di memoria</b> gestito dal linguaggio che funziona come una pila:
+</p>
+
+<ul class="org-ul">
+<li><b>cresce</b> ad ogni entrata in una <i>funzione</i> o in un <i>blocco</i>, producendo un nuovo pezzetto di memoria dove memorizza le variabili definite localmente (detto anche l’*ambiente* delle variabili);
+</li>
+<li><b>decresce</b> ad ogni uscita da una <i>funzione</i> o da un <i>blocco</i>, liberando la memoria che ospitava l’ambiente delle variabili locali.
+</li>
+</ul>
+
+<p>
+Si considerino con attenzione gli <b>scope</b> in questo pezzo di codice (assumiamo che i puntatori, in quanto indirizzi di memoria, siano lunghi 8 byte nelle architetture moderne a 64 bit):
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">f</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">chiamare la funzione f fa CRESCERE lo stack della quantit&#224; giusta per</span>
+<span style="color: #b9a992;">       ospitare i PARAMETRI x e b, oltre alla VARIABILE LOCALE i.</span>
+<span style="color: #b9a992;">       x e i occupano 4 byte ciascuna, b &#232; un puntatore che occupa = 8 byte,</span>
+<span style="color: #b9a992;">       6 per un totale di 4 + 4 + 8 = 16 byte.</span>
+<span style="color: #b9a992;">       si badi che un parametro di tipo array &#232; equivalente ad un parametro</span>
+<span style="color: #b9a992;">       di tipo puntatore ad array int(*b)[5]): non c'&#232; copia degli</span>
+<span style="color: #b9a992;">       elemnti, ma solo del puntatore.</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>x &gt; <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">){</span>
+        <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #81895d;">[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #81895d;">][</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #81895d;">]</span>;
+        <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">se l'esecuzione entra nell'if allora lo stack CRESCE di</span>
+<span style="color: #b9a992;">           altri 5 * 5 * 4 = 80 byte per ospitare l'array locale di 20 interi,</span>
+<span style="color: #b9a992;">           oltre a 8 byte per il puntatore all'array 14 stesso, ovvero la variabile</span>
+<span style="color: #b9a992;">           locale a, per un totale di 88 byte.</span><span style="color: #b9a992;"> */</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #81895d;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; <span style="color: #465953; background-color: #d2ebe3;">5</span>; ++i<span style="color: #81895d;">)</span>
+        <span style="color: #81895d;">{</span>
+            <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">j</span>;
+            <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">quando l'esecuzione entra nel blocco del for esterno,</span>
+<span style="color: #b9a992;">               lo stack CRESCE di 4 byte per ospitare j.</span><span style="color: #b9a992;"> */</span>
+            <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #957f5f;">(</span>j = <span style="color: #465953; background-color: #d2ebe3;">0</span>; j &lt; <span style="color: #465953; background-color: #d2ebe3;">5</span>; ++j<span style="color: #957f5f;">)</span>
+                a<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">][</span>j<span style="color: #957f5f;">]</span> = b<span style="color: #957f5f;">[</span>j<span style="color: #957f5f;">][</span>i<span style="color: #957f5f;">]</span>;
+        <span style="color: #81895d;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">all'uscita dal blocco del for esterno lo stack DECRESCE di 4 byte</span>
+<span style="color: #b9a992;">             perch&#233; j &#232; uscita dallo scope.</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #9c739c;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">all'uscita dall'if lo stack DECRESCE di 88 byte perch&#233; l'array a &#232; uscito di scope.</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span> <span style="color: #9c739c;">{</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #81895d;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; <span style="color: #465953; background-color: #d2ebe3;">5</span>; ++i<span style="color: #81895d;">){</span>
+            <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">j</span>;
+            <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">se invece l'esecuzione entra nell'else e di conseguenza</span>
+<span style="color: #b9a992;">               nel blocco del for esterno qui sopra, lo stack CRESCE di 4 byte per ospitare j.</span><span style="color: #b9a992;"> */</span>
+            <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #957f5f;">(</span>j=<span style="color: #465953; background-color: #d2ebe3;">0</span>;j&lt;<span style="color: #465953; background-color: #d2ebe3;">5</span>;++j<span style="color: #957f5f;">)</span>
+                b<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">][</span>j<span style="color: #957f5f;">]</span> = <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+
+        <span style="color: #81895d;">}</span><span style="color: #b9a992;">/*  </span><span style="color: #b9a992;">all'uscita dal blocco del for esterno lo stack DECRESCE di 4 byte</span>
+<span style="color: #b9a992;">             perch&#233; j &#232; uscita dallo scope.</span>
+<span style="color: #b9a992;">             si badi che la j definita nel for dell'if e la j definita qui</span>
+<span style="color: #b9a992;">             sopra, anche se si chiamano con lo stesso nome, sono di fatto</span>
+<span style="color: #b9a992;">             due variabili distinte, create e distrutte nello stack separatamente.</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #9c739c;">}</span>
+ <span style="color: #7382a0;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">all'uscita dalla funzione f lo stack DECRESCE di 16 byte perch&#233; la</span>
+<span style="color: #b9a992;">      variabile i ed i parametri x e b non esistono pi&#249;</span><span style="color: #b9a992;"> */</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #9c739c;">]</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">n</span> = <span style="color: #465953; background-color: #d2ebe3;">4</span>;
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">appena il programma comincia lo stack CRESCE per ospitare l'array</span>
+<span style="color: #b9a992;">       di grandezza 5 * 5 * 4 = 80 byte, oltre al puntatore di 8 byte all'array</span>
+<span style="color: #b9a992;">       stesso (la variabile a di fatto &#232; il 22 puntatore, non l'array di per s&#233;).</span>
+<span style="color: #b9a992;">       Anche l'intero n &#232; una variabile locale che occupa 4 byte, per un</span>
+<span style="color: #b9a992;">       totale di 80 + 8 + 4 = 92 byte.</span><span style="color: #b9a992;">*/</span>
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">chiamare la funzione f produrr&#224; la CRESCITA e la DECRESCITA della medesima</span>
+<span style="color: #b9a992;">       quantit&#224; di stack: qualunque sia questa quantit&#224;, al ritorno dalla funzione</span>
+<span style="color: #b9a992;">       lo stack si trover&#224; nella stessa condizione in cui si trovava prima</span>
+<span style="color: #b9a992;">       della chiamata, nulla &#232; cambiato.</span><span style="color: #b9a992;"> */</span>
+    f<span style="color: #9c739c;">(</span>n, a<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span> <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">all'uscita dal main (e quindi dal programma) lo stack DECRESCE di 92 byte</span>
+<span style="color: #b9a992;">     perch&#233; le variabili locali a e n non esistono pi&#249;.</span><span style="color: #b9a992;"> */</span>
+</pre>
+</div>
+
+<p>
+Lo heap invece è una memoria <b>frammentata</b> ma normale, usabile liberamente dal programmatore, richiedibile tramite una chiamata alla funzione <b>malloc()</b> (o simili) e liberabile tramite la funzione <b>free()</b>. In linguaggio C ogni singolo pezzo di memoria allocato tramite <b>malloc()</b> deve essere liberato esplicitamente dal programmatore tramite un’apposita chiamata a <b>free()</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Array 2D Statici</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Essendo il linguaggio a gestire automaticamente lo <b>stack</b>, il compilatore deve conoscere la dimensione di tutte le variabili di uno <b>scope</b>: ogni variabile occupa una certa quantità di memoria e il <b>compilatore calcola la somma di tutte le dimensioni di tutte le variabili allocando e deallocando la quantità di memoria corretta</b>.
+Ad esempio:
+</p>
+<ul class="org-ul">
+<li>un <b>int</b> occupa <b>32 bit = 4 byte</b>;
+</li>
+<li>un <b>double</b> occupa <b>64 bit = 8 byte</b>;
+</li>
+<li>un <b>array statico</b> di <b>N</b> elementi di tipo <b>T</b> occupa <b>N x sizeof(T) + 8</b>, dove gli <b>8 byte extra</b> sono per il <b>puntatore stesso all’array</b>.
+</li>
+</ul>
+
+<p>
+Ecco perché gli array statici sono trattati come variabili e pertanto devono avere dimensione costante:
+</p>
+<blockquote>
+<p>
+Perché il compilatore deve sapere quanto grandi sono.
+</p>
+</blockquote>
+
+<p>
+Un array bidimensionale statico ha un tipo tipo avente forma <b>T(*</b> <b>)[ N ]</b> dove <b>T</b> è il tipo degli elementi ed <b>N</b> è una costante intera che indica il numero di colonne.
+Ad esempio, dichiarando un <b>array bidimensionale statico</b> come <b>int a[ 3 ][ 5 ]</b>, la variabile <b>a</b> avrà tipo <b>int(*</b> <b>)[ 5 ]</b>. Si badi che non compare l’informazione relativa al numero di righe nel tipo: questo perché il numero di righe è un’informazione irrilevante per il compilatore per accedere correttamente alle celle dell’array.
+</p>
+
+<blockquote>
+<p>
+La ragione di questo sta nel memory layout degli array statici, vale a dire nel modo in cui vengono disposti gli elementi in memoria.
+</p>
+</blockquote>
+
+<p>
+Prendete la seguente definizione:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">10</span><span style="color: #7382a0;">][</span><span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #7382a0;">]</span>;
+</pre>
+</div>
+
+<p>
+Questo è un <b>array bidimensionale</b> di interi statico avente <b>10 righe</b> e <b>20 colonne</b>. <b>In memoria tuttavia è disposto come un array unidimensionale</b>, come una sequenza continua di <b>10 x 20 = 200</b> elementi di tipo <b>int</b>. Ad esempio, l’espressione con doppio <i>subscript</i> <b>a[ 3 ][ 8 ]</b> accede all’elemento alla <b>riga 3</b> e <b>colonna 8</b>; ma come fa a calcolare l’indirizzo esatto di memoria dove giace quell’elemento se l’array in realtà è piatto? Lo fa utilizzando la famosa formula che useremmo anche noi se facessimo il <b>flattening</b> dell’array: l’espressione <b>a[ 3 ][ 8 ]</b> dovremmo tradurla con <b>a[3 x 20 + 8]</b>.
+</p>
+
+<p>
+In generale, dato un array di <b>H righe</b> e <b>W colonne</b>, per accedere all’elemento posizionato alla <b>riga i</b> e alla <b>colonna j</b> la formula è <b>i x W + j</b>. Il compilatore traduce automaticamente l’espressione <b>a[ 3 ][ 8 ]</b> in <b>a[3 x 20 + 8]</b>; quel 20 tuttavia, che corrisponde al numero di colonne dell’array a e che sostituisce la W nella formula generale, deve essere noto al compilatore, il quale ne deve tenere traccia nel tipo della variabile <b>a</b>. Il tipo di <b>a</b> infatti è <b>int(*</b> <b>)[20]</b>: quel numero 20 compare al suo interno. Per il compilatore è sufficiente conoscere il numero di colonne, non serve conservare l’informazione del numero di righe perché nella formula generale non compare la <b>H</b> ma solo la <b>W</b>. I tipi sono il mondo in cui un compilatore tiene traccia delle informazioni relative ad una variabile: non esistono solamente i tipi base come <b>int, double, char ecc.</b> ma anche tipi più complessi, che catturano informazioni utili al compilatore per gestire quel dato.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Array 2D Dinamici</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Quando le dimensioni di un array non sono costanti, perché dipendenti da un input dell’utente, ad esempio, oppure da una qualche computazione, è possibile allocare un array di <b>H righe</b> e <b>W colonne</b> dinamicamente nello <b>heap</b> tramite chiamate alla funzione di libreria <b>malloc()</b>. Esistono due tecniche possibili che differiscono nel memory layout e nei tipi:
+</p>
+
+<ul class="org-ul">
+<li><i>array flattened</i>: si alloca un array <i>monodimensionale</i> di <b>H x W</b> elementi e lo si tratta come un <b>array bidimensionale</b>, cioè usando la formula <b>i x W + j</b> per accedere ad un elemento alla <b>riga i</b> e <b>colonna j</b>;
+</li>
+<li><i>array di array</i>: si alloca un array <i>monodimensionale</i> di <b>H</b> elementi di tipo <b>int*</b>: ciascun elemento è un <i>puntatore</i> ad un altro array di <b>W</b> interi che rappresenta una riga.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Array 2D Dinamici <i>flattened</i></h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Il termine “flattened” significa “appiattito” in inglese; e si utilizza in gergo per dire che un array bidimensionale è in realtà memorizzato come una sequenza continua di elementi, ogni riga segue in memoria la successiva.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">a</span> = <span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #7382a0;">)</span> malloc<span style="color: #7382a0;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #9c739c;">)</span> * <span style="color: #465953; background-color: #d2ebe3;">20</span> * <span style="color: #465953; background-color: #d2ebe3;">30</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+La variabile <b>a</b> ha tipo <b>int*</b> e punta ad un blocco di memoria in cui ci sono 60 interi contigui. La moltiplicazione 20 x 30 in nessun modo fa intendere al compilatore che stiamo allocando un array bidimensionale, è solamente un’espressione che scrive il programmatore per rendere più leggibile il fatto
+che useremo quell’array monodimensionale come se fosse bidimensionale. Per accedere ad un elemento alla <b>riga i</b> e <b>colonna j</b> non possiamo usare il doppio <i>subscript</i> <b>a[ i ][ j ]</b> perché <b>a</b> è in realtà un array monodimensionale per il compilatore; possiamo usare 1 solo subscript e siamo costretti ad calcolare la posizione dell’elemento che ci interessa tramite <b>a[i x 30 + j]</b>.
+</p>
+
+<p>
+Il vantaggio di questa tecnica è che l’allocazione della memoria è semplice, ma l’accesso agli elementi è più verboso per il programmatore; per il computer, tuttavia, calcolare ogni volta la posizione tramite una moltiplicazione ed una somma è meno oneroso di un doppio dereference: si tratta quindi della tecnica più <i>efficiente</i> dal punto di vista delle performance.
+</p>
+
+<p>
+Si osservi infine che un array bidimensionale dinamico <i>flattened</i> e un array bidimensionale statico hanno lo <i>stesso layout di memoria</i>, tuttavia i <i>tipi sono diversi</i>: nel caso di un array dinamico <i>flattened</i> abbiamo un <b>int*</b> e bisogna accedere con singolo <i>subscipt</i> e la formula, nel caso dell’array statico abbiamo un <b>int(*</b> <b>)[ N ]</b> (dove <b>N</b> è un intero costante) accessibile tramite doppio <i>subscript</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Array di Array</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Un <b>array di array</b> di interi è un array <i>monodimensionale</i> di <b>int*</b> in cui ogni cella contiene il puntatore ad un array monodimensionale di elementi di tipo <b>int</b>. L’array di <b>int*</b> ha tanti elementi quante sono le righe; e ciascun elemento punta ad un array <i>distinto</i> di <b>int</b> che ha tanti elementi quante sono le colonne.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #4c5361; background-color: #dde4f2;">a</span> = <span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>**<span style="color: #7382a0;">)</span> malloc<span style="color: #7382a0;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #9c739c;">)</span> * <span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+
+<p>
+Questo non è tutto però: abbiamo solamente allocato l’array che contiene i puntatori alle righe. Si badi che un array di <b>int*</b> ha in effetti tipo <b>int**</b>. Per ciascun elemento di a dobbiamo allocare di‐ namicamente un array di int lungo quanto una riga, ovvero di lunghezza pari al numero di colonne.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #7382a0;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; <span style="color: #465953; background-color: #d2ebe3;">20</span>; ++i<span style="color: #7382a0;">)</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">a</span><span style="color: #7382a0;">[</span>i<span style="color: #7382a0;">]</span> = <span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #7382a0;">)</span> malloc<span style="color: #7382a0;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #9c739c;">)</span> * <span style="color: #465953; background-color: #d2ebe3;">30</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+Per un array di 20 x 30 elementi abbiamo fatto 1 + 20 = 21 <b>malloc()</b>: una per l’array di puntatori più una per ogni riga. Questo approccio ha lo svantaggio avere una allocazione (e la conseguente liberazione) di memoria più complessa, ma per accedere agli elementi di <b>a</b> non è necessaria nessuna formula: si usa la stessa sintassi con doppio <i>subscript</i> che si usa per gli array bidimensionali statici, ad esempio <b>a[ 2 ][ 6 ]</b>. Nell’espressione <b>a[ i ][ j ]</b>, la sotto‐espressione <b>a[ i ]</b> legge un <b>int*</b> alla posizione <b>i</b> dall’array di puntatori <b>a</b>; il secondo subscript <b>[ j ]</b> è riferito al puntatore ritornato dalla sottoespressione <b>a[ i ]</b> alla sua sinistra e va a pescare un <b>int</b> in posizione <b>j</b>.
+</p>
+
+<p>
+E’ interessante notare che l’espressione <b>a[ i ][ j ]</b> è equivalente all’espressione <b>*(*(a + i) + j)</b>. Si osservi infine che questa tecnica è più versatile di quanto non sembri, poiché un programmatore è libero di allocare righe di lunghezza diversa qualora sia necessario per l’algoritmo. Questo è possibile perché il tipo <b>int**</b> non specifica di per sé nessun vincolo sulla lunghezza delle righe (ovvero il numero di colonne).
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Puntatori a Righe</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Si prenda in considerazione il seguente codice:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">10</span><span style="color: #7382a0;">][</span><span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #7382a0;">]</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">row</span> = a<span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">7</span><span style="color: #7382a0;">]</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v1</span> = row<span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">11</span><span style="color: #7382a0;">]</span>, <span style="color: #4c5361; background-color: #dde4f2;">v2</span> = a<span style="color: #7382a0;">[</span><span style="color: #465953; background-color: #d2ebe3;">7</span><span style="color: #7382a0;">][</span><span style="color: #465953; background-color: #d2ebe3;">11</span><span style="color: #7382a0;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">v1 e v2 sono uguali</span><span style="color: #b9a992;"> */</span>
+</pre>
+</div>
+
+<p>
+Se <b>a</b> è una variabile di tipo <b>int(*</b> <b>)[ 20 ]</b>, allora l’espressione <b>a[ 7 ]</b> produce un <b>int*</b> che punta al primo elemento della riga 7: potete considerare <b>row</b> come un array monodimensionale che rappre‐ senta la riga 7. Ciò implica che l’espressione <b>row[ 11 ]</b> è equivalente all’espressione <b>a[ 7 ][ 11 ]</b>.
+</p>
+
+<p>
+Si noti che la stessa cosa vale anche in caso di array di array allocati dinamicamente, poiché se <b>a</b> fosse un array di array dinamico allora avrebbe tipo <b>int**</b>, ergo l’espressione <b>a[ 7 ]</b> produrrebbe un <b>int*</b>.
+</p>
+
+<p>
+<a href="ITlist.html">[ HOME ]​</a>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Esempio Puntatori</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Per approfondire la questione prendete in esame il seguente codice ANSI‐C e studiate con attenzione i tipi dei binding e i relativi commenti:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">alloca array dinamici 2D di dimensioni passate come argomenti</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #605a52;">allocate_array_of_array</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim2</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    inti;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #4c5361; background-color: #dde4f2;">a</span> = <span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>**<span style="color: #9c739c;">)</span> malloc<span style="color: #9c739c;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #81895d;">)</span> * dim1<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; dim1; ++i<span style="color: #9c739c;">)</span>
+        a<span style="color: #9c739c;">[</span>i<span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #9c739c;">)</span> malloc<span style="color: #9c739c;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #81895d;">)</span> * dim2<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> a;
+<span style="color: #7382a0;">}</span>
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">libera la memoria di un array dinamico 2D allocato tramite la funzione allocate_dynamic_array2d()</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">free_array_of_array</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i=<span style="color: #465953; background-color: #d2ebe3;">0</span>;i&lt;dim1;++i<span style="color: #9c739c;">)</span>
+    <span style="color: #9c739c;">{</span>
+        free<span style="color: #81895d;">(</span>a<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">]</span><span style="color: #81895d;">)</span>;
+    <span style="color: #9c739c;">}</span>
+    free<span style="color: #9c739c;">(</span>a<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">stampa array dinamici 2D di dimensioni passate come argomenti</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">print_array_of_array</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim2</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">j</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i=<span style="color: #465953; background-color: #d2ebe3;">0</span>;i&lt;dim1;++i<span style="color: #9c739c;">)</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>j=<span style="color: #465953; background-color: #d2ebe3;">0</span>;j&lt;dim2;++j<span style="color: #9c739c;">)</span>
+            printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a[%d][%d] = %d\n"</span>, i, j, a<span style="color: #81895d;">[</span>i<span style="color: #81895d;">][</span>j<span style="color: #81895d;">]</span><span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">allora una array bidimensionale flattened tramite una singola chiamata alla malloc()</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #605a52;">allocate_flattened_array2d</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim2</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #9c739c;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #9c739c;">)</span> malloc<span style="color: #9c739c;">(</span><span style="color: #614c61; background-color: #f1ddf1;">sizeof</span><span style="color: #81895d;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #81895d;">)</span> * dim1 * dim2<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">libera la memoria di un array flattened: si noti che &#232; praticamente una semplice chiamata alla free().</span>
+<span style="color: #b9a992;">in gergo si chiamano STUB le funzioni che semplicemente</span>
+<span style="color: #b9a992;">chiamano un'altra funzione.</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #605a52;">free_flattened_array2d</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    free<span style="color: #9c739c;">(</span>a<span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">stampa array dinamici 2D di dimensioni passate come argomenti</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">print_flattened_array</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim2</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">j</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i=<span style="color: #465953; background-color: #d2ebe3;">0</span>;i&lt;dim1;++i<span style="color: #9c739c;">)</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>j=<span style="color: #465953; background-color: #d2ebe3;">0</span>;j&lt;dim2;++j<span style="color: #9c739c;">)</span>
+            printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a[%d][%d] = %d\n"</span>, i, j, a<span style="color: #81895d;">[</span>i * dim2 + j<span style="color: #81895d;">]</span><span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #b9a992;">/* </span><span style="color: #b9a992;">stampa array statici aventi 4 colonne ed un numero qualunque di righe passato come argomento</span><span style="color: #b9a992;"> */</span>
+<span style="color: #605a52; background-color: #f7f3ee;">void</span> <span style="color: #605a52;">print_static_array2d__4columns</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #9c739c;">(</span>*<span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #9c739c;">)[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">dim1</span><span style="color: #7382a0;">)</span> <span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">j</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i=<span style="color: #465953; background-color: #d2ebe3;">0</span>;i&lt;dim1;++i<span style="color: #9c739c;">)</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>j=<span style="color: #465953; background-color: #d2ebe3;">0</span>;j&lt;<span style="color: #465953; background-color: #d2ebe3;">4</span>;++j<span style="color: #9c739c;">)</span>
+            printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"a[%d][%d] = %d\n"</span>, i, j, a<span style="color: #81895d;">[</span>i<span style="color: #81895d;">][</span>j<span style="color: #81895d;">]</span><span style="color: #9c739c;">)</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">2</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = <span style="color: #9c739c;">{</span>     <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">array 2D statico 2 righe, 4 colonne</span><span style="color: #b9a992;"> */</span>
+        <span style="color: #81895d;">{</span><span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #465953; background-color: #d2ebe3;">11</span>, <span style="color: #465953; background-color: #d2ebe3;">12</span>, <span style="color: #465953; background-color: #d2ebe3;">13</span><span style="color: #81895d;">}</span>,
+        <span style="color: #81895d;">{</span><span style="color: #465953; background-color: #d2ebe3;">14</span>, <span style="color: #465953; background-color: #d2ebe3;">15</span>, <span style="color: #465953; background-color: #d2ebe3;">16</span>, <span style="color: #465953; background-color: #d2ebe3;">17</span><span style="color: #81895d;">}</span>
+    <span style="color: #9c739c;">}</span>;
+
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span>;        <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">array 2D statico 8 righe, 4 colonne (non inizializzato).</span>
+<span style="color: #b9a992;">                           a e b hanno lo stesso tipo, ovvero int(*)[4].</span>
+<span style="color: #b9a992;">                           da notare che l'informazione del numero di righe non</span>
+<span style="color: #b9a992;">                           compare nel tipo, ma solamente il numero di colonne.</span><span style="color: #b9a992;">*/</span>
+
+
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>** <span style="color: #4c5361; background-color: #dde4f2;">array_of_array</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">doppio pointer per array bidimensionale dinamico</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>*<span style="color: #4c5361; background-color: #dde4f2;">flattened_array</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">singolo pointer per un array bidimensionale flattened</span><span style="color: #b9a992;">*/</span>
+
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">j</span>; <span style="color: #465953; background-color: #d2ebe3;">78</span>
+
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #9c739c;">(</span>*p1<span style="color: #9c739c;">)[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #9c739c;">]</span> = a; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: p1 &#232; equivalente ad a</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">p2</span> = a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: p2 punta alla prima riga dell'array a</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">p3</span>=p1<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: p3 &#232; uguale a p2</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span>**  <span style="color: #4c5361; background-color: #dde4f2;">p5</span> = a; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">TYPE ERROR: il tipo di a &#232; int(*)[4] non int**</span><span style="color: #b9a992;"> */</span> <span style="color: #465953; background-color: #d2ebe3;">84</span>
+
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> v1 = a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">OK:v1vale13</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v2</span> = p1<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">][</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">OK:v2&#232;ugualeav1</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v3</span> = p2<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: equivalente a a[0][3], quindi v1, v2 e v3 sono uguali</span><span style="color: #b9a992;">*/</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v4</span> = a<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">2</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">TYPE ERROR: a[2] non produce un int ma un int*</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v5</span> = p2<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: equivalente a a[0][0], v5 vale 10</span><span style="color: #b9a992;"> */</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v6</span> = *p2; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">OK: equivalente a p2[0], quindi v6 &#232; uguale a v5</span><span style="color: #b9a992;">*/</span>
+
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">equivalente a stampare l'array a</span><span style="color: #b9a992;"> */</span>
+    print_static_array2d__4columns<span style="color: #9c739c;">(</span>p1, <span style="color: #465953; background-color: #d2ebe3;">2</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">anche b si pu&#242; stampare con la stessa funzione, perch&#233; a e b hanno lo stesso tipo.</span>
+<span style="color: #b9a992;">       si badi che il numero di colonne compare nel tipo stesso int(*)[4], quindi &#232; noto</span>
+<span style="color: #b9a992;">       a compile-time, mentre il numero di righe &#232; passato come argomento, quindi &#232; noto</span>
+<span style="color: #b9a992;">       solo a runtime.</span><span style="color: #b9a992;"> */</span>
+    print_static_array2d__4columns<span style="color: #9c739c;">(</span>b, <span style="color: #465953; background-color: #d2ebe3;">3</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">alloca e poi stampa un array di array avente 10 righe e 20 colonne in memoria</span>
+<span style="color: #b9a992;">       dinamica (cio&#232; nello heap).</span><span style="color: #b9a992;"> */</span>
+    array_of_arrayc = allocate_array_of_array<span style="color: #9c739c;">(</span><span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #9c739c;">)</span>;
+    print_array_of_array<span style="color: #9c739c;">(</span>array_of_array, <span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">libera la memoria dell'array di array</span><span style="color: #b9a992;"> */</span>
+    free_array_of_array<span style="color: #9c739c;">(</span>array_of_array<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">alloca e poi stampa un array bidimensionale flattened avente 10 righe e 20</span>
+<span style="color: #b9a992;">       colonne in memoria dinamica.</span><span style="color: #b9a992;"> */</span>
+    flattened_array = allocate_flattened_array<span style="color: #9c739c;">(</span><span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #9c739c;">)</span>;
+    print_flattened_array<span style="color: #9c739c;">(</span>flattened_array, <span style="color: #465953; background-color: #d2ebe3;">10</span>, <span style="color: #465953; background-color: #d2ebe3;">20</span><span style="color: #9c739c;">)</span>;
+
+    <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">libera la memoria dell'array flattened</span><span style="color: #b9a992;"> */</span>
+    free_array_of_array<span style="color: #9c739c;">(</span>flattened_array<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Note Sintattiche sui Tipi Puntatori ad Array in C</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+La sintassi dei tipi in C è bizzarra. Il linguaggio ci abitua a credere che, in una dichiarazione, la sintassi sia:
+</p>
+
+<pre class="example">
+T x;        /* dichiarazione */
+T x = expr  /* inizializzazione */
+</pre>
+
+<p>
+Dove T è un tipo, x è un identificatore, expr è una espressione di tipo T o convertibile a T. Come ad esempio come in:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">n</span> = <span style="color: #465953; background-color: #d2ebe3;">3</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">double</span> <span style="color: #4c5361; background-color: #dde4f2;">m</span> = <span style="color: #465953; background-color: #d2ebe3;">7.2</span> + <span style="color: #465953; background-color: #d2ebe3;">12.3</span>;
+<span style="color: #605a52; background-color: #f7f3ee;">char</span> <span style="color: #4c5361; background-color: #dde4f2;">c</span>;
+</pre>
+</div>
+
+<p>
+Pertanto ci si potrebbe aspettare che per dichiarare una variabile il cui tipo è “array di 4 colonne”, ovvero <b>int(*</b> <b>)[ 4 ]</b>, si possa scrivere così:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span><span style="color: #7382a0;">(</span>*<span style="color: #7382a0;">)[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span> myarray; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">SYNTAX ERROR</span><span style="color: #b9a992;"> */</span>
+</pre>
+</div>
+
+<p>
+Ma non è così ‐ il modo corretto di dichiarare una variabile avente tipo <b>int(*</b> <b>)[ 4 ]</b> è il seguente:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #7382a0;">(</span>*<span style="color: #4c5361; background-color: #dde4f2;">myarray</span><span style="color: #7382a0;">)[</span><span style="color: #465953; background-color: #d2ebe3;">4</span><span style="color: #7382a0;">]</span>;
+</pre>
+</div>
+
+<p>
+Si noti che il nome dell’identificatore myarray compare dentro le parentesi tonde appena a destra dell’asterisco. Lo stesso vale per i nomi dei parametri di funzione, che seguono le stesse regole sintat‐ tiche delle dichiarazioni di variabili.
+</p>
+
+<p>
+La ragione di questa strana sintassi è che uno statement di dichiarazione può includere dichiarazioni multiple che alternano puntatori e non, quindi, a livello sintattico, i puntatori diventano qualificatori degli identificatori, come ad esempio in:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, *<span style="color: #4c5361; background-color: #dde4f2;">b</span>, **<span style="color: #4c5361; background-color: #dde4f2;">c</span>, <span style="color: #4c5361; background-color: #dde4f2;">d</span>; <span style="color: #b9a992;">/* </span><span style="color: #b9a992;">a e d hanno tipo int; b ha tipo int*; c ha tipo int**</span><span style="color: #b9a992;"> */</span>
+</pre>
+</div>
+
+<p>
+L’asterisco, in altre parole, non fa parte del sintagma del tipo nella parte sinistra, ma compare appena a sinistra dell’identificatore qualificando la promozione a puntatore. Estendendo questa regola gram‐ maticale si comprende anche la sintassi dei puntatori ad array statici e dei puntatori a funzione:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">j</span>, <span style="color: #7382a0;">(</span>*<span style="color: #4c5361; background-color: #dde4f2;">d</span><span style="color: #7382a0;">)[</span><span style="color: #465953; background-color: #d2ebe3;">5</span><span style="color: #7382a0;">]</span>, <span style="color: #7382a0;">(</span>*<span style="color: #605a52;">e</span><span style="color: #7382a0;">)(</span><span style="color: #605a52; background-color: #f7f3ee;">double</span>, <span style="color: #605a52; background-color: #f7f3ee;">char</span><span style="color: #7382a0;">)</span>;
+</pre>
+</div>
+
+<p>
+Questa riga dichiara: 2 interi i e j; un puntatore d ad array bidimensionale di interi avente 5 colonne; un puntatore e a funzione avente 2 argomenti di tipo double e char rispettivamente e tipo di ritorno int.
+</p>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2022-01-21 Fri 15:05</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

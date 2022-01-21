@@ -169,3 +169,6 @@ Il risulto quindi *non e' definito*
 
 ogni compilatore e ogni esecuzione potrebbe portare a risultati diversi.
 #+end_quote
+
+
+[[* Tipo double][[ TOP ]​]]   [[file:ITlist.org][[ HOME ]​]]

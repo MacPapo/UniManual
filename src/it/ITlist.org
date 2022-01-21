@@ -6,3 +6,4 @@
 * [[file:func.org][Funzioni]]
 * [[file:rif.org][Riferimenti]]
 * [[file:array.org][Array]]
+* [[file:array2.org][Ancora su Array Multidimensionali Statici vs Dinamici]]

@@ -224,3 +224,6 @@ Quella sopra non può essere l’implementazione di cui abbiamo bisogno:
 - Nell’invocazione di inc(x) viene valutata l’espressione x e una copia del valore viene compiato nella variabile "locale" dell'ambiente della funzione *inc*. È la copia ad essere incrementata ma non la variabile originale.
 
 [[../img/info/inc.png]]
+
+
+[[* Definizione di funzione][[ TOP ]​]] [[file:ITlist.org][[ HOME ]​]]

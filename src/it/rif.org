@@ -211,3 +211,6 @@ int main()
 | Stima: |  32.00000762939453 |
 | Stima: |               32.0 |
 | Stima: |               32.0 |
+
+
+[[* Riferimenti][[ TOP ]​]] [[file:ITlist.org][[ HOME ]​]]

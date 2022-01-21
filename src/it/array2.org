@@ -1,0 +1,347 @@
+#+TITLE: Ancora su Array Multidimensionali Statici vs Dinamici
+#+AUTHOR: Jacopo Costantini
+
+* Array multidimensionali
+
+Gli array multidimensionali in C sono una questione sottile. Limitiamoci agli array bidimensionali per cominciare, tenendo presente che tutto ciò che diremo scala anche a dimensioni addizionali. Definiamo innanzitutto il significato del termine statico e del termine dinamico:
+
+- /statica/ è una struttura dati (un array in questo caso) che viene memorizzato nello *stack*;
+- /dinamica/ invece è una struttura dati che viene memorizzata nello *heap*.
+
+Cosa sono lo *stack* e lo *heap*?
+
+- Lo /stack/ è la memoria dove vengono memorizzate le variabili in linguaggio *C*, è la memoria che contiene l’ambiente delle variabili delle funzioni e dei blocchi (detto anche *scope*) ed è *statica* nel senso che la sua grandezza è calcolata dal compilatore e rimane costante per tutta la durata del programma;
+- Lo /heap/ è la memoria allocata dalle *malloc()*, è la *memoria dinamica* appunto perché si può *allocare* e *deallocare* liberamente. Viene anche chiamato *memoria dinamica*.
+
+La vera differenza non è tanto nel tipo di memoria, perché in realtà i computer hanno un solo tipo di memoria, ma nel modo in cui viene gestita. Lo stack è un *pezzo di memoria* gestito dal linguaggio che funziona come una pila:
+
+- *cresce* ad ogni entrata in una /funzione/ o in un /blocco/, producendo un nuovo pezzetto di memoria dove memorizza le variabili definite localmente (detto anche l’*ambiente* delle variabili);
+- *decresce* ad ogni uscita da una /funzione/ o da un /blocco/, liberando la memoria che ospitava l’ambiente delle variabili locali.
+
+Si considerino con attenzione gli *scope* in questo pezzo di codice (assumiamo che i puntatori, in quanto indirizzi di memoria, siano lunghi 8 byte nelle architetture moderne a 64 bit):
+
+#+begin_src C -n 1
+void f(int x, int b[5][5])
+{
+    int i;
+    /* chiamare la funzione f fa CRESCERE lo stack della quantità giusta per
+       ospitare i PARAMETRI x e b, oltre alla VARIABILE LOCALE i.
+       x e i occupano 4 byte ciascuna, b è un puntatore che occupa = 8 byte,
+       6 per un totale di 4 + 4 + 8 = 16 byte.
+       si badi che un parametro di tipo array è equivalente ad un parametro
+       di tipo puntatore ad array int(*b)[5]): non c'è copia degli
+       elemnti, ma solo del puntatore. */
+    if(x > 0){
+        int a[5][5];
+        /* se l'esecuzione entra nell'if allora lo stack CRESCE di
+           altri 5 * 5 * 4 = 80 byte per ospitare l'array locale di 20 interi,
+           oltre a 8 byte per il puntatore all'array 14 stesso, ovvero la variabile
+           locale a, per un totale di 88 byte. */
+        for(i = 0; i < 5; ++i)
+        {
+            int j;
+            /* quando l'esecuzione entra nel blocco del for esterno,
+               lo stack CRESCE di 4 byte per ospitare j. */
+            for(j = 0; j < 5; ++j)
+                a[i][j] = b[j][i];
+        } /* all'uscita dal blocco del for esterno lo stack DECRESCE di 4 byte
+             perché j è uscita dallo scope. */
+    } /* all'uscita dall'if lo stack DECRESCE di 88 byte perché l'array a è uscito di scope. */
+    else {
+        for(i = 0; i < 5; ++i){
+            int j;
+            /* se invece l'esecuzione entra nell'else e di conseguenza
+               nel blocco del for esterno qui sopra, lo stack CRESCE di 4 byte per ospitare j. */
+            for(j=0;j<5;++j)
+                b[i][j] = 0;
+
+        }/*  all'uscita dal blocco del for esterno lo stack DECRESCE di 4 byte
+             perché j è uscita dallo scope.
+             si badi che la j definita nel for dell'if e la j definita qui
+             sopra, anche se si chiamano con lo stesso nome, sono di fatto
+             due variabili distinte, create e distrutte nello stack separatamente. */
+    }
+ } /* all'uscita dalla funzione f lo stack DECRESCE di 16 byte perché la
+      variabile i ed i parametri x e b non esistono più */
+
+int main()
+{
+    int a[5][5];
+    int n = 4;
+    /* appena il programma comincia lo stack CRESCE per ospitare l'array
+       di grandezza 5 * 5 * 4 = 80 byte, oltre al puntatore di 8 byte all'array
+       stesso (la variabile a di fatto è il 22 puntatore, non l'array di per sé).
+       Anche l'intero n è una variabile locale che occupa 4 byte, per un
+       totale di 80 + 8 + 4 = 92 byte.*/
+
+    /* chiamare la funzione f produrrà la CRESCITA e la DECRESCITA della medesima
+       quantità di stack: qualunque sia questa quantità, al ritorno dalla funzione
+       lo stack si troverà nella stessa condizione in cui si trovava prima
+       della chiamata, nulla è cambiato. */
+    f(n, a);
+
+    return 0;
+} /* all'uscita dal main (e quindi dal programma) lo stack DECRESCE di 92 byte
+     perché le variabili locali a e n non esistono più. */
+#+end_src
+
+Lo heap invece è una memoria *frammentata* ma normale, usabile liberamente dal programmatore, richiedibile tramite una chiamata alla funzione *malloc()* (o simili) e liberabile tramite la funzione *free()*. In linguaggio C ogni singolo pezzo di memoria allocato tramite *malloc()* deve essere liberato esplicitamente dal programmatore tramite un’apposita chiamata a *free()*.
+
+* Array 2D Statici
+
+Essendo il linguaggio a gestire automaticamente lo *stack*, il compilatore deve conoscere la dimensione di tutte le variabili di uno *scope*: ogni variabile occupa una certa quantità di memoria e il *compilatore calcola la somma di tutte le dimensioni di tutte le variabili allocando e deallocando la quantità di memoria corretta*.
+Ad esempio:
++ un *int* occupa *32 bit = 4 byte*;
++ un *double* occupa *64 bit = 8 byte*;
++ un *array statico* di *N* elementi di tipo *T* occupa *N x sizeof(T) + 8*, dove gli *8 byte extra* sono per il *puntatore stesso all’array*.
+
+Ecco perché gli array statici sono trattati come variabili e pertanto devono avere dimensione costante:
+#+begin_quote
+Perché il compilatore deve sapere quanto grandi sono.
+#+end_quote
+
+Un array bidimensionale statico ha un tipo tipo avente forma *T(** *)[ N ]* dove *T* è il tipo degli elementi ed *N* è una costante intera che indica il numero di colonne.
+Ad esempio, dichiarando un *array bidimensionale statico* come *int a[ 3 ][ 5 ]*, la variabile *a* avrà tipo *int(** *)[ 5 ]*. Si badi che non compare l’informazione relativa al numero di righe nel tipo: questo perché il numero di righe è un’informazione irrilevante per il compilatore per accedere correttamente alle celle dell’array.
+
+#+begin_quote
+La ragione di questo sta nel memory layout degli array statici, vale a dire nel modo in cui vengono disposti gli elementi in memoria.
+#+end_quote
+
+Prendete la seguente definizione:
+#+begin_src C -n 1
+int a[10][20];
+#+end_src
+
+Questo è un *array bidimensionale* di interi statico avente *10 righe* e *20 colonne*. *In memoria tuttavia è disposto come un array unidimensionale*, come una sequenza continua di *10 x 20 = 200* elementi di tipo *int*. Ad esempio, l’espressione con doppio /subscript/ *a[ 3 ][ 8 ]* accede all’elemento alla *riga 3* e *colonna 8*; ma come fa a calcolare l’indirizzo esatto di memoria dove giace quell’elemento se l’array in realtà è piatto? Lo fa utilizzando la famosa formula che useremmo anche noi se facessimo il *flattening* dell’array: l’espressione *a[ 3 ][ 8 ]* dovremmo tradurla con *a[3 x 20 + 8]*.
+
+In generale, dato un array di *H righe* e *W colonne*, per accedere all’elemento posizionato alla *riga i* e alla *colonna j* la formula è *i x W + j*. Il compilatore traduce automaticamente l’espressione *a[ 3 ][ 8 ]* in *a[3 x 20 + 8]*; quel 20 tuttavia, che corrisponde al numero di colonne dell’array a e che sostituisce la W nella formula generale, deve essere noto al compilatore, il quale ne deve tenere traccia nel tipo della variabile *a*. Il tipo di *a* infatti è *int(** *)[20]*: quel numero 20 compare al suo interno. Per il compilatore è sufficiente conoscere il numero di colonne, non serve conservare l’informazione del numero di righe perché nella formula generale non compare la *H* ma solo la *W*. I tipi sono il mondo in cui un compilatore tiene traccia delle informazioni relative ad una variabile: non esistono solamente i tipi base come *int, double, char ecc.* ma anche tipi più complessi, che catturano informazioni utili al compilatore per gestire quel dato.
+
+* Array 2D Dinamici
+
+Quando le dimensioni di un array non sono costanti, perché dipendenti da un input dell’utente, ad esempio, oppure da una qualche computazione, è possibile allocare un array di *H righe* e *W colonne* dinamicamente nello *heap* tramite chiamate alla funzione di libreria *malloc()*. Esistono due tecniche possibili che differiscono nel memory layout e nei tipi:
+
+- /array flattened/: si alloca un array /monodimensionale/ di *H x W* elementi e lo si tratta come un *array bidimensionale*, cioè usando la formula *i x W + j* per accedere ad un elemento alla *riga i* e *colonna j*;
+- /array di array/: si alloca un array /monodimensionale/ di *H* elementi di tipo *int**: ciascun elemento è un /puntatore/ ad un altro array di *W* interi che rappresenta una riga.
+
+** Array 2D Dinamici /flattened/
+
+Il termine “flattened” significa “appiattito” in inglese; e si utilizza in gergo per dire che un array bidimensionale è in realtà memorizzato come una sequenza continua di elementi, ogni riga segue in memoria la successiva.
+
+#+begin_src C
+int* a = (int*) malloc(sizeof(int) * 20 * 30);
+#+end_src
+
+La variabile *a* ha tipo *int** e punta ad un blocco di memoria in cui ci sono 60 interi contigui. La moltiplicazione 20 x 30 in nessun modo fa intendere al compilatore che stiamo allocando un array bidimensionale, è solamente un’espressione che scrive il programmatore per rendere più leggibile il fatto
+che useremo quell’array monodimensionale come se fosse bidimensionale. Per accedere ad un elemento alla *riga i* e *colonna j* non possiamo usare il doppio /subscript/ *a[ i ][ j ]* perché *a* è in realtà un array monodimensionale per il compilatore; possiamo usare 1 solo subscript e siamo costretti ad calcolare la posizione dell’elemento che ci interessa tramite *a[i x 30 + j]*.
+
+Il vantaggio di questa tecnica è che l’allocazione della memoria è semplice, ma l’accesso agli elementi è più verboso per il programmatore; per il computer, tuttavia, calcolare ogni volta la posizione tramite una moltiplicazione ed una somma è meno oneroso di un doppio dereference: si tratta quindi della tecnica più /efficiente/ dal punto di vista delle performance.
+
+Si osservi infine che un array bidimensionale dinamico /flattened/ e un array bidimensionale statico hanno lo /stesso layout di memoria/, tuttavia i /tipi sono diversi/: nel caso di un array dinamico /flattened/ abbiamo un *int** e bisogna accedere con singolo /subscipt/ e la formula, nel caso dell’array statico abbiamo un *int(** *)[ N ]* (dove *N* è un intero costante) accessibile tramite doppio /subscript/.
+
+** Array di Array
+
+Un *array di array* di interi è un array /monodimensionale/ di *int** in cui ogni cella contiene il puntatore ad un array monodimensionale di elementi di tipo *int*. L’array di *int** ha tanti elementi quante sono le righe; e ciascun elemento punta ad un array /distinto/ di *int* che ha tanti elementi quante sono le colonne.
+
+#+begin_src C
+int** a = (int**) malloc(sizeof(int*) * 20);
+#+end_src
+
+
+Questo non è tutto però: abbiamo solamente allocato l’array che contiene i puntatori alle righe. Si badi che un array di *int** ha in effetti tipo *int***. Per ciascun elemento di a dobbiamo allocare di‐ namicamente un array di int lungo quanto una riga, ovvero di lunghezza pari al numero di colonne.
+
+#+begin_src C
+for(i = 0; i < 20; ++i)
+    a[i] = (int*) malloc(sizeof(int) * 30);
+#+end_src
+
+Per un array di 20 x 30 elementi abbiamo fatto 1 + 20 = 21 *malloc()*: una per l’array di puntatori più una per ogni riga. Questo approccio ha lo svantaggio avere una allocazione (e la conseguente liberazione) di memoria più complessa, ma per accedere agli elementi di *a* non è necessaria nessuna formula: si usa la stessa sintassi con doppio /subscript/ che si usa per gli array bidimensionali statici, ad esempio *a[ 2 ][ 6 ]*. Nell’espressione *a[ i ][ j ]*, la sotto‐espressione *a[ i ]* legge un *int** alla posizione *i* dall’array di puntatori *a*; il secondo subscript *[ j ]* è riferito al puntatore ritornato dalla sottoespressione *a[ i ]* alla sua sinistra e va a pescare un *int* in posizione *j*.
+
+E’ interessante notare che l’espressione *a[ i ][ j ]* è equivalente all’espressione **(*(a + i) + j)*. Si osservi infine che questa tecnica è più versatile di quanto non sembri, poiché un programmatore è libero di allocare righe di lunghezza diversa qualora sia necessario per l’algoritmo. Questo è possibile perché il tipo *int*** non specifica di per sé nessun vincolo sulla lunghezza delle righe (ovvero il numero di colonne).
+
+* Puntatori a Righe
+
+Si prenda in considerazione il seguente codice:
+
+#+begin_src C -n 1
+int a[10][20];
+int* row = a[7];
+int v1 = row[11], v2 = a[7][11]; /* v1 e v2 sono uguali */
+#+end_src
+
+Se *a* è una variabile di tipo *int(** *)[ 20 ]*, allora l’espressione *a[ 7 ]* produce un *int** che punta al primo elemento della riga 7: potete considerare *row* come un array monodimensionale che rappre‐ senta la riga 7. Ciò implica che l’espressione *row[ 11 ]* è equivalente all’espressione *a[ 7 ][ 11 ]*.
+
+Si noti che la stessa cosa vale anche in caso di array di array allocati dinamicamente, poiché se *a* fosse un array di array dinamico allora avrebbe tipo *int***, ergo l’espressione *a[ 7 ]* produrrebbe un *int**.
+
+[[file:ITlist.org][[ HOME ]​]]
+* Esempio Puntatori
+
+Per approfondire la questione prendete in esame il seguente codice ANSI‐C e studiate con attenzione i tipi dei binding e i relativi commenti:
+
+#+begin_src C -n 1
+#include <stdlib.h>
+#include <stdio.h>
+
+/* alloca array dinamici 2D di dimensioni passate come argomenti */
+int** allocate_array_of_array(int dim1, int dim2)
+{
+    inti;
+    int** a = (int**) malloc(sizeof(int*) * dim1);
+    for(i = 0; i < dim1; ++i)
+        a[i] = (int*) malloc(sizeof(int) * dim2);
+    return a;
+}
+/* libera la memoria di un array dinamico 2D allocato tramite la funzione allocate_dynamic_array2d() */
+void free_array_of_array(int** a, int dim1)
+{
+    int i;
+    for(i=0;i<dim1;++i)
+    {
+        free(a[i]);
+    }
+    free(a);
+}
+
+/* stampa array dinamici 2D di dimensioni passate come argomenti */
+void print_array_of_array(int** a, int dim1, int dim2)
+{
+    int i, j;
+    for(i=0;i<dim1;++i)
+        for(j=0;j<dim2;++j)
+            printf("a[%d][%d] = %d\n", i, j, a[i][j]);
+}
+
+/* allora una array bidimensionale flattened tramite una singola chiamata alla malloc() */
+int* allocate_flattened_array2d(int dim1, int dim2)
+{
+    return (int*) malloc(sizeof(int) * dim1 * dim2);
+}
+
+/* libera la memoria di un array flattened: si noti che è praticamente una semplice chiamata alla free().
+in gergo si chiamano STUB le funzioni che semplicemente
+chiamano un'altra funzione. */
+int* free_flattened_array2d(int* a)
+{
+    free(a);
+}
+
+/* stampa array dinamici 2D di dimensioni passate come argomenti */
+void print_flattened_array(int* a, int dim1, int dim2)
+{
+    int i, j;
+    for(i=0;i<dim1;++i)
+        for(j=0;j<dim2;++j)
+            printf("a[%d][%d] = %d\n", i, j, a[i * dim2 + j]);
+}
+
+/* stampa array statici aventi 4 colonne ed un numero qualunque di righe passato come argomento */
+void print_static_array2d__4columns(int(*a)[4], int dim1) {
+    int i, j;
+    for(i=0;i<dim1;++i)
+        for(j=0;j<4;++j)
+            printf("a[%d][%d] = %d\n", i, j, a[i][j]);
+}
+
+int main()
+{
+    int a[2][4] = {     /* array 2D statico 2 righe, 4 colonne */
+        {10, 11, 12, 13},
+        {14, 15, 16, 17}
+    };
+
+    int b[3][4];        /* array 2D statico 8 righe, 4 colonne (non inizializzato).
+                           a e b hanno lo stesso tipo, ovvero int(*)[4].
+                           da notare che l'informazione del numero di righe non
+                           compare nel tipo, ma solamente il numero di colonne.*/
+
+
+    int** array_of_array; /* doppio pointer per array bidimensionale dinamico*/
+    int*flattened_array; /* singolo pointer per un array bidimensionale flattened*/
+
+    int i, j; 78
+
+    int (*p1)[4] = a; /* OK: p1 è equivalente ad a*/
+    int* p2 = a[0]; /* OK: p2 punta alla prima riga dell'array a */
+    int* p3=p1[0]; /* OK: p3 è uguale a p2*/
+    int**  p5 = a; /* TYPE ERROR: il tipo di a è int(*)[4] non int** */ 84
+
+    int v1 = a[0][3]; /*OK:v1vale13*/
+    int v2 = p1[0][3]; /*OK:v2èugualeav1*/
+    int v3 = p2[3]; /* OK: equivalente a a[0][3], quindi v1, v2 e v3 sono uguali*/
+    int v4 = a[2]; /* TYPE ERROR: a[2] non produce un int ma un int* */
+    int v5 = p2[0]; /* OK: equivalente a a[0][0], v5 vale 10 */
+    int v6 = *p2; /* OK: equivalente a p2[0], quindi v6 è uguale a v5*/
+
+
+    /* equivalente a stampare l'array a */
+    print_static_array2d__4columns(p1, 2);
+
+    /* anche b si può stampare con la stessa funzione, perché a e b hanno lo stesso tipo.
+       si badi che il numero di colonne compare nel tipo stesso int(*)[4], quindi è noto
+       a compile-time, mentre il numero di righe è passato come argomento, quindi è noto
+       solo a runtime. */
+    print_static_array2d__4columns(b, 3);
+
+    /* alloca e poi stampa un array di array avente 10 righe e 20 colonne in memoria
+       dinamica (cioè nello heap). */
+    array_of_arrayc = allocate_array_of_array(10, 20);
+    print_array_of_array(array_of_array, 10, 20);
+    /* libera la memoria dell'array di array */
+    free_array_of_array(array_of_array);
+
+    /* alloca e poi stampa un array bidimensionale flattened avente 10 righe e 20
+       colonne in memoria dinamica. */
+    flattened_array = allocate_flattened_array(10, 20);
+    print_flattened_array(flattened_array, 10, 20);
+
+    /* libera la memoria dell'array flattened */
+    free_array_of_array(flattened_array);
+
+    return 0;
+}
+
+#+end_src
+
+** Note Sintattiche sui Tipi Puntatori ad Array in C
+
+La sintassi dei tipi in C è bizzarra. Il linguaggio ci abitua a credere che, in una dichiarazione, la sintassi sia:
+
+#+begin_example
+T x;        /* dichiarazione */
+T x = expr  /* inizializzazione */
+#+end_example
+
+Dove T è un tipo, x è un identificatore, expr è una espressione di tipo T o convertibile a T. Come ad esempio come in:
+
+#+begin_src C -n 1
+int n = 3;
+double m = 7.2 + 12.3;
+char c;
+#+end_src
+
+Pertanto ci si potrebbe aspettare che per dichiarare una variabile il cui tipo è “array di 4 colonne”, ovvero *int(** *)[ 4 ]*, si possa scrivere così:
+
+#+begin_src C -n 1
+int(*)[4] myarray; /* SYNTAX ERROR */
+#+end_src
+
+Ma non è così ‐ il modo corretto di dichiarare una variabile avente tipo *int(** *)[ 4 ]* è il seguente:
+
+#+begin_src C -n 1
+int (*myarray)[4];
+#+end_src
+
+Si noti che il nome dell’identificatore myarray compare dentro le parentesi tonde appena a destra dell’asterisco. Lo stesso vale per i nomi dei parametri di funzione, che seguono le stesse regole sintat‐ tiche delle dichiarazioni di variabili.
+
+La ragione di questa strana sintassi è che uno statement di dichiarazione può includere dichiarazioni multiple che alternano puntatori e non, quindi, a livello sintattico, i puntatori diventano qualificatori degli identificatori, come ad esempio in:
+
+#+begin_src C
+int a, *b, **c, d; /* a e d hanno tipo int; b ha tipo int*; c ha tipo int** */
+#+end_src
+
+L’asterisco, in altre parole, non fa parte del sintagma del tipo nella parte sinistra, ma compare appena a sinistra dell’identificatore qualificando la promozione a puntatore. Estendendo questa regola gram‐ maticale si comprende anche la sintassi dei puntatori ad array statici e dei puntatori a funzione:
+
+#+begin_src C
+int i, j, (*d)[5], (*e)(double, char);
+#+end_src
+
+Questa riga dichiara: 2 interi i e j; un puntatore d ad array bidimensionale di interi avente 5 colonne; un puntatore e a funzione avente 2 argomenti di tipo double e char rispettivamente e tipo di ritorno int.
