@@ -7,3 +7,4 @@
 * [[file:rif.org][Riferimenti]]
 * [[file:array.org][Array]]
 * [[file:array2.org][Ancora su Array Multidimensionali Statici vs Dinamici]]
+* [[file:pci.org][Patterns di Computazione Iterativa]]

@@ -345,3 +345,6 @@ int i, j, (*d)[5], (*e)(double, char);
 #+end_src
 
 Questa riga dichiara: 2 interi i e j; un puntatore d ad array bidimensionale di interi avente 5 colonne; un puntatore e a funzione avente 2 argomenti di tipo double e char rispettivamente e tipo di ritorno int.
+
+
+[[* Array multidimensionali][[ TOP ]​]]  [[file:ITlist.org][[ HOME ]​]]

@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Patterns di Computazione Iterativa</title>
+<!-- 2022-01-22 Sat 10:49 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Jacopo Costantini">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Accumulo di valori numerici e di valori logici</a></li>
+<li><a href="#sec-2">2. Ricerca con filtro</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Patterns di Computazione Iterativa</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Accumulo di valori numerici e di valori logici</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Consideriamo il seguente esercizio: dato un array di interi \(x=\{10,20,30,40,50,60\}\), calcolare la somma dei suoi elementi.
+</p>
+
+<p>
+La somma è una tipica operazione che gode della proprietà associativa, e cioè è vero che \((a+b)+c=a+(b+c)\), che ne nostro esempio ci consente di scrivere:
+</p>
+
+<p>
+\[10+20+30+40+50+60=((((((10)+20)+30)+40)+50)+60)\]
+</p>
+
+<p>
+Per calcolare la somma degli elementi dell’intera sequenza possiamo calcolare la somma parziale al primo all’*i‐esimo* elemento e poi aggiungere l’elemento in posizione <b>i + 1</b>. A questo scopo, useremo una variabile accumulatore per memorizzare di volta in volta la somma parziale, incrementandola man mano che processiamo gli elementi della lista.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">somma</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">accum</span> = <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+        accum += v<span style="color: #9c739c;">[</span>i<span style="color: #9c739c;">]</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> accum;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">10</span>,<span style="color: #465953; background-color: #d2ebe3;">20</span>,<span style="color: #465953; background-color: #d2ebe3;">30</span>,<span style="color: #465953; background-color: #d2ebe3;">40</span>,<span style="color: #465953; background-color: #d2ebe3;">50</span>,<span style="color: #465953; background-color: #d2ebe3;">60</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">s</span> = somma<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span><span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, s<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+210
+</pre>
+
+
+
+<p>
+Questo pattern si applica a diverse operazioni: <b>prodotto, media, minimo, massimo, and logico, or logico, etc.</b>
+E’ importante inizializzare in maniera corretta la variabile accumulatore, in modo da avere un valore neutro rispetto all’operazione da eseguire (ad es. per il calcolo del prodotto dovrò inizializzare con valore 1) e per avere un valore valido anche nel caso in cui il ciclo non venga mai eseguito (non possiamo sapere infatti quale sarà l’input).
+Proviamo lo stesso esempio per la ricerca del minimo. Possiamo infatti scrivere che:
+</p>
+
+<p>
+\[min(10+20+30+40+50+60)=min(min(min(min(min(min(10)+20)+30)+40)+50)+60)\]
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">min</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #7382a0;">)</span> <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">func min</span><span style="color: #b9a992;">*/</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>a &lt; b<span style="color: #9c739c;">)</span> <span style="color: #614c61; background-color: #f1ddf1;">return</span> a;
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span> <span style="color: #614c61; background-color: #f1ddf1;">return</span> b;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">minimo</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> *<span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">accum</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>v_size &lt;= <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">)</span> exit<span style="color: #9c739c;">(</span><span style="color: #465953; background-color: #d2ebe3;">EXIT_FAILURE</span><span style="color: #9c739c;">)</span>; <span style="color: #b9a992;">/*</span><span style="color: #b9a992;">controllo dell'input</span><span style="color: #b9a992;">*/</span>
+    accum = v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+        accum = min<span style="color: #9c739c;">(</span>v<span style="color: #81895d;">[</span>i<span style="color: #81895d;">]</span>, accum<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> accum;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">10</span>,<span style="color: #465953; background-color: #d2ebe3;">20</span>,<span style="color: #465953; background-color: #d2ebe3;">30</span>,<span style="color: #465953; background-color: #d2ebe3;">40</span>,<span style="color: #465953; background-color: #d2ebe3;">50</span>,<span style="color: #465953; background-color: #d2ebe3;">60</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">s</span> = minimo<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span><span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, s<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+10
+</pre>
+
+
+
+<p>
+Nell’esempio sopra, l’accumulatore viene inizializzato con il primo elemento del vettore. Questa soluzione è da preferire all’inizializzazione con costanti, e vi eviterà errori banali quali inizializzare con 0 in cerca del massimo per poi ricevere un input con valori anche negativi. Abbiamo però aggiunto un controllo sulla lunghezza del vettore in input per essere sicuri che ci sia un primo elemento. Un modo comune di implementare queste funzioni dove è possibile avere degli errori è quello di usare un parametro aggiuntivo di tipo puntatore da aggiornare con il risultato (nell’esempio avremmo un <b>int*</b> accum) e di ritornare 1 in caso di successo e 0 in caso di errore.
+</p>
+
+<p>
+Lo stesso pattern vale per la congiunzione o disgiunzione di proposizioni logiche, come ad esempio
+controllare che tutti i numeri della sequenza in input siano pari.
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">pari</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">accum</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>v_size &lt;= <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">)</span> exit<span style="color: #9c739c;">(</span><span style="color: #465953; background-color: #d2ebe3;">EXIT_FAILURE</span><span style="color: #9c739c;">)</span>;
+    accum = v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>%<span style="color: #465953; background-color: #d2ebe3;">2</span> == <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">1</span>; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+        accum = accum &amp;&amp; <span style="color: #9c739c;">(</span>v<span style="color: #81895d;">[</span>i<span style="color: #81895d;">]</span>%<span style="color: #465953; background-color: #d2ebe3;">2</span> == <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> accum;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">11</span>,<span style="color: #465953; background-color: #d2ebe3;">22</span>,<span style="color: #465953; background-color: #d2ebe3;">33</span>,<span style="color: #465953; background-color: #d2ebe3;">44</span>,<span style="color: #465953; background-color: #d2ebe3;">55</span>,<span style="color: #465953; background-color: #d2ebe3;">66</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">s</span> = pari<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span><span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, s<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+0
+</pre>
+
+
+<p>
+Nota:
+</p>
+<blockquote>
+<p>
+Non appena incontriamo un valore falso possiamo smettere la visita del vettore, perchè un valore falso in and logico con un altro valore restituirà sempre un valore falso.
+</p>
+</blockquote>
+
+<p>
+Possiamo riscrivere il codice come segue.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">pari</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>, <span style="color: #4c5361; background-color: #dde4f2;">accum</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>v_size &lt;= <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">)</span> exit<span style="color: #9c739c;">(</span><span style="color: #465953; background-color: #d2ebe3;">EXIT_FAILURE</span><span style="color: #9c739c;">)</span>;
+    accum = v<span style="color: #9c739c;">[</span><span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">]</span>%<span style="color: #465953; background-color: #d2ebe3;">2</span> == <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">1</span>; accum &amp;&amp; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+        accum = accum &amp;&amp; <span style="color: #9c739c;">(</span>v<span style="color: #81895d;">[</span>i<span style="color: #81895d;">]</span>%<span style="color: #465953; background-color: #d2ebe3;">2</span> == <span style="color: #465953; background-color: #d2ebe3;">0</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> accum;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">11</span>,<span style="color: #465953; background-color: #d2ebe3;">22</span>,<span style="color: #465953; background-color: #d2ebe3;">33</span>,<span style="color: #465953; background-color: #d2ebe3;">44</span>,<span style="color: #465953; background-color: #d2ebe3;">55</span>,<span style="color: #465953; background-color: #d2ebe3;">66</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">s</span> = pari<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span><span style="color: #9c739c;">)</span>;
+    printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"%d"</span>, s<span style="color: #9c739c;">)</span>;
+
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+0
+</pre>
+
+
+<p>
+Nell’esempio sopra, non sarà eseguita nemmeno una iterazione del ciclo.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Ricerca con filtro</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Consideriamo il seguente esercizio: dato un array di interi \(x=\{10,20,30,40,50,60\}\), trovare il primo valore da sinistra maggiore di 35.
+In questo caso è necessario scorrere tutti gli elementi del vettore, ma è possibile terminare in anticipo l’iterazione non appena l’elemento cercato viene trovato.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">find</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">elem</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+    <span style="color: #9c739c;">{</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #81895d;">(</span>v<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">]</span> &gt; <span style="color: #465953; background-color: #d2ebe3;">35</span><span style="color: #81895d;">)</span>
+        <span style="color: #81895d;">{</span>
+            *elem = v<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">]</span>;
+            <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+        <span style="color: #81895d;">}</span>
+    <span style="color: #9c739c;">}</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">10</span>,<span style="color: #465953; background-color: #d2ebe3;">20</span>,<span style="color: #465953; background-color: #d2ebe3;">30</span>,<span style="color: #465953; background-color: #d2ebe3;">40</span>,<span style="color: #465953; background-color: #d2ebe3;">50</span>,<span style="color: #465953; background-color: #d2ebe3;">60</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">found</span> = find<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span>, &amp;z<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>found<span style="color: #9c739c;">)</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Trovato %d"</span>, z<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Nessun elemento trovato"</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+Trovato 40
+</pre>
+
+
+<p>
+Nella soluzione abbiamo usato l’approccio di scrivere l’output (l’elemento trovato) usando il puntatore ricevuto come parametro, e di far restituire alla funzione il valore 1 o 0 in base all’esito della ricerca.
+Non è quindi necessario scorrere sempre tutti gli elementi del vettore, Il comando return ha l’effetto immediato di terminare l’esecuzione della funzione. Se nell’esempio vengono completate tutte le iterazioni del ciclo for allora significa che non abbiamo mai trovato l’elemento cercato e possiamo quindi restituire il valore 0 per indicarne l’assenza.
+I due pattern visti fino adesso possono essere presenti contemporaneamente. In questo caso l’inzializzazione dell’accumulatore deve essere fatta con attenzione, evitando di usare valori che non rispettano la proprietà del filtro.
+</p>
+
+<p>
+Consideriamo l’esempio: dato un array di interi x={10,20,30,40,50,60}, calcolare il minimo degli elementi maggiori di 30.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-C"><span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdio.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+<span style="color: #605a52; background-color: #f7f3ee;">#include</span> <span style="color: #7382a0; background-color: #e2e9c1;">&lt;</span><span style="color: #525643; background-color: #e2e9c1;">stdlib.h</span><span style="color: #7382a0; background-color: #e2e9c1;">&gt;</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">min</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">a</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">b</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>a &lt; b<span style="color: #9c739c;">)</span> <span style="color: #614c61; background-color: #f1ddf1;">return</span> a;
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span> <span style="color: #614c61; background-color: #f1ddf1;">return</span> b;
+<span style="color: #7382a0;">}</span>
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">minimo</span><span style="color: #7382a0;">(</span><span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">v</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">v_size</span>, <span style="color: #605a52; background-color: #f7f3ee;">int</span>* <span style="color: #4c5361; background-color: #dde4f2;">accum</span><span style="color: #7382a0;">)</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">i</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">found_at_least_one</span> = <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">for</span><span style="color: #9c739c;">(</span>i = <span style="color: #465953; background-color: #d2ebe3;">0</span>; i &lt; v_size; ++i<span style="color: #9c739c;">)</span>
+    <span style="color: #9c739c;">{</span>
+        <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #81895d;">(</span>v<span style="color: #957f5f;">[</span>i<span style="color: #957f5f;">]</span> &gt; <span style="color: #465953; background-color: #d2ebe3;">30</span><span style="color: #81895d;">)</span>
+        <span style="color: #81895d;">{</span>
+            <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #957f5f;">(</span><span style="color: #605a52; background-color: #f7f3ee;">!</span>found_at_least_one<span style="color: #957f5f;">)</span>
+            <span style="color: #957f5f;">{</span>
+                *accum = v<span style="color: #7382a0;">[</span>i<span style="color: #7382a0;">]</span>;
+                found_at_least_one = <span style="color: #465953; background-color: #d2ebe3;">1</span>;
+            <span style="color: #957f5f;">}</span>
+            <span style="color: #614c61; background-color: #f1ddf1;">else</span>
+            <span style="color: #957f5f;">{</span>
+                *accum = min<span style="color: #7382a0;">(</span>*accum, v<span style="color: #9c739c;">[</span>i<span style="color: #9c739c;">]</span><span style="color: #7382a0;">)</span>;
+            <span style="color: #957f5f;">}</span>
+        <span style="color: #81895d;">}</span>
+    <span style="color: #9c739c;">}</span>
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> found_at_least_one;
+<span style="color: #7382a0;">}</span>
+
+<span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #605a52;">main</span><span style="color: #7382a0;">()</span>
+<span style="color: #7382a0;">{</span>
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">x</span><span style="color: #9c739c;">[]</span> = <span style="color: #9c739c;">{</span><span style="color: #465953; background-color: #d2ebe3;">10</span>,<span style="color: #465953; background-color: #d2ebe3;">20</span>,<span style="color: #465953; background-color: #d2ebe3;">30</span>,<span style="color: #465953; background-color: #d2ebe3;">40</span>,<span style="color: #465953; background-color: #d2ebe3;">50</span>,<span style="color: #465953; background-color: #d2ebe3;">60</span><span style="color: #9c739c;">}</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">z</span>;
+    <span style="color: #605a52; background-color: #f7f3ee;">int</span> <span style="color: #4c5361; background-color: #dde4f2;">found</span> = minimo<span style="color: #9c739c;">(</span>x, <span style="color: #465953; background-color: #d2ebe3;">6</span>, &amp;z<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">if</span><span style="color: #9c739c;">(</span>found<span style="color: #9c739c;">)</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Trovato %d"</span>, z<span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">else</span>
+        printf<span style="color: #9c739c;">(</span><span style="color: #525643; background-color: #e2e9c1;">"Nessun elemento trovato"</span><span style="color: #9c739c;">)</span>;
+    <span style="color: #614c61; background-color: #f1ddf1;">return</span> <span style="color: #465953; background-color: #d2ebe3;">0</span>;
+<span style="color: #7382a0;">}</span>
+</pre>
+</div>
+
+<pre class="example">
+Trovato 40
+</pre>
+
+
+<p>
+Nota:
+</p>
+<blockquote>
+<p>
+L’utilizzo del flag found_at_least_one per mantenere l’informazione di aver già trovato almeno un elemento che soddisfa il filtro.
+</p>
+</blockquote>
+
+
+<p>
+<a href="#sec-1">[ TOP ]​</a> <a href="ITlist.html">[ HOME ]​</a>
+</p>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Jacopo Costantini</p>
+<p class="date">Created: 2022-01-22 Sat 10:49</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

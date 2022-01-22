@@ -1,0 +1,247 @@
+#+TITLE: Patterns di Computazione Iterativa
+#+AUTHOR: Jacopo Costantini
+
+* Accumulo di valori numerici e di valori logici
+
+Consideriamo il seguente esercizio: dato un array di interi $x=\{10,20,30,40,50,60\}$, calcolare la somma dei suoi elementi.
+
+La somma è una tipica operazione che gode della proprietà associativa, e cioè è vero che $(a+b)+c=a+(b+c)$, che ne nostro esempio ci consente di scrivere:
+
+$$10+20+30+40+50+60=((((((10)+20)+30)+40)+50)+60)$$
+
+Per calcolare la somma degli elementi dell’intera sequenza possiamo calcolare la somma parziale al primo all’*i‐esimo* elemento e poi aggiungere l’elemento in posizione *i + 1*. A questo scopo, useremo una variabile accumulatore per memorizzare di volta in volta la somma parziale, incrementandola man mano che processiamo gli elementi della lista.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+
+int somma(int* v, int v_size)
+{
+    int i;
+    int accum = 0;
+    for(i = 0; i < v_size; ++i)
+        accum += v[i];
+    return accum;
+}
+
+int main()
+{
+    int x[] = {10,20,30,40,50,60};
+    int s = somma(x, 6);
+    printf("%d", s);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: 210
+
+
+Questo pattern si applica a diverse operazioni: *prodotto, media, minimo, massimo, and logico, or logico, etc.*
+E’ importante inizializzare in maniera corretta la variabile accumulatore, in modo da avere un valore neutro rispetto all’operazione da eseguire (ad es. per il calcolo del prodotto dovrò inizializzare con valore 1) e per avere un valore valido anche nel caso in cui il ciclo non venga mai eseguito (non possiamo sapere infatti quale sarà l’input).
+Proviamo lo stesso esempio per la ricerca del minimo. Possiamo infatti scrivere che:
+
+$$min(10+20+30+40+50+60)=min(min(min(min(min(min(10)+20)+30)+40)+50)+60)$$
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int a, int b) /*func min*/
+{
+    if(a < b) return a;
+    else return b;
+}
+
+int minimo(int *v, int v_size)
+{
+    int i, accum;
+    if(v_size <= 0) exit(EXIT_FAILURE); /*controllo dell'input*/
+    accum = v[0];
+    for(i = 0; i < v_size; ++i)
+        accum = min(v[i], accum);
+    return accum;
+}
+
+int main()
+{
+    int x[] = {10,20,30,40,50,60};
+    int s = minimo(x, 6);
+    printf("%d", s);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: 10
+
+
+Nell’esempio sopra, l’accumulatore viene inizializzato con il primo elemento del vettore. Questa soluzione è da preferire all’inizializzazione con costanti, e vi eviterà errori banali quali inizializzare con 0 in cerca del massimo per poi ricevere un input con valori anche negativi. Abbiamo però aggiunto un controllo sulla lunghezza del vettore in input per essere sicuri che ci sia un primo elemento. Un modo comune di implementare queste funzioni dove è possibile avere degli errori è quello di usare un parametro aggiuntivo di tipo puntatore da aggiornare con il risultato (nell’esempio avremmo un *int** accum) e di ritornare 1 in caso di successo e 0 in caso di errore.
+
+Lo stesso pattern vale per la congiunzione o disgiunzione di proposizioni logiche, come ad esempio
+controllare che tutti i numeri della sequenza in input siano pari.
+
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <stdlib.h>
+
+int pari(int* v, int v_size)
+{
+    int i, accum;
+    if(v_size <= 0) exit(EXIT_FAILURE);
+    accum = v[0]%2 == 0;
+    for(i = 1; i < v_size; ++i)
+        accum = accum && (v[i]%2 == 0);
+    return accum;
+}
+
+int main()
+{
+    int x[] = {11,22,33,44,55,66};
+    int s = pari(x, 6);
+    printf("%d", s);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: 0
+
+Nota:
+#+begin_quote
+Non appena incontriamo un valore falso possiamo smettere la visita del vettore, perchè un valore falso in and logico con un altro valore restituirà sempre un valore falso.
+#+end_quote
+
+Possiamo riscrivere il codice come segue.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <stdlib.h>
+
+int pari(int* v, int v_size)
+{
+    int i, accum;
+    if(v_size <= 0) exit(EXIT_FAILURE);
+    accum = v[0]%2 == 0;
+    for(i = 1; accum && i < v_size; ++i)
+        accum = accum && (v[i]%2 == 0);
+    return accum;
+}
+
+int main()
+{
+    int x[] = {11,22,33,44,55,66};
+    int s = pari(x, 6);
+    printf("%d", s);
+
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: 0
+
+Nell’esempio sopra, non sarà eseguita nemmeno una iterazione del ciclo.
+
+* Ricerca con filtro
+
+Consideriamo il seguente esercizio: dato un array di interi $x=\{10,20,30,40,50,60\}$, trovare il primo valore da sinistra maggiore di 35.
+In questo caso è necessario scorrere tutti gli elementi del vettore, ma è possibile terminare in anticipo l’iterazione non appena l’elemento cercato viene trovato.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <stdlib.h>
+
+int find(int* v, int v_size, int* elem)
+{
+    int i;
+    for(i = 0; i < v_size; ++i)
+    {
+        if(v[i] > 35)
+        {
+            ,*elem = v[i];
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+    int x[] = {10,20,30,40,50,60};
+    int z;
+    int found = find(x, 6, &z);
+    if(found)
+        printf("Trovato %d", z);
+    else
+        printf("Nessun elemento trovato");
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: Trovato 40
+
+Nella soluzione abbiamo usato l’approccio di scrivere l’output (l’elemento trovato) usando il puntatore ricevuto come parametro, e di far restituire alla funzione il valore 1 o 0 in base all’esito della ricerca.
+Non è quindi necessario scorrere sempre tutti gli elementi del vettore, Il comando return ha l’effetto immediato di terminare l’esecuzione della funzione. Se nell’esempio vengono completate tutte le iterazioni del ciclo for allora significa che non abbiamo mai trovato l’elemento cercato e possiamo quindi restituire il valore 0 per indicarne l’assenza.
+I due pattern visti fino adesso possono essere presenti contemporaneamente. In questo caso l’inzializzazione dell’accumulatore deve essere fatta con attenzione, evitando di usare valori che non rispettano la proprietà del filtro.
+
+Consideriamo l’esempio: dato un array di interi x={10,20,30,40,50,60}, calcolare il minimo degli elementi maggiori di 30.
+
+#+begin_src C -n 1 :exports both
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int a, int b)
+{
+    if(a < b) return a;
+    else return b;
+}
+int minimo(int* v, int v_size, int* accum)
+{
+    int i;
+    int found_at_least_one = 0;
+    for(i = 0; i < v_size; ++i)
+    {
+        if(v[i] > 30)
+        {
+            if(!found_at_least_one)
+            {
+                *accum = v[i];
+                found_at_least_one = 1;
+            }
+            else
+            {
+                *accum = min(*accum, v[i]);
+            }
+        }
+    }
+    return found_at_least_one;
+}
+
+int main()
+{
+    int x[] = {10,20,30,40,50,60};
+    int z;
+    int found = minimo(x, 6, &z);
+    if(found)
+        printf("Trovato %d", z);
+    else
+        printf("Nessun elemento trovato");
+    return 0;
+}
+#+end_src
+
+#+RESULTS:
+: Trovato 40
+
+Nota:
+#+begin_quote
+L’utilizzo del flag found_at_least_one per mantenere l’informazione di aver già trovato almeno un elemento che soddisfa il filtro.
+#+end_quote
+
+
+[[* Accumulo di valori numerici e di valori logici][[ TOP ]​]] [[file:ITlist.org][[ HOME ]​]]
