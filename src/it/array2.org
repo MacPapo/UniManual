@@ -147,7 +147,7 @@ int** a = (int**) malloc(sizeof(int*) * 20);
 #+end_src
 
 
-Questo non è tutto però: abbiamo solamente allocato l’array che contiene i puntatori alle righe. Si badi che un array di *int** ha in effetti tipo *int***. Per ciascun elemento di a dobbiamo allocare di‐ namicamente un array di int lungo quanto una riga, ovvero di lunghezza pari al numero di colonne.
+Questo non è tutto però: abbiamo solamente allocato l’array che contiene i puntatori alle righe. Si badi che un array di *int** ha in effetti tipo *int***. Per ciascun elemento di a dobbiamo allocare dinamicamente un array di int lungo quanto una riga, ovvero di lunghezza pari al numero di colonne.
 
 #+begin_src C
 for(i = 0; i < 20; ++i)
@@ -172,7 +172,6 @@ Se *a* è una variabile di tipo *int(** *)[ 20 ]*, allora l’espressione *a[ 7 
 
 Si noti che la stessa cosa vale anche in caso di array di array allocati dinamicamente, poiché se *a* fosse un array di array dinamico allora avrebbe tipo *int***, ergo l’espressione *a[ 7 ]* produrrebbe un *int**.
 
-[[file:ITlist.org][[ HOME ]​]]
 * Esempio Puntatori
 
 Per approfondire la questione prendete in esame il seguente codice ANSI‐C e studiate con attenzione i tipi dei binding e i relativi commenti:
@@ -255,14 +254,14 @@ int main()
 
 
     int** array_of_array; /* doppio pointer per array bidimensionale dinamico*/
-    int*flattened_array; /* singolo pointer per un array bidimensionale flattened*/
+    int*  flattened_array; /* singolo pointer per un array bidimensionale flattened*/
 
-    int i, j; 78
+    int i, j;
 
     int (*p1)[4] = a; /* OK: p1 è equivalente ad a*/
     int* p2 = a[0]; /* OK: p2 punta alla prima riga dell'array a */
-    int* p3=p1[0]; /* OK: p3 è uguale a p2*/
-    int**  p5 = a; /* TYPE ERROR: il tipo di a è int(*)[4] non int** */ 84
+    int* p3 = p1[0]; /* OK: p3 è uguale a p2*/
+    int** p5 = a; /* TYPE ERROR: il tipo di a è int(*)[4] non int** */ 84
 
     int v1 = a[0][3]; /*OK:v1vale13*/
     int v2 = p1[0][3]; /*OK:v2èugualeav1*/
