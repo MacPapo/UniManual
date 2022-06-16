@@ -1,0 +1,56 @@
+#+title: Algoritmo di ordinamento Counting Sort
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Specifiche preliminari
+#+begin_quote
+Assunzione: i numeri da ordinare dono interi e compresi in un *intervallo che va da 0 a k*.
+
+*INPUT*: A[1, 2, ..., n] dove A[j] ∈ [0 ... k] per ogni j ∈ {1 ... n}.
+
+*OUTPUT*: B[1 ... n] ordinato.
+
+Memoria ausiliaria: C[0 ... k] vettore delle occorrenze.
+#+end_quote
+
+* Algoritmo
+#+begin_src cpp
+/*
+A = array da ordinare
+B = array ordinato (alla fine dell'algoritmo)
+n = numero di elementi da ordinare
+k = intervallo entro il quale sono presenti i numeri da ordinare (da 0 a k)
+,*/
+COUNTING_SORT(vector<int> A, vector<int> B, int n, int k){
+    vector<int> C;
+
+    //Inizializzazione vettore delle occorrenze
+    for(int i = 0; i <= k; i++){
+        C.push_back(0);
+    }
+
+    for(int j = 1; j < n; j++){
+        C.at(A.at(j))++;
+    }
+
+    //somma dell'elemento selezionato con quello precedente (somme prefisse)
+    for(int i = 1; i <= k; i++){
+        C.at(i) += C.at(i - 1);
+    }
+
+    for(int j = n - 1; j >= 1; j--){
+        B.at(C.at(A.at(j))) = A.at(j);
+        C.at(A.at(j))--;
+    }
+}
+#+end_src
+
+* Complessità
+#+begin_quote
+L'algoritmo è *stabile* --> i numeri con lo stesso valore sono salvati con lo stesso ordine
+
+Complessità: {{{color(red, θ(n + k))}}}
+
+L'algoritmo viene utilizzato quando k è dell'ordine di n. In questo modo la complessità diventa {{{color(red, θ(n))}}}
+#+end_quote
+
+[[file:../index.org][HOME]]

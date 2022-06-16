@@ -1,0 +1,15 @@
+#+title: Algoritmi e strutture dati
+
+Indice degli argomenti
+
+* Modulo 1
+
+* Modulo 2
+** [[file:countingsort.org][Counting Sort]]
+** [[file:radixsort.org][Radix Sort]]
+** [[file:definizioni.org][Definizioni generali sui grafi]]
+** [[file:kruskal.org][MST e Algoritmo di Kruskal]]
+** [[file:prim.org][Algoritmo di Prim]]
+** [[file:dijkstra.org][Algoritmo di Djikstra]]
+** [[file:bellman_ford.org][Algoritmo di Bellman-Ford]]
+** [[file:greedy.org][Algoritmo Greedy]]

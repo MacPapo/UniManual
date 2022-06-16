@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Algoritmi Greedy</title>
+<!-- 2022-05-13 Fri 10:56 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Pietro Visconti">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Definizione</a></li>
+<li><a href="#sec-2">2. Struttura comune di molti algoritmi greedy</a></li>
+<li><a href="#sec-3">3. ACTIVITY<sub>SELECTOR</sub> (selezione delle attività)</a>
+<ul class="nav">
+<li><a href="#sec-3-1">3.1. Specifiche preliminari</a></li>
+<li><a href="#sec-3-2">3.2. Algoritmo</a></li>
+<li><a href="#sec-3-3">3.3. Complessità</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. MAX CLIQUE</a>
+<ul class="nav">
+<li><a href="#sec-4-1">4.1. Definizioni</a></li>
+<li><a href="#sec-4-2">4.2. Algoritmo</a></li>
+<li><a href="#sec-4-3">4.3. Complessità</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">Algoritmi Greedy</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Definizione</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+Gli algoritmi greedy prendono una decisione che sembra essere la migliore <b>nel momento in cui viene presa</b>.
+Questo non significa che sia quella corretta.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Struttura comune di molti algoritmi greedy</h2>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+1) Ordinamento secondo un certo criterio
+2) A &lt;- NIL
+3) for each element x preso secondo l'ordine in 1
+4)      if A U {x} è OK, allora
+5)          A &lt;- A U {x}
+6) return A
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> ACTIVITY<sub>SELECTOR</sub> (selezione delle attività)</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Specifiche preliminari</h3>
+<div class="outline-text-3" id="text-3-1">
+<blockquote>
+<p>
+Siano:
+</p>
+<ol class="org-ol">
+<li>V = {1, 2, 3, &#x2026;, n}
+</li>
+<li>∀ i = 1&#x2026;n -&gt; s<sub>i</sub> e f<sub>i</sub> (tempi di inizio e fine)
+</li>
+<li>attività i -&gt; [s<sub>i</sub>, f<sub>i</sub>[
+</li>
+<li>attività j -&gt; [s<sub>j</sub>, f<sub>j</sub>[
+</li>
+</ol>
+
+<p>
+Se <b>[s<sub>i</sub>, f<sub>i</sub>[ ∩ [s<sub>j</sub>, f<sub>j</sub>[</b> != NIL &#x2013;&gt; i, j sono compatibili
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Algoritmo</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #a89984;">/*</span>
+<span style="color: #a89984;">s = array che contiene i tempi di inizio</span>
+<span style="color: #a89984;">f = array che contiene i tempi di fine</span>
+<span style="color: #a89984;">*/</span>
+<span style="color: #b57614;">GREEDY_ACTIVITY_SELECTOR</span><span style="color: #076678;">(</span>s, f<span style="color: #076678;">){</span>
+    n &lt;- length<span style="color: #b16286;">[</span>s<span style="color: #b16286;">]</span>
+
+    <span style="color: #a89984;">//</span><span style="color: #a89984;">Ordina le attivit&#224; per il tempo di fine (ascendente)</span>
+    <span style="color: #8f3f71;">SORT</span><span style="color: #b16286;">(</span>f<span style="color: #b16286;">)</span>
+
+    A &lt;- <span style="color: #8f3f71; font-weight: bold;">1</span>
+    j &lt;- <span style="color: #8f3f71; font-weight: bold;">1</span>
+    <span style="color: #9d0006;">for</span> i = <span style="color: #8f3f71; font-weight: bold;">2</span> TO n<span style="color: #b16286;">{</span>
+        <span style="color: #9d0006;">if</span> s_i &gt;= f_j <span style="color: #8ec07c;">{</span>
+            A &lt;- A U <span style="color: #d65d0e;">{</span>i<span style="color: #d65d0e;">}</span>
+            j &lt;- i
+        <span style="color: #8ec07c;">}</span>
+    <span style="color: #b16286;">}</span>
+
+    <span style="color: #9d0006;">return</span> A
+<span style="color: #076678;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Complessità</h3>
+<div class="outline-text-3" id="text-3-3">
+<blockquote>
+<p>
+nlogn (ordinamento) + n (ciclo) -&gt; <font color="red"> O(nlogn)</font>
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> MAX CLIQUE</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Definizioni</h3>
+<div class="outline-text-3" id="text-4-1">
+<blockquote>
+<p>
+Siano G = (V, E) e C sottoinsieme di V
+</p>
+
+<ol class="org-ol">
+<li>Una <b>clique</b> è definita come G[C] tale che G[C] è <b>completo</b>
+</li>
+<li>Una clique <b>massimale</b> è detta tale se non esiste una clique D tale che C sia sottoinsieme di D
+</li>
+<li>Una clique è detta <b>massima</b> se la cardinalità di C (|C|) è massima in tutte le clique
+</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Algoritmo</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #a89984;">/*</span>
+<span style="color: #a89984;">C = grafo</span>
+<span style="color: #a89984;">u = nodo</span>
+<span style="color: #a89984;">*/</span>
+<span style="color: #b57614;">IS_A_CLIQUE</span><span style="color: #076678;">(</span>C, u<span style="color: #076678;">){</span>
+    <span style="color: #9d0006;">for</span> each v in C <span style="color: #b16286;">{</span>
+        <span style="color: #9d0006;">if</span> <span style="color: #8ec07c;">(</span>u, v<span style="color: #8ec07c;">)</span> <span style="color: #8f3f71;">in</span> <span style="color: #076678;">E</span> <span style="color: #8ec07c;">{</span>
+            <span style="color: #9d0006;">return</span> <span style="color: #8f3f71;">false</span>
+        <span style="color: #8ec07c;">}</span>
+    <span style="color: #b16286;">}</span>
+
+    <span style="color: #9d0006;">return</span> <span style="color: #8f3f71;">true</span>
+<span style="color: #076678;">}</span>
+
+<span style="color: #a89984;">/*</span>
+<span style="color: #a89984;">G = grafo</span>
+<span style="color: #a89984;">*/</span>
+<span style="color: #b57614;">GREEDY_CLIQUE</span><span style="color: #076678;">(</span>G<span style="color: #076678;">){</span>
+    <span style="color: #a89984;">//</span><span style="color: #a89984;">Ordinamento dei nodi in base al grado</span>
+    <span style="color: #8f3f71;">SORT</span><span style="color: #b16286;">(</span>G<span style="color: #8ec07c;">[</span>V<span style="color: #8ec07c;">]</span><span style="color: #b16286;">)</span>
+    C &lt;- <span style="color: #8f3f71;">NIL</span>
+
+    <span style="color: #a89984;">//</span><span style="color: #a89984;">Estrazione in base all'ordinamento</span>
+    <span style="color: #9d0006;">for</span> each u in G<span style="color: #b16286;">[</span>V<span style="color: #b16286;">]</span> <span style="color: #b16286;">{</span>
+        <span style="color: #9d0006;">if</span> <span style="color: #8f3f71;">IS_A_CLIQUE</span><span style="color: #8ec07c;">(</span><span style="color: #8f3f71;">A</span> <span style="color: #076678;">U</span> <span style="color: #d65d0e;">{</span>u<span style="color: #d65d0e;">}</span>, u<span style="color: #8ec07c;">)</span> <span style="color: #8ec07c;">{</span>
+            A &lt;- A U <span style="color: #d65d0e;">{</span>u<span style="color: #d65d0e;">}</span>
+        <span style="color: #8ec07c;">}</span>
+    <span style="color: #b16286;">}</span>
+
+    <span style="color: #9d0006;">return</span> A
+<span style="color: #076678;">}</span>
+
+<span style="color: #a89984;">//</span><span style="color: #a89984;">NB: l'algoritmo non funziona SEMPRE</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Complessità</h3>
+<div class="outline-text-3" id="text-4-3">
+<blockquote>
+<p>
+nlogn (ordinamento) + n (ciclo) * n (is<sub>a</sub><sub>clique</sub>) &#x2013;&gt; <font color="red"> O(n^2)</font>
+</p>
+</blockquote>
+
+<p>
+<a href="../index.html">HOME</a>
+</p>
+</div>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Pietro Visconti</p>
+<p class="date">Created: 2022-05-13 Fri 10:56</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

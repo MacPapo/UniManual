@@ -1,0 +1,122 @@
+#+title: Algoritmi Greedy
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Definizione
+#+begin_quote
+Gli algoritmi greedy prendono una decisione che sembra essere la migliore *nel momento in cui viene presa*.
+Questo non significa che sia quella corretta.
+#+end_quote
+
+
+* Struttura comune di molti algoritmi greedy
+#+begin_example
+1) Ordinamento secondo un certo criterio
+2) A <- NIL
+3) for each element x preso secondo l'ordine in 1
+4)      if A U {x} è OK, allora
+5)          A <- A U {x}
+6) return A
+#+end_example
+
+* ACTIVITY_SELECTOR (selezione delle attività)
+
+** Specifiche preliminari
+#+begin_quote
+Siano:
+1) V = {1, 2, 3, ..., n}
+2) ∀ i = 1...n -> s_i e f_i (tempi di inizio e fine)
+3) attività i -> [s_i, f_i[
+4) attività j -> [s_j, f_j[
+
+Se *[s_i, f_i[ ∩ [s_j, f_j[* != NIL --> i, j sono compatibili
+#+end_quote
+
+
+** Algoritmo
+#+begin_src cpp
+/*
+s = array che contiene i tempi di inizio
+f = array che contiene i tempi di fine
+,*/
+GREEDY_ACTIVITY_SELECTOR(s, f){
+    n <- length[s]
+
+    //Ordina le attività per il tempo di fine (ascendente)
+    SORT(f)
+
+    A <- 1
+    j <- 1
+    for i = 2 TO n{
+        if s_i >= f_j {
+            A <- A U {i}
+            j <- i
+        }
+    }
+
+    return A
+}
+#+end_src
+
+
+** Complessità
+#+begin_quote
+nlogn (ordinamento) + n (ciclo) -> {{{color(red, O(nlogn))}}}
+#+end_quote
+
+
+* MAX CLIQUE
+
+** Definizioni
+#+begin_quote
+Siano G = (V, E) e C sottoinsieme di V
+
+1) Una *clique* è definita come G[C] tale che G[C] è *completo*
+2) Una clique *massimale* è detta tale se non esiste una clique D tale che C sia sottoinsieme di D
+3) Una clique è detta *massima* se la cardinalità di C (|C|) è massima in tutte le clique
+#+end_quote
+
+
+** Algoritmo
+#+begin_src cpp
+/*
+C = grafo
+u = nodo
+,*/
+IS_A_CLIQUE(C, u){
+    for each v in C {
+        if (u, v) in E {
+            return false
+        }
+    }
+
+    return true
+}
+
+/*
+G = grafo
+,*/
+GREEDY_CLIQUE(G){
+    //Ordinamento dei nodi in base al grado
+    SORT(G[V])
+    C <- NIL
+
+    //Estrazione in base all'ordinamento
+    for each u in G[V] {
+        if IS_A_CLIQUE(A U {u}, u) {
+            A <- A U {u}
+        }
+    }
+
+    return A
+}
+
+//NB: l'algoritmo non funziona SEMPRE
+#+end_src
+
+
+** Complessità
+#+begin_quote
+nlogn (ordinamento) + n (ciclo) * n (is_a_clique) --> {{{color(red, O(n^2))}}}
+#+end_quote
+
+[[file:../index.org][HOME]]

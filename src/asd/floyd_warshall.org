@@ -1,0 +1,57 @@
+#+title: Algoritmo di Floyd-Warshall
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Specifiche preliminari
+#+begin_quote
+Dati G = (V, E) e V = {1, 2, ..., n}
+
+W = (w_ij) ∈ R^(n*n) -> matrice n*n
+
+in cui *w_ij* è uguale a:
+@@html:<br>@@
+1) *0* se i == j;
+2) *w_ij* se i != j e (i, j) in E;
+3) *+inf* se i != j e (i, j) not in E
+@@html:<br>@@
+@@html:<br>@@
+Dato D_ij = {p | p è cammino minimo semplice tra i e j}, alla fine dell'algoritmo:
+@@html:<br>@@
+*d_ij^(k) = δ(i, j) = min w(p), p ∈ D_ij^(k)*
+#+end_quote
+
+* Formula divisa in sottoproblemi (programmazione dinamica)
+#+begin_quote
+*d_ij^(k)* è uguale a:
+@@html:<br>@@
+1) *w_ij* se k = 0;
+2) *min(d_ik^(k-1) + d_kj^(k-1), d_ij^(k-1))* se k != 0.
+#+end_quote
+
+* Algoritmo
+#+begin_src cpp
+/*
+W = matrice n*n
+
+PREREQUISITI: accetta pesi negativi, ma non cicli negativi.
+,*/
+FLOYD-WARSHALL(W){
+    n <- rows(W)
+    D^(0) <- W
+
+    for k = 1 TO n{
+        for i = 1 TO n{
+            for j = 1 TO n{
+                d_ij^(k) = min(d_ik^(k-1) + d_kj^(k-1), d_ij^(k-1)
+            }
+        }
+    }
+
+    return D^(n)
+}
+#+end_src
+
+
+* Complessità
+#+begin_quote
+Semplicemente {{{color(red, O(n^3))}}} in quanto vengono eseguiti 3 cicli annidati.
+#+end_quote

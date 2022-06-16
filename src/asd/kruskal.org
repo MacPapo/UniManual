@@ -1,0 +1,141 @@
+#+title: MST e Algoritmo di Kruskal
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+** Minimum Spanning Tree (MST)
+#+begin_quote
+Uno Spanning Tree è un albero che *ricopre tutti i nodi*.
+@@html:<br>@@
+Uno Spanning Tree è uno MST se il peso del suddetto albero è minimo tra tutti gli altri Spanning Tree.
+#+end_quote
+
+
+** Algoritmo GENERIC-MST
+#+begin_src cpp
+/*
+G = grafo
+w = funzione peso
+,*/
+GENERIC-MST(G, w){
+    A <- NIL
+
+    while(|A| < |V| - 1){
+        Trova un arco sicuro per A (u, v)
+        A <- A U {(u, v)}
+    }
+
+    return A
+}
+#+end_src
+
+
+** Teorema fondamentale degli MST<<teorema>>
+#+begin_quote
+{{{color(red, Enunciato)}}}
+@@html:<br>@@
+Sia G = (V, E, w) un grafo non orientato, pesato e connesso.
+Siano:
+a) A sottoinsieme di E contenuto in qualche MST
+b) (S, V\s) taglio rispetto ad A (nessuno degli archi di A attraversa il taglio)
+c) (u, v) ∈ E è un arco leggero che attraversa il taglio
+
+*Allora, l'arco (u, v) è sicuro per A.*
+@@html:<br>@@
+A U {(u, v)} è contenuto in qualche MST.
+@@html:<br>@@
+@@html:<br>@@
+{{{color(red, Dimostrazione)}}}
+@@html:<br>@@
+Sia T sottoinsieme di E un MST che contenga A.
+@@html:<br>@@
+- Se (u, v) ∈ T --> Fine in quanto *A U {(u, v)} sottoinsieme di T_MST*
+- Se (u, v) ∉ T:
+
+{{{color(red, Metodo del cuci e taglia)}}}
+@@html:<br>@@
+Sia *T' = T U {(u, v)} \ {(x, y)}* --> Viene aggiunto l'arco da esaminare e tolto un qualsiasi arco (x, y) dall'insieme.
+@@html:<br>@@
+{{{color(red, T' è un MST?)}}} Se si riesce a dimostrare, allora la dimostrazione è finita.
+@@html:<br>@@
+1) *T' è uno spanning tree* --> Ovvio per Ipotesi.
+2) *W(T') = W(T) --> T' è MST*, in quanto:
+   - W(T) <= W(T') perchè T è MST.
+   - W(T') <= W(T) perchè *W(T') = W(T) + w(u, v) - w(x, y) = W(T) + (numero <= 0)* in quanto w(u, v) è leggero.
+3) *A U {(u, v)} sottoinsieme di T' (MST)*
+   - A sottoinsieme di T' --> per Ipotesi (b)
+   - (u, v) ∈ T' per costruzione
+@@html:<br>@@
+CVD
+#+end_quote
+
+
+** Strutture dati per insiemi disgiunti
+#+begin_src cpp
+MAKE_SET(x) -> return {X}
+
+UNION(x, y) -> Sx U Sy
+
+FIND_SET(x) -> return rappresentante dell'insieme che contiene x
+#+end_src
+
+
+** Algoritmo CONNECTED_COMPONENTS
+#+begin_src cpp
+/*
+G = grafo
+,*/
+CONNECTED_COMPONENTS(G){
+    for each v in V[G]{
+        MAKE_SET(v)
+    }
+
+    for each (u, v) in E[G]{
+        if(FIND_SET(u) != FIND_SET(v)){
+            UNION(u, v)
+        }
+    }
+}
+#+end_src
+
+
+** Algoritmo di Kruskal
+#+begin_src cpp
+/*
+G = grafo
+w = funzione peso
+,*/
+MST-KRUSKAL(G, w){
+    //INIZIALIZZAZIONE
+    A <- NIL
+    for each u in V[G]{
+        MAKE_SET(u)
+    }
+
+    //ORDINAMENTO DEI PESI IN ORDINE NON DECRESCENTE
+    SORT(E[G])
+
+    //CODICE SIMILE A CONNECTED_COMPONENTS
+    for each (u, v) in E[G]{
+        if(FIND_SET(u) != FIND_SET(v)){
+            UNION(u, v)
+            A <- A U {(u, v)}
+        }
+    }
+
+    return A
+}
+#+end_src
+
+
+** Complessità
+#+begin_quote
+n (inizializzazione) + mlogm (ordinamento archi) + mlogm (corpo dell'algoritmo)
+@@html:<br>@@
+= O(n + mlogm + mlogm) -> {{{color(red, O(mlogm))}}}
+#+end_quote
+
+** Dimostrazione della correttezza
+#+begin_quote
+L'algoritmo di Kruskal è corretto grazie al [[teorema][teorema fondamentale degli MST]]
+#+end_quote
+
+[[file:../index.org][HOME]]

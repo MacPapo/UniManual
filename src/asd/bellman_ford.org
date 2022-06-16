@@ -1,0 +1,106 @@
+#+title: Algoritmo di Bellman Ford
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Algoritmi preliminari
+#+begin_src cpp
+/*
+G = grafo
+s = nodo sorgente
+,*/
+INIT_SS(G, s){
+    for each u in V[G]{
+        d[u] = +inf
+        π[u] = NIL
+    }
+    d[s] = 0
+}
+
+/*
+v = nodo di arrivo
+u = nodo precedente a v (?)
+w(u, v) = peso dell'arco tra u e v
+,*/
+RELAX(u, v, w(u, v)){
+    if(d[v] > d[u] + w(u, v)){
+        d[v] = d[u] + w(u, v)
+        π[v] = u
+    }
+}
+#+end_src
+
+* Algoritmo
+#+begin_src cpp
+/*
+G = grafo
+w = funzione peso
+s = nodo sorgente
+
+PREREQUISITI: supporta pesi negativi ma non cicli negativi.
+,*/
+BELLMAN-FORD(G, w, s){
+    //INIZIALIZZAZIONE
+    INIT_SS(G, s)
+
+    //RELAX SU TUTTI I NODI (TRANNE LA SORGENTE)
+    for i = 1 TO |V[G]| - 1{
+        for each (u, v) in E[G]{
+            RELAX(u, v, (u, v))
+        }
+    }
+
+    //VERIFICA CHE NON CI SIANO CICLI NEGATIVI
+    for each (u, v) in E[G]{
+        if(d[v] > d[u] + w(u, v)){
+            return (FALSE, d, π)
+        }
+    }
+
+    return (TRUE, d, π)
+}
+#+end_src
+
+* Complessità
+#+begin_quote
+n (inizializzazione) + (n - 1)m (for della relax) + m (controllo cicli negativi)
+@@html:<br>@@
+-> {{{color(red, O(n*m))}}}
+#+end_quote
+
+* Dimostrazione della correttezza
+#+begin_quote
+{{{color(red, Teorema di correttezza di Bellman-Ford)}}}
+@@html:<br>@@
+Si esegua l'algoritmo di Bellman-Ford su un grafo G = (V, E).
+@@html:<br>@@
+W : E -> R con vertice sorgente s ∈ V.
+@@html:<br>@@
+Se in G *non ci sono cicli negativi raggiungibili da s*, allora alla fine dell'esecuzione di BF:
+@@html:<br>@@
+1) d[u] = δ(s, u)
+2) Gπ è albero di cammini minimi
+3) L'algoritmo restituisce TRUE
+@@html:<br>@@
+Se invece in G esiste un ciclo negativo raggiungibile da s, allora l'algoritmo restituisce FALSE.
+@@html:<br>@@
+@@html:<br>@@
+{{{color(red, Dimostrazione)}}}
+@@html:<br>@@
+*Ipotesi* : Esiste ciclo negativo raggiungibile da s.
+@@html:<br>@@
+*Tesi* : L'algoritmo restituisce FALSE.
+@@html:<br>@@
+*PER ASSURDO* : L'algoritmo restituisce TRUE.
+@@html:<br>@@
+@@html:<br>@@
+∀ (u, v) ∈ E : d[v] <= d[u] + w(u, v)
+@@html:<br>@@
+C = <X_0, X_1, ... X_Q> raggiungibili da s
+@@html:<br>@@
+X_0 = X_Q
+@@html:<br>@@
+[Sommatoria che va da i = 1 a Q]: w(X_(i-1), X_i) < 0
+@@html:<br>@@
+∀ i = 1 ... Q
+@@html:<br>@@
+d[X_i] <= d[X_(i-1)] + w(X_(i-1), X_i)
+#+end_quote

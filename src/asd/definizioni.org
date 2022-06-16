@@ -1,0 +1,87 @@
+#+title: Definizioni generali sui grafi
+    Dati G = (V,E) dove G è un grafo, V è l'insieme dei nodi ed E è l'insieme degli archi:
+
+** Cammino
+#+begin_quote
+Un cammino corrisponde al *numero di archi* interposti tra un nodo sorgente e un nodo destinazione.
+@@html:<br>@@
+Un cammino è detto *semplice* quando tutti i vertici sono distinti.
+#+end_quote
+
+** Componente connessa
+#+begin_quote
+Una componente connessa è un sottoinsieme del grafo in cui tutti i nodi risultano *raggiungibili*
+@@html:<br>@@
+(essa può corrispondere al grafo stesso)
+@@html:<br>@@
+Non esiste un sottografo connesso più grande della componente connessa
+#+end_quote
+
+** Completezza di un grafo
+#+begin_quote
+1) *Vuoto* se E è un insieme vuoto
+2) *Completo* se E = VxV
+#+end_quote
+
+** Densità di un grafo
+#+begin_quote
+1) Se G è *non orientato*, allora *δ(G) = |E| / (numero di archi possibili)*
+2) Se G è *orientato*, *δ(G) = |E| / |V|^2*
+#+end_quote
+
+** Foresta
+#+begin_quote
+Una foresta è un grafo *connesso e aciclico*
+#+end_quote
+
+** Grado di un vertice
+#+begin_quote
+Il grado di un vertice (deg(u)) corrisponde al numero di vertici adiacenti ad esso (in un grafo non orientato).
+@@html:<br>@@
+Vale la seguente proprietà: *0 <= deg(u) <= n - 1*
+@@html:<br>@@
+*Non è possibile creare un grafo in cui tutti i gradi dei vertici sono distinti*
+#+end_quote
+
+** Lemma della stretta di mano
+#+begin_quote
+Dati n = |V| e m = |E|, si ha che:
+@@html:<br>@@
+*La somma dei gradi di tutti i vertici di un grafo non orientato è pari a 2m*
+#+end_quote
+
+** Grafo regolare
+#+begin_quote
+Un grafo non orientato si dice *regolare* quando, dato un numero intero *k*, il grado di tutti i vertici è pari a k.
+#+end_quote
+
+** Isomorfismo di grafi ?!?!?!
+
+** Clique
+#+begin_quote
+Una Clique è un sottoinsieme di un grafo (indicato con C) non orientato tale che *G[C] è completo.*
+@@html:<br>@@
+Una clique può essere *massimale* se, dati certi vertici non si riesce ad estendere la clique ulteriormente;
+@@html:<br>@@
+Altrimenti può essere *massima* quando non esiste una clique più grande all'interno del grafo (viene escluso il grafo stesso).
+#+end_quote
+
+
+** Proprietà dei grafi connessi/aciclici
+#+begin_quote
+Se un grafo non orientato è connesso, allora *|E| = |V| - 1*.
+@@html:<br>@@
+Se invece il grafo è aciclico, allora *|E| <= |V| - 1*.
+#+end_quote
+
+
+** Teorema degli alberi
+#+begin_quote
+1) G è un albero
+2) Due vertici qualsiasi di G sono connessi da un unico cammino
+3) G è connesso, ma se qualunque arco viene rimosso da G, il grafo risultante è disconnesso
+4) G è connesso e aciclico -> |E| = |V| - 1
+5) G è aciclico, ma aggiungendo un qualsiasi arco a G, il grafo risultante è ciclico
+#+end_quote
+
+[[file:../index.org][HOME]]

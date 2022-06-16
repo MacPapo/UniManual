@@ -1,0 +1,178 @@
+#+title: Algoritmo di Dijkstra
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Algoritmi preliminari
+#+begin_src cpp
+/*
+G = grafo
+s = nodo sorgente
+,*/
+INIT_SS(G, s){
+    for each u in V[G]{
+        d[u] = +inf
+        π[u] = NIL
+    }
+    d[s] = 0
+}
+
+/*
+v = nodo di arrivo
+u = nodo precedente a v (?)
+w(u, v) = peso dell'arco tra u e v
+,*/
+RELAX(u, v, w(u, v)){
+    if(d[v] > d[u] + w(u, v)){
+        d[v] = d[u] + w(u, v)
+        π[v] = u
+    }
+}
+#+end_src
+
+* Proprietà preliminari
+
+** Proprietà del limite inferiore
+Se si inizializza con INIT_SS, per qualunque sequenza di RELAX si ha:
+#+begin_quote
+δ(s, u) <= d[u] --- ∀ u ∈ V
+#+end_quote
+
+Inoltre, se dopo una RELAX
+
+#+begin_quote
+δ(s, u) = d[u]
+#+end_quote
+
+allora il valore di d[u] non potrà cambiare mai più
+
+** Proprietà dell'assenza di cammino
+Se non esiste un cammino tra s e u
+#+begin_quote
+δ(s, u) = +inf
+#+end_quote
+
+e allora dopo la INIT_SS si ha
+
+#+begin_quote
+d[u] = δ(s, u)
+#+end_quote
+
+** Proprietà della convergenza
+Se d[u] =  δ(s, u):
+#+begin_quote
+La prima RELAX su (u, v) porrà d[v] =  δ(s, v)
+#+end_quote
+
+** Proprietà del grafo dei predecessori
+Se alla fine di un algoritmo che usa RELAX si ha:
+#+begin_quote
+d[u] = δ(s, u)
+#+end_quote
+
+Allora Gπ è un albero di cammini minimi
+
+** Distanza triangolare
+Dato (u, v) ∈ E
+#+begin_quote
+δ(s, v) = δ(s, u) + w(u, v)
+#+end_quote
+
+* Algoritmo
+
+#+begin_src cpp
+/*
+G = grafo
+w = funzione peso
+s = nodo sorgente
+
+PREREQUISITI: i pesi devono essere positivi e non possono esserci cicli negativi.
+,*/
+DIJKSTRA(G, w, s){
+    INIT_SS(G, s)
+    Q <- V[G]
+    S <- NIL
+
+    while(Q != NIL){
+        u <- EXTRACT_MIN(Q)
+        S <- S U {u}
+
+        for each V in ADJ[u]
+            RELAX(u, v, w(u, v))
+    }
+
+    return (d, Gπ)
+}
+#+end_src
+
+* Complessità
+
+** Implementazione con Q array lineare
+#+begin_quote
+n (inizializzazione) + n^2 (extract_min) + m (relax, m = out-degree)
+
+= O(n + n^2 + m) -> {{{color(red, O(n^2) )}}}
+#+end_quote
+
+** Implementazione con Q heap binario
+#+begin_quote
+n (inizializzazione) + nlogn (extract_min) + mlogn (relax + ribilanciamento dell'albero)
+
+= O(n + nlogn + mlogn) -> {{{color(red, O(mlogn))}}}
+#+end_quote
+(In base a cosa m > n ??)
+
+* Dimostrazione della correttezza
+
+Sempre vera dopo la INIT_SS:
+#+begin_quote
+Se u != s  -->  d[u] = +inf  -->  δ(s, s) = -inf
+@@html:<br>@@
+Se u == s  -->  d[s] = 0  -->  δ(s, s) = 0
+@@html:<br>@@
+@@html:<br>@@
+δ(s, u) = d[u]
+@@html:<br>@@
+@@html:<br>@@
+*PER ASSURDO*:
+    Esiste v ∈ V tale che dopo una RELAX
+    *d[v] < δ(s, v)*
+@@html:<br>@@
+@@html:<br>@@
+Dopo la RELAX(u, v, w(u, v)) abbiamo che
+@@html:<br>@@
+*d[u] + w(u, v) = d[v]*
+@@html:<br>@@
+di conseguenza *d[u] < δ(s, v)* per ipotesi
+@@html:<br>@@
+e a sua volta *d[u] = δ(s, u) + w(u, v)*
+@@html:<br>@@
+e di conseguenza *d[u] < δ(s, u)*, che è assurdo
+@@html:<br>@@
+C.V.D
+#+end_quote
+
+* Teorema di Djikstra
+#+begin_quote
+Sia G = (V, E), w: E -> R, w(u, v) >= 0.
+@@html:<br>@@
+Alla fine dell'algoritmo di Dijkstra si avra:
+1) *d[u] = δ(s, u)*
+2) Gπ è un *albero di cammini minimi*
+#+end_quote
+
+* Cammino minimo tra tutte le coppie di nodi
+#+begin_src cpp
+ITERATED_DIJKSTRA(G, w){
+    for each u in V[G]
+        DIJKSTRA(G, w, u)
+}
+#+end_src
+
+* Confronto tra gli algoritmi
+
+| algorithm         | SPARSO        | DENSO         |
+|-------------------+---------------+---------------|
+| IT_DIJKSTRA array | O(n^3)        | O(n^3)        |
+| IT_DIJKSTRA heap  | O(n^2 * logn) | O(n^3 * logn) |
+| IT_BF             | O(n^3)        | O(n^4)        |
+
+[[file:../index.org][HOME]]

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>MST e Algoritmo di Kruskal</title>
+<!-- 2022-05-18 Wed 21:49 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Org-mode">
+<meta name="author" content="Pietro Visconti">
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
+/* org mode styles on top of twbs */
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-size: 18px;
+    margin-bottom: 105px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 101px;
+    background-color: #f5f5f5;
+}
+
+footer > div {
+    padding: 10px;
+}
+
+footer p {
+    margin: 0 0 5px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#table-of-contents {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+blockquote p {
+    font-size: 18px;
+}
+
+pre {
+    font-size: 16px;
+}
+
+.footpara {
+    display: inline-block;
+}
+
+figcaption {
+  font-size: 16px;
+  color: #666;
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+/* from twbs docs */
+
+.bs-docs-sidebar.affix {
+    position: static;
+}
+@media (min-width: 768px) {
+    .bs-docs-sidebar {
+        padding-left: 20px;
+    }
+}
+
+/* All levels of nav */
+.bs-docs-sidebar .nav > li > a {
+    display: block;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+}
+.bs-docs-sidebar .nav > li > a:hover,
+.bs-docs-sidebar .nav > li > a:focus {
+    padding-left: 19px;
+    color: #A1283B;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 1px solid #A1283B;
+}
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
+    padding-left: 18px;
+    font-weight: bold;
+    color: #A1283B;
+    background-color: transparent;
+    border-left: 2px solid #A1283B;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-docs-sidebar .nav .nav {
+    display: none; /* Hide by default, but at >768px, show it */
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav > li > a:focus {
+    padding-left: 29px;
+}
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
+    padding-left: 28px;
+    font-weight: 500;
+}
+
+/* Nav: third level (shown on .active) */
+.bs-docs-sidebar .nav .nav .nav {
+    padding-bottom: 10px;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 40px;
+    font-size: 12px;
+    font-weight: normal;
+}
+.bs-docs-sidebar .nav .nav .nav > li > a:hover,
+.bs-docs-sidebar .nav .nav .nav > li > a:focus {
+    padding-left: 39px;
+}
+.bs-docs-sidebar .nav .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav .nav > .active:focus > a {
+    padding-left: 38px;
+    font-weight: 500;
+}
+
+/* Show and affix the side nav when space allows it */
+@media (min-width: 992px) {
+    .bs-docs-sidebar .nav > .active > ul {
+        display: block;
+    }
+    /* Widen the fixed sidebar */
+    .bs-docs-sidebar.affix,
+    .bs-docs-sidebar.affix-bottom {
+        width: 213px;
+    }
+    .bs-docs-sidebar.affix {
+        position: fixed; /* Undo the static from mobile first approach */
+        top: 20px;
+    }
+    .bs-docs-sidebar.affix-bottom {
+        position: absolute; /* Undo the static from mobile first approach */
+    }
+    .bs-docs-sidebar.affix .bs-docs-sidenav,.bs-docs-sidebar.affix-bottom .bs-docs-sidenav {
+        margin-top: 0;
+        margin-bottom: 0
+    }
+}
+@media (min-width: 1200px) {
+    /* Widen the fixed sidebar again */
+    .bs-docs-sidebar.affix-bottom,
+    .bs-docs-sidebar.affix {
+        width: 263px;
+    }
+}
+</style>
+<script>
+$(function() {
+    'use strict';
+
+    $('.bs-docs-sidebar li').first().addClass('active');
+
+    $(document.body).scrollspy({target: '.bs-docs-sidebar'});
+
+    $('.bs-docs-sidebar').affix();
+});
+</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  displayAlign: "center",
+  displayIndent: "2em",
+  messageStyle: "none",
+  "HTML-CSS": {
+    scale: 100,
+    styles: {
+      ".MathJax_Display": {
+        "font-size": "100%"
+      }
+    }
+  },
+  "SVG": {
+    scale: 100,
+    styles: {
+      ".MathJax_SVG_Display": {
+        "font-size": "100%",
+        "margin-left": "-2.281em"
+      }
+    }
+  }
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_SVG"></script>
+</head>
+<body>
+<div id="content" class="container">
+<div class="row"><div class="col-md-3 col-md-push-9"><nav id="table-of-contents">
+<div id="text-table-of-contents" class="bs-docs-sidebar">
+<ul class="nav">
+<li><a href="#sec-1">1. Minimum Spanning Tree (MST)</a></li>
+<li><a href="#sec-2">2. Algoritmo GENERIC-MST</a></li>
+<li><a href="#sec-3">3. Teorema fondamentale degli MST</a></li>
+<li><a href="#sec-4">4. Strutture dati per insiemi disgiunti</a></li>
+<li><a href="#sec-5">5. Algoritmo CONNECTED<sub>COMPONENTS</sub></a></li>
+<li><a href="#sec-6">6. Algoritmo di Kruskal</a></li>
+<li><a href="#sec-7">7. Complessità</a></li>
+<li><a href="#sec-8">8. Dimostrazione della correttezza</a></li>
+</ul>
+</div>
+</nav>
+</div><div class="col-md-9 col-md-pull-3"><h1 class="title">MST e Algoritmo di Kruskal</h1>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Minimum Spanning Tree (MST)</h2>
+<div class="outline-text-2" id="text-1">
+<blockquote>
+<p>
+Uno Spanning Tree è un albero che <b>ricopre tutti i nodi</b>.
+<br>
+Uno Spanning Tree è uno MST se il peso del suddetto albero è minimo tra tutti gli altri Spanning Tree.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Algoritmo GENERIC-MST</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #928374;">/*</span>
+<span style="color: #928374;">G = grafo</span>
+<span style="color: #928374;">w = funzione peso</span>
+<span style="color: #928374;">*/</span>
+<span style="color: #d3869b;">GENERIC</span>-<span style="color: #d3869b;">MST</span><span style="color: #fe8019;">(</span>G, w<span style="color: #fe8019;">){</span>
+    A &lt;- <span style="color: #d3869b;">NIL</span>
+
+    <span style="color: #fb4934;">while</span><span style="color: #cc241d;">(</span>|A| &lt; |V| - <span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #cc241d;">){</span>
+        Trova un arco sicuro <span style="color: #fabd2f;">per</span> <span style="color: #83a598;">A</span> <span style="color: #b8bb26;">(</span>u, v<span style="color: #b8bb26;">)</span>
+        A &lt;- A U <span style="color: #b8bb26;">{</span><span style="color: #83a598;">(</span>u, v<span style="color: #83a598;">)</span><span style="color: #b8bb26;">}</span>
+    <span style="color: #cc241d;">}</span>
+
+    <span style="color: #fb4934;">return</span> A
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Teorema fondamentale degli MST<a id="teorema" name="teorema"></a></h2>
+<div class="outline-text-2" id="text-3">
+<blockquote>
+<p>
+<font color="red"> Enunciato</font>
+<br>
+Sia G = (V, E, w) un grafo non orientato, pesato e connesso.
+Siano:
+</p>
+<ol class="org-ol">
+<li>A sottoinsieme di E contenuto in qualche MST
+</li>
+<li>(S, V\s) taglio rispetto ad A (nessuno degli archi di A attraversa il taglio)
+</li>
+<li>(u, v) ∈ E è un arco leggero che attraversa il taglio
+</li>
+</ol>
+
+<p>
+<b>Allora, l&rsquo;arco (u, v) è sicuro per A.</b>
+<br>
+A U {(u, v)} è contenuto in qualche MST.
+<br>
+<br>
+<font color="red"> Dimostrazione</font>
+<br>
+Sia T sottoinsieme di E un MST che contenga A.
+<br>
+</p>
+<ul class="org-ul">
+<li>Se (u, v) ∈ T &#x2013;&gt; Fine in quanto <b>A U {(u, v)} sottoinsieme di T<sub>MST</sub></b>
+</li>
+<li>Se (u, v) ∉ T:
+</li>
+</ul>
+
+<p>
+<font color="red"> Metodo del cuci e taglia</font>
+<br>
+Sia <b>T&rsquo; = T U {(u, v)} \ {(x, y)}</b> &#x2013;&gt; Viene aggiunto l&rsquo;arco da esaminare e tolto un qualsiasi arco (x, y) dall&rsquo;insieme.
+<br>
+<font color="red"> T' è un MST?</font> Se si riesce a dimostrare, allora la dimostrazione è finita.
+<br>
+</p>
+<ol class="org-ol">
+<li><b>T&rsquo; è uno spanning tree</b> &#x2013;&gt; Ovvio per Ipotesi.
+</li>
+<li><b>W(T&rsquo;) = W(T) &#x2013;&gt; T&rsquo; è MST</b>, in quanto:
+<ul class="org-ul">
+<li>W(T) &lt;= W(T&rsquo;) perchè T è MST.
+</li>
+<li>W(T&rsquo;) &lt;= W(T) perchè <b>W(T&rsquo;) = W(T) + w(u, v) - w(x, y) = W(T) + (numero &lt;= 0)</b> in quanto w(u, v) è leggero.
+</li>
+</ul>
+</li>
+<li><b>A U {(u, v)} sottoinsieme di T&rsquo; (MST)</b>
+<ul class="org-ul">
+<li>A sottoinsieme di T&rsquo; &#x2013;&gt; per Ipotesi (b)
+</li>
+<li>(u, v) ∈ T&rsquo; per costruzione
+</li>
+</ul>
+</li>
+</ol>
+<p>
+<br>
+CVD
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Strutture dati per insiemi disgiunti</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #d3869b;">MAKE_SET</span><span style="color: #fe8019;">(</span>x<span style="color: #fe8019;">)</span> -&gt; <span style="color: #fb4934;">return</span> <span style="color: #fe8019;">{</span>X<span style="color: #fe8019;">}</span>
+
+<span style="color: #d3869b;">UNION</span><span style="color: #fe8019;">(</span>x, y<span style="color: #fe8019;">)</span> -&gt; Sx U Sy
+
+<span style="color: #d3869b;">FIND_SET</span><span style="color: #fe8019;">(</span>x<span style="color: #fe8019;">)</span> -&gt; <span style="color: #fb4934;">return</span> rappresentante dell<span style="color: #fabd2f;">'</span>insieme che contiene x
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Algoritmo CONNECTED<sub>COMPONENTS</sub></h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #928374;">/*</span>
+<span style="color: #928374;">G = grafo</span>
+<span style="color: #928374;">*/</span>
+<span style="color: #b8bb26;">CONNECTED_COMPONENTS</span><span style="color: #fe8019;">(</span>G<span style="color: #fe8019;">){</span>
+    <span style="color: #fb4934;">for</span> each v in V<span style="color: #cc241d;">[</span>G<span style="color: #cc241d;">]{</span>
+        <span style="color: #d3869b;">MAKE_SET</span><span style="color: #b8bb26;">(</span>v<span style="color: #b8bb26;">)</span>
+    <span style="color: #cc241d;">}</span>
+
+    <span style="color: #fb4934;">for</span> each <span style="color: #cc241d;">(</span>u, v<span style="color: #cc241d;">)</span> <span style="color: #fabd2f;">in</span> <span style="color: #83a598;">E</span><span style="color: #cc241d;">[</span>G<span style="color: #cc241d;">]{</span>
+        <span style="color: #fb4934;">if</span><span style="color: #b8bb26;">(</span><span style="color: #d3869b;">FIND_SET</span><span style="color: #83a598;">(</span>u<span style="color: #83a598;">)</span> != <span style="color: #d3869b;">FIND_SET</span><span style="color: #83a598;">(</span>v<span style="color: #83a598;">)</span><span style="color: #b8bb26;">){</span>
+            <span style="color: #d3869b;">UNION</span><span style="color: #83a598;">(</span>u, v<span style="color: #83a598;">)</span>
+        <span style="color: #b8bb26;">}</span>
+    <span style="color: #cc241d;">}</span>
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Algoritmo di Kruskal</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<pre class="src src-cpp"><span style="color: #928374;">/*</span>
+<span style="color: #928374;">G = grafo</span>
+<span style="color: #928374;">w = funzione peso</span>
+<span style="color: #928374;">*/</span>
+<span style="color: #d3869b;">MST</span>-<span style="color: #d3869b;">KRUSKAL</span><span style="color: #fe8019;">(</span>G, w<span style="color: #fe8019;">){</span>
+    <span style="color: #928374;">//</span><span style="color: #928374;">INIZIALIZZAZIONE</span>
+    A &lt;- <span style="color: #d3869b;">NIL</span>
+    <span style="color: #fb4934;">for</span> each u in V<span style="color: #cc241d;">[</span>G<span style="color: #cc241d;">]{</span>
+        <span style="color: #d3869b;">MAKE_SET</span><span style="color: #b8bb26;">(</span>u<span style="color: #b8bb26;">)</span>
+    <span style="color: #cc241d;">}</span>
+
+    <span style="color: #928374;">//</span><span style="color: #928374;">ORDINAMENTO DEI PESI IN ORDINE NON DECRESCENTE</span>
+    <span style="color: #d3869b;">SORT</span><span style="color: #cc241d;">(</span>E<span style="color: #b8bb26;">[</span>G<span style="color: #b8bb26;">]</span><span style="color: #cc241d;">)</span>
+
+    <span style="color: #928374;">//</span><span style="color: #928374;">CODICE SIMILE A CONNECTED_COMPONENTS</span>
+    <span style="color: #fb4934;">for</span> each <span style="color: #cc241d;">(</span>u, v<span style="color: #cc241d;">)</span> <span style="color: #fabd2f;">in</span> <span style="color: #83a598;">E</span><span style="color: #cc241d;">[</span>G<span style="color: #cc241d;">]{</span>
+        <span style="color: #fb4934;">if</span><span style="color: #b8bb26;">(</span><span style="color: #d3869b;">FIND_SET</span><span style="color: #83a598;">(</span>u<span style="color: #83a598;">)</span> != <span style="color: #d3869b;">FIND_SET</span><span style="color: #83a598;">(</span>v<span style="color: #83a598;">)</span><span style="color: #b8bb26;">){</span>
+            <span style="color: #d3869b;">UNION</span><span style="color: #83a598;">(</span>u, v<span style="color: #83a598;">)</span>
+            A &lt;- A U <span style="color: #83a598;">{</span><span style="color: #fe8019;">(</span>u, v<span style="color: #fe8019;">)</span><span style="color: #83a598;">}</span>
+        <span style="color: #b8bb26;">}</span>
+    <span style="color: #cc241d;">}</span>
+
+    <span style="color: #fb4934;">return</span> A
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Complessità</h2>
+<div class="outline-text-2" id="text-7">
+<blockquote>
+<p>
+n (inizializzazione) + mlogm (ordinamento archi) + mlogm (corpo dell&rsquo;algoritmo)
+<br>
+= O(n + mlogm + mlogm) -&gt; <font color="red"> O(mlogm)</font>
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Dimostrazione della correttezza</h2>
+<div class="outline-text-2" id="text-8">
+<blockquote>
+<p>
+L&rsquo;algoritmo di Kruskal è corretto grazie al <a href="#teorema">teorema fondamentale degli MST</a>
+</p>
+</blockquote>
+
+<p>
+<a href="../index.html">HOME</a>
+</p>
+</div>
+</div>
+</div></div></div>
+<footer id="postamble" class="">
+<div><p class="author">Author: Pietro Visconti</p>
+<p class="date">Created: 2022-05-18 Wed 21:49</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 28.0.91 (<a href="http://orgmode.org">Org-mode</a> 9.6)</p>
+</div>
+</footer>
+</body>
+</html>

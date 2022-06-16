@@ -1,0 +1,59 @@
+#+title: Algoritmo di Prim
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+** Specifiche preliminari
+#+begin_quote
+*∀ u ∈ V*:
+@@html:<br>@@
+1) key[u] corrisponde al *peso dell'arco* che collega all'altra parte del taglio.
+2) π[u] al *nodo predecessore* (ossia quello collegato dall'altra parte del taglio).
+3) Q è sottoinsieme di V[G] e rappresenta una coda di priorità contenente i *vertici da estrarre*.
+4) Di conseguenza l'insieme V-Q rappresenta i *vertici già estratti*.
+#+end_quote
+
+** Algoritmo di Prim
+#+begin_src cpp
+/*
+G = grafo
+w = funzione peso
+r = radice
+,*/
+MST-PRIM(G, w, r){
+    //INIZIALIZZAZIONE
+    Q <- V[G]
+    for each u in Q{
+        key[u] <- +inf
+        π[u] <- NIL
+    }
+    key[r] <- 0
+
+    //CORPO DELL'ALGORITMO
+    while(Q != NIL){
+        u <- EXTRACT_MIN(Q)
+
+        //PER OGNI VERTICE ADIACENTE A u
+        for each v in ADJ[u]{
+            if(v ∈ Q and w(u, v) < key[v]){
+                π[v] <- u
+                key[v] <- w(u, v)
+            }
+        }
+    }
+
+    return A <- {(u, π[u]) ∈ E | u ∈ V - {r}}
+}
+#+end_src
+
+** Complessità
+#+begin_quote
+n (inizializzazione) + nlogn (estrazione da Q) + 2mlogn (ciclo for + funzione peso)
+@@html:<br>@@
+= O(n + nlogn + mlogn) -> {{{color(red, O(mlogn))}}}
+#+end_quote
+
+** Dimostrazione della correttezza
+#+begin_quote
+L'algoritmo di Prim è corretto grazie al [[file:kruskal.org][teorema fondamentale degli MST]]
+#+end_quote
+
+[[file:../index.org][HOME]]

@@ -1,0 +1,28 @@
+#+title: Algoritmo Radix Sort
+#+MACRO: color @@html:<font color="$1">$2</font>@@
+
+* Specifiche preliminari
+#+begin_quote
+Questo algoritmo viene utilizzato per ordinare elementi con "d" cifre dove la cifra 1 è quella meno significativa, "d" quella più significativa.
+#+end_quote
+
+* Algoritmo
+#+begin_src cpp
+/*
+A = array da ordinare
+d = numero di cifre dei numeri da ordinare
+,*/
+RADIX_SORT(Array A, int d){
+    for(int i = 1; i <= d; i++){
+        A = counting_sort(A, 9, d);
+    }
+}
+#+end_src
+
+* Complessità
+#+begin_quote
+Dati n numeri, ciascuno di n cifre, dove ogni cifra può avere fino a k valori possibili, la procedura radix-sort ordina correttamente i numeri nel tempo di esecuzione {{{color(red, θ(d * (n + k)))}}}
+se l'ordinamento stabile della procedura impiega tempo {{{color(red, θ(n + k))}}}
+#+end_quote
+
+[[file:../index.org][HOME]]

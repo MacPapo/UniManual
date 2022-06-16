@@ -11,3 +11,7 @@ Cominciamo !!
 
 - [[file:it/ITlist.org][Introduzione alla programmazione]]
 - [[file:arch/Archlist.org][Architettura degli elaboratori]]
+
+* Secondo Anno
+
+- [[file:asd/AsdList.org][Algoritmi e strutture dati]]
